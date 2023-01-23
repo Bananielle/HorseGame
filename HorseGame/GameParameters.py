@@ -20,7 +20,7 @@ class GameParameters():
         #pygame.time.set_timer(self.ADDSHARK, 700) # Define how quickly new sharks are added (e.g., every 1000ms)
         self.ADDCOIN = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCOIN, 2000) # Define how quickly new jellyfish are added (e.g., every 4000ms)
-        self.NrOfCoins = 0
+        self.NrOfCoins = 1
         self.HORSEANIMATION = pygame.USEREVENT + 3
         pygame.time.set_timer(self.HORSEANIMATION, 100)  # Define how quickly new jellyfish are added (e.g., every 4000ms)
 
@@ -44,13 +44,14 @@ class GameParameters():
         self.player = player
         print('Player created')
         self.sharks = pygame.sprite.Group()  # - sharks is used for collision detection and position updates
-        self.jellyfish = pygame.sprite.Group()  # - enemies is used for collision detection and position updates
+        self.coin = pygame.sprite.Group()  # - enemies is used for collision detection and position updates
         self.all_sprites = pygame.sprite.Group()  # - all_sprites isused for rendering
         self.all_sprites.add(self.player)
 
         # Counter ( for countin down the seconds until game over)
         self.SECOND_HAS_PASSED = pygame.USEREVENT
         pygame.time.set_timer(self.SECOND_HAS_PASSED, 1000) # in ms
+        self.startingPosition_y = (SCREEN_HEIGHT - 300)
 
     def reset(self):
         self.all_sprites.empty()

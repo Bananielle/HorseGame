@@ -16,20 +16,19 @@ from pygame.locals import (
 # Define the enemy object extending pygame.sprite.Sprite
 # Instead of a surface, we use an image for a better looking sprite
 class Coin(pygame.sprite.Sprite):
-    def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT,gameParams):
+    def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT,gameParams, startingPosition_y):
         super(Coin, self).__init__()
         self.gameParams = gameParams
         self.surf = pygame.image.load("Resources/coin.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         # The starting position is randomly generated, as is the speed
+        self.startingPosition_y = startingPosition_y
         self.rect = self.surf.get_rect(
-            center=(
-                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
-                random.randint(0, SCREEN_HEIGHT - 400),
+            center=(SCREEN_WIDTH,startingPosition_y
             )
         )
-        self.rect = self.surf.get_rect(
-            center=(random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),200))
+      #  self.rect = self.surf.get_rect(
+          #  center=(random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),200))
         self.minSpeed = 1 * gameParams.velocity * gameParams.deltaTime
         self.maxSpeed = 2 * gameParams.velocity * gameParams.deltaTime
         self.speed = random.randint(self.minSpeed, self.maxSpeed)
@@ -37,7 +36,7 @@ class Coin(pygame.sprite.Sprite):
         self.SCREEN_HEIGTH = SCREEN_HEIGHT
         self.movedUpCounter = 0
         self.reachedFinalSpot = False
-        self.endSpot = random.randint(int(self.SCREEN_WIDTH / 1.5), int(self.SCREEN_WIDTH / 1.5))
+        self.endSpot = int(self.SCREEN_WIDTH / 1.6)
 
 
 
@@ -48,7 +47,7 @@ class Coin(pygame.sprite.Sprite):
             self.rect.move_ip(0, -self.speed) # Move down
         else:
             self.rect.move_ip(0, self.speed) # Move up
-            if self.movedUpCounter > 40:
+            if self.movedUpCounter > 37:
                 self.movedUpCounter = 0
 
         self.movedUpCounter += 1

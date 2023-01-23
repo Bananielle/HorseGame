@@ -25,13 +25,15 @@ class MainPlayer(pygame.sprite.Sprite):
         self.surf = pygame.image.load("Resources/Horse.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * 2,self.surf.get_height() * 2)) # But this greatly reduces the image quality...
-        self.rect = self.surf.get_rect(center=(80,self.SCREEN_HEIGHT-10))
+        self.rect = self.surf.get_rect(center=(280,self.SCREEN_HEIGHT-10))
 
         self.soundSystem = soundSystem
         self.playerSpeed = 10
         self.RidingAnimation = 0
         self.JumpingAnimation = 0
         self.HorseIsJumping = False
+        self.HorseIsJumpingUp = False
+        self.HorseIsJumpingDown = False
 
     def updateImage(self):
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
@@ -54,6 +56,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
         self.updateImage()
 
+
         self.RidingAnimation = self.RidingAnimation + 1
         if self.RidingAnimation > 5: # Reset animation
             self.RidingAnimation = 0
@@ -62,7 +65,7 @@ class MainPlayer(pygame.sprite.Sprite):
     def update(self, pressed_keys,brainKeyPress, useBCIinput):
 
         # Make sure player speed is framrate independent
-        self.playerSpeed = 15 * self.gameParams.velocity * self.gameParams.deltaTime
+        self.playerSpeed = 5 * self.gameParams.velocity * self.gameParams.deltaTime
 
         # Also allow for BCI input to make player move up and down if True
         if useBCIinput:
@@ -74,6 +77,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
         if pressed_keys[K_UP]:
             self.HorseIsJumping = True
+            self.HorseIsJumpingUp = True
 
         # Actual keyboard presses
         if pressed_keys[K_UP]:
@@ -99,24 +103,58 @@ class MainPlayer(pygame.sprite.Sprite):
         elif self.rect.bottom >= self.SCREEN_HEIGHT-10:
             self.rect.bottom = self.SCREEN_HEIGHT-10
 
-    def jump(self):
+    def jumpUp(self):
         if self.RidingAnimation == 0:
+            self.moveRight()
             self.surf = pygame.image.load("Resources/Jump1.png").convert()
         elif self.RidingAnimation == 1:
             self.surf = pygame.image.load("Resources/Jump2.png").convert()
         elif self.RidingAnimation == 2:
-            self.surf = pygame.image.load("Resources/Jump3.png").convert()
+            self.surf = pygame.image.load("Resources/Jump2.png").convert()
         elif self.RidingAnimation == 3:
+            self.surf = pygame.image.load("Resources/Jump3.png").convert()
+        elif self.RidingAnimation == 4:
+            self.surf = pygame.image.load("Resources/Jump3.png").convert()
+        elif self.RidingAnimation == 5:
             self.surf = pygame.image.load("Resources/Jump4.png").convert()
+        elif self.RidingAnimation == 6:
+            self.surf = pygame.image.load("Resources/Jump5.png").convert()
+        elif self.RidingAnimation == 7:
+            self.surf = pygame.image.load("Resources/Jump6.png").convert()
+
+        self.updateImage()
+        self.moveRight()
+        self.moveUp()
+
+        self.RidingAnimation = self.RidingAnimation + 1
+        if self.RidingAnimation > 4:  # Reset animation
+            self.RidingAnimation = 4
+
+    def jumpDown(self):
+        if self.RidingAnimation == 0:
+            self.moveRight()
+            self.surf = pygame.image.load("Resources/Jump4.png").convert()
+        elif self.RidingAnimation == 1:
+            self.surf = pygame.image.load("Resources/Jump4.png").convert()
+        elif self.RidingAnimation == 2:
+            self.surf = pygame.image.load("Resources/Jump5.png").convert()
+        elif self.RidingAnimation == 3:
+            self.surf = pygame.image.load("Resources/Jump5.png").convert()
         elif self.RidingAnimation == 4:
             self.surf = pygame.image.load("Resources/Jump5.png").convert()
         elif self.RidingAnimation == 5:
             self.surf = pygame.image.load("Resources/Jump6.png").convert()
+        elif self.RidingAnimation == 6:
+            self.surf = pygame.image.load("Resources/Jump6.png").convert()
+        elif self.RidingAnimation == 7:
+            self.surf = pygame.image.load("Resources/Jump6.png").convert()
 
         self.updateImage()
+        self.moveRight()
+        self.moveDown()
 
         self.RidingAnimation = self.RidingAnimation + 1
-        if self.RidingAnimation > 5:  # Reset animation
+        if self.RidingAnimation > 7:  # Reset animation
             self.RidingAnimation = 0
 
 

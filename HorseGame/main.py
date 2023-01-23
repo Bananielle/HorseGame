@@ -43,6 +43,7 @@ from gameover import GameOver, PressSpaceToReplay
 from StartScreenPics import PressSpace, Fish, FishAdventure, Settings
 from MainPlayer import MainPlayer
 
+
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
@@ -174,7 +175,6 @@ if __name__ == '__main__':
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
 
-
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 # If space to start
@@ -242,24 +242,23 @@ if __name__ == '__main__':
                     gameParams.gameTimeCounterText = scoreboard.makePinkFont(text)
                     print("Seconds left: " + text)
                     if (gameParams.gameTimeCounter_s == 10):  # speed up the main theme if less than 10 seconds left
-                        #soundSystem.drum.play()
+                        # soundSystem.drum.play()
                         soundSystem.speedupMaintheme()
                     if (gameParams.gameTimeCounter_s == 3):  # Play countdown if only 3 seconds left
                         soundSystem.countdownSound.play()
-
-
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
 
             # Add new jellyfish if counter has passed
             if event.type == gameParams.ADDCOIN:
-                if gameParams.NrOfCoins < 3:
-                    new_jellyfish = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams)
-                    gameParams.jellyfish.add(new_jellyfish)
-                    gameParams.all_sprites.add(new_jellyfish)
-                    gameParams.NrOfCoins = gameParams.NrOfCoins + 1
-                    print("New jellyfish added at (game time counter) = " + str(gameParams.gameTimeCounter_s))
+                if gameParams.NrOfCoins < 4:
+                    gameParams.startingPosition_y += 40
+                    new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams, gameParams.startingPosition_y )
+                    gameParams.coin.add(new_coin)
+                    gameParams.all_sprites.add(new_coin)
+                    gameParams.NrOfCoins += 1
+                    print("New coin with starting position_y = ", str(gameParams.startingPosition_y),"  added at (game time counter) = " + str(gameParams.gameTimeCounter_s))
 
             # Should we add a new shark?
             if event.type == gameParams.ADDSHARK:
@@ -271,13 +270,24 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gameParams.HORSEANIMATION:
-                if not gameParams.player.HorseIsJumping:
-                    gameParams.player.changeHorseAnimation()
+                if gameParams.player.HorseIsJumping:
+                    if gameParams.player.HorseIsJumpingUp:
+                        if gameParams.player.rect.top > 0 + (SCREEN_HEIGHT * 0.5):
+                            gameParams.player.jumpUp()
+                            print("Horse is jumping up.")
+                        else:
+                            gameParams.player.HorseIsJumpingUp = False
+                            gameParams.player.HorseIsJumpingDown = True
+                    if gameParams.player.HorseIsJumpingDown:
+                        if gameParams.player.rect.bottom < SCREEN_HEIGHT:
+                            gameParams.player.jumpDown()
+                            print("Horse is jumping down.")
+                        else:
+                            gameParams.player.HorseIsJumpingDown = False
+                            gameParams.player.HorseIsJumping = False
+
                 else:
-                    print("Horse is jumping.")
-                    gameParams.player.jump()
-
-
+                    gameParams.player.changeHorseAnimation()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -285,11 +295,9 @@ if __name__ == '__main__':
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gameParams.player.update(keyboard_input, BCI_input, gameParams.useBCIinput)
 
-
-
         # Update the position of our enemies and clouds
         gameParams.sharks.update()
-        gameParams.jellyfish.update()
+        gameParams.coin.update()
 
         # Draw all our sprites
         for entity in gameParams.all_sprites:
@@ -308,7 +316,7 @@ if __name__ == '__main__':
                 gameParams.nrSharksCollectedText = gameParams.mainFont.render(text, True, GOLD)
 
             # Check if any sharks have collided with the player
-        for jelllyfish in gameParams.jellyfish:
+        for jelllyfish in gameParams.coin:
             if jelllyfish.rect.colliderect(gameParams.player.rect):
                 jelllyfish.kill()
                 soundSystem.jellyfishCollected.play()
