@@ -34,14 +34,15 @@ import pygame, random, os
 import SettingsScreen
 from BrainComputerInterface import BrainComputerInterface
 from GameParameters import GameParameters
-from Jellyfish import Jellyfish
-from SeaBackground import MainGame_background
+from Coin import Coin
+from Background import MainGame_background
 from SettingsScreen import Settings_header
 from Sharks import Shark
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
-from StartScreenPics import PressSpace, Fish, FishAdventure, Settings
+from StartScreenPics import PressSpace, Horse, FishAdventure, Settings, ReadyToJump
 from MainPlayer import MainPlayer
+
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -124,12 +125,12 @@ if __name__ == '__main__':
             # Put each score on the screen in descending order
             for score in sortedScores:
                 count_str = str(count) + '.'
-                if score == gameParams.nrSharksCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
-                    scores_text = self.font.render(str(score) + ' fish collected', True, GOLD)
+                if score == gameParams.nrCoinsCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
+                    scores_text = self.font.render(str(score) + ' coins collected', True, GOLD)
                     count_text = self.font.render(count_str, True, GOLD)
                     currentScoreAlreadyDisplayed = True
                 else:
-                    scores_text = self.makePinkFont(str(score) + ' fish collected')
+                    scores_text = self.makePinkFont(str(score) + ' coins collected')
                     count_text = self.makePinkFont(count_str)
 
                 # Put score on screen
@@ -151,6 +152,7 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, SCREEN_WIDTH, SCREEN_HEIGHT)
         player.gameParams = gameParameters  # So that player also has access to game parameters
+        player.setPlayerSpeed() # to make this independent of frame rate
 
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
 
@@ -164,17 +166,15 @@ if __name__ == '__main__':
 
         # Create elements to be put on screen
         startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
-        fish = Fish(SCREEN_WIDTH, SCREEN_HEIGHT)
+        horse = Horse(SCREEN_WIDTH, SCREEN_HEIGHT)
         fishadventure_text = FishAdventure(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Settings(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
-        screen.blit(fish.surf, fish.location)
+        screen.blit(horse.surf, horse.location)
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
-
-        soundSystem.playStartScreenSound()
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -222,7 +222,9 @@ if __name__ == '__main__':
     def runMainGame():
         soundSystem.playMaintheme_slow()
         gamestate = GameState.MAINGAME
+        readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
         BCI_input = 0
+
 
         mainGame_background.updateBackGrounds()
         displaySeaBackgroundsOnScreen()
@@ -233,39 +235,89 @@ if __name__ == '__main__':
 
             # Show the player how much time as passed
             if event.type == gameParams.SECOND_HAS_PASSED:
-                if (gameParams.gameTimeCounter_s == 0):
+                if gameParams.gameTimeCounter_s == gameParams.durationGame_s:
                     gamestate = GameState.GAMEOVER
                     gameParams.player.kill()
                 else:
-                    gameParams.gameTimeCounter_s -= 1
+                    gameParams.gameTimeCounter_s += 1
                     text = str(gameParams.gameTimeCounter_s).rjust(3)
                     gameParams.gameTimeCounterText = scoreboard.makePinkFont(text)
-                    print("Seconds left: " + text)
-                    if (gameParams.gameTimeCounter_s == 10):  # speed up the main theme if less than 10 seconds left
-                        #soundSystem.drum.play()
+                    print("Seconds: " + text)
+                    if (gameParams.gameTimeCounter_s == gameParams.durationGame_s-10):  # speed up the main theme if less than 10 seconds left
+                        # soundSystem.drum.play()
                         soundSystem.speedupMaintheme()
-                    if (gameParams.gameTimeCounter_s == 3):  # Play countdown if only 3 seconds left
+                    if (gameParams.gameTimeCounter_s == gameParams.durationGame_s-3):  # Play countdown if only 3 seconds left
                         soundSystem.countdownSound.play()
-
-
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
 
-            # Add new jellyfish if counter has passed
-            if event.type == gameParams.ADDJELLYFISH:
-                new_jellyfish = Jellyfish(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams)
-                gameParams.jellyfish.add(new_jellyfish)
-                gameParams.all_sprites.add(new_jellyfish)
-                print("New jellyfish added at (game time counter) = " + str(gameParams.gameTimeCounter_s))
 
-            # Should we add a new shark?
-            if event.type == gameParams.ADDSHARK:
-                # Create the new enemy, and add it to our sprite groups
-                new_shark = Shark(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams)
-                gameParams.sharks.add(new_shark)
-                gameParams.all_sprites.add(new_shark)
-                print("New shark added at (game time counter) = " + str(gameParams.gameTimeCounter_s))
+            # EXPERIMENT EVENTS
+
+            # BASELINE
+            if gameParams.gameTimeCounter_s == 5:
+                print("Baseline ended.")
+                # Task trial
+                print("Prepare to jump!")  # Show it's jumping time
+                gameParams.task = True
+                gameParams.rest = False
+
+            if gameParams.gameTimeCounter_s == 10:
+                print("Resting period (5s after task end).")
+                gameParams.task = False
+                gameParams.rest = True
+
+            if gameParams.gameTimeCounter_s == 20: # Add new coins
+                gameParams.resetCoinStartingPosition()
+                gameParams.NrOfCoins = 2
+
+            if gameParams.gameTimeCounter_s == 25:
+                # Task trial
+                print("Prepare to jump!")  # Show it's jumping time
+                gameParams.task = True
+                gameParams.rest = False
+
+            if gameParams.gameTimeCounter_s == 30:
+                print("Resting period (5s after task end).")
+                gameParams.task = False
+                gameParams.rest = True
+
+
+            # Add new coin if counter has passed
+            if event.type == gameParams.ADDCOIN:
+                if gameParams.NrOfCoins < 4:
+                    gameParams.startingPosition_y += 60
+                    new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams, gameParams.startingPosition_y)
+                    gameParams.coin.add(new_coin)
+                    gameParams.all_sprites.add(new_coin)
+                    gameParams.NrOfCoins += 1
+                    print("New coin with starting position_y = ", str(gameParams.startingPosition_y),
+                          "  added at (game time counter) = " + str(gameParams.gameTimeCounter_s))
+
+            # Update horse riding animation
+            if event.type == gameParams.HORSEANIMATION:
+                if gameParams.player.HorseIsJumping:
+                    if gameParams.player.HorseIsJumpingUp:
+                        if gameParams.player.rect.top > 0 + (SCREEN_HEIGHT * 0.5):
+                            gameParams.player.jumpUp()
+                            print("Horse is jumping up.")
+                        else:
+                            gameParams.player.HorseIsJumpingUp = False
+                            gameParams.player.HorseIsJumpingDown = True
+                    if gameParams.player.HorseIsJumpingDown:
+                        if gameParams.player.rect.bottom < SCREEN_HEIGHT -10:
+                            gameParams.player.jumpDown()
+                            print("Horse is jumping down.")
+                        else:
+                            gameParams.player.HorseIsJumpingDown = False
+                            gameParams.player.HorseIsJumping = False
+
+                else:
+                    gameParams.player.changeHorseAnimation()
+                    if gameParams.player.rect.left > gameParams.player.startingPosition_x: # Move horse back to starting point
+                        gameParams.player.moveLeft()
+                        gameParams.player.moveLeft()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -275,7 +327,8 @@ if __name__ == '__main__':
 
         # Update the position of our enemies and clouds
         gameParams.sharks.update()
-        gameParams.jellyfish.update()
+        gameParams.coin.update()
+       # gameParams.messages.update()
 
         # Draw all our sprites
         for entity in gameParams.all_sprites:
@@ -283,29 +336,24 @@ if __name__ == '__main__':
 
         # print("check4")
 
-        # Check if any sharks have collided with the player
-        for sharks in gameParams.sharks:
-            if sharks.rect.colliderect(gameParams.player.rect):
-                sharks.kill()
-                soundSystem.coin_sound.play()
-                gameParams.nrSharksCollected += 1
-                # Show the player how much coins have been collected
-                text = str(gameParams.nrSharksCollected).rjust(3)
-                gameParams.nrSharksCollectedText = gameParams.mainFont.render(text, True, GOLD)
 
-            # Check if any sharks have collided with the player
-        for jelllyfish in gameParams.jellyfish:
-            if jelllyfish.rect.colliderect(gameParams.player.rect):
-                jelllyfish.kill()
+            # Check if any coins have collided with the player
+        for coin in gameParams.coin:
+            if coin.rect.colliderect(gameParams.player.rect):
+                coin.kill()
                 soundSystem.jellyfishCollected.play()
-                gameParams.nrSharksCollected += 5  # Extra points for jellyfish!
+                gameParams.nrCoinsCollected += 1  # Extra points for jellyfish!
                 # Show the player how much coins have been collected
-                text = str(gameParams.nrSharksCollected).rjust(3)
-                gameParams.nrSharksCollectedText = gameParams.jellyfishCollectedFont.render(text, True, RED)
+                text = str(gameParams.nrCoinsCollected).rjust(3)
+                gameParams.nrCoinsCollectedText = gameParams.jellyfishCollectedFont.render(text, True, RED)
 
         # Draw game time counter text
         screen.blit(gameParams.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
-        screen.blit(gameParams.nrSharksCollectedText, (SCREEN_WIDTH - 70, 50))
+        screen.blit(gameParams.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+
+        if gameParams.task:
+            if not gameParams.player.HorseIsJumping:
+                screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
 
@@ -323,7 +371,7 @@ if __name__ == '__main__':
         screen.blit(replay.surf, replay.surf_center)
 
         # Save the score for the player
-        scoreboard.addScoretoScoreBoard(gameParams.nrSharksCollected)
+        scoreboard.addScoretoScoreBoard(gameParams.nrCoinsCollected)
 
         for event in pygame.event.get():
 
