@@ -19,8 +19,8 @@ class GameParameters():
         # Create custom events for adding a new sprites (sharks and jellyfish)
 
         self.ADDCOIN = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.ADDCOIN, 500) # Define how quickly new jellyfish are added (e.g., every 4000ms)
-        self.NrOfCoins = 1
+        pygame.time.set_timer(self.ADDCOIN, 600) # Define how quickly new jellyfish are added (e.g., every 4000ms)
+        self.NrOfCoins = 4
 
         self.HORSEANIMATION = pygame.USEREVENT + 3
         pygame.time.set_timer(self.HORSEANIMATION, 100)  # Define how quickly new jellyfish are added (e.g., every 4000ms)
@@ -65,6 +65,8 @@ class GameParameters():
 
         self.task = False
         self.rest = False
+
+        self.mainGame_background = 0
 
     def resetCoinStartingPosition(self):
         self.startingPosition_y = (self.SCREEN_HEIGHT - 300)

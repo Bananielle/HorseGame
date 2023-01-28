@@ -58,7 +58,7 @@ if __name__ == '__main__':
     # Import pygame.locals for easier access to key coordinates. Updated to conform to flake8 and black standards
     from pygame.locals import (
         RLEACCEL,
-        K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, K_SPACE, K_l, K_s, KEYDOWN, QUIT,
+        K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, K_SPACE, K_l, K_s, K_p, KEYDOWN, QUIT,
     )
 
     # Configure fullscreen. If you don't want fullscreen, set to 0 instead. Otherwise set to pygame.FULLSCREEN
@@ -237,6 +237,15 @@ if __name__ == '__main__':
             # Update horse riding animation
             if event.type == gameParams.HORSEANIMATION:
                 gameParams.player.changeHorseAnimation()
+
+            # Start the path if p is pressed
+            if event.type == KEYDOWN:
+                # If space to start
+                if event.key == K_p:
+                    gameParams.mainGame_background.startPathBackground()
+                if event.key == K_SPACE:
+                    gameParams.mainGame_background.endPathBackground()
+
 
             # Show the player how much time as passed
             if event.type == gameParams.SECOND_HAS_PASSED:
@@ -533,6 +542,7 @@ if __name__ == '__main__':
 
     # Set up a new game (will be refreshed after every replay)
     gamestate, gameParams, mainGame_background = startANewGame()
+    gameParams.mainGame_background = mainGame_background
     BCI_input = 0
 
     # ========== GAME STATE MACHINE ==============
