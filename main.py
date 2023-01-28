@@ -58,7 +58,7 @@ if __name__ == '__main__':
     # Import pygame.locals for easier access to key coordinates. Updated to conform to flake8 and black standards
     from pygame.locals import (
         RLEACCEL,
-        K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, K_SPACE, K_s, KEYDOWN, QUIT,
+        K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, K_SPACE, K_l, K_s, KEYDOWN, QUIT,
     )
 
     # Configure fullscreen. If you don't want fullscreen, set to 0 instead. Otherwise set to pygame.FULLSCREEN
@@ -85,6 +85,7 @@ if __name__ == '__main__':
     class GameStates:
         STARTSCREEN = 'StartScreen'
         SETTINGS = 'Settings'
+        LOCALIZER = 'Localizer'
         STARTNEWGAME = 'StartNewGame'
         MAINGAME = 'MainGame'
         GAMEOVER = 'GameOver'
@@ -183,6 +184,11 @@ if __name__ == '__main__':
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.STARTNEWGAME)
 
+                if event.key == K_l:
+                    startscreen.kill()
+                    startANewGame()
+                    gamestate = GameState.setGameState(GameState.LOCALIZER)
+
                 if event.key == K_s:  # When you press 's'
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.SETTINGS)
@@ -215,6 +221,54 @@ if __name__ == '__main__':
                     gamestate = GameState.setGameState(GameState.STARTSCREEN)
 
             gamestate = didPlayerPressQuit(gamestate, event)
+
+        return gamestate
+
+    def runLocalizer():
+        gamestate = GameState.LOCALIZER
+
+        mainGame_background.updateBackGrounds()
+        displaySeaBackgroundsOnScreen()
+
+        for event in pygame.event.get():
+            # Did the user hit a key?
+            # print("check1")
+
+            # Update horse riding animation
+            if event.type == gameParams.HORSEANIMATION:
+                gameParams.player.changeHorseAnimation()
+
+            # Show the player how much time as passed
+            if event.type == gameParams.SECOND_HAS_PASSED:
+                if gameParams.gameTimeCounter_s == gameParams.durationGame_s:
+                    gamestate = GameState.GAMEOVER
+                    gameParams.player.kill()
+                else:
+                    gameParams.gameTimeCounter_s += 1
+                    text = str(gameParams.gameTimeCounter_s).rjust(3)
+                    gameParams.gameTimeCounterText = scoreboard.makePinkFont(text)
+                    print("Seconds: " + text)
+                    if (
+                            gameParams.gameTimeCounter_s == gameParams.durationGame_s - 10):  # speed up the main theme if less than 10 seconds left
+                        # soundSystem.drum.play()
+                        soundSystem.speedupMaintheme()
+                    if (
+                            gameParams.gameTimeCounter_s == gameParams.durationGame_s - 3):  # Play countdown if only 3 seconds left
+                        soundSystem.countdownSound.play()
+
+            gamestate = didPlayerPressQuit(gamestate, event)
+
+            # Get user input
+            keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
+            gameParams.player.update(keyboard_input, BCI_input, gameParams.useBCIinput)
+
+        # Draw all our sprites
+        for entity in gameParams.all_sprites:
+            screen.blit(entity.surf, entity.rect)
+
+        # Draw game time counter text
+        screen.blit(gameParams.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
+        screen.blit(gameParams.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
 
         return gamestate
 
@@ -254,6 +308,11 @@ if __name__ == '__main__':
 
 
             # EXPERIMENT EVENTS
+
+            # Show coins
+            if gameParams.gameTimeCounter_s == 2:
+                gameParams.resetCoinStartingPosition()
+                gameParams.NrOfCoins = 1
 
             # BASELINE
             if gameParams.gameTimeCounter_s == 5:
@@ -486,6 +545,9 @@ if __name__ == '__main__':
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()
+
+        if gamestate == GameState.LOCALIZER:
+            gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
             gamestate, gameParams, mainGame_background = startANewGame()
