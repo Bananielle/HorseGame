@@ -25,7 +25,7 @@ class MainGame_background(pygame.sprite.Sprite):
         self.bgX_foreground = 0
         self.bgX2_foreground = self.background_foreground_upcoming.get_width()-100
 
-        self.backgroundSpeed =  gameParams.velocity * gameParams.deltaTime +2
+        self.backgroundSpeed =  gameParams.velocity * gameParams.deltaTime +1
 
         self.transitionToNewBackground = False
         self.pathBackgroundStatus = 0 # 0 = deactivated, 1 = start, 2 = middle, 3 = end
@@ -120,9 +120,9 @@ class MainGame_background(pygame.sprite.Sprite):
                 self.changeBackground_upcoming()
 
         else: # This is only for the backgrounds further away. They don't change.
-            if bgX < (backgroundWidth - 10) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
+            if bgX < (backgroundWidth - 15) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
                 bgX = backgroundWidth
-            if bgX2 < (backgroundWidth - 10) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
+            if bgX2 < (backgroundWidth - 15) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
                 bgX2 = backgroundWidth
 
         return bgX, bgX2
@@ -130,8 +130,8 @@ class MainGame_background(pygame.sprite.Sprite):
     def changeBackground_upcoming(self):
             if self.pathBackgroundStatus == 1:
                 self.changeToPathBackground_start() # Immediately add start and middle to the list
-                self.changeToPathBackground_middle()
-            if self.pathBackgroundStatus == 2:
+                #self.changeToPathBackground_middle()
+            elif self.pathBackgroundStatus == 2:
                 self.changeToPathBackground_middle()
             elif self.pathBackgroundStatus == 3:
                 self.changeToPathBackground_end()
@@ -154,8 +154,8 @@ class MainGame_background(pygame.sprite.Sprite):
     def changeBackground_current(self):
             if self.pathBackgroundStatus == 1:
                 self.changeToPathBackground_start() # Immediately add start and middle to the list
-                self.changeToPathBackground_middle()
-            if self.pathBackgroundStatus == 2:
+                #self.changeToPathBackground_middle()
+            elif self.pathBackgroundStatus == 2:
                 self.changeToPathBackground_middle()
             elif self.pathBackgroundStatus == 3:
                 self.changeToPathBackground_end()

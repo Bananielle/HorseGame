@@ -30,6 +30,7 @@ In SoundSystem
 """
 
 import pygame, random, os
+from pylsl import StreamInfo, StreamOutlet # import required classes
 
 import SettingsScreen
 from BrainComputerInterface import BrainComputerInterface
@@ -143,6 +144,14 @@ if __name__ == '__main__':
                 count += 1
                 # print('score ', score, ' printed')
 
+    def startTaskTrigger():
+        outlet.push_sample(x=[2])  # Task trigger
+        print('Started task trigger.')
+
+    def startRestTrigger():
+        outlet.push_sample(x=[1])  # Rest trigger
+        print('Started Rest trigger.')
+
 
     # GAME STATE FUNCTIONS
     def startANewGame():
@@ -226,7 +235,7 @@ if __name__ == '__main__':
 
     def runLocalizer():
         gamestate = GameState.LOCALIZER
-
+        readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
         mainGame_background.updateAllBackGrounds()
         displaySeaBackgroundsOnScreen()
 
@@ -245,6 +254,23 @@ if __name__ == '__main__':
                     gameParams.mainGame_background.startPathBackground()
                 if event.key == K_SPACE:
                     gameParams.mainGame_background.endPathBackground()
+
+            # PARADIGM
+            if gameParams.gameTimeCounter_s == 1:
+                startRestTrigger()
+
+
+            if gameParams.gameTimeCounter_s == 5: # 2s delay for when path starts (so 8 starts at 10s
+                startTaskTrigger()
+                gameParams.mainGame_background.startPathBackground()
+                gameParams.task = True
+                gameParams.rest = False
+
+            if gameParams.gameTimeCounter_s == 15: # 3s delay (so 17 ends at 20s)
+                gameParams.mainGame_background.endPathBackground()
+                startRestTrigger()
+                gameParams.task = False
+                gameParams.rest = True
 
 
             # Show the player how much time as passed
@@ -278,6 +304,9 @@ if __name__ == '__main__':
         # Draw game time counter text
         screen.blit(gameParams.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
         screen.blit(gameParams.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+
+        if gameParams.task:
+            screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
 
@@ -533,6 +562,11 @@ if __name__ == '__main__':
     soundSystem = SoundSystem()
 
     BCI = BrainComputerInterface()
+
+    # Set up trigger straem
+    info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
+                      source_id='Example')  # sets variables for object info
+    outlet = StreamOutlet(info)  # initialize stream.
 
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
