@@ -25,9 +25,9 @@ class MainPlayer(pygame.sprite.Sprite):
         self.surf = pygame.image.load("Resources/Horse.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * 2,self.surf.get_height() * 2)) # But this greatly reduces the image quality...
-
+        self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-75
         self.startingPosition_x = 280
-        self.rect = self.surf.get_rect(center=(280,self.SCREEN_HEIGHT-10))
+        self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
 
         self.soundSystem = soundSystem
         self.playerSpeed = 10
@@ -106,8 +106,8 @@ class MainPlayer(pygame.sprite.Sprite):
             self.rect.bottom = self.SCREEN_HEIGHT
 
         # Keep horse on the path
-        elif self.rect.bottom >= self.SCREEN_HEIGHT-10:
-            self.rect.bottom = self.SCREEN_HEIGHT-10
+        elif self.rect.bottom >= self.lowerLimitYpositionPlayer+30:
+            self.rect.bottom = self.lowerLimitYpositionPlayer+30
 
     def jumpUp(self):
         if self.RidingAnimation == 0:

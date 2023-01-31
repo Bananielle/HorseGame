@@ -5,7 +5,7 @@ from pygame import mixer  # Only use this one for the main theme
 # Use a different module for sounds, because the pygame soundsystem didn't work together with  python 2.7.5.
 # (which was needed for exypriment...)
 
-USE_BACKGROUND_MUSIC = True # toggles the background music on/off (note, the background music makes use of the pygame mixer)
+USE_BACKGROUND_MUSIC = False # toggles the background music on/off (note, the background music makes use of the pygame mixer)
 
 # Set up the sounds
 class SoundSystem():
@@ -21,7 +21,7 @@ class SoundSystem():
         # self.maintheme_fast = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_fast.wav")
         self.drum = simpleaudio.WaveObject.from_wave_file("Resources/drum.wav")
 
-        self.playingBubbleSound = self.move_up_sound.play()
+       # self.playingBubbleSound = self.move_up_sound.play()
         self.playedStartScreenSound =False
 
         if USE_BACKGROUND_MUSIC:
@@ -46,15 +46,12 @@ class SoundSystem():
             self.gameoverSoundIsPlaying = False
             self.gameoverThemeIsPlaying = False
 
-    def playStartScreenSound(self):
-        if not self.playedStartScreenSound:
-            self.playBubbleSound(self.move_up_sound)
-            self.playedStartScreenSound = True
+  #  def playStartScreenSound(self):
+   ###       self.playedStartScreenSound = True
 
     # The bubble sound sounds terrible if they overlap,  first check whether something else is playing. Otherwise you can play the sound
-    def playBubbleSound(self, sound):
-        if not self.playingBubbleSound.is_playing():
-            self.playingBubbleSound = sound.play()
+   # def playBubbleSound(self, sound):
+    ##       self.playingBubbleSound = 1 #sound.play()
 
     def playMaintheme_slow(self):
         if USE_BACKGROUND_MUSIC:

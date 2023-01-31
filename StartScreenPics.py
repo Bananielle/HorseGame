@@ -23,12 +23,12 @@ class PressSpace(pygame.sprite.Sprite):
         )
 
 
-class Fish(pygame.sprite.Sprite):
+class Horse(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
-        super(Fish, self).__init__()
+        super(Horse, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.surf = pygame.image.load("Resources/bigfish.png").convert()
+        self.surf = pygame.image.load("Resources/bighorse.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect()
 
@@ -43,7 +43,7 @@ class FishAdventure(pygame.sprite.Sprite):
         super(FishAdventure, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.surf = pygame.image.load("Resources/fish_adventure.png").convert_alpha()
+        self.surf = pygame.image.load("Resources/Horse-adventure.png").convert_alpha()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect()
 
@@ -65,4 +65,18 @@ class Settings(pygame.sprite.Sprite):
         self.location = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
             ((self.SCREEN_HEIGHT * 0.95) - self.surf.get_height())
+        )
+
+class ReadyToJump(pygame.sprite.Sprite):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
+        super(ReadyToJump, self).__init__()
+        self.SCREEN_WIDTH = SCREEN_WIDTH
+        self.SCREEN_HEIGHT = SCREEN_HEIGHT
+        self.surf = pygame.image.load("Resources/readytojump.png").convert_alpha()
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+        self.rect = self.surf.get_rect()
+
+        self.surf_center = (
+            (self.SCREEN_WIDTH - self.surf.get_width()) / 2.5,
+            ((self.SCREEN_HEIGHT * 0.8) - self.surf.get_height())
         )

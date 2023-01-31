@@ -227,7 +227,7 @@ if __name__ == '__main__':
     def runLocalizer():
         gamestate = GameState.LOCALIZER
 
-        mainGame_background.updateBackGrounds()
+        mainGame_background.updateAllBackGrounds()
         displaySeaBackgroundsOnScreen()
 
         for event in pygame.event.get():
@@ -289,7 +289,7 @@ if __name__ == '__main__':
         BCI_input = 0
 
 
-        mainGame_background.updateBackGrounds()
+        mainGame_background.updateAllBackGrounds()
         displaySeaBackgroundsOnScreen()
 
         for event in pygame.event.get():
@@ -484,8 +484,8 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 20])
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 20])
-        screen.blit(mainGame_background.background_foreground, [mainGame_background.bgX_foreground, 40])
-        screen.blit(mainGame_background.background_foreground, [mainGame_background.bgX2_foreground, 40])
+        screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, 40])
+        screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, 40])
 
         # return mainGame_background
 
