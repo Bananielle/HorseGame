@@ -34,7 +34,7 @@ class Horse(pygame.sprite.Sprite):
 
         self.location = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
-            (self.SCREEN_HEIGHT * 0.5 - self.surf.get_height())
+            (self.SCREEN_HEIGHT * 0.55 - self.surf.get_height())
         )
 
 

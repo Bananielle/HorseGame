@@ -38,7 +38,7 @@ from GameParameters import GameParameters
 from Coin import Coin
 from Background import MainGame_background
 from SettingsScreen import Settings_header
-from Sharks import Shark
+
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
 from StartScreenPics import PressSpace, Horse, FishAdventure, Settings, ReadyToJump

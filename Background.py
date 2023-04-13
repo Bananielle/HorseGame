@@ -114,7 +114,7 @@ class MainGame_background(pygame.sprite.Sprite):
             # Upcoming background image
             if bgX2 < (backgroundWidth-6) * -1:
                 print('bgX2 = ', str(bgX2), ' < ', str((backgroundWidth - 4) * -1))
-                bgX2 = backgroundWidth-200
+                bgX2 = backgroundWidth-210
                 self.transition_bgX2 = True
                 print('bgX2 = ', str(bgX2),'. Going to background statemachine 2. BackgroundStatus = ', str(self.pathBackgroundStatus))
                 self.changeBackground_upcoming()
