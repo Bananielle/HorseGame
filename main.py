@@ -55,6 +55,7 @@ if __name__ == '__main__':
     print_hi('Starting up Horse Game...')
     print_hi('Developed by Danielle Evenblij, 2023')
     print(os.getcwd())
+    print('test')
 
     # Import pygame.locals for easier access to key coordinates. Updated to conform to flake8 and black standards
     from pygame.locals import (
@@ -75,6 +76,11 @@ if __name__ == '__main__':
 
     # Brain input variables
     fakeBrainInput = 0
+
+    # print 'hello world'
+    # print 'hello world'
+    print('test')
+
 
 
     def getBrainInput(fakeBrainInput):
