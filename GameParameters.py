@@ -11,12 +11,26 @@ class GameParameters():
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
 
-        # Adjustable parameters
-        self.gameTimeCounter_s = 0 # How long you want to one game run to last (in seconds)
-        self.durationGame_s = 40
+        # ADJUSTABLE PARAMETERS
+        # paradigm
+        self.duration_TASK_s = 5
+        self.duration_REST_s = 5
+        self.totalNum_TRIALS = 5  # Set the number of times Task should occur
+        self.duration_BASELINE_s = 5
+        self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s ) * self.totalNum_TRIALS + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
+        #Other
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
         self.FPS = 60 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
-        # Create custom events for adding a new sprites (sharks and jellyfish)
+        self.useExclamationMark = False # Shows a bright exclamation mark when a task starts
+        self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
+
+        self.currentTime_s = 0  #
+
+        # Paradigm parameters - constants
+        self.TASK_counter = 0    # Set the initial values for the event counters
+        self.REST_counter = 0
+        self.startTime_TASK = 0  # Set the start time for event A
+        self.startTime_REST = 0
 
         self.ADDCOIN = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCOIN, 600) # Define how quickly new jellyfish are added (e.g., every 4000ms)
@@ -39,10 +53,13 @@ class GameParameters():
         self.velocity = 1 # Determines general speed of all sprites (to ensure frame-rate independence)
         self.deltaTime = 1
 
+        # Create counter text
         self.counterText = str('-').rjust(3)
-        self.mainFont = pygame.font.SysFont('herculanum', 35, bold=True, )
-        self.jellyfishCollectedFont = pygame.font.SysFont('herculanum', 45, bold=True, )
+        self.mainFont = pygame.font.SysFont('herculanum', 30, bold=True, )
+        self.jellyfishCollectedFont = pygame.font.SysFont('herculanum', 40, bold=True, )
         self.gameTimeCounterText = self.mainFont.render(self.counterText, True, PINK)
+        self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
+        self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
 
         self.nrCoinsCollected = 0
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
@@ -64,9 +81,13 @@ class GameParameters():
         self.startingPosition_y = (SCREEN_HEIGHT - 350)
 
         self.task = False
-        self.rest = False
+        self.rest = True
 
         self.mainGame_background = 0
+
+    def update_Taskcounter(self):
+        self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
+        self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
 
     def resetCoinStartingPosition(self):
         self.startingPosition_y = (self.SCREEN_HEIGHT - 300)
@@ -74,8 +95,6 @@ class GameParameters():
     def reset(self):
         self.all_sprites.empty()
 
-    def run(self):
-        print('test')
 
 
 

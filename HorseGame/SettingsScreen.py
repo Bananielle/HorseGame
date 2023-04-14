@@ -42,6 +42,6 @@ class GametimeText():
         self.location = (SCREEN_WIDTH/3, SCREEN_HEIGHT/2)
         self.gameParams = gameParams
 
-        self.text_seconds = str(gameParams.gameTimeCounter_s)
+        self.text_seconds = str(gameParams.currentTime_s)
         self.gameTimeSetting_seconds = self.settingsFont.render(self.text_seconds, True, PINK)
         self.location_seconds = ((SCREEN_WIDTH/2), SCREEN_HEIGHT/2)

@@ -77,10 +77,7 @@ if __name__ == '__main__':
     # Brain input variables
     fakeBrainInput = 0
 
-    # print 'hello world'
-    # print 'hello world'
     print('test')
-
 
 
     def getBrainInput(fakeBrainInput):
@@ -110,9 +107,9 @@ if __name__ == '__main__':
             self.font = pygame.font.SysFont('herculanum', 35, bold=True, )
 
         def addScoretoScoreBoard(self, score):
-            if not gameParams.scoreSaved:
+            if not gp.scoreSaved:
                 self.scoresList.append(score)
-                gameParams.scoreSaved = True  # This will reset when the player goes back to the start screen
+                gp.scoreSaved = True  # This will reset when the player goes back to the start screen
                 print('Score ', score, ' saved to score list. Is now: ', str(self.scoresList))
 
         def makePinkFont(self, string):
@@ -133,7 +130,7 @@ if __name__ == '__main__':
             # Put each score on the screen in descending order
             for score in sortedScores:
                 count_str = str(count) + '.'
-                if score == gameParams.nrCoinsCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
+                if score == gp.nrCoinsCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
                     scores_text = self.font.render(str(score) + ' coins collected', True, GOLD)
                     count_text = self.font.render(count_str, True, GOLD)
                     currentScoreAlreadyDisplayed = True
@@ -186,11 +183,18 @@ if __name__ == '__main__':
         fishadventure_text = FishAdventure(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Settings(SCREEN_WIDTH, SCREEN_HEIGHT)
 
+        string = "Press L for test environment!"
+        font = pygame.font.SysFont('herculanum', 20, bold=True, )
+        textestEnvironment_txtt = font.render(string, True, PINK)  # Pink colour
+        testEnvironment_txt = font.render("(Press 'L' for test environment)", True, (255, 255, 255))
+
+
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
         screen.blit(horse.surf, horse.location)
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
+        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT - 100))
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -217,7 +221,7 @@ if __name__ == '__main__':
         gamestate = GameState.SETTINGS
         screen.fill([0, 0, 0])  # Set black background
 
-        gameSetting = SettingsScreen.GametimeText(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams)
+        gameSetting = SettingsScreen.GametimeText(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
 
         settings_header = Settings_header(SCREEN_WIDTH, SCREEN_HEIGHT)
         screen.blit(settings_header.surf, settings_header.surf_center)
@@ -247,71 +251,110 @@ if __name__ == '__main__':
 
         for event in pygame.event.get():
             # Did the user hit a key?
-            # print("check1")
 
             # Update horse riding animation
-            if event.type == gameParams.HORSEANIMATION:
-                gameParams.player.changeHorseAnimation()
+            if event.type == gp.HORSEANIMATION:
+                gp.player.changeHorseAnimation()
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
                 # If space to start
                 if event.key == K_p:
-                    gameParams.mainGame_background.startPathBackground()
+                    gp.mainGame_background.startPathBackground()
                 if event.key == K_SPACE:
-                    gameParams.mainGame_background.endPathBackground()
+                    gp.mainGame_background.endPathBackground()
 
             # PARADIGM
-            if gameParams.gameTimeCounter_s == 1:
-                startRestTrigger()
-
-
-            if gameParams.gameTimeCounter_s == 5: # 2s delay for when path starts (so 8 starts at 10s
+            # Check if it's time for event TASK
+            if gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False:
+                # Perform event A
+                gp.task = True
+                gp.rest = False
                 startTaskTrigger()
-                gameParams.mainGame_background.startPathBackground()
-                gameParams.task = True
-                gameParams.rest = False
 
-            if gameParams.gameTimeCounter_s == 15: # 3s delay (so 17 ends at 20s)
-                gameParams.mainGame_background.endPathBackground()
+                gp.startTime_TASK = gp.currentTime_s # Reset the start time for event TASK
+                gp.startTime_REST = gp.currentTime_s # Set the start time for event REST
+                gp.TASK_counter += 1  # Increment the counter for event TASK
+
+                gp.update_Taskcounter()
+                print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+
+            # Check if it's time for event REST
+            if gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False:
+                # Perform event REST
+                gp.task = False
+                gp.rest = True
                 startRestTrigger()
-                gameParams.task = False
-                gameParams.rest = True
+
+                gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
+                gp.startTime_REST = gp.currentTime_s # Reset the start time for event B
+                gp.REST_counter += 1 # Increment the counter for event B
+                print("Event REST")
+
+
+            # if gameParams.currentTime_s == 1:
+            #     startRestTrigger()
+            #
+            #
+            # if gameParams.currentTime_s == 5:
+            #     startTaskTrigger()
+            #     #gameParams.mainGame_background.startPathBackground()
+            #     gameParams.task = True
+            #     gameParams.rest = False
+            #
+            # if gameParams.currentTime_s == 10:
+            #     #gameParams.mainGame_background.endPathBackground()
+            #     startRestTrigger()
+            #     gameParams.task = False
+            #     gameParams.rest = True
+            #
+            # if gameParams.currentTime_s == 15:
+            #     startTaskTrigger()
+            #     # gameParams.mainGame_background.startPathBackground()
+            #     gameParams.task = True
+            #     gameParams.rest = False
+            #
+            # if gameParams.currentTime_s == 20:
+            #     # gameParams.mainGame_background.endPathBackground()
+            #     startRestTrigger()
+            #     gameParams.task = False
+            #     gameParams.rest = True
 
 
             # Show the player how much time as passed
-            if event.type == gameParams.SECOND_HAS_PASSED:
-                if gameParams.gameTimeCounter_s == gameParams.durationGame_s:
+            if event.type == gp.SECOND_HAS_PASSED:
+                if gp.currentTime_s == gp.durationGame_s:
                     gamestate = GameState.GAMEOVER
-                    gameParams.player.kill()
+                    gp.player.kill()
                 else:
-                    gameParams.gameTimeCounter_s += 1
-                    text = str(gameParams.gameTimeCounter_s).rjust(3)
-                    gameParams.gameTimeCounterText = scoreboard.makePinkFont(text)
+                    gp.currentTime_s += 1
+                    text = str(gp.currentTime_s).rjust(3)
+                    gp.gameTimeCounterText = scoreboard.makePinkFont(text)
                     print("Seconds: " + text)
                     if (
-                            gameParams.gameTimeCounter_s == gameParams.durationGame_s - 10):  # speed up the main theme if less than 10 seconds left
+                            gp.currentTime_s == gp.durationGame_s - 10):  # speed up the main theme if less than 10 seconds left
                         # soundSystem.drum.play()
                         soundSystem.speedupMaintheme()
                     if (
-                            gameParams.gameTimeCounter_s == gameParams.durationGame_s - 3):  # Play countdown if only 3 seconds left
+                            gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
                         soundSystem.countdownSound.play()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
             # Get user input
             keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
-            gameParams.player.update(keyboard_input, BCI_input, gameParams.useBCIinput)
+            gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
 
         # Draw all our sprites
-        for entity in gameParams.all_sprites:
+        for entity in gp.all_sprites:
             screen.blit(entity.surf, entity.rect)
 
         # Draw game time counter text
-        screen.blit(gameParams.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
-        screen.blit(gameParams.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+        screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
+        screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+        screen.blit(gp.nrTrialsCompletedText, (20, 20))
 
-        if gameParams.task:
+        if gp.task and gp.useExclamationMark:
             screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
@@ -332,19 +375,19 @@ if __name__ == '__main__':
             # print("check1")
 
             # Show the player how much time as passed
-            if event.type == gameParams.SECOND_HAS_PASSED:
-                if gameParams.gameTimeCounter_s == gameParams.durationGame_s:
+            if event.type == gp.SECOND_HAS_PASSED:
+                if gp.currentTime_s == gp.durationGame_s:
                     gamestate = GameState.GAMEOVER
-                    gameParams.player.kill()
+                    gp.player.kill()
                 else:
-                    gameParams.gameTimeCounter_s += 1
-                    text = str(gameParams.gameTimeCounter_s).rjust(3)
-                    gameParams.gameTimeCounterText = scoreboard.makePinkFont(text)
+                    gp.currentTime_s += 1
+                    text = str(gp.currentTime_s).rjust(3)
+                    gp.gameTimeCounterText = scoreboard.makePinkFont(text)
                     print("Seconds: " + text)
-                    if (gameParams.gameTimeCounter_s == gameParams.durationGame_s-10):  # speed up the main theme if less than 10 seconds left
+                    if (gp.currentTime_s == gp.durationGame_s-10):  # speed up the main theme if less than 10 seconds left
                         # soundSystem.drum.play()
                         soundSystem.speedupMaintheme()
-                    if (gameParams.gameTimeCounter_s == gameParams.durationGame_s-3):  # Play countdown if only 3 seconds left
+                    if (gp.currentTime_s == gp.durationGame_s-3):  # Play countdown if only 3 seconds left
                         soundSystem.countdownSound.play()
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
@@ -354,108 +397,106 @@ if __name__ == '__main__':
             # EXPERIMENT EVENTS
 
             # Show coins
-            if gameParams.gameTimeCounter_s == 2:
-                gameParams.resetCoinStartingPosition()
-                gameParams.NrOfCoins = 1
+            if gp.currentTime_s == 2:
+                gp.resetCoinStartingPosition()
+                gp.NrOfCoins = 1
 
             # BASELINE
-            if gameParams.gameTimeCounter_s == 5:
+            if gp.currentTime_s == 5:
                 print("Baseline ended.")
                 # Task trial
                 print("Prepare to jump!")  # Show it's jumping time
-                gameParams.task = True
-                gameParams.rest = False
+                gp.task = True
+                gp.rest = False
 
-            if gameParams.gameTimeCounter_s == 10:
+            if gp.currentTime_s == 10:
                 print("Resting period (5s after task end).")
-                gameParams.task = False
-                gameParams.rest = True
+                gp.task = False
+                gp.rest = True
 
-            if gameParams.gameTimeCounter_s == 20: # Add new coins
-                gameParams.resetCoinStartingPosition()
-                gameParams.NrOfCoins = 2
+            if gp.currentTime_s == 20: # Add new coins
+                gp.resetCoinStartingPosition()
+                gp.NrOfCoins = 2
 
-            if gameParams.gameTimeCounter_s == 25:
+            if gp.currentTime_s == 25:
                 # Task trial
                 print("Prepare to jump!")  # Show it's jumping time
-                gameParams.task = True
-                gameParams.rest = False
+                gp.task = True
+                gp.rest = False
 
-            if gameParams.gameTimeCounter_s == 30:
+            if gp.currentTime_s == 30:
                 print("Resting period (5s after task end).")
-                gameParams.task = False
-                gameParams.rest = True
+                gp.task = False
+                gp.rest = True
 
 
             # Add new coin if counter has passed
-            if event.type == gameParams.ADDCOIN:
-                if gameParams.NrOfCoins < 4:
-                    gameParams.startingPosition_y += 60
-                    new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gameParams, gameParams.startingPosition_y)
-                    gameParams.coin.add(new_coin)
-                    gameParams.all_sprites.add(new_coin)
-                    gameParams.NrOfCoins += 1
-                    print("New coin with starting position_y = ", str(gameParams.startingPosition_y),
-                          "  added at (game time counter) = " + str(gameParams.gameTimeCounter_s))
+            if event.type == gp.ADDCOIN:
+                if gp.NrOfCoins < 4:
+                    gp.startingPosition_y += 60
+                    new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, gp.startingPosition_y)
+                    gp.coin.add(new_coin)
+                    gp.all_sprites.add(new_coin)
+                    gp.NrOfCoins += 1
+                    print("New coin with starting position_y = ", str(gp.startingPosition_y),
+                          "  added at (game time counter) = " + str(gp.currentTime_s))
 
             # Update horse riding animation
-            if event.type == gameParams.HORSEANIMATION:
-                if gameParams.player.HorseIsJumping:
-                    if gameParams.player.HorseIsJumpingUp:
-                        if gameParams.player.rect.top > 0 + (SCREEN_HEIGHT * 0.5):
-                            gameParams.player.jumpUp()
+            if event.type == gp.HORSEANIMATION:
+                if gp.player.HorseIsJumping:
+                    if gp.player.HorseIsJumpingUp:
+                        if gp.player.rect.top > 0 + (SCREEN_HEIGHT * 0.5):
+                            gp.player.jumpUp()
                             print("Horse is jumping up.")
                         else:
-                            gameParams.player.HorseIsJumpingUp = False
-                            gameParams.player.HorseIsJumpingDown = True
-                    if gameParams.player.HorseIsJumpingDown:
-                        if gameParams.player.rect.bottom < SCREEN_HEIGHT -10:
-                            gameParams.player.jumpDown()
+                            gp.player.HorseIsJumpingUp = False
+                            gp.player.HorseIsJumpingDown = True
+                    if gp.player.HorseIsJumpingDown:
+                        if gp.player.rect.bottom < SCREEN_HEIGHT -10:
+                            gp.player.jumpDown()
                             print("Horse is jumping down.")
                         else:
-                            gameParams.player.HorseIsJumpingDown = False
-                            gameParams.player.HorseIsJumping = False
+                            gp.player.HorseIsJumpingDown = False
+                            gp.player.HorseIsJumping = False
 
                 else:
-                    gameParams.player.changeHorseAnimation()
-                    if gameParams.player.rect.left > gameParams.player.startingPosition_x: # Move horse back to starting point
-                        gameParams.player.moveLeft()
-                        gameParams.player.moveLeft()
+                    gp.player.changeHorseAnimation()
+                    if gp.player.rect.left > gp.player.startingPosition_x: # Move horse back to starting point
+                        gp.player.moveLeft()
+                        gp.player.moveLeft()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
         # Get user input
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
-        gameParams.player.update(keyboard_input, BCI_input, gameParams.useBCIinput)
+        gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
 
         # Update the position of our enemies and clouds
-        gameParams.sharks.update()
-        gameParams.coin.update()
+        gp.sharks.update()
+        gp.coin.update()
        # gameParams.messages.update()
 
         # Draw all our sprites
-        for entity in gameParams.all_sprites:
+        for entity in gp.all_sprites:
             screen.blit(entity.surf, entity.rect)
-
-        # print("check4")
 
 
             # Check if any coins have collided with the player
-        for coin in gameParams.coin:
-            if coin.rect.colliderect(gameParams.player.rect):
+        for coin in gp.coin:
+            if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
                 soundSystem.jellyfishCollected.play()
-                gameParams.nrCoinsCollected += 1  # Extra points for jellyfish!
+                gp.nrCoinsCollected += 1  # Extra points for jellyfish!
                 # Show the player how much coins have been collected
-                text = str(gameParams.nrCoinsCollected).rjust(3)
-                gameParams.nrCoinsCollectedText = gameParams.jellyfishCollectedFont.render(text, True, RED)
+                text = str(gp.nrCoinsCollected).rjust(3)
+                gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
 
         # Draw game time counter text
-        screen.blit(gameParams.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
-        screen.blit(gameParams.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+        screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
+        screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
 
-        if gameParams.task:
-            if not gameParams.player.HorseIsJumping:
+        if gp.task:
+            if not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
@@ -474,7 +515,7 @@ if __name__ == '__main__':
         screen.blit(replay.surf, replay.surf_center)
 
         # Save the score for the player
-        scoreboard.addScoretoScoreBoard(gameParams.nrCoinsCollected)
+        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollected)
 
         for event in pygame.event.get():
 
@@ -484,7 +525,7 @@ if __name__ == '__main__':
                     gamestate = GameState.setGameState(GameState.SCOREBOARD)
 
                     # Reset game parameters if you want to restart a game
-                    gameParams.reset()
+                    gp.reset()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -522,6 +563,11 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, 40])
         screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, 40])
 
+        if not gp.task and gp.useGreyOverlay:
+            #screen.blit(mainGame_background.background_path, [mainGame_background.bgX_foreground, 40])
+            #screen.blit(mainGame_background.background_path, [mainGame_background.bgX2_foreground, 40])
+            screen.blit(mainGame_background.overlay_greysurface, (0, 0))# Draw the grey overlay surface on top of the background
+
         # return mainGame_background
 
 
@@ -554,7 +600,7 @@ if __name__ == '__main__':
     print('Screen width = ' + str(SCREEN_WIDTH) + ', screen height = ' + str(SCREEN_HEIGHT))
 
     # Clock
-    clock = pygame.time.Clock()  # Setup the clock for tracking time
+    clock = pygame.time.Clock()  # Set up the clock for tracking time
 
     # Screen
     SURFACE = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
@@ -581,8 +627,8 @@ if __name__ == '__main__':
     scoreboard = Scoreboard()
 
     # Set up a new game (will be refreshed after every replay)
-    gamestate, gameParams, mainGame_background = startANewGame()
-    gameParams.mainGame_background = mainGame_background
+    gamestate, gp, mainGame_background = startANewGame()
+    gp.mainGame_background = mainGame_background
     BCI_input = 0
 
     # ========== GAME STATE MACHINE ==============
@@ -600,7 +646,7 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gameParams, mainGame_background = startANewGame()
+            gamestate, gp, mainGame_background = startANewGame()
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()
@@ -616,9 +662,9 @@ if __name__ == '__main__':
 
         # Take care of time
         clock.tick(
-            gameParams.FPS)  # Updates the clock using a framerate of x frames per second (so goes through the while loop e.g. 60 times per second).
+            gp.FPS)  # Updates the clock using a framerate of x frames per second (so goes through the while loop e.g. 60 times per second).
         now = pygame.time.get_ticks()  # Get current time since pygame started
-        gameParams.deltaTime = int(
+        gp.deltaTime = int(
             (now - prev_time) / 10)  # Compute delta time... divided by 10 because to make sprite speed more manageble
         prev_time = now
 

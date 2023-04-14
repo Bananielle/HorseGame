@@ -22,6 +22,11 @@ class MainGame_background(pygame.sprite.Sprite):
                                                                     (SCREEN_WIDTH + (int(SCREEN_WIDTH/3.2)), SCREEN_HEIGHT -25)) # Make sure this is an integer, because it doesn't accept floats
         self.background_foreground_upcoming = self.background_foreground_current # A copy, but will be used for background transitions
 
+        self.background_path = pygame.image.load('Resources/path_start.png')
+        self.background_path = pygame.transform.scale(self.background_path, (self.background_path.get_width(),SCREEN_HEIGHT - 25))  # Make sure this is an integer, because it doesn't accept floats
+        self.bgX_path = 0
+        self.bgX2_path = self.background_path.get_width() -10
+
         self.bgX_foreground = 0
         self.bgX2_foreground = self.background_foreground_upcoming.get_width()-100
 
@@ -35,13 +40,21 @@ class MainGame_background(pygame.sprite.Sprite):
 
         self.backgroundQueue = list()
 
+        # Create a semi-transparent grey surface to overlay on top of the background
+        WINDOWSIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
+        print('Window size: ', WINDOWSIZE)
+        transparency = 90
+        self.overlay_greysurface = pygame.Surface(WINDOWSIZE)
+        self.overlay_greysurface.set_alpha(transparency)
+        self.overlay_greysurface.fill((transparency, transparency, transparency))
+
     def startPathBackground(self):
         self.pathBackgroundStatus = 1;
-        print('Starting path background.')
+        #print('Starting path background.')
 
     def endPathBackground(self):
         self.pathBackgroundStatus = 3
-        print('Ending path background.')
+        #print('Ending path background.')
 
     def changeToPathBackground_start(self):
         #self.background_foreground_upcoming = pygame.image.load('Resources/country_withRocks_start.png')
@@ -49,7 +62,7 @@ class MainGame_background(pygame.sprite.Sprite):
         #self.scaleBackground_foreground()
         self.backgroundQueue.append(temp)
         self.pathBackgroundStatus = 2
-        print('Changing to path background: start.')
+        #print('Changing to path background: start.')
 
     def changeToPathBackground_middle(self):
         #self.background_foreground_upcoming = pygame.image.load('Resources/country_withRocks_middle.png')
@@ -58,7 +71,7 @@ class MainGame_background(pygame.sprite.Sprite):
         self.backgroundQueue.append(temp)
         self.pathBackgroundStatus = 2 # Keep in this loop until instructed otherwise
 
-        print('Changing to path background: middle.')
+       # print('Changing to path background: middle.')
 
     def changeToPathBackground_end(self):
         #self.background_foreground_upcoming = pygame.image.load('Resources/country_withRocks_end.png')
@@ -67,14 +80,14 @@ class MainGame_background(pygame.sprite.Sprite):
         temp = pygame.image.load('Resources/country_withRocks_end.png')
         self.backgroundQueue.append(temp)
         self.pathBackgroundStatus = 0
-        print('Changing to path background: end.')
+       # print('Changing to path background: end.')
 
     def changeToDefaultBackground(self):
         #self.background_foreground_upcoming = pygame.image.load('Resources/country-platform-tiles-example.png')
         #self.scaleBackground_foreground()
         temp = pygame.image.load('Resources/country_default.png')
         self.backgroundQueue.append(temp)
-        print('Changing to default background.')
+        #print('Changing to default background.')
 
 
     def updateAllBackGrounds(self):
@@ -85,6 +98,7 @@ class MainGame_background(pygame.sprite.Sprite):
                                                                  self.bgX_middle, self.bgX2_middle)
 
         self.move_foregrounds()
+        self.move_paths()
 
         #print('bgX = ', int(self.bgX_foreground), ' bgX2 = ', int(self.bgX2_foreground))
 
@@ -94,6 +108,13 @@ class MainGame_background(pygame.sprite.Sprite):
                                                                          self.background_foreground_upcoming.get_width(),
                                                                          self.bgX_foreground,
                                                                          self.bgX2_foreground)
+
+    def move_paths(self):
+        isForeground = True
+        self.bgX_path, self.bgX2_path = self.move_background(isForeground, 2 * self.backgroundSpeed,
+                                                                         self.background_path.get_width(),
+                                                                         self.bgX_path,
+                                                                         self.bgX2_path)
 
 
     def move_background(self,isForeground, speed, backgroundWidth, bgX, bgX2):
@@ -105,18 +126,18 @@ class MainGame_background(pygame.sprite.Sprite):
         if isForeground: # Th
             # Current background image
             if bgX < (backgroundWidth-6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
-                print('bgX = ', str(bgX), ' < ',str((backgroundWidth-4) * -1))
+               # print('bgX = ', str(bgX), ' < ',str((backgroundWidth-4) * -1))
                 bgX = backgroundWidth-200
-                print('bgX = ', str(bgX),'. Going to background statemachine 1. BackgroundStatus = ', str(self.pathBackgroundStatus))
+               # print('bgX = ', str(bgX),'. Going to background statemachine 1. BackgroundStatus = ', str(self.pathBackgroundStatus))
                 self.transition_bgX = True
                 self.changeBackground_current()
 
             # Upcoming background image
             if bgX2 < (backgroundWidth-6) * -1:
-                print('bgX2 = ', str(bgX2), ' < ', str((backgroundWidth - 4) * -1))
+            #    print('bgX2 = ', str(bgX2), ' < ', str((backgroundWidth - 4) * -1))
                 bgX2 = backgroundWidth-210
                 self.transition_bgX2 = True
-                print('bgX2 = ', str(bgX2),'. Going to background statemachine 2. BackgroundStatus = ', str(self.pathBackgroundStatus))
+             #   print('bgX2 = ', str(bgX2),'. Going to background statemachine 2. BackgroundStatus = ', str(self.pathBackgroundStatus))
                 self.changeBackground_upcoming()
 
         else: # This is only for the backgrounds further away. They don't change.
@@ -149,7 +170,7 @@ class MainGame_background(pygame.sprite.Sprite):
                                                                          self.SCREEN_HEIGHT-25))  # Make sure this is an integer, because it doesn't accept floats
 
             self.backgroundQueue.remove(firstItemOnList)  # Remove background from queue
-            print(self.backgroundQueue)
+            #print("Background queue: " + self.backgroundQueue)
 
     def changeBackground_current(self):
             if self.pathBackgroundStatus == 1:
@@ -173,5 +194,5 @@ class MainGame_background(pygame.sprite.Sprite):
                                                                          self.SCREEN_HEIGHT-25))  # Make sure this is an integer, because it doesn't accept floats
 
             self.backgroundQueue.remove(firstItemOnList)  # Remove background from queue
-            print(self.backgroundQueue)
+            #print("Background queue: " + self.backgroundQueue)
 
