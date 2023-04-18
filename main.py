@@ -315,39 +315,45 @@ if __name__ == '__main__':
 
 
             # EXPERIMENT EVENTS
-
-            # Show coins
-            if gp.currentTime_s == 2:
+            # Baseline
+            if gp.currentTime_s == 1:
                 gp.resetCoinStartingPosition()
                 gp.NrOfCoins = 1
 
-            # BASELINE
-            if gp.currentTime_s == 5:
-                print("Baseline ended.")
-                # Task trial
-                print("Prepare to jump!")  # Show it's jumping time
-                gp.task = True
-                gp.rest = False
+            runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
-            if gp.currentTime_s == 10:
-                print("Resting period (5s after task end).")
-                gp.task = False
-                gp.rest = True
+            # # Show coins
+            # if gp.currentTime_s == 2:
+            #     gp.resetCoinStartingPosition()
+            #     gp.NrOfCoins = 1
 
-            if gp.currentTime_s == 20: # Add new coins
-                gp.resetCoinStartingPosition()
-                gp.NrOfCoins = 2
-
-            if gp.currentTime_s == 25:
-                # Task trial
-                print("Prepare to jump!")  # Show it's jumping time
-                gp.task = True
-                gp.rest = False
-
-            if gp.currentTime_s == 30:
-                print("Resting period (5s after task end).")
-                gp.task = False
-                gp.rest = True
+            # # BASELINE
+            # if gp.currentTime_s == 5:
+            #     print("Baseline ended.")
+            #     # Task trial
+            #     print("Prepare to jump!")  # Show it's jumping time
+            #     gp.task = True
+            #     gp.rest = False
+            #
+            # if gp.currentTime_s == 10:
+            #     print("Resting period (5s after task end).")
+            #     gp.task = False
+            #     gp.rest = True
+            #
+            # if gp.currentTime_s == 20: # Add new coins
+            #     gp.resetCoinStartingPosition()
+            #     gp.NrOfCoins = 2
+            #
+            # if gp.currentTime_s == 25:
+            #     # Task trial
+            #     print("Prepare to jump!")  # Show it's jumping time
+            #     gp.task = True
+            #     gp.rest = False
+            #
+            # if gp.currentTime_s == 30:
+            #     print("Resting period (5s after task end).")
+            #     gp.task = False
+            #     gp.rest = True
 
 
             # Add new coin if counter has passed
@@ -471,37 +477,64 @@ if __name__ == '__main__':
 
         return gamestate
 
+    def runMainGameParadigm():
+        if isItTimeForTaskEvent():
+            initiateBasicTaskEvent()
+
+        if isItTimeForRestEvent():
+            gp.resetCoinStartingPosition()
+            gp.NrOfCoins = 1
+            initiateBasicRestEvent()
+
     def runLocalizerParadigm():
         # PARADIGM
         # Check if it's time for event TASK
-        if gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False:
-            # Perform event A
-            gp.task = True
-            gp.rest = False
-            startTaskTrigger()
-            if gp.usePath:
-                mainGame_background.startPathBackground()
-
-            gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
-            gp.startTime_REST = gp.currentTime_s  # Set the start time for event REST
-            gp.TASK_counter += 1  # Increment the counter for event TASK
-
-            gp.update_Taskcounter()
-            print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+        if isItTimeForTaskEvent():
+           initiateBasicTaskEvent()
 
         # Check if it's time for event REST
-        if gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False:
-            # Perform event REST
-            gp.task = False
-            gp.rest = True
-            startRestTrigger()
-            if gp.usePath:
-                mainGame_background.endPathBackground()
+        if isItTimeForRestEvent():
+           initiateBasicRestEvent()
 
-            gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
-            gp.startTime_REST = gp.currentTime_s  # Reset the start time for event B
-            gp.REST_counter += 1  # Increment the counter for event B
-            print("Event REST")
+
+    def resetTaskandRestTime():
+        gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
+        gp.startTime_REST = gp.currentTime_s  # Set the start time for event REST
+
+
+    def isItTimeForTaskEvent():
+        return gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False
+
+
+    def isItTimeForRestEvent():
+        return gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False
+
+
+    def initiateBasicTaskEvent():
+        gp.task = True
+        gp.rest = False
+        startTaskTrigger()
+        if gp.usePath:
+            mainGame_background.startPathBackground()
+
+        resetTaskandRestTime()
+        gp.TASK_counter += 1  # Increment the counter for event TASK
+        gp.update_Taskcounter()
+        print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+
+
+    def initiateBasicRestEvent():
+        gp.task = False
+        gp.rest = True
+        startRestTrigger()
+        if gp.usePath:
+            mainGame_background.endPathBackground()
+
+        resetTaskandRestTime()
+        gp.REST_counter += 1  # Increment the counter for event B
+        print("Event REST")
+
+
 
     def showHowMuchTimeHasPassed(gamestate):
 
