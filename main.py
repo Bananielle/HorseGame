@@ -265,79 +265,11 @@ if __name__ == '__main__':
                     gp.mainGame_background.endPathBackground()
 
             # PARADIGM
-            # Check if it's time for event TASK
-            if gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False:
-                # Perform event A
-                gp.task = True
-                gp.rest = False
-                startTaskTrigger()
+            runParadigm() # Duration of task and rest can be changed in GameParameters.py
 
-                gp.startTime_TASK = gp.currentTime_s # Reset the start time for event TASK
-                gp.startTime_REST = gp.currentTime_s # Set the start time for event REST
-                gp.TASK_counter += 1  # Increment the counter for event TASK
-
-                gp.update_Taskcounter()
-                print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
-
-            # Check if it's time for event REST
-            if gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False:
-                # Perform event REST
-                gp.task = False
-                gp.rest = True
-                startRestTrigger()
-
-                gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
-                gp.startTime_REST = gp.currentTime_s # Reset the start time for event B
-                gp.REST_counter += 1 # Increment the counter for event B
-                print("Event REST")
-
-
-            # if gameParams.currentTime_s == 1:
-            #     startRestTrigger()
-            #
-            #
-            # if gameParams.currentTime_s == 5:
-            #     startTaskTrigger()
-            #     #gameParams.mainGame_background.startPathBackground()
-            #     gameParams.task = True
-            #     gameParams.rest = False
-            #
-            # if gameParams.currentTime_s == 10:
-            #     #gameParams.mainGame_background.endPathBackground()
-            #     startRestTrigger()
-            #     gameParams.task = False
-            #     gameParams.rest = True
-            #
-            # if gameParams.currentTime_s == 15:
-            #     startTaskTrigger()
-            #     # gameParams.mainGame_background.startPathBackground()
-            #     gameParams.task = True
-            #     gameParams.rest = False
-            #
-            # if gameParams.currentTime_s == 20:
-            #     # gameParams.mainGame_background.endPathBackground()
-            #     startRestTrigger()
-            #     gameParams.task = False
-            #     gameParams.rest = True
-
-
-            # Show the player how much time as passed
+            # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
-                if gp.currentTime_s == gp.durationGame_s:
-                    gamestate = GameState.GAMEOVER
-                    gp.player.kill()
-                else:
-                    gp.currentTime_s += 1
-                    text = str(gp.currentTime_s).rjust(3)
-                    gp.gameTimeCounterText = scoreboard.makePinkFont(text)
-                    print("Seconds: " + text)
-                    if (
-                            gp.currentTime_s == gp.durationGame_s - 10):  # speed up the main theme if less than 10 seconds left
-                        # soundSystem.drum.play()
-                        soundSystem.speedupMaintheme()
-                    if (
-                            gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
-                        soundSystem.countdownSound.play()
+                showHowMuchTimeHasPassed()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -374,21 +306,9 @@ if __name__ == '__main__':
             # Did the user hit a key?
             # print("check1")
 
-            # Show the player how much time as passed
+            # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
-                if gp.currentTime_s == gp.durationGame_s:
-                    gamestate = GameState.GAMEOVER
-                    gp.player.kill()
-                else:
-                    gp.currentTime_s += 1
-                    text = str(gp.currentTime_s).rjust(3)
-                    gp.gameTimeCounterText = scoreboard.makePinkFont(text)
-                    print("Seconds: " + text)
-                    if (gp.currentTime_s == gp.durationGame_s-10):  # speed up the main theme if less than 10 seconds left
-                        # soundSystem.drum.play()
-                        soundSystem.speedupMaintheme()
-                    if (gp.currentTime_s == gp.durationGame_s-3):  # Play countdown if only 3 seconds left
-                        soundSystem.countdownSound.play()
+                showHowMuchTimeHasPassed()
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
@@ -550,6 +470,52 @@ if __name__ == '__main__':
             gamestate = didPlayerPressQuit(gamestate, event)
 
         return gamestate
+
+    def runParadigm():
+        # PARADIGM
+        # Check if it's time for event TASK
+        if gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False:
+            # Perform event A
+            gp.task = True
+            gp.rest = False
+            startTaskTrigger()
+
+            gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
+            gp.startTime_REST = gp.currentTime_s  # Set the start time for event REST
+            gp.TASK_counter += 1  # Increment the counter for event TASK
+
+            gp.update_Taskcounter()
+            print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+
+        # Check if it's time for event REST
+        if gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False:
+            # Perform event REST
+            gp.task = False
+            gp.rest = True
+            startRestTrigger()
+
+            gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
+            gp.startTime_REST = gp.currentTime_s  # Reset the start time for event B
+            gp.REST_counter += 1  # Increment the counter for event B
+            print("Event REST")
+
+    def showHowMuchTimeHasPassed():
+        # Show the player how much time has passed
+        if gp.currentTime_s == gp.durationGame_s:
+            gamestate = GameState.GAMEOVER
+            gp.player.kill()
+        else:
+            gp.currentTime_s += 1
+            text = str(gp.currentTime_s).rjust(3)
+            gp.gameTimeCounterText = scoreboard.makePinkFont(text)
+            print("Seconds: " + text)
+            if (
+                    gp.currentTime_s == gp.durationGame_s - 10):  # speed up the main theme if less than 10 seconds left
+                # soundSystem.drum.play()
+                soundSystem.speedupMaintheme()
+            if (
+                    gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
+                soundSystem.countdownSound.play()
 
 
     # OTHER FUNCTIONS
