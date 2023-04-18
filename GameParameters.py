@@ -70,7 +70,6 @@ class GameParameters():
         # Create the sprites
         self.player = player
         print('Player created')
-        self.sharks = pygame.sprite.Group()  # - sharks is used for collision detection and position updates
         self.coin = pygame.sprite.Group()  # - enemies is used for collision detection and position updates
         self.messages = pygame.sprite.Group()
         self.all_sprites = pygame.sprite.Group()  # - all_sprites isused for rendering

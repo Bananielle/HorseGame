@@ -44,9 +44,9 @@ class Coin(pygame.sprite.Sprite):
     # Remove it when it passes the left edge of the screen
     def update(self):
         if self.movedUpCounter < 20:
-            self.rect.move_ip(0, -self.speed) # Move down
+            self.rect.move_ip(0, -self.speed/3) # Move down
         else:
-            self.rect.move_ip(0, self.speed) # Move up
+            self.rect.move_ip(0, self.speed/3) # Move up
             if self.movedUpCounter > 37:
                 self.movedUpCounter = 0
 

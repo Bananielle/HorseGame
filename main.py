@@ -322,43 +322,9 @@ if __name__ == '__main__':
 
             runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
-            # # Show coins
-            # if gp.currentTime_s == 2:
-            #     gp.resetCoinStartingPosition()
-            #     gp.NrOfCoins = 1
-
-            # # BASELINE
-            # if gp.currentTime_s == 5:
-            #     print("Baseline ended.")
-            #     # Task trial
-            #     print("Prepare to jump!")  # Show it's jumping time
-            #     gp.task = True
-            #     gp.rest = False
-            #
-            # if gp.currentTime_s == 10:
-            #     print("Resting period (5s after task end).")
-            #     gp.task = False
-            #     gp.rest = True
-            #
-            # if gp.currentTime_s == 20: # Add new coins
-            #     gp.resetCoinStartingPosition()
-            #     gp.NrOfCoins = 2
-            #
-            # if gp.currentTime_s == 25:
-            #     # Task trial
-            #     print("Prepare to jump!")  # Show it's jumping time
-            #     gp.task = True
-            #     gp.rest = False
-            #
-            # if gp.currentTime_s == 30:
-            #     print("Resting period (5s after task end).")
-            #     gp.task = False
-            #     gp.rest = True
-
-
             # Add new coin if counter has passed
             if event.type == gp.ADDCOIN:
-                if gp.NrOfCoins < 4:
+                if gp.NrOfCoins < 3:
                     gp.startingPosition_y += 60
                     new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, gp.startingPosition_y)
                     gp.coin.add(new_coin)
@@ -378,9 +344,9 @@ if __name__ == '__main__':
                             gp.player.HorseIsJumpingUp = False
                             gp.player.HorseIsJumpingDown = True
                     if gp.player.HorseIsJumpingDown:
-                        if gp.player.rect.bottom < SCREEN_HEIGHT -10:
+                        if gp.player.rect.bottom < SCREEN_HEIGHT -50: #
                             gp.player.jumpDown()
-                            print("Horse is jumping down.")
+                            print("Horse is jumping down. Screen height = ", str(SCREEN_HEIGHT), "  Horse bottom = ", str(gp.player.rect.bottom))
                         else:
                             gp.player.HorseIsJumpingDown = False
                             gp.player.HorseIsJumping = False
@@ -388,6 +354,7 @@ if __name__ == '__main__':
                 else:
                     gp.player.changeHorseAnimation()
                     if gp.player.rect.left > gp.player.startingPosition_x: # Move horse back to starting point
+                        print("Horse is moving back to starting point.")
                         gp.player.moveLeft()
                         gp.player.moveLeft()
 
@@ -398,7 +365,6 @@ if __name__ == '__main__':
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
 
         # Update the position of our enemies and clouds
-        gp.sharks.update()
         gp.coin.update()
        # gameParams.messages.update()
 
