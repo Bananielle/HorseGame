@@ -247,7 +247,7 @@ if __name__ == '__main__':
         gamestate = GameState.LOCALIZER
         readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
         mainGame_background.updateAllBackGrounds()
-        displaySeaBackgroundsOnScreen()
+        displayBackgroundsOnScreen()
 
         for event in pygame.event.get():
             # Did the user hit a key?
@@ -300,7 +300,7 @@ if __name__ == '__main__':
 
 
         mainGame_background.updateAllBackGrounds()
-        displaySeaBackgroundsOnScreen()
+        displayBackgroundsOnScreen()
 
         for event in pygame.event.get():
             # Did the user hit a key?
@@ -344,7 +344,7 @@ if __name__ == '__main__':
                             gp.player.HorseIsJumpingUp = False
                             gp.player.HorseIsJumpingDown = True
                     if gp.player.HorseIsJumpingDown:
-                        if gp.player.rect.bottom < SCREEN_HEIGHT -50: #
+                        if gp.player.rect.bottom < SCREEN_HEIGHT -50:
                             gp.player.jumpDown()
                             print("Horse is jumping down. Screen height = ", str(SCREEN_HEIGHT), "  Horse bottom = ", str(gp.player.rect.bottom))
                         else:
@@ -388,7 +388,7 @@ if __name__ == '__main__':
         screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
 
         if gp.task:
-            if not gp.player.HorseIsJumping:
+            if gp.useExclamationMark and not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
@@ -427,7 +427,7 @@ if __name__ == '__main__':
     def runScoreboard():
         gamestate = GameState.SCOREBOARD
 
-        displaySeaBackgroundsOnScreen()
+        displayBackgroundsOnScreen()
         replay = PressSpaceToReplay(SCREEN_WIDTH, SCREEN_HEIGHT)
         screen.blit(replay.surf, replay.surf_center)
         scoreboard.displayScoreboard()
@@ -525,7 +525,7 @@ if __name__ == '__main__':
 
 
     # OTHER FUNCTIONS
-    def displaySeaBackgroundsOnScreen():
+    def displayBackgroundsOnScreen():
 
         screen.fill((0, 0, 0))  # black
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
@@ -541,6 +541,8 @@ if __name__ == '__main__':
         if gp.task and gp.usePath:
             screen.blit(mainGame_background.background_path, [mainGame_background.bgX_foreground, 40])
             screen.blit(mainGame_background.background_path, [mainGame_background.bgX2_foreground, 40])
+
+
 
         # return mainGame_background
 

@@ -141,9 +141,9 @@ class MainGame_background(pygame.sprite.Sprite):
                 self.changeBackground_upcoming()
 
         else: # This is only for the backgrounds further away. They don't change.
-            if bgX < (backgroundWidth - 15) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
+            if bgX < (backgroundWidth - 6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
                 bgX = backgroundWidth
-            if bgX2 < (backgroundWidth - 15) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
+            if bgX2 < (backgroundWidth - 6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
                 bgX2 = backgroundWidth
 
         return bgX, bgX2
