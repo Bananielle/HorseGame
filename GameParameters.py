@@ -27,6 +27,9 @@ class GameParameters():
         self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
 
+
+        self.a = 1;
+
         self.currentTime_s = 0  #
 
         # Paradigm parameters - constants
