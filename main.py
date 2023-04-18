@@ -265,11 +265,11 @@ if __name__ == '__main__':
                     gp.mainGame_background.endPathBackground()
 
             # PARADIGM
-            runParadigm() # Duration of task and rest can be changed in GameParameters.py
+            runLocalizerParadigm() # Duration of task and rest can be changed in GameParameters.py
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
-                showHowMuchTimeHasPassed()
+                gamestate = showHowMuchTimeHasPassed(gamestate)
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -308,7 +308,7 @@ if __name__ == '__main__':
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
-                showHowMuchTimeHasPassed()
+                gamestate = showHowMuchTimeHasPassed(gamestate)
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
@@ -471,7 +471,7 @@ if __name__ == '__main__':
 
         return gamestate
 
-    def runParadigm():
+    def runLocalizerParadigm():
         # PARADIGM
         # Check if it's time for event TASK
         if gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False:
@@ -479,6 +479,8 @@ if __name__ == '__main__':
             gp.task = True
             gp.rest = False
             startTaskTrigger()
+            if gp.usePath:
+                mainGame_background.startPathBackground()
 
             gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
             gp.startTime_REST = gp.currentTime_s  # Set the start time for event REST
@@ -493,13 +495,16 @@ if __name__ == '__main__':
             gp.task = False
             gp.rest = True
             startRestTrigger()
+            if gp.usePath:
+                mainGame_background.endPathBackground()
 
             gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
             gp.startTime_REST = gp.currentTime_s  # Reset the start time for event B
             gp.REST_counter += 1  # Increment the counter for event B
             print("Event REST")
 
-    def showHowMuchTimeHasPassed():
+    def showHowMuchTimeHasPassed(gamestate):
+
         # Show the player how much time has passed
         if gp.currentTime_s == gp.durationGame_s:
             gamestate = GameState.GAMEOVER
@@ -517,6 +522,8 @@ if __name__ == '__main__':
                     gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
                 soundSystem.countdownSound.play()
 
+        return gamestate
+
 
     # OTHER FUNCTIONS
     def displaySeaBackgroundsOnScreen():
@@ -530,9 +537,11 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, 40])
 
         if not gp.task and gp.useGreyOverlay:
-            #screen.blit(mainGame_background.background_path, [mainGame_background.bgX_foreground, 40])
-            #screen.blit(mainGame_background.background_path, [mainGame_background.bgX2_foreground, 40])
             screen.blit(mainGame_background.overlay_greysurface, (0, 0))# Draw the grey overlay surface on top of the background
+
+        if gp.task and gp.usePath:
+            screen.blit(mainGame_background.background_path, [mainGame_background.bgX_foreground, 40])
+            screen.blit(mainGame_background.background_path, [mainGame_background.bgX2_foreground, 40])
 
         # return mainGame_background
 

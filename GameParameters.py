@@ -23,6 +23,7 @@ class GameParameters():
         self.FPS = 60 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
         self.useExclamationMark = False # Shows a bright exclamation mark when a task starts
         self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
+        self.usePath = True # If true, then a path will appear during the task trial
 
         self.currentTime_s = 0  #
 
