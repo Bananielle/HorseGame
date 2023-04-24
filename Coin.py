@@ -29,7 +29,7 @@ class Coin(pygame.sprite.Sprite):
         )
       #  self.rect = self.surf.get_rect(
           #  center=(random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),200))
-        self.speed = 2 * gameParams.velocity * gameParams.deltaTime
+        self.speed = 3 * gameParams.velocity * gameParams.deltaTime
         #self.maxSpeed = 2 * gameParams.velocity * gameParams.deltaTime
         #self.speed = random.randint(self.minSpeed, self.maxSpeed)
         self.SCREEN_WIDTH = SCREEN_WIDTH

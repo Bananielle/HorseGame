@@ -37,6 +37,7 @@ from BrainComputerInterface import BrainComputerInterface
 from GameParameters import GameParameters
 from Coin import Coin
 from Background import MainGame_background
+from LoadingBar import LoadingBar
 from SettingsScreen import Settings_header
 
 from SoundSystem import SoundSystem
@@ -70,6 +71,9 @@ if __name__ == '__main__':
     GOLD = (255, 184, 28)
     PINK = (170, 22, 166)
     RED = (255, 0, 0)
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    GREEN = (0, 255, 0)
 
     # Timing stuff
     prev_time = 0
@@ -316,26 +320,16 @@ if __name__ == '__main__':
 
             # EXPERIMENT EVENTS
             # Baseline
-            if gp.currentTime_s == 1:
-                gp.NrOfCoins = 1
-                if not gp.coinAlreadyBeingAdded:
-                    coinEvent()
-                    gp.coinAlreadyBeingAdded = True
+            # if gp.currentTime_s == 1:
+            #     gp.NrOfCoins = 1
+            #     if not gp.coinAlreadyBeingAdded:
+            #         coinEvent()
+            #         gp.coinAlreadyBeingAdded = True
 
 
 
             runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
-            # # Add new coin if counter has passed
-            # if event.type == gp.ADDCOIN:
-            #     if gp.NrOfCoins < 2:
-            #         gp.startingPosition_y += 60
-            #         new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, gp.startingPosition_y)
-            #         gp.coin.add(new_coin)
-            #         gp.all_sprites.add(new_coin)
-            #         gp.NrOfCoins += 1
-            #         print("New coin with starting position_y = ", str(gp.startingPosition_y),
-            #               "  added at (game time counter) = " + str(gp.currentTime_s))
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
@@ -383,7 +377,7 @@ if __name__ == '__main__':
                 coin.kill()
                 soundSystem.jellyfishCollected.play()
                 gp.nrCoinsCollected += 1  # Extra points for jellyfish!
-                # Show the player how much coins have been collected
+                # Show the player how many coins have been collected
                 text = str(gp.nrCoinsCollected).rjust(3)
                 gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
 
@@ -392,6 +386,8 @@ if __name__ == '__main__':
         screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
 
         if gp.task:
+            screen.blit(loadingBar.surf, loadingBar.surf_center)
+            updateLoadingBar(loadingBar)
             if gp.useExclamationMark and not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
@@ -452,10 +448,13 @@ if __name__ == '__main__':
         if gp.currentTime_s >= gp.duration_BASELINE_s:
             if isItTimeForTaskEvent():
                 initiateBasicTaskEvent()
+                deleteExistingCoins()
+                coinEvent()
 
             if isItTimeForRestEvent():
                 initiateBasicRestEvent()
-                coinEvent()
+                loadingBar.resetLoadingBar()
+
 
     def runLocalizerParadigm():
         # PARADIGM
@@ -466,6 +465,16 @@ if __name__ == '__main__':
         # Check if it's time for event REST
         if isItTimeForRestEvent():
            initiateBasicRestEvent()
+
+
+    def updateLoadingBar(loadingBar):
+        # percentage = (gp.currentTime_s+1 - gp.startTime_TASK) / gp.duration_TASK_s # +1 because 1 second already passed
+        # print('Updating loading bar. Percentage of task completed: ', str(percentage))
+        # loadingBar.updateLoadingBar(gp.currentTime_s - gp.startTime_TASK)
+
+        loadingBar.fillLoadingBar()
+        pygame.draw.rect(screen, GREEN, [loadingBar.barfilling_x,loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
+        #pygame.draw.rect(screen, BLACK, [100,100, loadingBar.bar_width, loadingBar.bar_height], 2)
 
 
     def resetTaskandRestTime():
@@ -492,6 +501,10 @@ if __name__ == '__main__':
         gp.TASK_counter += 1  # Increment the counter for event TASK
         gp.update_Taskcounter()
         print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+
+    def deleteExistingCoins():
+        for coin in gp.coin:
+            coin.kill()
 
     def coinEvent():
             gp.coinStartingPosition_y -= 0
@@ -627,6 +640,7 @@ if __name__ == '__main__':
     gamestate, gp, mainGame_background = startANewGame()
     gp.mainGame_background = mainGame_background
     BCI_input = 0
+    loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
 
     # ========== GAME STATE MACHINE ==============
     gamestate = GameState.STARTSCREEN

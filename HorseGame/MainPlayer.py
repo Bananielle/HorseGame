@@ -65,7 +65,7 @@ class MainPlayer(pygame.sprite.Sprite):
     def update(self, pressed_keys,brainKeyPress, useBCIinput):
 
         # Make sure player speed is framrate independent
-        self.playerSpeed = 5 * self.gameParams.velocity * self.gameParams.deltaTime
+        self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
 
         # Also allow for BCI input to make player move up and down if True
         if useBCIinput:

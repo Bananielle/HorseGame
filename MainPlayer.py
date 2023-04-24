@@ -30,7 +30,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
 
         self.soundSystem = soundSystem
-        self.playerSpeed = 20
+        self.playerSpeed = 10
         self.RidingAnimation = 0
         self.JumpingAnimation = 0
         self.HorseIsJumping = False
@@ -70,8 +70,6 @@ class MainPlayer(pygame.sprite.Sprite):
     # Move the sprite based on keypresses
     def update(self, pressed_keys,brainKeyPress, useBCIinput):
 
-        # Make sure player speed is framrate independent
-        self.playerSpeed = 5 * self.gameParams.velocity * self.gameParams.deltaTime
 
         # Also allow for BCI input to make player move up and down if True
         if useBCIinput:
