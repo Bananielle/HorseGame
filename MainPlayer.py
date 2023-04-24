@@ -30,7 +30,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
 
         self.soundSystem = soundSystem
-        self.playerSpeed = 15
+        self.playerSpeed = 20
         self.RidingAnimation = 0
         self.JumpingAnimation = 0
         self.HorseIsJumping = False

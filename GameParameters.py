@@ -16,14 +16,14 @@ class GameParameters():
         self.duration_TASK_s = 5
         self.duration_REST_s = 5
         self.totalNum_TRIALS = 5  # Set the number of times Task should occur
-        self.duration_BASELINE_s = 5
+        self.duration_BASELINE_s = 10
         self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s ) * self.totalNum_TRIALS + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
         #Other
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
         self.FPS = 60 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
 
         # Background markers for task and rest periods
-        self.useExclamationMark = False # Shows a bright exclamation mark when a task starts
+        self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
         self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
 
@@ -68,7 +68,10 @@ class GameParameters():
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
 
         self.nrCoinsCollected = 0
+        self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
+        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - 200)
+        self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
 
         self.scoreSaved = False
 
@@ -83,7 +86,7 @@ class GameParameters():
         # Counter ( for countin down the seconds until game over)
         self.SECOND_HAS_PASSED = pygame.USEREVENT
         pygame.time.set_timer(self.SECOND_HAS_PASSED, 1000) # in ms
-        self.startingPosition_y = (SCREEN_HEIGHT - 350)
+
 
         self.task = False
         self.rest = True
@@ -95,7 +98,7 @@ class GameParameters():
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
 
     def resetCoinStartingPosition(self):
-        self.startingPosition_y = (self.SCREEN_HEIGHT - 300)
+        self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
 
     def reset(self):
         self.all_sprites.empty()

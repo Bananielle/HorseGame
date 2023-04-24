@@ -317,21 +317,25 @@ if __name__ == '__main__':
             # EXPERIMENT EVENTS
             # Baseline
             if gp.currentTime_s == 1:
-                gp.resetCoinStartingPosition()
                 gp.NrOfCoins = 1
+                if not gp.coinAlreadyBeingAdded:
+                    coinEvent()
+                    gp.coinAlreadyBeingAdded = True
+
+
 
             runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
-            # Add new coin if counter has passed
-            if event.type == gp.ADDCOIN:
-                if gp.NrOfCoins < 3:
-                    gp.startingPosition_y += 60
-                    new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, gp.startingPosition_y)
-                    gp.coin.add(new_coin)
-                    gp.all_sprites.add(new_coin)
-                    gp.NrOfCoins += 1
-                    print("New coin with starting position_y = ", str(gp.startingPosition_y),
-                          "  added at (game time counter) = " + str(gp.currentTime_s))
+            # # Add new coin if counter has passed
+            # if event.type == gp.ADDCOIN:
+            #     if gp.NrOfCoins < 2:
+            #         gp.startingPosition_y += 60
+            #         new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, gp.startingPosition_y)
+            #         gp.coin.add(new_coin)
+            #         gp.all_sprites.add(new_coin)
+            #         gp.NrOfCoins += 1
+            #         print("New coin with starting position_y = ", str(gp.startingPosition_y),
+            #               "  added at (game time counter) = " + str(gp.currentTime_s))
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
@@ -444,13 +448,14 @@ if __name__ == '__main__':
         return gamestate
 
     def runMainGameParadigm():
-        if isItTimeForTaskEvent():
-            initiateBasicTaskEvent()
 
-        if isItTimeForRestEvent():
-            gp.resetCoinStartingPosition()
-            gp.NrOfCoins = 1
-            initiateBasicRestEvent()
+        if gp.currentTime_s >= gp.duration_BASELINE_s:
+            if isItTimeForTaskEvent():
+                initiateBasicTaskEvent()
+
+            if isItTimeForRestEvent():
+                initiateBasicRestEvent()
+                coinEvent()
 
     def runLocalizerParadigm():
         # PARADIGM
@@ -487,6 +492,22 @@ if __name__ == '__main__':
         gp.TASK_counter += 1  # Increment the counter for event TASK
         gp.update_Taskcounter()
         print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+
+    def coinEvent():
+            gp.coinStartingPosition_y -= 0
+            addNewCoin(1, gp.coinStartingPosition_y)
+            addNewCoin(1, gp.coinStartingPosition_y - 70)
+            addNewCoin(1, gp.coinStartingPosition_y - 140)
+
+
+    def addNewCoin(coinType, y_position):
+        new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, y_position)
+        gp.coin.add(new_coin)
+        gp.all_sprites.add(new_coin)
+        gp.NrOfCoins += 1
+        print("New coin with starting position_y = ", str(gp.coinStartingPosition_y),
+              "  added at (game time counter) = " + str(gp.currentTime_s))
+
 
 
     def initiateBasicRestEvent():

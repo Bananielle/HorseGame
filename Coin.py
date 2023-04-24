@@ -29,7 +29,7 @@ class Coin(pygame.sprite.Sprite):
         )
       #  self.rect = self.surf.get_rect(
           #  center=(random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),200))
-        self.speed = 1.1 * gameParams.velocity * gameParams.deltaTime
+        self.speed = 2 * gameParams.velocity * gameParams.deltaTime
         #self.maxSpeed = 2 * gameParams.velocity * gameParams.deltaTime
         #self.speed = random.randint(self.minSpeed, self.maxSpeed)
         self.SCREEN_WIDTH = SCREEN_WIDTH
@@ -44,9 +44,9 @@ class Coin(pygame.sprite.Sprite):
     # Remove it when it passes the left edge of the screen
     def update(self):
         if self.movedUpCounter < 20:
-            self.rect.move_ip(0, -self.speed/3) # Move down
+            self.rect.move_ip(0, -self.speed/2) # Move down
         else:
-            self.rect.move_ip(0, self.speed/3) # Move up
+            self.rect.move_ip(0, self.speed/2) # Move up
             if self.movedUpCounter > 37:
                 self.movedUpCounter = 0
 
