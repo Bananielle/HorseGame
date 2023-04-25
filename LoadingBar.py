@@ -21,10 +21,10 @@ class LoadingBar(pygame.sprite.Sprite):
         self.bar_width = 127
         self.bar_height = 15
         self.bar_fill = 0
-        self.fill_rate = self.bar_width / (5*60) # 60 because pygame lock is in milliseconds
+        self.fill_rate = self.bar_width / (gameParams.duration_TASK_s * gameParams.FPS)
 
         # Put the center of surf at the left corner of the display
-        self.surf_center = ( (30 ,   (20   )))
+        self.surf_center = (30,20)
         self.barfilling_x = 37
         self.barfilling_y = 35
 

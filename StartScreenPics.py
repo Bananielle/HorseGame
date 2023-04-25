@@ -67,7 +67,7 @@ class Settings(pygame.sprite.Sprite):
             ((self.SCREEN_HEIGHT * 0.95) - self.surf.get_height())
         )
 
-class ReadyToJump(pygame.sprite.Sprite):
+class ReadyToJump():
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
         super(ReadyToJump, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
@@ -78,5 +78,5 @@ class ReadyToJump(pygame.sprite.Sprite):
 
         self.surf_center = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2.5,
-            ((self.SCREEN_HEIGHT * 0.8) - self.surf.get_height())
+            ((self.SCREEN_HEIGHT * 0.7) - self.surf.get_height())
         )

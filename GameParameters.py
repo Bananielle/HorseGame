@@ -20,12 +20,12 @@ class GameParameters():
         self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s ) * self.totalNum_TRIALS + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
         #Other
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
-        self.FPS = 60 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
 
         # Background markers for task and rest periods
         self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
         self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
-        self.usePath = True # If true, then a path will appear during the task trial
+        self.usePath = False # If true, then a path will appear during the task trial
         self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
 
         self.currentTime_s = 0  #

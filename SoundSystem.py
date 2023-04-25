@@ -11,11 +11,9 @@ USE_BACKGROUND_MUSIC = False # toggles the background music on/off (note, the ba
 class SoundSystem():
     def __init__(self):
 
-        self.move_up_sound = simpleaudio.WaveObject.from_wave_file("Resources/bubbles.wav")
-        self.move_down_sound = simpleaudio.WaveObject.from_wave_file("Resources/bubbles.wav")
         #  self.collision_sound = pygame.mixer.Sound("Collision.ogg")
-        self.coin_sound = simpleaudio.WaveObject.from_wave_file("Resources/coin.wav")
-        self.jellyfishCollected = simpleaudio.WaveObject.from_wave_file("Resources/collectedJellyfish.wav")
+        self.coin_sound = simpleaudio.WaveObject.from_wave_file("Resources/collectedJellyfish.wav")
+        self.coinCollected = simpleaudio.WaveObject.from_wave_file("Resources/coin.wav")
         self.countdownSound = simpleaudio.WaveObject.from_wave_file("Resources/countdown.wav")
         # self.maintheme_slow = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_slow.wav")
         # self.maintheme_fast = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_fast.wav")

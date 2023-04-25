@@ -375,7 +375,7 @@ if __name__ == '__main__':
         for coin in gp.coin:
             if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
-                soundSystem.jellyfishCollected.play()
+                soundSystem.coinCollected.play()
                 gp.nrCoinsCollected += 1  # Extra points for jellyfish!
                 # Show the player how many coins have been collected
                 text = str(gp.nrCoinsCollected).rjust(3)
@@ -682,6 +682,8 @@ if __name__ == '__main__':
         prev_time = now
 
         pygame.display.flip()
+
+        #print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()
