@@ -513,8 +513,8 @@ if __name__ == '__main__':
     def coinEvent():
             gp.coinStartingPosition_y -= 0
             addNewCoin(1, gp.coinStartingPosition_y)
-            addNewCoin(1, gp.coinStartingPosition_y - 70)
-            addNewCoin(1, gp.coinStartingPosition_y - 140)
+            addNewCoin(1, gp.coinStartingPosition_y - 100)
+            addNewCoin(1, gp.coinStartingPosition_y - 200)
 
 
     def addNewCoin(coinType, y_position):
