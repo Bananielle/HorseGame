@@ -24,13 +24,15 @@ class MainPlayer(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.surf = pygame.image.load("Resources/Horse.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
-        self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * 2,self.surf.get_height() * 2)) # But this greatly reduces the image quality...
-        self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-75
+        self.imageScaleFactor = int(3)
+        self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,self.surf.get_height() * self.imageScaleFactor)) # But this greatly reduces the image quality...
+        self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-30
         self.startingPosition_x = 280
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
+        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer + 0
 
         self.soundSystem = soundSystem
-        self.playerSpeed = 10
+        self.playerSpeed = 15
         self.RidingAnimation = 0
         self.JumpingAnimation = 0
         self.HorseIsJumping = False
@@ -44,9 +46,9 @@ class MainPlayer(pygame.sprite.Sprite):
     def updateImage(self):
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.surf = pygame.transform.scale(self.surf, (
-        self.surf.get_width() * 2, self.surf.get_height() * 2))  # But this greatly reduces the image quality...
+        self.surf.get_width() * self.imageScaleFactor, self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
 
-    def changeHorseAnimation(self):
+    def ridingHorseAnimation(self):
         if self.RidingAnimation == 0:
             self.surf = pygame.image.load("Resources/Walk1.png").convert()
         elif self.RidingAnimation == 1:
@@ -104,8 +106,11 @@ class MainPlayer(pygame.sprite.Sprite):
             self.rect.bottom = self.SCREEN_HEIGHT
 
         # Keep horse on the path
-        elif self.rect.bottom >= self.lowerLimitYpositionPlayer+30:
-            self.rect.bottom = self.lowerLimitYpositionPlayer+30
+        self.keepHorseOnPath()
+
+    def keepHorseOnPath(self):
+        if self.rect.bottom >= self.borderOfPathForHorse:
+            self.rect.bottom = self.borderOfPathForHorse
 
     def jumpUp(self):
         if self.RidingAnimation == 0:

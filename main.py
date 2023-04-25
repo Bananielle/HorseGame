@@ -258,7 +258,7 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.player.changeHorseAnimation()
+                gp.player.ridingHorseAnimation()
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -333,28 +333,7 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                if gp.player.HorseIsJumping:
-                    if gp.player.HorseIsJumpingUp:
-                        if gp.player.rect.top > 0 + (SCREEN_HEIGHT * 0.5):
-                            gp.player.jumpUp()
-                            print("Horse is jumping up.")
-                        else:
-                            gp.player.HorseIsJumpingUp = False
-                            gp.player.HorseIsJumpingDown = True
-                    if gp.player.HorseIsJumpingDown:
-                        if gp.player.rect.bottom < SCREEN_HEIGHT -50:
-                            gp.player.jumpDown()
-                            print("Horse is jumping down. Screen height = ", str(SCREEN_HEIGHT), "  Horse bottom = ", str(gp.player.rect.bottom))
-                        else:
-                            gp.player.HorseIsJumpingDown = False
-                            gp.player.HorseIsJumping = False
-
-                else:
-                    gp.player.changeHorseAnimation()
-                    if gp.player.rect.left > gp.player.startingPosition_x: # Move horse back to starting point
-                        print("Horse is moving back to starting point.")
-                        gp.player.moveLeft()
-                        gp.player.moveLeft()
+                makeHorseJump()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -394,6 +373,30 @@ if __name__ == '__main__':
 
         return gamestate
 
+    def makeHorseJump():
+        if gp.player.HorseIsJumping:
+            if gp.player.HorseIsJumpingUp:
+                if gp.player.rect.top > 0 + (SCREEN_HEIGHT * 0.4):
+                    gp.player.jumpUp()
+                    print("Horse is jumping up.")
+                else:
+                    gp.player.HorseIsJumpingUp = False
+                    gp.player.HorseIsJumpingDown = True
+            if gp.player.HorseIsJumpingDown:
+                if gp.player.rect.bottom <= gp.player.borderOfPathForHorse-1:
+                    gp.player.jumpDown()
+                    print("Horse is jumping down. Screen height = ", str(SCREEN_HEIGHT), "  Horse bottom = ",
+                          str(gp.player.rect.bottom), " borderOfScreenForHorse = ", str(gp.player.borderOfPathForHorse))
+                else:
+                    gp.player.HorseIsJumpingDown = False
+                    gp.player.HorseIsJumping = False
+
+        else:
+            gp.player.ridingHorseAnimation()
+            if gp.player.rect.left > gp.player.startingPosition_x:  # Move horse back to starting point
+                print("Horse is moving back to starting point.")
+                gp.player.moveLeft()
+                gp.player.moveLeft()
 
     def runGameOver():
         gamestate = GameState.GAMEOVER
@@ -603,8 +606,8 @@ if __name__ == '__main__':
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
     if FULLSCREEN == 0:
-        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3)
-        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h / 3)
+        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 4)
+        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h / 4)
     else:  # If fullscreen is selected, adjust all size parameters to fullscreen
         SCREEN_WIDTH = infoObject.current_w
         SCREEN_HEIGHT = infoObject.current_h
