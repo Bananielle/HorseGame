@@ -386,8 +386,9 @@ if __name__ == '__main__':
         screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
 
         if gp.task:
-            screen.blit(loadingBar.surf, loadingBar.surf_center)
-            updateLoadingBar(loadingBar)
+            if gp.useLoadingBar:
+                screen.blit(loadingBar.surf, loadingBar.surf_center)
+                updateLoadingBar(loadingBar)
             if gp.useExclamationMark and not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
@@ -453,7 +454,7 @@ if __name__ == '__main__':
 
             if isItTimeForRestEvent():
                 initiateBasicRestEvent()
-                loadingBar.resetLoadingBar()
+
 
 
     def runLocalizerParadigm():
@@ -530,6 +531,7 @@ if __name__ == '__main__':
         if gp.usePath:
             mainGame_background.endPathBackground()
 
+        loadingBar.resetLoadingBar()
         resetTaskandRestTime()
         gp.REST_counter += 1  # Increment the counter for event B
         print("Event REST")
