@@ -6,18 +6,22 @@ class MainGame_background(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH =SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.background_far = pygame.image.load('Resources/country-platform-back.png')
+        self.folder = "Resources/Bear/"
+        self.background_far = pygame.image.load(self.folder + 'background.png')
+        #self.background_far = pygame.image.load('Resources/country-platform-back.png')
         self.background_far = pygame.transform.scale(self.background_far,
                                                      (SCREEN_WIDTH, self.background_far.get_height() * 3))
         self.bgX_far = 0 # first image
         self.bgX2_far = self.background_far.get_width() # second image (you're basically glueing both of them together to make a smooth transition
 
-        self.background_middle = pygame.image.load('Resources/country-platform-forest.png')
+        self.background_middle = pygame.image.load(self.folder + 'middleground.png')
+        #self.background_middle = pygame.image.load('Resources/country-platform-forest.png')
         self.background_middle = pygame.transform.scale(self.background_middle, (SCREEN_WIDTH, SCREEN_HEIGHT - int((SCREEN_HEIGHT/10)))) # Make sure it's an integer because the fucntion doesn't accept floats
         self.bgX_middle = 0
         self.bgX2_middle = self.background_middle.get_width()
 
-        self.background_foreground_current = pygame.image.load('Resources/country_default.png')
+        self.background_foreground_current = pygame.image.load(self.folder + 'foreground.png')
+        #self.background_foreground_current = pygame.image.load('Resources/country_default.png')
         self.background_foreground_current = pygame.transform.scale(self.background_foreground_current,
                                                                     (SCREEN_WIDTH + (int(SCREEN_WIDTH/3.2)), SCREEN_HEIGHT -25)) # Make sure this is an integer, because it doesn't accept floats
         self.background_foreground_upcoming = self.background_foreground_current # A copy, but will be used for background transitions
@@ -85,7 +89,7 @@ class MainGame_background(pygame.sprite.Sprite):
     def changeToDefaultBackground(self):
         #self.background_foreground_upcoming = pygame.image.load('Resources/country-platform-tiles-example.png')
         #self.scaleBackground_foreground()
-        temp = pygame.image.load('Resources/country_default.png')
+        temp = pygame.image.load(self.folder + 'foreground.png')
         self.backgroundQueue.append(temp)
         #print('Changing to default background.')
 

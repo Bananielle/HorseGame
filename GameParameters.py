@@ -24,7 +24,7 @@ class GameParameters():
 
         # Background markers for task and rest periods
         self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
-        self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
+        self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
 

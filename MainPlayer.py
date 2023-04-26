@@ -22,7 +22,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.folder = "Resources/Camel/"
+        self.folder = "Resources/Bear/"
         self.surf = pygame.image.load(self.folder + "Walk1.png").convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.imageScaleFactor = int(3)
