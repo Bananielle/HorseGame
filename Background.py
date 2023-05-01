@@ -22,8 +22,8 @@ class MainGame_background(pygame.sprite.Sprite):
 
         self.background_foreground_current = pygame.image.load(self.folder + 'foreground.png')
         #self.background_foreground_current = pygame.image.load('Resources/country_default.png')
-        self.background_foreground_current = pygame.transform.scale(self.background_foreground_current,
-                                                                    (SCREEN_WIDTH + (int(SCREEN_WIDTH/3.2)), SCREEN_HEIGHT -25)) # Make sure this is an integer, because it doesn't accept floats
+        self.background_foreground_current = pygame.transform.smoothscale(self.background_foreground_current,
+                                                                    (SCREEN_WIDTH + (int(SCREEN_WIDTH/3.2)), SCREEN_HEIGHT -0)) # Make sure this is an integer, because it doesn't accept floats
         self.background_foreground_upcoming = self.background_foreground_current # A copy, but will be used for background transitions
 
         self.background_path = pygame.image.load('Resources/path_start.png')
@@ -171,7 +171,7 @@ class MainGame_background(pygame.sprite.Sprite):
             self.background_foreground_upcoming = pygame.transform.scale(self.background_foreground_upcoming,
                                                                         (self.SCREEN_WIDTH + (
                                                                             int(self.SCREEN_WIDTH / 3.2)),
-                                                                         self.SCREEN_HEIGHT-25))  # Make sure this is an integer, because it doesn't accept floats
+                                                                         self.SCREEN_HEIGHT-0))  # Make sure this is an integer, because it doesn't accept floats
 
             self.backgroundQueue.remove(firstItemOnList)  # Remove background from queue
             #print("Background queue: " + self.backgroundQueue)
@@ -195,7 +195,7 @@ class MainGame_background(pygame.sprite.Sprite):
             self.background_foreground_current = pygame.transform.scale(self.background_foreground_current,
                                                                         (self.SCREEN_WIDTH + (
                                                                             int(self.SCREEN_WIDTH / 3.2)),
-                                                                         self.SCREEN_HEIGHT-25))  # Make sure this is an integer, because it doesn't accept floats
+                                                                         self.SCREEN_HEIGHT-0))  # Make sure this is an integer, because it doesn't accept floats
 
             self.backgroundQueue.remove(firstItemOnList)  # Remove background from queue
             #print("Background queue: " + self.backgroundQueue)

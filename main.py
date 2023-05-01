@@ -569,10 +569,17 @@ if __name__ == '__main__':
         screen.fill((0, 0, 0))  # black
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
+
+        if gp.player.folder == "Resources/Bear/": # Need to change position of background because the trees need to reach all the way to the top of the screen
+            y = 0
+            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle,0])
+            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
+        else:
+            y = 40
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 20])
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 20])
-        screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, 40])
-        screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, 40])
+        screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
+        screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
 
         if not gp.task and gp.useGreyOverlay:
             screen.blit(mainGame_background.overlay_greysurface, (0, 0))# Draw the grey overlay surface on top of the background
