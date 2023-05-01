@@ -1,5 +1,6 @@
 import pygame
 import _turbosatorinetworkinterface as tsi  # handles getting data from TSI
+import numpy as np
 
 from pygame.locals import (
     K_UP,
@@ -43,9 +44,36 @@ class BrainComputerInterface():
 
         return input
 
+    def scaleOxyData(self):\
+
+        oxy = self.getCurrentInput()
+        scalefactor = self.tsi.get_oxy_data_scale_factor()
+
+        scaled_data = oxy * scalefactor
+
+
+        # window_size = 10
+        # fnirs_window = np.zeros(window_size)
+        # fnirs_window[:-1] = fnirs_window[1:] # [:-1] selects all the elements of the array except for the last one. [1:] is all elements except for the first one.
+        # fnirs_window[-1] = oxy # Insert the new value at the end of the array
+        #
+        # scaled_data = (fnirs_window - np.min(fnirs_window)) / (np.max(fnirs_window) - np.min(fnirs_window)) # Perform min-max scaling on the windowed data
+        #
+        # # Sanity test: example array of fNIRS data and Min-max scaling
+        # fnirs_data = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+        # scaled_data = (fnirs_data - np.min(fnirs_data)) / (np.max(fnirs_data) - np.min(fnirs_data))
+        # print("SCALING FACTOR SANITY TEST:")
+        # print(scaled_data)
+
+        return scaled_data
+
     def getKeyboardPressFromBrainInput(self):
+        scaledOxyData = self.scaleOxyData()
+
         self.previousInput = self.currentInput
-        self.currentInput = self.getCurrentInput()
+        self.currentInput = scaledOxyData
+
+        print("Current input: " + str(self.currentInput) + ", previous input: " + str(self.previousInput))
 
         keyboardPress = self.translateToKeyboardPress(self.currentInput, self.previousInput)
 

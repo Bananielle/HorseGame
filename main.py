@@ -657,6 +657,7 @@ if __name__ == '__main__':
     soundSystem = SoundSystem()
 
     BCI = BrainComputerInterface()
+    BCI.scaleOxyData()
 
     # Set up trigger straem
     info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
