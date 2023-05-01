@@ -295,10 +295,14 @@ if __name__ == '__main__':
         # Draw game time counter text
         screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
         screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
-        screen.blit(gp.nrTrialsCompletedText, (20, 20))
+        screen.blit(gp.nrTrialsCompletedText, (20, 60))
 
-        if gp.task and gp.useExclamationMark:
-            screen.blit(readyToJump.surf, readyToJump.surf_center)
+        if gp.task:
+            if gp.useLoadingBar:
+                screen.blit(loadingBar.surf, loadingBar.surf_center)
+                updateLoadingBar(loadingBar)
+            if gp.useExclamationMark and not gp.player.HorseIsJumping:
+                screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
 
@@ -348,16 +352,12 @@ if __name__ == '__main__':
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
 
-        # Update the position of coins
-        gp.coin.update()
+        gp.coin.update() # Update the position of coins
+        checkForCoinCollision() # Check if any coins have collided with the player
 
         # Draw all our sprites
         for entity in gp.all_sprites:
             screen.blit(entity.surf, entity.rect)
-
-
-        # Check if any coins have collided with the player
-        checkForCoinCollision()
 
         # Draw game time counter text
         screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
@@ -374,11 +374,7 @@ if __name__ == '__main__':
 
     def checkForCoinCollision():
         for coin in gp.coin:
-            #print('Player center x y: ', gp.player.rect.centerx, gp.player.rect.centery)
-            print('Player rect: ', gp.player.rect)
             if coin.rect.colliderect(gp.player.rect):
-            #if gp.player.rect.collidepoint(coin.rect.centerx, coin.rect.centery):
-            #if coin.rect.collidepoint(gp.player.rect.centerx,gp.player.rect.centery):
                 coin.kill()
                 soundSystem.coinCollected.play()
                 gp.nrCoinsCollected += 1  # Extra points for jellyfish!
@@ -406,7 +402,7 @@ if __name__ == '__main__':
 
         else:
             gp.player.ridingHorseAnimation()
-            if gp.player.rect.left > gp.player.startingPosition_x:  # Move horse back to starting point
+            if gp.player.rect.centerx > gp.player.startingPosition_x:  # Move horse back to starting point
                 print("Horse is moving back to starting point.")
                 gp.player.moveLeft()
                 gp.player.moveLeft()
@@ -531,8 +527,13 @@ if __name__ == '__main__':
     def coinEvent():
             gp.coinStartingPosition_y -= 0
             addNewCoin(1, gp.coinStartingPosition_y)
+            addNewCoin(1, gp.coinStartingPosition_y - 50)
             addNewCoin(1, gp.coinStartingPosition_y - 100)
+            addNewCoin(1, gp.coinStartingPosition_y - 150)
             addNewCoin(1, gp.coinStartingPosition_y - 200)
+            addNewCoin(1, gp.coinStartingPosition_y - 250)
+            addNewCoin(1, gp.coinStartingPosition_y - 300)
+
 
 
     def addNewCoin(coinType, y_position):
@@ -592,6 +593,8 @@ if __name__ == '__main__':
             y = 0
             screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle,0])
             screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
+        if gp.player.folder == "Resources/Camel/": # Need to change position of background because the trees need to reach all the way to the top of the screen
+            y = 20
         else:
             y = 40
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 20])

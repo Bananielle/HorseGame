@@ -27,7 +27,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.folder = "Resources/Camel/"
+        self.folder = "Resources/Horse/"
         self.surf = pygame.image.load(self.folder + "Walk1.png").convert()
 
         self.prepareImage()
@@ -38,7 +38,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.borderOfPathForHorse = self.lowerLimitYpositionPlayer -1
 
 
-        print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
+        #print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
 
         self.soundSystem = soundSystem
         self.playerSpeed = 15

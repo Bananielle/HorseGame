@@ -13,7 +13,7 @@ class GameParameters():
 
         # ADJUSTABLE PARAMETERS
         # paradigm
-        self.folder = 'Bear'
+        self.folder = 'Horse'
         self.duration_TASK_s = 5
         self.duration_REST_s = 5
         self.totalNum_TRIALS = 5  # Set the number of times Task should occur
