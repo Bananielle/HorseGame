@@ -27,7 +27,7 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
             self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
 
-        self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 5
+        self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) # I have to give it integers...
 
     def getCurrentInput(self):
@@ -49,21 +49,9 @@ class BrainComputerInterface():
         oxy = self.getCurrentInput()
         scalefactor = self.tsi.get_oxy_data_scale_factor()
 
-        scaled_data = oxy * scalefactor
+        scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
 
-
-        # window_size = 10
-        # fnirs_window = np.zeros(window_size)
-        # fnirs_window[:-1] = fnirs_window[1:] # [:-1] selects all the elements of the array except for the last one. [1:] is all elements except for the first one.
-        # fnirs_window[-1] = oxy # Insert the new value at the end of the array
-        #
-        # scaled_data = (fnirs_window - np.min(fnirs_window)) / (np.max(fnirs_window) - np.min(fnirs_window)) # Perform min-max scaling on the windowed data
-        #
-        # # Sanity test: example array of fNIRS data and Min-max scaling
-        # fnirs_data = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
-        # scaled_data = (fnirs_data - np.min(fnirs_data)) / (np.max(fnirs_data) - np.min(fnirs_data))
-        # print("SCALING FACTOR SANITY TEST:")
-        # print(scaled_data)
+        print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
 
         return scaled_data
 
