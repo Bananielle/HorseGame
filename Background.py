@@ -6,7 +6,7 @@ class MainGame_background(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH =SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.folder = "Resources/Bear/"
+        self.folder = "Resources/Camel/"
         self.background_far = pygame.image.load(self.folder + 'background.png')
         #self.background_far = pygame.image.load('Resources/country-platform-back.png')
         self.background_far = pygame.transform.scale(self.background_far,

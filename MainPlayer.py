@@ -27,7 +27,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.folder = "Resources/Bear/"
+        self.folder = "Resources/Camel/"
         self.surf = pygame.image.load(self.folder + "Walk1.png").convert()
 
         self.prepareImage()
@@ -35,7 +35,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-65
         self.startingPosition_x = 280
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
-        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer + 0
+        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer -1
 
 
         print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
@@ -55,9 +55,9 @@ class MainPlayer(pygame.sprite.Sprite):
                                                        self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
 
         # create a new surface that contains only the non-transparent portion of the image (needed for proper collision detection with sprites)
-        non_transparent_region = pygame.Surface(self.surf.get_size(), pygame.SRCALPHA)
-        non_transparent_region.blit(self.surf, (0, 0), special_flags=pygame.BLEND_RGBA_MAX)
-        self.surf = non_transparent_region  # set the new image and rect
+       # non_transparent_region = pygame.Surface(self.surf.get_size(), pygame.SRCALPHA)
+       # non_transparent_region.blit(self.surf, (0, 0), special_flags=pygame.BLEND_RGBA_MAX)
+       # self.surf = non_transparent_region  # set the new image and rect
         #self.rect = self.surf.get_rect()
 
     def setPlayerSpeed(self):
