@@ -256,9 +256,13 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             # Did the user hit a key?
 
+            # PARADIGM
+            runLocalizerParadigm()  # Duration of task and rest can be changed in GameParameters.py
+
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
                 gp.player.ridingHorseAnimation()
+                makeHorseJump() # If horse is jumping, make it jump
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -268,8 +272,6 @@ if __name__ == '__main__':
                 if event.key == K_SPACE:
                     gp.mainGame_background.endPathBackground()
 
-            # PARADIGM
-            runLocalizerParadigm() # Duration of task and rest can be changed in GameParameters.py
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -280,6 +282,11 @@ if __name__ == '__main__':
             # Get user input
             keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
             gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
+
+        # Update the position of coins
+        if gp.displayCoinsInLocalizer:
+            checkForCoinCollision()  # Check if any coins have collided with the player
+            gp.coin.update()
 
         # Draw all our sprites
         for entity in gp.all_sprites:
@@ -341,24 +348,16 @@ if __name__ == '__main__':
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
 
-        # Update the position of our enemies and clouds
+        # Update the position of coins
         gp.coin.update()
-       # gameParams.messages.update()
 
         # Draw all our sprites
         for entity in gp.all_sprites:
             screen.blit(entity.surf, entity.rect)
 
 
-            # Check if any coins have collided with the player
-        for coin in gp.coin:
-            if coin.rect.colliderect(gp.player.rect):
-                coin.kill()
-                soundSystem.coinCollected.play()
-                gp.nrCoinsCollected += 1  # Extra points for jellyfish!
-                # Show the player how many coins have been collected
-                text = str(gp.nrCoinsCollected).rjust(3)
-                gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
+        # Check if any coins have collided with the player
+        checkForCoinCollision()
 
         # Draw game time counter text
         screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
@@ -372,6 +371,20 @@ if __name__ == '__main__':
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
+
+    def checkForCoinCollision():
+        for coin in gp.coin:
+            #print('Player center x y: ', gp.player.rect.centerx, gp.player.rect.centery)
+            print('Player rect: ', gp.player.rect)
+            if coin.rect.colliderect(gp.player.rect):
+            #if gp.player.rect.collidepoint(coin.rect.centerx, coin.rect.centery):
+            #if coin.rect.collidepoint(gp.player.rect.centerx,gp.player.rect.centery):
+                coin.kill()
+                soundSystem.coinCollected.play()
+                gp.nrCoinsCollected += 1  # Extra points for jellyfish!
+                # Show the player how many coins have been collected
+                text = str(gp.nrCoinsCollected).rjust(3)
+                gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
 
     def makeHorseJump():
         if gp.player.HorseIsJumping:
@@ -465,10 +478,15 @@ if __name__ == '__main__':
         # Check if it's time for event TASK
         if isItTimeForTaskEvent():
            initiateBasicTaskEvent()
+           if gp.displayCoinsInLocalizer:
+            deleteExistingCoins()
+            coinEvent()
 
         # Check if it's time for event REST
         if isItTimeForRestEvent():
-           initiateBasicRestEvent()
+            gp.player.HorseIsJumping = True
+            gp.player.HorseIsJumpingUp = True
+            initiateBasicRestEvent()
 
 
     def updateLoadingBar(loadingBar):

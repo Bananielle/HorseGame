@@ -19,20 +19,26 @@ from pygame.locals import (
 class MainPlayer(pygame.sprite.Sprite):
     def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT, gameParams, soundSystem):
         super(MainPlayer, self).__init__()
+        self.borderOfPathForHorse = None
+        self.rect = None
+        self.startingPosition_x = None
+        self.lowerLimitYpositionPlayer = None
+        self.imageScaleFactor = None
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.folder = "Resources/Bear/"
         self.surf = pygame.image.load(self.folder + "Walk1.png").convert()
-        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
-        self.imageScaleFactor = int(3)
-        self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,self.surf.get_height() * self.imageScaleFactor)) # But this greatly reduces the image quality...
+
+        self.prepareImage()
+
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-65
         self.startingPosition_x = 280
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
         self.borderOfPathForHorse = self.lowerLimitYpositionPlayer + 0
 
-        print('MainPlayer rect: ', self.rect)
+
+        print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
 
         self.soundSystem = soundSystem
         self.playerSpeed = 15
@@ -42,14 +48,20 @@ class MainPlayer(pygame.sprite.Sprite):
         self.HorseIsJumpingUp = False
         self.HorseIsJumpingDown = False
 
+    def prepareImage(self):
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+        self.imageScaleFactor = int(3)
+        self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,
+                                                       self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
+
+        # create a new surface that contains only the non-transparent portion of the image (needed for proper collision detection with sprites)
+        non_transparent_region = pygame.Surface(self.surf.get_size(), pygame.SRCALPHA)
+        non_transparent_region.blit(self.surf, (0, 0), special_flags=pygame.BLEND_RGBA_MAX)
+        self.surf = non_transparent_region  # set the new image and rect
+        #self.rect = self.surf.get_rect()
 
     def setPlayerSpeed(self):
         self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
-
-    def updateImage(self):
-        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
-        self.surf = pygame.transform.scale(self.surf, (
-        self.surf.get_width() * self.imageScaleFactor, self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
 
     def ridingHorseAnimation(self):
         if self.RidingAnimation == 0:
@@ -65,7 +77,7 @@ class MainPlayer(pygame.sprite.Sprite):
         elif self.RidingAnimation == 5:
             self.surf = pygame.image.load(self.folder + "Walk6.png").convert()
 
-        self.updateImage()
+        self.prepareImage()
 
 
         self.RidingAnimation = self.RidingAnimation + 1
@@ -134,7 +146,7 @@ class MainPlayer(pygame.sprite.Sprite):
         elif self.RidingAnimation == 7:
             self.surf = pygame.image.load(self.folder + "Jump6.png").convert()
 
-        self.updateImage()
+        self.prepareImage()
         self.moveRight()
         self.moveUp()
 
@@ -160,7 +172,7 @@ class MainPlayer(pygame.sprite.Sprite):
         elif self.RidingAnimation == 7:
             self.surf = pygame.image.load(self.folder + "Jump6.png").convert()
 
-        self.updateImage()
+        self.prepareImage()
         self.moveRight()
         self.moveDown()
 

@@ -28,6 +28,7 @@ class GameParameters():
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
+        self.displayCoinsInLocalizer = True
 
         self.currentTime_s = 0  #
 
