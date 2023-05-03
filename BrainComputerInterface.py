@@ -15,6 +15,9 @@ class BrainComputerInterface():
         self.fakeInput = 0
         self.TSIconnectionFound = True
         self.timeBetweenSamples_ms = 100000
+        self.collectTimewindowData= False
+        self.timewindow = []
+        self.startTimeMeasurement = 0
 
         # Look for a connection to turbo-satori
         try:
@@ -30,6 +33,23 @@ class BrainComputerInterface():
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) # I have to give it integers...
 
+    def startMeasuringTask(self):
+        scaled_data = 2 #self.scaleOxyData()
+        if self.collectTimewindowData:
+            self.timewindow.append(scaled_data)
+        else:
+            self.timewindow = [] # Reset the timewindow
+
+    def calculateNFsignal(self):
+        NFsignal_raw = np.array(self.timewindow)
+        NFsignal_mean = np.mean(NFsignal_raw)
+        NFsignal_max = np.max(NFsignal_raw)
+        NFSignal_median = np.median(NFsignal_raw)
+
+        print("NFsignal_raw: " + str(NFsignal_raw))
+        print("NFsignal_mean: " + str(NFsignal_mean) + ", NFsignal_max: " + str(NFsignal_max) + ", NFSignal_median: " + str(NFSignal_median))
+
+
     def getCurrentInput(self):
 
         if self.TSIconnectionFound:
@@ -44,14 +64,16 @@ class BrainComputerInterface():
 
         return input
 
-    def scaleOxyData(self):\
+    def scaleOxyData(self):
+        if self.TSIconnectionFound:
+            oxy = self.getCurrentInput()
+            scalefactor = self.tsi.get_oxy_data_scale_factor()
 
-        oxy = self.getCurrentInput()
-        scalefactor = self.tsi.get_oxy_data_scale_factor()
+            scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
 
-        scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
-
-        print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
+            print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
+        else:
+            scaled_data = 0
 
         return scaled_data
 

@@ -27,7 +27,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.folder = "Resources/Horse/"
+        self.folder = "Resources/Bear/"
         self.surf = pygame.image.load(self.folder + "Walk1.png").convert()
 
         self.prepareImage()
@@ -126,6 +126,31 @@ class MainPlayer(pygame.sprite.Sprite):
     def keepHorseOnPath(self):
         if self.rect.bottom >= self.borderOfPathForHorse:
             self.rect.bottom = self.borderOfPathForHorse
+
+    def performJumpSequence(self):
+        if self.HorseIsJumping:
+            if self.HorseIsJumpingUp:
+                if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
+                    self.jumpUp()
+                    print("Horse is jumping up.")
+                else:
+                    self.HorseIsJumpingUp = False
+                    self.HorseIsJumpingDown = True
+            if self.HorseIsJumpingDown:
+                if self.rect.bottom <= self.borderOfPathForHorse - 1:
+                    self.jumpDown()
+                    print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
+                          str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
+                else:
+                    self.HorseIsJumpingDown = False
+                    self.HorseIsJumping = False
+
+        else:
+            self.ridingHorseAnimation()
+            if self.rect.centerx > self.startingPosition_x:  # Move horse back to starting point
+                print("Horse is moving back to starting point.")
+                self.moveLeft()
+                self.moveLeft()
 
     def jumpUp(self):
         if self.RidingAnimation == 0:

@@ -262,7 +262,7 @@ if __name__ == '__main__':
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
                 gp.player.ridingHorseAnimation()
-                makeHorseJump() # If horse is jumping, make it jump
+                gp.player.performJumpSequence() # If horse is jumping, make it jump
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -306,6 +306,21 @@ if __name__ == '__main__':
 
         return gamestate
 
+    def collectTaskTrialData():
+        # Send time window to BCI
+        # If 3 seconds have passed after a task onset, send the time window to BCI.
+        if gp.task:
+            if gp.currentTime_s >= gp.startTime_TASK + 3:
+                if not BCI.collectTimewindowData:
+                    BCI.startTimeMeasurement = gp.currentTime_s # Start time measurement
+                BCI.collectTimewindowData = True
+                BCI.startMeasuringTask()
+                print("Collecting timewindow data")
+        if BCI.collectTimewindowData:
+            if gp.currentTime_s >= BCI.startTimeMeasurement + 3: # todo: make a variable out of 3
+                BCI.calculateNFsignal()
+                BCI.collectTimewindowData = False
+                print("Calculating NF signal...")
 
     def runMainGame():
         soundSystem.playMaintheme_slow()
@@ -327,6 +342,7 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
+            collectTaskTrialData() #todo: Also in localizer?
 
 
             # EXPERIMENT EVENTS
@@ -344,7 +360,7 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                makeHorseJump()
+                gp.player.performJumpSequence()
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -382,30 +398,6 @@ if __name__ == '__main__':
                 text = str(gp.nrCoinsCollected).rjust(3)
                 gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
 
-    def makeHorseJump():
-        if gp.player.HorseIsJumping:
-            if gp.player.HorseIsJumpingUp:
-                if gp.player.rect.top > 0 + (SCREEN_HEIGHT * 0.4):
-                    gp.player.jumpUp()
-                    print("Horse is jumping up.")
-                else:
-                    gp.player.HorseIsJumpingUp = False
-                    gp.player.HorseIsJumpingDown = True
-            if gp.player.HorseIsJumpingDown:
-                if gp.player.rect.bottom <= gp.player.borderOfPathForHorse-1:
-                    gp.player.jumpDown()
-                    print("Horse is jumping down. Screen height = ", str(SCREEN_HEIGHT), "  Horse bottom = ",
-                          str(gp.player.rect.bottom), " borderOfScreenForHorse = ", str(gp.player.borderOfPathForHorse))
-                else:
-                    gp.player.HorseIsJumpingDown = False
-                    gp.player.HorseIsJumping = False
-
-        else:
-            gp.player.ridingHorseAnimation()
-            if gp.player.rect.centerx > gp.player.startingPosition_x:  # Move horse back to starting point
-                print("Horse is moving back to starting point.")
-                gp.player.moveLeft()
-                gp.player.moveLeft()
 
     def runGameOver():
         gamestate = GameState.GAMEOVER
