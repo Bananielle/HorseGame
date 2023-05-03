@@ -321,7 +321,7 @@ if __name__ == '__main__':
                 BCI.calculateNFsignal()
                 BCI.collectTimewindowData = False
                 BCI.resetTimewindowArray()
-                print("Calculating NF signal...")
+                print("Calculating NF signal...")jhgjg
 
     def runMainGame():
         soundSystem.playMaintheme_slow()
