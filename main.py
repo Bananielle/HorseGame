@@ -320,6 +320,7 @@ if __name__ == '__main__':
             if gp.currentTime_s >= BCI.startTimeMeasurement + 3: # todo: make a variable out of 3
                 BCI.calculateNFsignal()
                 BCI.collectTimewindowData = False
+                BCI.resetTimewindowArray()
                 print("Calculating NF signal...")
 
     def runMainGame():

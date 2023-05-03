@@ -37,8 +37,9 @@ class BrainComputerInterface():
         scaled_data = 2 #self.scaleOxyData()
         if self.collectTimewindowData:
             self.timewindow.append(scaled_data)
-        else:
-            self.timewindow = [] # Reset the timewindow
+
+    def resetTimewindowArray(self):
+        self.timewindow = []
 
     def calculateNFsignal(self):
         NFsignal_raw = np.array(self.timewindow)
