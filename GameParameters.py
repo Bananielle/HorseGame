@@ -14,10 +14,10 @@ class GameParameters():
         # ADJUSTABLE PARAMETERS
         # paradigm
         self.folder = 'Horse'
-        self.duration_TASK_s = 5
-        self.duration_REST_s = 5
+        self.duration_TASK_s = 10
+        self.duration_REST_s = 14
         self.totalNum_TRIALS = 5  # Set the number of times Task should occur
-        self.duration_BASELINE_s = 5
+        self.duration_BASELINE_s = 0
         self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s ) * self.totalNum_TRIALS + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
         #Other
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses

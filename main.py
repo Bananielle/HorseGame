@@ -30,7 +30,7 @@ In SoundSystem
 """
 
 import pygame, random, os
-from pylsl import StreamInfo, StreamOutlet # import required classes
+#from pylsl import StreamInfo, StreamOutlet # import required classes
 
 import SettingsScreen
 from BrainComputerInterface import BrainComputerInterface
@@ -152,11 +152,11 @@ if __name__ == '__main__':
                 # print('score ', score, ' printed')
 
     def startTaskTrigger():
-        outlet.push_sample(x=[2])  # Task trigger
-        print('Started task trigger.')
+       # outlet.push_sample(x=[2])  # Task trigger
+       print('Started task trigger.')
 
     def startRestTrigger():
-        outlet.push_sample(x=[1])  # Rest trigger
+       # outlet.push_sample(x=[1])  # Rest trigger
         print('Started Rest trigger.')
 
 
@@ -310,18 +310,20 @@ if __name__ == '__main__':
         # Send time window to BCI
         # If 3 seconds have passed after a task onset, send the time window to BCI.
         if gp.task:
-            if gp.currentTime_s >= gp.startTime_TASK + 3:
+            if (gp.currentTime_s >= gp.startTime_TASK + 3): # If current time lies in the measurement window
                 if not BCI.collectTimewindowData:
                     BCI.startTimeMeasurement = gp.currentTime_s # Start time measurement
-                BCI.collectTimewindowData = True
-                BCI.startMeasuringTask()
-                print("Collecting timewindow data")
+                    BCI.collectTimewindowData = True
+                elif gp.currentTime_s < BCI.startTimeMeasurement + gp.duration_TASK_s:
+                    BCI.startMeasuringTask()
+                #print("Collecting timewindow data")
         if BCI.collectTimewindowData:
-            if gp.currentTime_s >= BCI.startTimeMeasurement + 3: # todo: make a variable out of 3
+            if gp.currentTime_s >= BCI.startTimeMeasurement + gp.duration_TASK_s: # todo: make a variable out of 3
+                print("Calculating NF signal...")
                 BCI.calculateNFsignal()
                 BCI.collectTimewindowData = False
                 BCI.resetTimewindowArray()
-                print("Calculating NF signal...")
+
 
     def runMainGame():
         soundSystem.playMaintheme_slow()
@@ -343,18 +345,7 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-            collectTaskTrialData() #todo: Also in localizer?
-
-
-            # EXPERIMENT EVENTS
-            # Baseline
-            # if gp.currentTime_s == 1:
-            #     gp.NrOfCoins = 1
-            #     if not gp.coinAlreadyBeingAdded:
-            #         coinEvent()
-            #         gp.coinAlreadyBeingAdded = True
-
-
+                collectTaskTrialData() #todo: Also in localizer?
 
             runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
@@ -653,9 +644,9 @@ if __name__ == '__main__':
     BCI.scaleOxyData()
 
     # Set up trigger straem
-    info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
-                      source_id='Example')  # sets variables for object info
-    outlet = StreamOutlet(info)  # initialize stream.
+#    info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
+   #                   source_id='Example')  # sets variables for object info
+   # outlet = StreamOutlet(info)  # initialize stream.
 
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()

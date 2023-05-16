@@ -14,7 +14,7 @@ class BrainComputerInterface():
         self.previousInput = 0
         self.fakeInput = 0
         self.TSIconnectionFound = True
-        self.timeBetweenSamples_ms = 100000
+        self.timeBetweenSamples_ms = 1000000
         self.collectTimewindowData= False
         self.timewindow = []
         self.startTimeMeasurement = 0
@@ -34,7 +34,8 @@ class BrainComputerInterface():
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) # I have to give it integers...
 
     def startMeasuringTask(self):
-        scaled_data = 2 #self.scaleOxyData()
+        scaled_data = self.scaleOxyData()
+        print("Started measuring task. Scaled oxy: " + str(scaled_data))
         if self.collectTimewindowData:
             self.timewindow.append(scaled_data)
 
@@ -58,7 +59,7 @@ class BrainComputerInterface():
             Selected = self.tsi.get_selected_channels()[0]
             oxy = self.tsi.get_data_oxy(Selected[0], currentTimePoint - 1)[0]
             input = oxy
-            print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
+           # print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
 
         else:
             input = 0
@@ -72,7 +73,7 @@ class BrainComputerInterface():
 
             scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
 
-            print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
+            #print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
         else:
             scaled_data = 0
 
@@ -84,7 +85,7 @@ class BrainComputerInterface():
         self.previousInput = self.currentInput
         self.currentInput = scaledOxyData
 
-        print("Current input: " + str(self.currentInput) + ", previous input: " + str(self.previousInput))
+      #  print("Current input: " + str(self.currentInput) + ", previous input: " + str(self.previousInput))
 
         keyboardPress = self.translateToKeyboardPress(self.currentInput, self.previousInput)
 
