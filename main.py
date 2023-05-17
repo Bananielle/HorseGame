@@ -9,7 +9,7 @@ Last updated: October 2022
 Notes for potential problem solving:
 - Use Python 3.7.5 as your interpreter (needed for expyriment)
 - When successfully pip installing expyriment (in a Python 3.7.5. environment), pygame is also immediately installed.
-- You may need to to pip install simpleaudio manually.
+- You may need to pip install simpleaudio manually.
 - If you get problems with the pygame mixer library, then toggle off USE_BACKGROUND_MUSIC in SoundSystem.py.
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ In SoundSystem
 """
 
 import pygame, random, os
-from pylsl import StreamInfo, StreamOutlet # import required classes
+from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
 from BrainComputerInterface import BrainComputerInterface
@@ -151,9 +151,11 @@ if __name__ == '__main__':
                 count += 1
                 # print('score ', score, ' printed')
 
+
     def startTaskTrigger():
         outlet.push_sample(x=[2])  # Task trigger
         print('Started task trigger.')
+
 
     def startRestTrigger():
         outlet.push_sample(x=[1])  # Rest trigger
@@ -168,8 +170,9 @@ if __name__ == '__main__':
         player = MainPlayer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
 
         gameParameters = GameParameters(player, SCREEN_WIDTH, SCREEN_HEIGHT)
+        gameParameters.generate_protocol()
         player.gameParams = gameParameters  # So that player also has access to game parameters
-        player.setPlayerSpeed() # to make this independent of frame rate
+        player.setPlayerSpeed()  # to make this independent of frame rate
 
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
 
@@ -191,7 +194,6 @@ if __name__ == '__main__':
         font = pygame.font.SysFont('herculanum', 20, bold=True, )
         textestEnvironment_txtt = font.render(string, True, PINK)  # Pink colour
         testEnvironment_txt = font.render("(Press 'L' for test environment)", True, (255, 255, 255))
-
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
@@ -247,6 +249,7 @@ if __name__ == '__main__':
 
         return gamestate
 
+
     def runLocalizer():
         gamestate = GameState.LOCALIZER
         readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -262,7 +265,7 @@ if __name__ == '__main__':
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
                 gp.player.ridingHorseAnimation()
-                gp.player.performJumpSequence() # If horse is jumping, make it jump
+                gp.player.performJumpSequence()  # If horse is jumping, make it jump
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -271,7 +274,6 @@ if __name__ == '__main__':
                     gp.mainGame_background.startPathBackground()
                 if event.key == K_SPACE:
                     gp.mainGame_background.endPathBackground()
-
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -306,29 +308,58 @@ if __name__ == '__main__':
 
         return gamestate
 
+    def stopCollectingData():
+        print("Calculating NF signal...")
+        BCI.calculateNFsignal()
+        BCI.collectTimewindowData = False
+        BCI.resetTimewindowDataArray()
+
+
+    def updateTimeWindow():
+        if gp.TASK_counter < gp.totalNum_TRIALS:
+            start_time_next_task = gp.protocol_file['task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
+            gp.window_start_time = start_time_next_task
+            gp.window_end_time = gp.window_start_time + gp.window_duration
+
+            print("Next time window: " + str(gp.window_start_time), "Window end time: " + str(gp.window_end_time))
+
+
     def collectTaskTrialData():
         # Send time window to BCI
-        # If 3 seconds have passed after a task onset, send the time window to BCI.
-        if gp.task:
-            if gp.currentTime_s >= gp.startTime_TASK + 3:
-                if not BCI.collectTimewindowData:
-                    BCI.startTimeMeasurement = gp.currentTime_s # Start time measurement
-                BCI.collectTimewindowData = True
-                BCI.startMeasuringTask()
-                print("Collecting timewindow data")
-        if BCI.collectTimewindowData:
-            if gp.currentTime_s >= BCI.startTimeMeasurement + 3: # todo: make a variable out of 3
-                BCI.calculateNFsignal()
-                BCI.collectTimewindowData = False
-                BCI.resetTimewindowArray()
-                print("Calculating NF signal...")jhgjg
+
+        if gp.window_start_time <= gp.currentTime_s <= gp.window_end_time:
+            BCI.collectTimewindowData = True
+            BCI.startMeasuringTask()
+            print("Collecting timewindow data")
+
+        if gp.currentTime_s == gp.window_end_time:
+            print("Calculating NF signal...")
+            BCI.calculateNFsignal()
+            BCI.collectTimewindowData = False
+            BCI.resetTimewindowDataArray()
+            updateTimeWindow()
+
+        #
+        # if gp.task:
+        #     if gp.currentTime_s >= gp.startTime_TASK + 3:
+        #         if not BCI.collectTimewindowData:
+        #             BCI.startTimeMeasurement = gp.currentTime_s  # Start time measurement
+        #         BCI.collectTimewindowData = True
+        #         BCI.startMeasuringTask()
+        #         print("Collecting timewindow data")
+        # if BCI.collectTimewindowData:
+        #     if gp.currentTime_s >= BCI.startTimeMeasurement + 3:  # todo: make a variable out of 3
+        #         BCI.calculateNFsignal()
+        #         BCI.collectTimewindowData = False
+        #         BCI.resetTimewindowArray()
+        #         print("Calculating NF signal...")
+
 
     def runMainGame():
         soundSystem.playMaintheme_slow()
         gamestate = GameState.MAINGAME
         readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
         BCI_input = 0
-
 
         mainGame_background.updateAllBackGrounds()
         displayBackgroundsOnScreen()
@@ -343,8 +374,7 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-            collectTaskTrialData() #todo: Also in localizer?
-
+                collectTaskTrialData()  # todo: Also in localizer?
 
             # EXPERIMENT EVENTS
             # Baseline
@@ -354,10 +384,7 @@ if __name__ == '__main__':
             #         coinEvent()
             #         gp.coinAlreadyBeingAdded = True
 
-
-
             runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
-
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
@@ -369,8 +396,8 @@ if __name__ == '__main__':
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
 
-        gp.coin.update() # Update the position of coins
-        checkForCoinCollision() # Check if any coins have collided with the player
+        gp.coin.update()  # Update the position of coins
+        checkForCoinCollision()  # Check if any coins have collided with the player
 
         # Draw all our sprites
         for entity in gp.all_sprites:
@@ -388,6 +415,7 @@ if __name__ == '__main__':
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
+
 
     def checkForCoinCollision():
         for coin in gp.coin:
@@ -449,6 +477,7 @@ if __name__ == '__main__':
 
         return gamestate
 
+
     def runMainGameParadigm():
 
         if gp.currentTime_s >= gp.duration_BASELINE_s:
@@ -456,20 +485,21 @@ if __name__ == '__main__':
                 initiateBasicTaskEvent()
                 deleteExistingCoins()
                 coinEvent()
+                resetRestStartTime()
 
             if isItTimeForRestEvent():
+                resetTaskStartTime()
                 initiateBasicRestEvent()
-
 
 
     def runLocalizerParadigm():
         # PARADIGM
         # Check if it's time for event TASK
         if isItTimeForTaskEvent():
-           initiateBasicTaskEvent()
-           if gp.displayCoinsInLocalizer:
-            deleteExistingCoins()
-            coinEvent()
+            initiateBasicTaskEvent()
+            if gp.displayCoinsInLocalizer:
+                deleteExistingCoins()
+                coinEvent()
 
         # Check if it's time for event REST
         if isItTimeForRestEvent():
@@ -484,9 +514,15 @@ if __name__ == '__main__':
         # loadingBar.updateLoadingBar(gp.currentTime_s - gp.startTime_TASK)
 
         loadingBar.fillLoadingBar()
-        pygame.draw.rect(screen, GREEN, [loadingBar.barfilling_x,loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
-        #pygame.draw.rect(screen, BLACK, [100,100, loadingBar.bar_width, loadingBar.bar_height], 2)
+        pygame.draw.rect(screen, GREEN,
+                         [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
+        # pygame.draw.rect(screen, BLACK, [100,100, loadingBar.bar_width, loadingBar.bar_height], 2)
 
+    def resetTaskStartTime():
+        gp.startTime_TASK = gp.currentTime_s  + gp.duration_REST_s# Reset the start time for event TASK
+
+    def resetRestStartTime():
+        gp.startTime_REST = gp.currentTime_s + gp.duration_TASK_s  # Reset the start time for event TASK
 
     def resetTaskandRestTime():
         gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
@@ -494,11 +530,27 @@ if __name__ == '__main__':
 
 
     def isItTimeForTaskEvent():
-        return gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False
+        if gp.task:
+            return False
+
+        if gp.TASK_counter >= gp.totalNum_TRIALS:
+            return False
+
+        if gp.currentTime_s >= gp.startTime_TASK:
+            return True
+
+        #return gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False
 
 
     def isItTimeForRestEvent():
-        return gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False
+        if gp.rest:
+            return False
+
+        if gp.currentTime_s >= gp.startTime_REST:
+            return True
+
+
+        #return gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False
 
 
     def initiateBasicTaskEvent():
@@ -508,25 +560,27 @@ if __name__ == '__main__':
         if gp.usePath:
             mainGame_background.startPathBackground()
 
-        resetTaskandRestTime()
+        #resetTaskandRestTime()
+        #resetTaskStartTime()
         gp.TASK_counter += 1  # Increment the counter for event TASK
         gp.update_Taskcounter()
         print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+
 
     def deleteExistingCoins():
         for coin in gp.coin:
             coin.kill()
 
-    def coinEvent():
-            gp.coinStartingPosition_y -= 0
-            addNewCoin(1, gp.coinStartingPosition_y)
-            addNewCoin(1, gp.coinStartingPosition_y - 50)
-            addNewCoin(1, gp.coinStartingPosition_y - 100)
-            addNewCoin(1, gp.coinStartingPosition_y - 150)
-            addNewCoin(1, gp.coinStartingPosition_y - 200)
-            addNewCoin(1, gp.coinStartingPosition_y - 250)
-            addNewCoin(1, gp.coinStartingPosition_y - 300)
 
+    def coinEvent():
+        gp.coinStartingPosition_y -= 0
+        addNewCoin(1, gp.coinStartingPosition_y)
+        addNewCoin(1, gp.coinStartingPosition_y - 50)
+        addNewCoin(1, gp.coinStartingPosition_y - 100)
+        addNewCoin(1, gp.coinStartingPosition_y - 150)
+        addNewCoin(1, gp.coinStartingPosition_y - 200)
+        addNewCoin(1, gp.coinStartingPosition_y - 250)
+        addNewCoin(1, gp.coinStartingPosition_y - 300)
 
 
     def addNewCoin(coinType, y_position):
@@ -538,7 +592,6 @@ if __name__ == '__main__':
               "  added at (game time counter) = " + str(gp.currentTime_s))
 
 
-
     def initiateBasicRestEvent():
         gp.task = False
         gp.rest = True
@@ -547,10 +600,9 @@ if __name__ == '__main__':
             mainGame_background.endPathBackground()
 
         loadingBar.resetLoadingBar()
-        resetTaskandRestTime()
+        resetRestStartTime()
         gp.REST_counter += 1  # Increment the counter for event B
         print("Event REST")
-
 
 
     def showHowMuchTimeHasPassed(gamestate):
@@ -582,11 +634,11 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
 
-        if gp.player.folder == "Resources/Bear/": # Need to change position of background because the trees need to reach all the way to the top of the screen
+        if gp.player.folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 0
-            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle,0])
+            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 0])
             screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
-        if gp.player.folder == "Resources/Camel/": # Need to change position of background because the trees need to reach all the way to the top of the screen
+        if gp.player.folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 20
         else:
             y = 40
@@ -596,13 +648,12 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
 
         if not gp.task and gp.useGreyOverlay:
-            screen.blit(mainGame_background.overlay_greysurface, (0, 0))# Draw the grey overlay surface on top of the background
+            screen.blit(mainGame_background.overlay_greysurface,
+                        (0, 0))  # Draw the grey overlay surface on top of the background
 
         if gp.task and gp.usePath:
             screen.blit(mainGame_background.background_path, [mainGame_background.bgX_foreground, 40])
             screen.blit(mainGame_background.background_path, [mainGame_background.bgX2_foreground, 40])
-
-
 
         # return mainGame_background
 
@@ -627,8 +678,8 @@ if __name__ == '__main__':
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
     if FULLSCREEN == 0:
-        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 4)
-        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h / 4)
+        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3)
+        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h / 3)
     else:  # If fullscreen is selected, adjust all size parameters to fullscreen
         SCREEN_WIDTH = infoObject.current_w
         SCREEN_HEIGHT = infoObject.current_h
@@ -642,7 +693,8 @@ if __name__ == '__main__':
     SURFACE = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
     # Create the screen object. The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),
-                                     FULLSCREEN)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
+                                     FULLSCREEN,
+                                     display=1)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 
     # Setup sounds
     pygame.mixer.init()  # Setup for sounds, defaults are good
@@ -708,7 +760,7 @@ if __name__ == '__main__':
 
         pygame.display.flip()
 
-        #print('frame rate = ',clock.get_fps())
+        # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()

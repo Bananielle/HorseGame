@@ -14,19 +14,32 @@ class GameParameters():
         # ADJUSTABLE PARAMETERS
         # paradigm
         self.folder = 'Horse'
-        self.duration_TASK_s = 5
-        self.duration_REST_s = 5
-        self.totalNum_TRIALS = 5  # Set the number of times Task should occur
-        self.duration_BASELINE_s = 5
-        self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s ) * self.totalNum_TRIALS + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
+        self.protocol_file = {
+            'duration_TASK_s': 5,
+            'duration_REST_s': 5,
+            'totalNum_TRIALS': 5, # Set the number of times Task should occur
+            'duration_BASELINE_s': 5,
+            'task_start_times': {},
+            'rest_start_times': {}
+        }
+
+
+        self.duration_TASK_s = self.protocol_file['duration_TASK_s']
+        self.duration_REST_s = self.protocol_file['duration_REST_s']
+        self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
+        self.duration_BASELINE_s = self.protocol_file['duration_BASELINE_s']
+        self.durationGame_s = (self.protocol_file['duration_TASK_s'] + self.protocol_file['duration_REST_s'] ) * self.protocol_file['totalNum_TRIALS'] + self.protocol_file['duration_BASELINE_s'] #How long you want to one game run to last (in seconds)
         #Other
+        self.window_start_time = self.duration_BASELINE_s  # for first trial
+        self.window_duration = self.duration_TASK_s
+        self.window_end_time = self.window_start_time + self.window_duration
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
         self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
 
         # Background markers for task and rest periods
         self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
-        self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
-        self.usePath = False # If true, then a path will appear during the task trial
+        self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
+        self.usePath = True # If true, then a path will appear during the task trial
         self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
         self.displayCoinsInLocalizer = True
 
@@ -35,8 +48,8 @@ class GameParameters():
         # Paradigm parameters - constants
         self.TASK_counter = 0    # Set the initial values for the event counters
         self.REST_counter = 0
-        self.startTime_TASK = 0  # Set the start time for event A
-        self.startTime_REST = 0
+        self.startTime_TASK = self.duration_BASELINE_s  # Set the start time for event A
+        self.startTime_REST = self.duration_BASELINE_s + self.duration_TASK_s
 
         self.ADDCOIN = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCOIN, 600) # Define how quickly new jellyfish are added (e.g., every 4000ms)
@@ -103,6 +116,23 @@ class GameParameters():
     def reset(self):
         self.all_sprites.empty()
 
+    def generate_protocol(self):
+        task_duration = self.protocol_file['duration_TASK_s']
+        rest_duration = self.protocol_file['duration_REST_s']
+        baseline_duration = self.protocol_file['duration_BASELINE_s']
+        total_num_trials = self.protocol_file['totalNum_TRIALS']
 
+        task_start_times = {}
+        rest_start_times = {}
 
+        for trial_number in range(1, total_num_trials + 1):
+            task_start_time = baseline_duration + (trial_number - 1) * (task_duration + rest_duration)
+            task_start_times[trial_number] = task_start_time
 
+            rest_start_time = task_start_time + task_duration
+            rest_start_times[trial_number] = rest_start_time
+
+        self.protocol_file['task_start_times'] = task_start_times
+        self.protocol_file['rest_start_times'] = rest_start_times
+
+        print('Protocol generated. Task start times are:' + str(task_start_times) + " and rest start times are: " + str(rest_start_times))
