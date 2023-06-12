@@ -89,6 +89,8 @@ class GameParameters():
         self.scoreSaved = False
         self.printedNFdata = False
 
+        self.achieved_jump_height = 1
+
         # Create the sprites
         self.player = player
         print('Player created')

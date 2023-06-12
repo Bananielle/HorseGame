@@ -267,7 +267,7 @@ if __name__ == '__main__':
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
                 gp.player.ridingHorseAnimation()
-                gp.player.performJumpSequence()  # If horse is jumping, make it jump
+                gp.player.performJumpSequence(achieved_jump_height=1)  # If horse is jumping, make it jump. 1 indicates max jump height
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -391,7 +391,8 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.player.performJumpSequence()
+                gp.achieved_jump_height = BCI.turn_NFsignal_into_jump_height()
+                gp.player.performJumpSequence(achieved_jump_height=gp.achieved_jump_height)
 
             gamestate = didPlayerPressQuit(gamestate, event)
 

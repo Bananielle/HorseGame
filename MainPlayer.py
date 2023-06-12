@@ -37,7 +37,7 @@ class MainPlayer(pygame.sprite.Sprite):
         #print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
 
         self.soundSystem = soundSystem
-        self.playerSpeed = 15
+        self.playerSpeed = 25
         self.RidingAnimation = 0
         self.JumpingAnimation = 0
         self.HorseIsJumping = False
@@ -118,10 +118,19 @@ class MainPlayer(pygame.sprite.Sprite):
         if self.rect.bottom >= self.borderOfPathForHorse:
             self.rect.bottom = self.borderOfPathForHorse
 
-    def performJumpSequence(self):
+    def calculate_jump_position(self,achieved_jump_height):
+
+        # Calculate the jump position based on the maximum jump height
+        jump_position = (0 + self.SCREEN_HEIGHT * 0.2) * achieved_jump_height
+        print("Jump position = ", str(jump_position))
+
+        return jump_position
+
+    def performJumpSequence(self,achieved_jump_height):
         if self.HorseIsJumping:
             if self.HorseIsJumpingUp:
-                if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
+                #if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
+                if self.rect.top >  self.calculate_jump_position(achieved_jump_height):  # todo: this needs to be dependent on the NF max value (which is a value between 1 and 0)
                     self.jumpUp()
                     print("Horse is jumping up.")
                 else:

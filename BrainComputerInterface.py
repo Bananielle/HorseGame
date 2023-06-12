@@ -19,9 +19,11 @@ class BrainComputerInterface():
         self.timewindow = []
         self.startTimeMeasurement = 0
         self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": []}
+        self.NFsignal_mean = 1
+        self.NFsignal_max = 1
+        self.NFSignal_median =1
 
-        self.NF_maxLevel = 0 # This is the max level for the NF signal that people can reach
-        self.NF_level = 0
+        self.NF_maxLevel = 1 # This is the max level for the NF signal that people can reach
 
         # Look for a connection to turbo-satori
         try:
@@ -48,20 +50,27 @@ class BrainComputerInterface():
 
     def calculateNFsignal(self):
         NFsignal_raw = np.array(self.timewindow)
-        NFsignal_mean = np.mean(NFsignal_raw)
-        NFsignal_max = np.max(NFsignal_raw)
-        NFSignal_median = np.median(NFsignal_raw)
+        self.NFsignal_mean = np.mean(NFsignal_raw)
+        self.NFsignal_max = np.max(NFsignal_raw)
+        self.NFSignal_median = np.median(NFsignal_raw)
 
         print("NFsignal_raw: " + str(NFsignal_raw))
-        print("NFsignal_mean: " + str(NFsignal_mean) + ", NFsignal_max: " + str(NFsignal_max) + ", NFSignal_median: " + str(NFSignal_median))
+        print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: " + str(self.NFSignal_median))
 
         # Save the variables to a dictionary
-        self.NFsignal["NFsignal_mean"].append(NFsignal_mean)
-        self.NFsignal["NFsignal_max"].append(NFsignal_max)
-        self.NFsignal["NFSignal_median"].append(NFSignal_median)
+        self.NFsignal["NFsignal_mean"].append(self.NFsignal_mean)
+        self.NFsignal["NFsignal_max"].append(self.NFsignal_max)
+        self.NFsignal["NFSignal_median"].append(self.NFSignal_median)
 
 
         print("NFsignals stored: " + str(self.NFsignal))
+
+    def turn_NFsignal_into_jump_height(self):
+        achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel
+        print("achieved_NF_signal: " + str(achieved_NF_signal))
+
+        return achieved_NF_signal
+
 
     def calculate_NF_max_threshold(self):
     # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
