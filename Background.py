@@ -10,7 +10,7 @@ class MainGame_background(pygame.sprite.Sprite):
         self.background_far = pygame.image.load(self.folder + 'background.png')
         #self.background_far = pygame.image.load('Resources/country-platform-back.png')
         self.background_far = pygame.transform.scale(self.background_far,
-                                                     (SCREEN_WIDTH, self.background_far.get_height() * 3))
+                                                     (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.bgX_far = 0 # first image
         self.bgX2_far = self.background_far.get_width() # second image (you're basically glueing both of them together to make a smooth transition
 

@@ -38,6 +38,7 @@ from GameParameters import GameParameters
 from Coin import Coin
 from Background import MainGame_background
 from LoadingBar import LoadingBar
+from Rider import Rider
 from SettingsScreen import Settings_header
 
 from SoundSystem import SoundSystem
@@ -168,8 +169,9 @@ if __name__ == '__main__':
         gamestate = GameState.setGameState(GameState.MAINGAME)
 
         player = MainPlayer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
+        rider = Rider(player, SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
 
-        gameParameters = GameParameters(player, SCREEN_WIDTH, SCREEN_HEIGHT)
+        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
         gameParameters.generate_protocol()
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
@@ -284,6 +286,7 @@ if __name__ == '__main__':
             # Get user input
             keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
             gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
+            gp.rider.update()
 
         # Update the position of coins
         if gp.displayCoinsInLocalizer:
@@ -634,11 +637,11 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
 
-        if gp.player.folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
+        if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 0
             screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 0])
             screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
-        if gp.player.folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
+        if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 20
         else:
             y = 40
@@ -679,7 +682,7 @@ if __name__ == '__main__':
 
     if FULLSCREEN == 0:
         SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3)
-        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h / 3)
+        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3)
     else:  # If fullscreen is selected, adjust all size parameters to fullscreen
         SCREEN_WIDTH = infoObject.current_w
         SCREEN_HEIGHT = infoObject.current_h
@@ -691,10 +694,11 @@ if __name__ == '__main__':
 
     # Screen
     SURFACE = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
+    ratio = SCREEN_WIDTH / SCREEN_HEIGHT
     # Create the screen object. The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE,
                                      FULLSCREEN,
-                                     display=1)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
+                                     display=0)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 
     # Setup sounds
     pygame.mixer.init()  # Setup for sounds, defaults are good

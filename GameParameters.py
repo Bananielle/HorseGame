@@ -6,7 +6,7 @@ GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
 class GameParameters():
-    def __init__(self,player,SCREEN_WIDTH,SCREEN_HEIGHT,):
+    def __init__(self,player,rider,SCREEN_WIDTH,SCREEN_HEIGHT,):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -39,7 +39,7 @@ class GameParameters():
         # Background markers for task and rest periods
         self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
         self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
-        self.usePath = True # If true, then a path will appear during the task trial
+        self.usePath = False # If true, then a path will appear during the task trial
         self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
         self.displayCoinsInLocalizer = True
 
@@ -91,6 +91,7 @@ class GameParameters():
         # Create the sprites
         self.player = player
         print('Player created')
+        self.rider = rider
         self.coin = pygame.sprite.Group()  # - enemies is used for collision detection and position updates
         self.messages = pygame.sprite.Group()
         self.all_sprites = pygame.sprite.Group()  # - all_sprites isused for rendering
