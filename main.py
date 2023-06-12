@@ -446,6 +446,11 @@ if __name__ == '__main__':
         # Save the score for the player
         scoreboard.addScoretoScoreBoard(gp.nrCoinsCollected)
 
+        if not gp.printedNFdata:
+            print("NFsignals stored: " + str(BCI.NFsignal))
+            BCI.calculate_NF_max_threshold()
+            gp.printedNFdata = True
+
         for event in pygame.event.get():
 
             if event.type == KEYDOWN:

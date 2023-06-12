@@ -87,6 +87,7 @@ class GameParameters():
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
 
         self.scoreSaved = False
+        self.printedNFdata = False
 
         # Create the sprites
         self.player = player

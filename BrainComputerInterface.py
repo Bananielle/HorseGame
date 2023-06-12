@@ -18,6 +18,10 @@ class BrainComputerInterface():
         self.collectTimewindowData= False
         self.timewindow = []
         self.startTimeMeasurement = 0
+        self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": []}
+
+        self.NF_maxLevel = 0 # This is the max level for the NF signal that people can reach
+        self.NF_level = 0
 
         # Look for a connection to turbo-satori
         try:
@@ -51,9 +55,30 @@ class BrainComputerInterface():
         print("NFsignal_raw: " + str(NFsignal_raw))
         print("NFsignal_mean: " + str(NFsignal_mean) + ", NFsignal_max: " + str(NFsignal_max) + ", NFSignal_median: " + str(NFSignal_median))
 
+        # Save the variables to a dictionary
+        self.NFsignal["NFsignal_mean"].append(NFsignal_mean)
+        self.NFsignal["NFsignal_max"].append(NFsignal_max)
+        self.NFsignal["NFSignal_median"].append(NFSignal_median)
+
+
+        print("NFsignals stored: " + str(self.NFsignal))
+
+    def calculate_NF_max_threshold(self):
+    # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
+        NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean"]))
+        NFsignal_max = np.mean((self.NFsignal["NFsignal_max"]))
+        NFSignal_median = np.mean((self.NFsignal["NFSignal_median"]))
+
+        # Print the mean of the NFsignal_mean values
+        print("End of run. NFsignal_mean: " + str(NFsignal_mean) + ", NFsignal_max: " + str(NFsignal_max) + ", NFSignal_median: " + str(NFSignal_median))
+
+        self.set_NF_max_threshold(NFsignal_max)
+
+    def set_NF_max_threshold(self,NFsignal_max):
+        self.NF_maxLevel = NFsignal_max
+        print("NF_maxLevel set to: " + str(self.NF_maxLevel))
 
     def getCurrentInput(self):
-
         if self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
             Selected = self.tsi.get_selected_channels()[0]
