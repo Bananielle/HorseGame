@@ -356,21 +356,6 @@ if __name__ == '__main__':
             BCI.resetTimewindowDataArray()
             updateTimeWindow()
 
-        #
-        # if gp.task:
-        #     if gp.currentTime_s >= gp.startTime_TASK + 3:
-        #         if not BCI.collectTimewindowData:
-        #             BCI.startTimeMeasurement = gp.currentTime_s  # Start time measurement
-        #         BCI.collectTimewindowData = True
-        #         BCI.startMeasuringTask()
-        #         print("Collecting timewindow data")
-        # if BCI.collectTimewindowData:
-        #     if gp.currentTime_s >= BCI.startTimeMeasurement + 3:  # todo: make a variable out of 3
-        #         BCI.calculateNFsignal()
-        #         BCI.collectTimewindowData = False
-        #         BCI.resetTimewindowArray()
-        #         print("Calculating NF signal...")
-
 
     def runMainGame():
         soundSystem.playMaintheme_slow()
@@ -608,6 +593,7 @@ if __name__ == '__main__':
         addNewCoin(1, gp.coinStartingPosition_y - 200)
         addNewCoin(1, gp.coinStartingPosition_y - 250)
         addNewCoin(1, gp.coinStartingPosition_y - 300)
+        addNewCoin(1, gp.coinStartingPosition_y - 350)
 
 
     def addNewCoin(coinType, y_position):

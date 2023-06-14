@@ -96,7 +96,7 @@ class GameParameters():
         self.nrCoinsCollected = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
-        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - 200)
+        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4))
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
 
         self.scoreSaved = False
@@ -143,6 +143,7 @@ class GameParameters():
 
         for trial_number in range(1, total_num_trials + 1):
             task_start_time = baseline_duration + (trial_number - 1) * (task_duration + rest_duration)
+            print("task_start_time: " + str(task_start_time))
             task_start_times[trial_number] = task_start_time
 
             rest_start_time = task_start_time + task_duration

@@ -158,7 +158,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
                 if self.rect.top >  self.calculate_jump_position(NF_level_reached):  # todo: this needs to be dependent on the NF max value (which is a value between 1 and 0)
                     self.jumpUp()
-                    print("Horse is jumping up. NF_level reached: " + str(NF_level_reached) + ", Achieved jump position = " + str(self.calculate_jump_position(NF_level_reached)))
+                    print("Horse is jumping up. NF_level reached: " + str(int(NF_level_reached*100)) + "%, Achieved jump position = " + str(self.calculate_jump_position(NF_level_reached)))
                 else:
                     self.HorseIsJumpingUp = False
                     self.HorseIsJumpingDown = True
