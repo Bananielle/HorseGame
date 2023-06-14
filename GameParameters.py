@@ -15,14 +15,15 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 5,
-            'duration_REST_s': 5,
+            'duration_TASK_s': 10,
+            'duration_REST_s': 14,
             'totalNum_TRIALS': 5, # Set the number of times Task should occur
-            'duration_BASELINE_s': 5,
+            'duration_BASELINE_s': 25,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
+        self.draw_grid = True
 
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
         self.duration_REST_s = self.protocol_file['duration_REST_s']
@@ -72,13 +73,25 @@ class GameParameters():
         self.velocity = 1 # Determines general speed of all sprites (to ensure frame-rate independence)
         self.deltaTime = 1
 
+        # Create the sprites
+        self.player = player
+        print('Player created')
+        self.rider = rider
+        self.coin = pygame.sprite.Group()  # - enemies is used for collision detection and position updates
+        self.messages = pygame.sprite.Group()
+        self.all_sprites = pygame.sprite.Group()  # - all_sprites isused for rendering
+        self.all_sprites.add(self.player)
+
         # Create counter text
         self.counterText = str('-').rjust(3)
         self.mainFont = pygame.font.SysFont('herculanum', 30, bold=True, )
+        self.debuggingFont = pygame.font.SysFont('arial', 15, bold=False, )
         self.jellyfishCollectedFont = pygame.font.SysFont('herculanum', 40, bold=True, )
         self.gameTimeCounterText = self.mainFont.render(self.counterText, True, PINK)
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
+        self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top), True, [0,0,0])
+        #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
         self.nrCoinsCollected = 0
         self.coinAlreadyBeingAdded = False
@@ -91,15 +104,6 @@ class GameParameters():
 
         self.achieved_jump_height = 1
 
-        # Create the sprites
-        self.player = player
-        print('Player created')
-        self.rider = rider
-        self.coin = pygame.sprite.Group()  # - enemies is used for collision detection and position updates
-        self.messages = pygame.sprite.Group()
-        self.all_sprites = pygame.sprite.Group()  # - all_sprites isused for rendering
-        self.all_sprites.add(self.player)
-
         # Counter ( for countin down the seconds until game over)
         self.SECOND_HAS_PASSED = pygame.USEREVENT
         pygame.time.set_timer(self.SECOND_HAS_PASSED, 1000) # in ms
@@ -109,6 +113,14 @@ class GameParameters():
         self.rest = True
 
         self.mainGame_background = 0
+
+    def update_y_position_horse_text(self):
+        self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top),
+                                                                   True, [0, 0, 0])
+
+    def update_jump_position_text(self):
+        self.achieved_jump_height_text = self.debuggingFont.render("Achieved jump height = " + str(self.achieved_jump_height),
+                                                                   True, [0, 0, 0])
 
     def update_Taskcounter(self):
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)

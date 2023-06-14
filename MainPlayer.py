@@ -79,11 +79,11 @@ class MainPlayer(pygame.sprite.Sprite):
 
 
         # Also allow for BCI input to make player move up and down if True
-        if useBCIinput:
-            if brainKeyPress == K_UP:
-                self.moveUp()
-            if brainKeyPress == K_DOWN:
-                self.moveDown()
+        # if useBCIinput:
+        #     if brainKeyPress == K_UP:
+        #         self.moveUp()
+        #     if brainKeyPress == K_DOWN:
+        #         self.moveDown()
 
 
         if pressed_keys[K_UP]:
@@ -118,29 +118,55 @@ class MainPlayer(pygame.sprite.Sprite):
         if self.rect.bottom >= self.borderOfPathForHorse:
             self.rect.bottom = self.borderOfPathForHorse
 
-    def calculate_jump_position(self,achieved_jump_height):
+    def calculate_jump_position(self, achieved_NF_level):
+        #
+        # achieved_NF_level = 0.1
+        # while achieved_NF_level < 1.1:
+        #     jump_position = (0 + self.SCREEN_HEIGHT * 0.2) + (self.SCREEN_HEIGHT * (1 - achieved_NF_level))
+        #     print("=====achieved NF level: " + str(achieved_NF_level), ", jump position: " + str(jump_position))
+        #     achieved_NF_level += 0.1
 
-        # Calculate the jump position based on the maximum jump height
-        jump_position = (0 + self.SCREEN_HEIGHT * 0.2) * achieved_jump_height
-        print("Jump position = ", str(jump_position))
+        # NF should not be zero or negative
+        if achieved_NF_level <= 0:
+            print("NF signal is below zero:  ", str(achieved_NF_level))
+            achieved_NF_level = 0.2
+
+        # # Calculate the jump position based on the maximum jump height
+        # jump_position = (0 + self.SCREEN_HEIGHT * 0.2) + (self.SCREEN_HEIGHT * (1 - achieved_NF_level))
+        #
+        # # Jump should not be higher than 4/5 of the screen
+        # if jump_position < self.SCREEN_HEIGHT * 0.2:
+        #     print("Jump position is higher than screen limit:  ", str(jump_position))
+        #     jump_position = 0 + self.SCREEN_HEIGHT * 0.2
+
+        jump_lower_bound = 4 / 10  # Lower bound of the jump position range
+        jump_upper_bound = 10 / 10  # Upper bound of the jump position range
+
+        # Map the neurofeedback signal to the jump position range
+        jump_position = jump_lower_bound + (jump_upper_bound - jump_lower_bound) * achieved_NF_level
+        jump_position = int(self.SCREEN_HEIGHT * (1 - jump_position))
+
+        #print("Jump position = ", str(jump_position))
+
 
         return jump_position
 
-    def performJumpSequence(self,achieved_jump_height):
+    def performJumpSequence(self, NF_level_reached):
         if self.HorseIsJumping:
             if self.HorseIsJumpingUp:
                 #if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
-                if self.rect.top >  self.calculate_jump_position(achieved_jump_height):  # todo: this needs to be dependent on the NF max value (which is a value between 1 and 0)
+
+                if self.rect.top >  self.calculate_jump_position(NF_level_reached):  # todo: this needs to be dependent on the NF max value (which is a value between 1 and 0)
                     self.jumpUp()
-                    print("Horse is jumping up.")
+                    print("Horse is jumping up. NF_level reached: " + str(NF_level_reached) + ", Achieved jump position = " + str(self.calculate_jump_position(NF_level_reached)))
                 else:
                     self.HorseIsJumpingUp = False
                     self.HorseIsJumpingDown = True
             if self.HorseIsJumpingDown:
                 if self.rect.bottom <= self.borderOfPathForHorse-1:
                     self.jumpDown()
-                    print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
-                          str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
+                    #print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
+                          #str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False

@@ -23,7 +23,7 @@ class BrainComputerInterface():
         self.NFsignal_max = 1
         self.NFSignal_median =1
 
-        self.NF_maxLevel = 1 # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 1.2 # This is the max level for the NF signal that people can reach
 
         # Look for a connection to turbo-satori
         try:
@@ -65,9 +65,9 @@ class BrainComputerInterface():
 
         print("NFsignals stored: " + str(self.NFsignal))
 
-    def turn_NFsignal_into_jump_height(self):
-        achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel
-        print("achieved_NF_signal: " + str(achieved_NF_signal))
+    def get_achieved_NF_level(self):
+        achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
+        #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
         return achieved_NF_signal
 
@@ -84,8 +84,8 @@ class BrainComputerInterface():
         self.set_NF_max_threshold(NFsignal_max)
 
     def set_NF_max_threshold(self,NFsignal_max):
-        self.NF_maxLevel = NFsignal_max
-        print("NF_maxLevel set to: " + str(self.NF_maxLevel))
+        self.NF_maxLevel_based_on_localizer = NFsignal_max
+        print("NF_maxLevel set to: " + str(self.NF_maxLevel_based_on_localizer))
 
     def getCurrentInput(self):
         if self.TSIconnectionFound:

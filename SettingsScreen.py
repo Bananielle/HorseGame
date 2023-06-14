@@ -1,4 +1,4 @@
-import pygame,pygame_textinput
+import pygame
 
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards

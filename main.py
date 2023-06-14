@@ -30,7 +30,7 @@ In SoundSystem
 """
 
 import pygame, random, os
-from pylsl import StreamInfo, StreamOutlet  # import required classes
+#from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
 from BrainComputerInterface import BrainComputerInterface
@@ -154,12 +154,12 @@ if __name__ == '__main__':
 
 
     def startTaskTrigger():
-        outlet.push_sample(x=[2])  # Task trigger
+       # outlet.push_sample(x=[2])  # Task trigger
         print('Started task trigger.')
 
 
     def startRestTrigger():
-        outlet.push_sample(x=[1])  # Rest trigger
+    #    outlet.push_sample(x=[1])  # Rest trigger
         print('Started Rest trigger.')
 
 
@@ -267,7 +267,8 @@ if __name__ == '__main__':
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
                 gp.player.ridingHorseAnimation()
-                gp.player.performJumpSequence(achieved_jump_height=1)  # If horse is jumping, make it jump. 1 indicates max jump height
+                gp.achieved_NF_level = BCI.get_achieved_NF_level()
+                gp.player.performJumpSequence(NF_level_reached=gp.achieved_NF_level)  # If horse is jumping, make it jump. 1 indicates max jump height
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -286,6 +287,7 @@ if __name__ == '__main__':
             # Get user input
             keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
             gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
+            collectTaskTrialData()  # todo: Also in localizer?
             gp.rider.update()
 
         # Update the position of coins
@@ -298,9 +300,8 @@ if __name__ == '__main__':
             screen.blit(entity.surf, entity.rect)
 
         # Draw game time counter text
-        screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
-        screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
-        screen.blit(gp.nrTrialsCompletedText, (20, 60))
+        draw_game_time_text()
+        draw_debugging_text()
 
         if gp.task:
             if gp.useLoadingBar:
@@ -310,6 +311,19 @@ if __name__ == '__main__':
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         return gamestate
+
+    def draw_game_time_text():
+        # Draw game time counter text
+        screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
+        screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+        screen.blit(gp.nrTrialsCompletedText, (20, 60))
+
+    def draw_debugging_text():
+        gp.update_y_position_horse_text()
+        gp.update_jump_position_text()
+        screen.blit(gp.horse_upper_position_text, (20, 80))
+        screen.blit(gp.achieved_jump_height_text, (20, 100))
+
 
     def stopCollectingData():
         print("Calculating NF signal...")
@@ -391,8 +405,8 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.achieved_jump_height = BCI.turn_NFsignal_into_jump_height()
-                gp.player.performJumpSequence(achieved_jump_height=gp.achieved_jump_height)
+                gp.achieved_NF_level = BCI.get_achieved_NF_level()
+                gp.player.performJumpSequence(NF_level_reached=gp.achieved_NF_level)
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -408,8 +422,9 @@ if __name__ == '__main__':
             screen.blit(entity.surf, entity.rect)
 
         # Draw game time counter text
-        screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
-        screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+        draw_game_time_text()
+        draw_debugging_text()
+
 
         if gp.task:
             if gp.useLoadingBar:
@@ -510,11 +525,14 @@ if __name__ == '__main__':
                 deleteExistingCoins()
                 coinEvent()
 
+            resetTaskStartTime()
+
         # Check if it's time for event REST
         if isItTimeForRestEvent():
             gp.player.HorseIsJumping = True
             gp.player.HorseIsJumpingUp = True
             initiateBasicRestEvent()
+            resetRestStartTime()
 
 
     def updateLoadingBar(loadingBar):
@@ -666,6 +684,17 @@ if __name__ == '__main__':
 
         # return mainGame_background
 
+        if gp.draw_grid:
+            # Draw the grid
+            for x in range(0, SCREEN_WIDTH, grid_size):
+                pygame.draw.line(screen, grid_color, (x, 0), (x, SCREEN_HEIGHT))
+                label = font.render(str(x), True, grid_color)
+                screen.blit(label, (x, 0))
+            for y in range(0, SCREEN_HEIGHT, grid_size):
+                label = font.render(str(y), True, grid_color)
+                screen.blit(label, (0, y))
+                pygame.draw.line(screen, grid_color, (0, y), (SCREEN_WIDTH, y))
+
 
     def didPlayerPressQuit(gamestate, event):
 
@@ -706,6 +735,11 @@ if __name__ == '__main__':
                                      FULLSCREEN,
                                      display=0)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 
+    # Grid configuration
+    grid_size = int(SCREEN_HEIGHT/10)  # Size of each grid cell
+    grid_color = (0, 0, 0)  # Color of the grid lines
+    font = pygame.font.SysFont(None, 18)  # Font for the position labels
+
     # Setup sounds
     pygame.mixer.init()  # Setup for sounds, defaults are good
 
@@ -715,9 +749,9 @@ if __name__ == '__main__':
     BCI.scaleOxyData()
 
     # Set up trigger straem
-    info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
-                      source_id='Example')  # sets variables for object info
-    outlet = StreamOutlet(info)  # initialize stream.
+#    info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
+   #                   source_id='Example')  # sets variables for object info
+   # outlet = StreamOutlet(info)  # initialize stream.
 
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
