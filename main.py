@@ -268,7 +268,7 @@ if __name__ == '__main__':
             if event.type == gp.HORSEANIMATION:
                 gp.player.ridingHorseAnimation()
                 gp.achieved_NF_level = BCI.get_achieved_NF_level()
-                gp.player.performJumpSequence(NF_level_reached=gp.achieved_NF_level)  # If horse is jumping, make it jump. 1 indicates max jump height
+                gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
