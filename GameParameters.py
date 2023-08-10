@@ -23,7 +23,7 @@ class GameParameters():
             'rest_start_times': {}
         }
 
-        self.draw_grid = True
+        self.draw_grid = False
 
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
         self.duration_REST_s = self.protocol_file['duration_REST_s']

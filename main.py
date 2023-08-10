@@ -269,6 +269,7 @@ if __name__ == '__main__':
                 gp.player.ridingHorseAnimation()
                 gp.achieved_NF_level = BCI.get_achieved_NF_level()
                 gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
+                gp.achieved_jump_height = 0.5 # For displayign debugging text
 
             # Start the path if p is pressed
             if event.type == KEYDOWN:
@@ -392,6 +393,8 @@ if __name__ == '__main__':
             if event.type == gp.HORSEANIMATION:
                 gp.achieved_NF_level = BCI.get_achieved_NF_level()
                 gp.player.performJumpSequence(NF_level_reached=gp.achieved_NF_level)
+                gp.achieved_jump_height =gp.achieved_NF_level
+
 
             gamestate = didPlayerPressQuit(gamestate, event)
 

@@ -19,11 +19,13 @@ class BrainComputerInterface():
         self.timewindow = []
         self.startTimeMeasurement = 0
         self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": []}
+
+        self.NF_maxLevel_based_on_localizer = 1.2  # This is the max level for the NF signal that people can reach
+
         self.NFsignal_mean = 1
-        self.NFsignal_max = 1
+        self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
         self.NFSignal_median =1
 
-        self.NF_maxLevel_based_on_localizer = 1.2 # This is the max level for the NF signal that people can reach
 
         # Look for a connection to turbo-satori
         try:
