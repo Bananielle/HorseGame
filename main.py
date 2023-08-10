@@ -510,14 +510,14 @@ if __name__ == '__main__':
                 deleteExistingCoins()
                 coinEvent()
 
-            resetTaskStartTime()
+            resetRestStartTime()
 
         # Check if it's time for event REST
         if isItTimeForRestEvent():
             gp.player.HorseIsJumping = True
             gp.player.HorseIsJumpingUp = True
             initiateBasicRestEvent()
-            resetRestStartTime()
+            resetTaskStartTime()
 
 
     def updateLoadingBar(loadingBar):
