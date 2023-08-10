@@ -509,9 +509,11 @@ if __name__ == '__main__':
             if gp.displayCoinsInLocalizer:
                 deleteExistingCoins()
                 coinEvent()
+            resetRestStartTime()
 
         # Check if it's time for event REST
         if isItTimeForRestEvent():
+            resetTaskStartTime()
             gp.player.HorseIsJumping = True
             gp.player.HorseIsJumpingUp = True
             initiateBasicRestEvent()
