@@ -15,25 +15,26 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 5,
-            'duration_REST_s': 5,
-            'totalNum_TRIALS': 5, # Set the number of times Task should occur
-            'duration_BASELINE_s': 5,
+            'duration_TASK_s': 10,
+            'duration_REST_s': 20,
+            'totalNum_TRIALS': 16, # Set the number of times Task should occur
+            'duration_BASELINE_s': 20,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
         self.draw_grid = False
 
+        self.hemodynamic_delay = 3
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
         self.duration_REST_s = self.protocol_file['duration_REST_s']
         self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
         self.duration_BASELINE_s = self.protocol_file['duration_BASELINE_s']
         self.durationGame_s = (self.protocol_file['duration_TASK_s'] + self.protocol_file['duration_REST_s'] ) * self.protocol_file['totalNum_TRIALS'] + self.protocol_file['duration_BASELINE_s'] #How long you want to one game run to last (in seconds)
         #Other
-        self.window_start_time = self.duration_BASELINE_s  # for first trial
-        self.window_duration = self.duration_TASK_s
-        self.window_end_time = self.window_start_time + self.window_duration
+        self.datawindow_start_time = self.duration_BASELINE_s + self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
+        self.datawindow_duration = self.duration_TASK_s - self.hemodynamic_delay # Needs to be equal to the end of the task (because then the horse needs to jump)
+        self.datawindow_end_time = self.datawindow_start_time + self.datawindow_duration
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
         self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
 

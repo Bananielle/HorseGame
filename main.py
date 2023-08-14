@@ -333,29 +333,29 @@ if __name__ == '__main__':
         BCI.resetTimewindowDataArray()
 
 
-    def updateTimeWindow():
+    def updateTimeDataWindow():
         if gp.TASK_counter < gp.totalNum_TRIALS:
             start_time_next_task = gp.protocol_file['task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
-            gp.window_start_time = start_time_next_task
-            gp.window_end_time = gp.window_start_time + gp.window_duration
+            gp.datawindow_start_time = start_time_next_task + gp.hemodynamic_delay
+            gp.datawindow_end_time = gp.datawindow_start_time + gp.datawindow_duration
 
-            print("Next time window: " + str(gp.window_start_time), "Window end time: " + str(gp.window_end_time))
+            print("Next data time window: " + str(gp.datawindow_start_time), "Datawindow end time: " + str(gp.datawindow_end_time))
 
 
     def collectTaskTrialData():
         # Send time window to BCI
 
-        if gp.window_start_time <= gp.currentTime_s <= gp.window_end_time:
+        if gp.datawindow_start_time <= gp.currentTime_s <= gp.datawindow_end_time:
             BCI.collectTimewindowData = True
             BCI.startMeasuringTask()
             print("Collecting timewindow data")
 
-        if gp.currentTime_s == gp.window_end_time:
+        if gp.currentTime_s == gp.datawindow_end_time:
             print("Calculating NF signal...")
             BCI.calculateNFsignal()
             BCI.collectTimewindowData = False
             BCI.resetTimewindowDataArray()
-            updateTimeWindow()
+            updateTimeDataWindow()
 
 
     def runMainGame():
@@ -500,6 +500,8 @@ if __name__ == '__main__':
                 resetRestStartTime()
 
             if isItTimeForRestEvent():
+                gp.player.HorseIsJumping = True
+                gp.player.HorseIsJumpingUp = True
                 resetTaskStartTime()
                 initiateBasicRestEvent()
 
