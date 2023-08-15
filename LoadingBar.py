@@ -17,12 +17,14 @@ class LoadingBar(pygame.sprite.Sprite):
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)   # Set
         self.rect = self.surf.get_rect()
 
+
         # Set up the loading bar
         self.bar_width = 130
         self.bar_height = 15
         self.bar_fill = 0
         self.fill_rate_task = self.bar_width / ((gameParams.duration_TASK_s - 0)* gameParams.FPS)
-        self.fill_rate_rest = self.bar_width / ((gameParams.duration_REST_s - 1 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
+        self.fill_rate_rest = self.bar_width / ((gameParams.duration_REST_s - 0 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
+        self.fill_rate_baseline = self.bar_width / ((gameParams.duration_BASELINE_s - 0 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
 
         # Put the center of surf at the left corner of the display
         self.surf_center = (30,20)
@@ -37,9 +39,14 @@ class LoadingBar(pygame.sprite.Sprite):
         if self.bar_fill < self.bar_width:
             if task: # If loading bar of task:
                 self.bar_fill += self.fill_rate_task
+               # print('Fill rate: ', self.fill_rate_task, ', Bar fill: ', self.bar_fill)
             else: # If loading bar of rest:
-                self.bar_fill += self.fill_rate_rest
-            #print('Fill rate: ', self.fill_rate, ', Bar fill: ', self.bar_fill)
+                if self.gameParams.baseline:
+                    self.bar_fill += self.fill_rate_baseline
+                 #   print('Fill rate: ', self.fill_rate_baseline, ', Bar fill: ', self.bar_fill)
+                else:
+                    self.bar_fill += self.fill_rate_rest
+                  #  print('Fill rate: ', self.fill_rate_rest, ', Bar fill: ', self.bar_fill)
 
     # def updateImage(self):
     #     self.surf.set_colorkey((0, 0, 0), RLEACCEL)

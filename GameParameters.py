@@ -31,7 +31,7 @@ class GameParameters():
         self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
         self.duration_BASELINE_s = self.protocol_file['duration_BASELINE_s']
         self.durationGame_s = (self.protocol_file['duration_TASK_s'] + self.protocol_file['duration_REST_s'] ) * self.protocol_file['totalNum_TRIALS'] + self.protocol_file['duration_BASELINE_s'] #How long you want to one game run to last (in seconds)
-        #Other
+        # Other
         self.datawindow_start_time = self.duration_BASELINE_s + self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_duration = self.duration_TASK_s - self.hemodynamic_delay # Needs to be equal to the end of the task (because then the horse needs to jump)
         self.datawindow_end_time = self.datawindow_start_time + self.datawindow_duration
@@ -112,6 +112,7 @@ class GameParameters():
 
         self.task = False
         self.rest = True
+        self.baseline = True
 
         self.mainGame_background = 0
 

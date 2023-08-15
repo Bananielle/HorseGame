@@ -317,7 +317,7 @@ if __name__ == '__main__':
 
         if gp.rest:
             if gp.useLoadingBar:
-                print("Using rest loading bar.")
+              #  print("Using rest loading bar.")
                 screen.blit(loadingBar.surf, loadingBar.surf_center)
                 updateLoadingBar_rest(loadingBar)
 
@@ -433,7 +433,7 @@ if __name__ == '__main__':
 
         if gp.rest:
             if gp.useLoadingBar:
-                print("Using rest loading bar.")
+               # print("Using rest loading bar.")
                 screen.blit(loadingBar.surf, loadingBar.surf_center)
                 updateLoadingBar_rest(loadingBar)
 
@@ -446,10 +446,27 @@ if __name__ == '__main__':
             if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
                 soundSystem.coinCollected.play()
-                gp.nrCoinsCollected += 1  # Extra points for jellyfish!
+                gp.nrCoinsCollected += 1
+
+                if coin.rank == 8:
+                    print("Highest coin collected! Killing all coins.")
+                    soundSystem.coin_sound.play() # Play extra sound
+                    killAllCoins()
+                    break
+
                 # Show the player how many coins have been collected
                 text = str(gp.nrCoinsCollected).rjust(3)
                 gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
+
+
+    def killAllCoins():
+        for coin in gp.coin:
+            coin.kill()
+            soundSystem.coinCollected.play()
+            gp.nrCoinsCollected += 1
+            # Show the player how many coins have been collected
+            text = str(gp.nrCoinsCollected).rjust(3)
+            gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
 
 
     def runGameOver():
@@ -510,6 +527,7 @@ if __name__ == '__main__':
     def runMainGameParadigm():
 
         if gp.currentTime_s >= gp.duration_BASELINE_s:
+            gp.baseline = False
             if isItTimeForTaskEvent():
                 initiateBasicTaskEvent()
                 deleteExistingCoins()
@@ -526,13 +544,15 @@ if __name__ == '__main__':
     def runLocalizerParadigm():
         # PARADIGM
         # Check if it's time for event TASK
-        if isItTimeForTaskEvent():
-            initiateBasicTaskEvent()
-            if gp.displayCoinsInLocalizer:
-                deleteExistingCoins()
-                coinEvent()
+        if gp.currentTime_s >= gp.duration_BASELINE_s:
+            gp.baseline = False
+            if isItTimeForTaskEvent():
+                initiateBasicTaskEvent()
+                if gp.displayCoinsInLocalizer:
+                    deleteExistingCoins()
+                    coinEvent()
 
-            resetRestStartTime()
+                resetRestStartTime()
 
         # Check if it's time for event REST
         if isItTimeForRestEvent():
@@ -616,18 +636,18 @@ if __name__ == '__main__':
 
     def coinEvent():
         gp.coinStartingPosition_y -= 0
-        addNewCoin(1, gp.coinStartingPosition_y)
-        addNewCoin(1, gp.coinStartingPosition_y - 50)
-        addNewCoin(1, gp.coinStartingPosition_y - 100)
-        addNewCoin(1, gp.coinStartingPosition_y - 150)
-        addNewCoin(1, gp.coinStartingPosition_y - 200)
-        addNewCoin(1, gp.coinStartingPosition_y - 250)
-        addNewCoin(1, gp.coinStartingPosition_y - 300)
-        addNewCoin(1, gp.coinStartingPosition_y - 350)
+        addNewCoin(1, gp.coinStartingPosition_y,1)
+        addNewCoin(1, gp.coinStartingPosition_y - 50,2)
+        addNewCoin(1, gp.coinStartingPosition_y - 100,3)
+        addNewCoin(1, gp.coinStartingPosition_y - 150,4)
+        addNewCoin(1, gp.coinStartingPosition_y - 200,5)
+        addNewCoin(1, gp.coinStartingPosition_y - 250,6)
+        addNewCoin(1, gp.coinStartingPosition_y - 300,7)
+        addNewCoin(1, gp.coinStartingPosition_y - 350,8)
 
 
-    def addNewCoin(coinType, y_position):
-        new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, y_position)
+    def addNewCoin(coinType, y_position,rank):
+        new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, y_position, rank)
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
         gp.NrOfCoins += 1

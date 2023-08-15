@@ -9,7 +9,7 @@ from pygame.locals import (
 # Define the enemy object extending pygame.sprite.Sprite
 # Instead of a surface, we use an image for a better looking sprite
 class Coin(pygame.sprite.Sprite):
-    def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT,gameParams, startingPosition_y):
+    def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT,gameParams, startingPosition_y,rank):
         super(Coin, self).__init__()
         self.gameParams = gameParams
         self.surf = pygame.image.load("Resources/coin.png").convert()
@@ -31,6 +31,7 @@ class Coin(pygame.sprite.Sprite):
         self.reachedFinalSpot = False
         self.endSpot = int(self.SCREEN_WIDTH / 1.6)
         self.coinAnimation = 0
+        self.rank = rank
 
     def updatePulsatingCoinAnimation(self):
         if self.coinAnimation == 0:
