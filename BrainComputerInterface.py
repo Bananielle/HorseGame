@@ -20,7 +20,7 @@ class BrainComputerInterface():
         self.startTimeMeasurement = 0
         self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": []}
 
-        self.NF_maxLevel_based_on_localizer = 1.0  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 0.3  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values

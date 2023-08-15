@@ -30,6 +30,8 @@ In SoundSystem
 """
 
 import pygame, random, os
+from pylsl import StreamInfo, StreamOutlet
+
 #from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
@@ -75,6 +77,8 @@ if __name__ == '__main__':
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     GREEN = (0, 255, 0)
+    GREY = (128, 128, 128)
+
 
     # Timing stuff
     prev_time = 0
@@ -154,12 +158,12 @@ if __name__ == '__main__':
 
 
     def startTaskTrigger():
-       # outlet.push_sample(x=[2])  # Task trigger
+        outlet.push_sample(x=[3])  # Triggers are buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
         print('Started task trigger.')
 
 
     def startRestTrigger():
-    #    outlet.push_sample(x=[1])  # Rest trigger
+        outlet.push_sample(x=[1])  # Rest trigger
         print('Started Rest trigger.')
 
 
@@ -307,9 +311,15 @@ if __name__ == '__main__':
         if gp.task:
             if gp.useLoadingBar:
                 screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar(loadingBar)
+                updateLoadingBar_task(loadingBar)
             if gp.useExclamationMark and not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
+
+        if gp.rest:
+            if gp.useLoadingBar:
+                print("Using rest loading bar.")
+                screen.blit(loadingBar.surf, loadingBar.surf_center)
+                updateLoadingBar_rest(loadingBar)
 
         return gamestate
 
@@ -417,9 +427,16 @@ if __name__ == '__main__':
         if gp.task:
             if gp.useLoadingBar:
                 screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar(loadingBar)
+                updateLoadingBar_task(loadingBar)
             if gp.useExclamationMark and not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
+
+        if gp.rest:
+            if gp.useLoadingBar:
+                print("Using rest loading bar.")
+                screen.blit(loadingBar.surf, loadingBar.surf_center)
+                updateLoadingBar_rest(loadingBar)
+
 
         return gamestate
 
@@ -525,15 +542,22 @@ if __name__ == '__main__':
             resetTaskStartTime()
 
 
-    def updateLoadingBar(loadingBar):
+    def updateLoadingBar_task(loadingBar):
         # percentage = (gp.currentTime_s+1 - gp.startTime_TASK) / gp.duration_TASK_s # +1 because 1 second already passed
         # print('Updating loading bar. Percentage of task completed: ', str(percentage))
         # loadingBar.updateLoadingBar(gp.currentTime_s - gp.startTime_TASK)
 
-        loadingBar.fillLoadingBar()
+        loadingBar.fillLoadingBar(task=True)
         pygame.draw.rect(screen, GREEN,
                          [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
         # pygame.draw.rect(screen, BLACK, [100,100, loadingBar.bar_width, loadingBar.bar_height], 2)
+
+
+    def updateLoadingBar_rest(loadingBar):
+
+        loadingBar.fillLoadingBar(task=False)
+        pygame.draw.rect(screen, GREY,
+                         [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
 
     def resetTaskStartTime():
         gp.startTime_TASK = gp.currentTime_s  + gp.duration_REST_s# Reset the start time for event TASK
@@ -573,6 +597,7 @@ if __name__ == '__main__':
     def initiateBasicTaskEvent():
         gp.task = True
         gp.rest = False
+        loadingBar.resetLoadingBar()
         startTaskTrigger()
         if gp.usePath:
             mainGame_background.startPathBackground()
@@ -739,10 +764,10 @@ if __name__ == '__main__':
     BCI = BrainComputerInterface()
     BCI.scaleOxyData()
 
-    # Set up trigger straem
-#    info = StreamInfo(name='Triggerstream', type='Markers', channel_count=1, channel_format='int32',
-   #                   source_id='Example')  # sets variables for object info
-   # outlet = StreamOutlet(info)  # initialize stream.
+    # Set up trigger stream (note that you need to exactly write "TriggerStream', otherwise Aurora and Turbo-Satori won't recognize it!
+    info = StreamInfo(name='TriggerStream', type='Markers', channel_count=1, channel_format='int32',
+                      source_id='Example')  # sets variables for object info
+    outlet = StreamOutlet(info)  # initialize stream.
 
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
