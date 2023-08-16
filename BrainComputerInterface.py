@@ -71,6 +71,10 @@ class BrainComputerInterface():
         achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
+        # Add a ceiling to the achieved NF signal
+        if achieved_NF_signal > 1:
+            achieved_NF_signal = 1
+
         return achieved_NF_signal
 
 
