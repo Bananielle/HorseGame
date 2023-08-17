@@ -16,15 +16,19 @@ class BrainComputerInterface():
         self.TSIconnectionFound = True
         self.timeBetweenSamples_ms = 100000
         self.collectTimewindowData= False
-        self.timewindow = []
+        self.timewindow_task = []
+        self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": []}
+        self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": []}
 
         self.NF_maxLevel_based_on_localizer = 0.3  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
         self.NFSignal_median =1
+
+        self.currentTask_signal = 1
+        self.currentRest_signal = 1
 
 
         # Look for a connection to turbo-satori
@@ -41,17 +45,27 @@ class BrainComputerInterface():
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) # I have to give it integers...
 
-    def startMeasuringTask(self):
+    def startMeasuring(self, task):
         scaled_data = self.scaleOxyData()
-        print("Scaled oxy: " + str(scaled_data))
+        #print("     Scaled oxy: " + str(scaled_data))
         if self.collectTimewindowData:
-            self.timewindow.append(scaled_data)
+            if task:
+                self.timewindow_task.append(scaled_data)
+            else:
+                self.timewindow_rest.append(scaled_data)
+
+        return scaled_data
 
     def resetTimewindowDataArray(self):
-        self.timewindow = []
+        self.timewindow_task = []
+        self.timewindow_rest = []
 
-    def calculateNFsignal(self):
-        NFsignal_raw = np.array(self.timewindow)
+    def calculateNFsignal(self,task):
+        if task:
+            NFsignal_raw = np.array(self.timewindow_task)
+        else: # If measurement is from the rest period
+            NFsignal_raw = np.array(self.timewindow_rest)
+
         self.NFsignal_mean = np.mean(NFsignal_raw)
         self.NFsignal_max = np.max(NFsignal_raw)
         self.NFSignal_median = np.median(NFsignal_raw)
@@ -60,12 +74,33 @@ class BrainComputerInterface():
         print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: " + str(self.NFSignal_median))
 
         # Save the variables to a dictionary
-        self.NFsignal["NFsignal_mean"].append(self.NFsignal_mean)
-        self.NFsignal["NFsignal_max"].append(self.NFsignal_max)
-        self.NFsignal["NFSignal_median"].append(self.NFSignal_median)
+        if task:
+            self.currentTask_signal = self.NFsignal_mean # Save the current task signal for PSC calculation
+
+            self.NFsignal["NFsignal_mean"].append(self.NFsignal_mean)
+            self.NFsignal["NFsignal_max"].append(self.NFsignal_max)
+            self.NFsignal["NFSignal_median"].append(self.NFSignal_median)
+
+
+
+        else: # If measurement is from the rest period
+            self.currentRest_signal = self.NFsignal_mean # Save the current rest signal for PSC calculation
+
+            self.NFsignal["NFsignal_mean_REST"].append(self.NFsignal_mean)
+            self.NFsignal["NFsignal_max_REST"].append(self.NFsignal_max)
+            self.NFsignal["NFSignal_median_REST"].append(self.NFSignal_median)
 
 
         print("NFsignals stored: " + str(self.NFsignal))
+
+    def get_percentage_signal_change(self):
+        # PSC = (T-B_/B*100%
+        T = self.currentTask_signal
+        B = self.currentRest_signal
+        PSC = (T-B)/B*100
+        print(      "Task = " + str(T) + ", Rest = " + str(B) + ", PSC = " + str(PSC))
+        return PSC
+
 
     def get_achieved_NF_level(self):
         achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer

@@ -292,7 +292,8 @@ if __name__ == '__main__':
             # Get user input
             keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
             gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
-            collectTaskTrialData()  # todo: Also in localizer?
+            collectTaskTrialData()
+            collectRestTrialData()
             gp.rider.update()
 
         # Update the position of coins
@@ -336,36 +337,57 @@ if __name__ == '__main__':
         screen.blit(gp.achieved_jump_height_text, (20, 100))
 
 
+
+
+    def updateTimeDataWindow_task():
+        if gp.TASK_counter < gp.totalNum_TRIALS:
+            start_time_next_task = gp.protocol_file['task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
+            gp.datawindow_task_start_time = start_time_next_task + gp.hemodynamic_delay
+            gp.datawindow_task_end_time = gp.datawindow_task_start_time + gp.datawindow_task_duration
+
+            print("T=",gp.currentTime_s,": Next data time window TASK: " + str(gp.datawindow_task_start_time), "Datawindow end time TASK: " + str(gp.datawindow_task_end_time))
+
+    def updateTimeDataWindow_rest():
+        if gp.TASK_counter < gp.totalNum_TRIALS:
+            start_time_next_rest = gp.protocol_file['rest_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
+            gp.datawindow_rest_start_time = start_time_next_rest + gp.hemodynamic_delay #todo: at what time do I start measuring the baseline?
+            gp.datawindow_rest_end_time = gp.datawindow_rest_start_time + gp.datawindow_rest_duration
+
+            print("T=",gp.currentTime_s,": Next data time window REST: " + str(gp.datawindow_rest_start_time), "Datawindow REST end time: " + str(gp.datawindow_rest_end_time))
+
+
     def stopCollectingData():
-        print("Calculating NF signal...")
-        BCI.calculateNFsignal()
+        print("T=",gp.currentTime_s,": Calculating NF signal...")
         BCI.collectTimewindowData = False
         BCI.resetTimewindowDataArray()
 
 
-    def updateTimeDataWindow():
-        if gp.TASK_counter < gp.totalNum_TRIALS:
-            start_time_next_task = gp.protocol_file['task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
-            gp.datawindow_start_time = start_time_next_task + gp.hemodynamic_delay
-            gp.datawindow_end_time = gp.datawindow_start_time + gp.datawindow_duration
-
-            print("Next data time window: " + str(gp.datawindow_start_time), "Datawindow end time: " + str(gp.datawindow_end_time))
-
-
     def collectTaskTrialData():
         # Send time window to BCI
-
-        if gp.datawindow_start_time <= gp.currentTime_s <= gp.datawindow_end_time:
+        if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time:
             BCI.collectTimewindowData = True
-            BCI.startMeasuringTask()
-            print("Collecting timewindow data")
+            scaled_data = BCI.startMeasuring(task=True)
+            print("T=",gp.currentTime_s,": Collecting timewindow data for task. Scaled data: " + str(scaled_data))
 
-        if gp.currentTime_s == gp.datawindow_end_time:
-            print("Calculating NF signal...")
-            BCI.calculateNFsignal()
-            BCI.collectTimewindowData = False
-            BCI.resetTimewindowDataArray()
-            updateTimeDataWindow()
+        if gp.currentTime_s == gp.datawindow_task_end_time:
+            BCI.calculateNFsignal(task=True)
+            stopCollectingData()
+            PSC = BCI.get_percentage_signal_change()
+            print("T=",gp.currentTime_s,": PSC = " + str(PSC))
+            updateTimeDataWindow_task()
+
+    def collectRestTrialData():
+        # Send time window to BCI
+        if gp.datawindow_rest_start_time <= gp.currentTime_s <= gp.datawindow_rest_end_time:
+            BCI.collectTimewindowData = True
+            scaled_data = BCI.startMeasuring(task=False)
+            print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Scaled data: " + str(scaled_data))
+
+        if gp.currentTime_s == gp.datawindow_rest_end_time:
+            BCI.calculateNFsignal(task=False)
+            stopCollectingData()
+            updateTimeDataWindow_rest()
+
 
 
     def runMainGame():
@@ -388,6 +410,7 @@ if __name__ == '__main__':
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()  # todo: Also in localizer?
+                collectRestTrialData()
 
             # EXPERIMENT EVENTS
             # Baseline
@@ -449,7 +472,7 @@ if __name__ == '__main__':
                 gp.nrCoinsCollected += 1
 
                 if coin.rank == 8:
-                    print("Highest coin collected! Killing all coins.")
+                    print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
                     soundSystem.coin_sound.play() # Play extra sound
                     killAllCoins()
                     break
@@ -626,7 +649,7 @@ if __name__ == '__main__':
         #resetTaskStartTime()
         gp.TASK_counter += 1  # Increment the counter for event TASK
         gp.update_Taskcounter()
-        print("Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
+        print("T=",gp.currentTime_s,": Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
 
 
     def deleteExistingCoins():
@@ -651,8 +674,6 @@ if __name__ == '__main__':
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
         gp.NrOfCoins += 1
-        print("New coin with starting position_y = ", str(gp.coinStartingPosition_y),
-              "  added at (game time counter) = " + str(gp.currentTime_s))
 
 
     def initiateBasicRestEvent():
@@ -665,7 +686,7 @@ if __name__ == '__main__':
         loadingBar.resetLoadingBar()
         resetRestStartTime()
         gp.REST_counter += 1  # Increment the counter for event B
-        print("Event REST")
+        print("T=",gp.currentTime_s,": Event REST")
 
 
     def showHowMuchTimeHasPassed(gamestate):

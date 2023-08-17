@@ -15,9 +15,9 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 5,
+            'duration_TASK_s': 10,
             'duration_REST_s': 10,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'totalNum_TRIALS': 3, # Set the number of times Task should occur
             'duration_BASELINE_s': 5 ,
             'task_start_times': {},
             'rest_start_times': {}
@@ -30,11 +30,16 @@ class GameParameters():
         self.duration_REST_s = self.protocol_file['duration_REST_s']
         self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
         self.duration_BASELINE_s = self.protocol_file['duration_BASELINE_s']
-        self.durationGame_s = (self.protocol_file['duration_TASK_s'] + self.protocol_file['duration_REST_s'] ) * self.protocol_file['totalNum_TRIALS'] + self.protocol_file['duration_BASELINE_s'] #How long you want to one game run to last (in seconds)
+        self.durationGame_s = (self.protocol_file['duration_TASK_s'] + self.protocol_file['duration_REST_s'] ) * (self.protocol_file['totalNum_TRIALS']+1) + self.protocol_file['duration_BASELINE_s'] #How long you want to one game run to last (in seconds)
         # Other
-        self.datawindow_start_time = self.duration_BASELINE_s + self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
-        self.datawindow_duration = self.duration_TASK_s - self.hemodynamic_delay # Needs to be equal to the end of the task (because then the horse needs to jump)
-        self.datawindow_end_time = self.datawindow_start_time + self.datawindow_duration
+        self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s+ self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
+        self.datawindow_task_duration = self.duration_TASK_s - self.hemodynamic_delay # Needs to be equal to the end of the task (because then the horse needs to jump)
+        self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration
+
+        self.datawindow_rest_start_time = self.duration_BASELINE_s  + self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
+        self.datawindow_rest_duration = self.duration_REST_s - self.hemodynamic_delay
+        self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
+
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
         self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
 
@@ -50,8 +55,8 @@ class GameParameters():
         # Paradigm parameters - constants
         self.TASK_counter = 0    # Set the initial values for the event counters
         self.REST_counter = 0
-        self.startTime_TASK = self.duration_BASELINE_s  # Set the start time for event A
-        self.startTime_REST = self.duration_BASELINE_s + self.duration_TASK_s
+        self.startTime_TASK = self.duration_BASELINE_s  + self.duration_REST_s# Set the start time for event A
+        self.startTime_REST = self.duration_BASELINE_s
 
         self.ADDCOIN = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCOIN, 600) # Define how quickly new jellyfish are added (e.g., every 4000ms)
@@ -144,12 +149,18 @@ class GameParameters():
         rest_start_times = {}
 
         for trial_number in range(1, total_num_trials + 1):
-            task_start_time = baseline_duration + (trial_number - 1) * (task_duration + rest_duration)
-            print("task_start_time: " + str(task_start_time))
+
+            rest_start_time = baseline_duration + (trial_number - 1) * (task_duration + rest_duration)
+            rest_start_times[trial_number] = rest_start_time
+
+            task_start_time = rest_start_time + rest_duration
             task_start_times[trial_number] = task_start_time
 
-            rest_start_time = task_start_time + task_duration
-            rest_start_times[trial_number] = rest_start_time
+        # Add the last rest period
+        rest_start_time = baseline_duration + (total_num_trials) * (task_duration + rest_duration)
+        rest_start_times[total_num_trials +2] = rest_start_time
+
+
 
         self.protocol_file['task_start_times'] = task_start_times
         self.protocol_file['rest_start_times'] = rest_start_times

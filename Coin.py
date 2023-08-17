@@ -22,7 +22,7 @@ class Coin(pygame.sprite.Sprite):
             center=(SCREEN_WIDTH,startingPosition_y
             )
         )
-        print(' Width coin: ', self.rect.width, ' Height coin: ', self.rect.height)
+        print("T=", self.gameParams.currentTime_s, ": New coin added. Width: ", self.rect.width, " Height: ", self.rect.height)
         self.speed = 3 * gameParams.velocity * gameParams.deltaTime
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
