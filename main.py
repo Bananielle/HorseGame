@@ -786,7 +786,7 @@ if __name__ == '__main__':
 
         pygame.display.flip()
 
-        # print('frame rate = ',clock.get_fps())
+       # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()

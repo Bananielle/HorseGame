@@ -15,10 +15,10 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 5,
-            'duration_REST_s': 5,
+            'duration_TASK_s': 6,
+            'duration_REST_s': 15,
             'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 2 ,
+            'duration_BASELINE_s': 20 ,
             'task_start_times': {},
             'rest_start_times': {}
         }
@@ -41,7 +41,8 @@ class GameParameters():
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
-        self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        self.FPS = 20 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly.
 
         # Background markers for task and rest periods
         self.useExclamationMark = True # Shows a bright exclamation mark when a task starts

@@ -145,9 +145,10 @@ class BrainComputerInterface():
     def scaleOxyData(self):
         if self.TSIconnectionFound:
             oxy = self.getCurrentInput()
-            scalefactor = self.tsi.get_oxy_data_scale_factor()
+            scalefactor = self.tsi.get_oxy_data_scale_factor() # Turbo-Satori's default is 200 as a scale factor
 
             scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
+
         #print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
 
         else:
