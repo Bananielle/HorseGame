@@ -97,7 +97,8 @@ class BrainComputerInterface():
         # PSC = (T-B_/B*100%
         T = self.currentTask_signal
         B = self.currentRest_signal
-        PSC = (T-B)/B*100
+        #PSC = (T-B)/B*100
+        PSC = T-B # Task signal - rest signal (just like the Turbo-satori software describes in the manual)
         print(      "Task = " + str(T) + ", Rest = " + str(B) + ", PSC = " + str(PSC))
         return PSC
 

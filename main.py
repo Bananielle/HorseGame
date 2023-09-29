@@ -333,8 +333,8 @@ if __name__ == '__main__':
     def draw_debugging_text():
         gp.update_y_position_horse_text()
         gp.update_jump_position_text()
-        screen.blit(gp.horse_upper_position_text, (20, 80))
-        screen.blit(gp.achieved_jump_height_text, (20, 100))
+        screen.blit(gp.horse_upper_position_text, (20, 100))
+        screen.blit(gp.achieved_jump_height_text, (20, 120))
 
 
 

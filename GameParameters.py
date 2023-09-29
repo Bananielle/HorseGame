@@ -15,10 +15,10 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 10,
-            'duration_REST_s': 10,
-            'totalNum_TRIALS': 3, # Set the number of times Task should occur
-            'duration_BASELINE_s': 5 ,
+            'duration_TASK_s': 5,
+            'duration_REST_s': 15,
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'duration_BASELINE_s': 2 ,
             'task_start_times': {},
             'rest_start_times': {}
         }
