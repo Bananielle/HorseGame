@@ -16,7 +16,7 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 5,
-            'duration_REST_s': 15,
+            'duration_REST_s': 5,
             'totalNum_TRIALS': 10, # Set the number of times Task should occur
             'duration_BASELINE_s': 2 ,
             'task_start_times': {},
@@ -48,7 +48,6 @@ class GameParameters():
         self.useGreyOverlay = True # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
-        self.displayCoinsInLocalizer = True
 
         self.currentTime_s = 0  #
 
@@ -116,7 +115,7 @@ class GameParameters():
 
 
         self.task = False
-        self.rest = True
+        self.rest = False
         self.baseline = True
 
         self.mainGame_background = 0
@@ -126,7 +125,7 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_jump_position_text(self):
-        self.achieved_jump_height_text = self.debuggingFont.render("Achieved jump height = " + str(self.achieved_jump_height),
+        self.achieved_jump_height_text = self.debuggingFont.render("Percent Signal Change (PSC) = " + str(self.achieved_jump_height),
                                                                    True, [0, 0, 0])
 
     def update_Taskcounter(self):

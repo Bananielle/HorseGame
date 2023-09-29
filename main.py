@@ -48,18 +48,11 @@ from gameover import GameOver, PressSpaceToReplay
 from StartScreenPics import PressSpace, Horse, FishAdventure, Settings, ReadyToJump
 from MainPlayer import MainPlayer
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('Starting up Horse Game...')
-    print_hi('Developed by Danielle Evenblij, 2023')
+    print('Starting up Horse Game...')
+    print('Developed by Danielle Evenblij, 2023')
     print(os.getcwd())
-    print('test')
 
     # Import pygame.locals for easier access to key coordinates. Updated to conform to flake8 and black standards
     from pygame.locals import (
@@ -79,15 +72,8 @@ if __name__ == '__main__':
     GREEN = (0, 255, 0)
     GREY = (128, 128, 128)
 
-
     # Timing stuff
     prev_time = 0
-
-    # Brain input variables
-    fakeBrainInput = 0
-
-    print('test')
-
 
     def getBrainInput(fakeBrainInput):
         fakeBrainInput += 1
@@ -156,11 +142,10 @@ if __name__ == '__main__':
                 count += 1
                 # print('score ', score, ' printed')
 
-
+    # TRIGGERS
     def startTaskTrigger():
         outlet.push_sample(x=[3])  # Triggers are buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
         print('Started task trigger.')
-
 
     def startRestTrigger():
         outlet.push_sample(x=[1])  # Rest trigger
@@ -258,30 +243,20 @@ if __name__ == '__main__':
 
     def runLocalizer():
         gamestate = GameState.LOCALIZER
-        readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
         mainGame_background.updateAllBackGrounds()
         displayBackgroundsOnScreen()
 
         for event in pygame.event.get():
-            # Did the user hit a key?
 
             # PARADIGM
-            runLocalizerParadigm()  # Duration of task and rest can be changed in GameParameters.py
+            runParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.player.ridingHorseAnimation()
-                gp.achieved_NF_level = BCI.get_achieved_NF_level()
                 gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
-                gp.achieved_jump_height = 0.5 # For displayign debugging text
+                gp.achieved_jump_height = 0.5 # For displaying debugging text
 
-            # Start the path if p is pressed
-            if event.type == KEYDOWN:
-                # If space to start
-                if event.key == K_p:
-                    gp.mainGame_background.startPathBackground()
-                if event.key == K_SPACE:
-                    gp.mainGame_background.endPathBackground()
+            showPathBackground(event)
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -296,33 +271,21 @@ if __name__ == '__main__':
             collectRestTrialData()
             gp.rider.update()
 
-        # Update the position of coins
-        if gp.displayCoinsInLocalizer:
-            checkForCoinCollision()  # Check if any coins have collided with the player
-            gp.coin.update()
-
-        # Draw all our sprites
-        for entity in gp.all_sprites:
-            screen.blit(entity.surf, entity.rect)
-
-        # Draw game time counter text
-        draw_game_time_text()
-        draw_debugging_text()
-
-        if gp.task:
-            if gp.useLoadingBar:
-                screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar_task(loadingBar)
-            if gp.useExclamationMark and not gp.player.HorseIsJumping:
-                screen.blit(readyToJump.surf, readyToJump.surf_center)
-
-        if gp.rest:
-            if gp.useLoadingBar:
-              #  print("Using rest loading bar.")
-                screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar_rest(loadingBar)
+        updatePlayerCoinsAndText()
+        performTaskRestSpecificActions()
 
         return gamestate
+
+
+
+    def showPathBackground(event):
+        # Start the path if p is pressed
+        if event.type == KEYDOWN:
+            # If space to start
+            if event.key == K_p:
+                gp.mainGame_background.startPathBackground()
+            if event.key == K_SPACE:
+                gp.mainGame_background.endPathBackground()
 
     def draw_game_time_text():
         # Draw game time counter text
@@ -335,9 +298,6 @@ if __name__ == '__main__':
         gp.update_jump_position_text()
         screen.blit(gp.horse_upper_position_text, (20, 100))
         screen.blit(gp.achieved_jump_height_text, (20, 120))
-
-
-
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
@@ -355,12 +315,10 @@ if __name__ == '__main__':
 
             print("T=",gp.currentTime_s,": Next data time window REST: " + str(gp.datawindow_rest_start_time), "Datawindow REST end time: " + str(gp.datawindow_rest_end_time))
 
-
     def stopCollectingData():
         print("T=",gp.currentTime_s,": Calculating NF signal...")
         BCI.collectTimewindowData = False
         BCI.resetTimewindowDataArray()
-
 
     def collectTaskTrialData():
         # Send time window to BCI
@@ -393,7 +351,6 @@ if __name__ == '__main__':
     def runMainGame():
         soundSystem.playMaintheme_slow()
         gamestate = GameState.MAINGAME
-        readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
         BCI_input = 0
 
         mainGame_background.updateAllBackGrounds()
@@ -401,7 +358,6 @@ if __name__ == '__main__':
 
         for event in pygame.event.get():
             # Did the user hit a key?
-            # print("check1")
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -409,28 +365,41 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-                collectTaskTrialData()  # todo: Also in localizer?
+                collectTaskTrialData()
                 collectRestTrialData()
 
-            # EXPERIMENT EVENTS
-            # Baseline
-            # if gp.currentTime_s == 1:
-            #     gp.NrOfCoins = 1
-            #     if not gp.coinAlreadyBeingAdded:
-            #         coinEvent()
-            #         gp.coinAlreadyBeingAdded = True
-
-            runMainGameParadigm()  # Duration of task and rest can be changed in GameParameters.py
+            runParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.achieved_NF_level = BCI.get_achieved_NF_level()
-                gp.player.performJumpSequence(NF_level_reached=gp.achieved_NF_level)
-                gp.achieved_jump_height =gp.achieved_NF_level
-
+                gp.achieved_jump_height = BCI.get_achieved_NF_level()
+                gp.player.performJumpSequence(NF_level_reached=gp.achieved_jump_height)
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
+        updatePlayerCoinsAndText()
+        performTaskRestSpecificActions()
+
+        return gamestate
+
+    def performTaskRestSpecificActions():
+
+        readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        if gp.task:
+            if gp.useLoadingBar:
+                screen.blit(loadingBar.surf, loadingBar.surf_center)
+                updateLoadingBar_task(loadingBar)
+            if gp.useExclamationMark and not gp.player.HorseIsJumping:
+                screen.blit(readyToJump.surf, readyToJump.surf_center)
+
+        if gp.rest:
+            if gp.useLoadingBar:
+                screen.blit(loadingBar.surf, loadingBar.surf_center)
+                updateLoadingBar_rest(loadingBar)
+
+
+    def updatePlayerCoinsAndText():
         # Get user input
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
@@ -445,23 +414,6 @@ if __name__ == '__main__':
         # Draw game time counter text
         draw_game_time_text()
         draw_debugging_text()
-
-
-        if gp.task:
-            if gp.useLoadingBar:
-                screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar_task(loadingBar)
-            if gp.useExclamationMark and not gp.player.HorseIsJumping:
-                screen.blit(readyToJump.surf, readyToJump.surf_center)
-
-        if gp.rest:
-            if gp.useLoadingBar:
-               # print("Using rest loading bar.")
-                screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar_rest(loadingBar)
-
-
-        return gamestate
 
 
     def checkForCoinCollision():
@@ -513,9 +465,7 @@ if __name__ == '__main__':
             gp.printedNFdata = True
 
         for event in pygame.event.get():
-
             if event.type == KEYDOWN:
-
                 if event.key == K_SPACE:
                     gamestate = GameState.setGameState(GameState.SCOREBOARD)
 
@@ -547,7 +497,7 @@ if __name__ == '__main__':
         return gamestate
 
 
-    def runMainGameParadigm():
+    def runParadigm():
 
         if gp.currentTime_s >= gp.duration_BASELINE_s:
             gp.baseline = False
@@ -558,42 +508,17 @@ if __name__ == '__main__':
                 resetRestStartTime()
 
             if isItTimeForRestEvent():
-                gp.player.HorseIsJumping = True
-                gp.player.HorseIsJumpingUp = True
+                if gp.REST_counter > 0: # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
+                    gp.player.HorseIsJumping = True
+                    gp.player.HorseIsJumpingUp = True
                 resetTaskStartTime()
                 initiateBasicRestEvent()
 
 
-    def runLocalizerParadigm():
-        # PARADIGM
-        # Check if it's time for event TASK
-        if gp.currentTime_s >= gp.duration_BASELINE_s:
-            gp.baseline = False
-            if isItTimeForTaskEvent():
-                initiateBasicTaskEvent()
-                if gp.displayCoinsInLocalizer:
-                    deleteExistingCoins()
-                    coinEvent()
-
-                resetRestStartTime()
-
-        # Check if it's time for event REST
-        if isItTimeForRestEvent():
-            gp.player.HorseIsJumping = True
-            gp.player.HorseIsJumpingUp = True
-            initiateBasicRestEvent()
-            resetTaskStartTime()
-
-
     def updateLoadingBar_task(loadingBar):
-        # percentage = (gp.currentTime_s+1 - gp.startTime_TASK) / gp.duration_TASK_s # +1 because 1 second already passed
-        # print('Updating loading bar. Percentage of task completed: ', str(percentage))
-        # loadingBar.updateLoadingBar(gp.currentTime_s - gp.startTime_TASK)
-
         loadingBar.fillLoadingBar(task=True)
         pygame.draw.rect(screen, GREEN,
                          [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
-        # pygame.draw.rect(screen, BLACK, [100,100, loadingBar.bar_width, loadingBar.bar_height], 2)
 
 
     def updateLoadingBar_rest(loadingBar):

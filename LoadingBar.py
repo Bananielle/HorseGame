@@ -22,9 +22,8 @@ class LoadingBar(pygame.sprite.Sprite):
         self.bar_width = 130
         self.bar_height = 15
         self.bar_fill = 0
-        self.fill_rate_task = self.bar_width / ((gameParams.duration_TASK_s - 0)* gameParams.FPS)
+        self.fill_rate_task = self.bar_width / ((gameParams.duration_TASK_s - 0) * gameParams.FPS)
         self.fill_rate_rest = self.bar_width / ((gameParams.duration_REST_s - 0 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
-        self.fill_rate_baseline = self.bar_width / ((gameParams.duration_BASELINE_s - 0 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
 
         # Put the center of surf at the left corner of the display
         self.surf_center = (30,20)
@@ -39,30 +38,7 @@ class LoadingBar(pygame.sprite.Sprite):
         if self.bar_fill < self.bar_width:
             if task: # If loading bar of task:
                 self.bar_fill += self.fill_rate_task
-               # print('Fill rate: ', self.fill_rate_task, ', Bar fill: ', self.bar_fill)
+                #print('Fill rate task: ', self.fill_rate_task, ', Bar fill: ', self.bar_fill)
             else: # If loading bar of rest:
-                if self.gameParams.baseline:
-                    self.bar_fill += self.fill_rate_baseline
-                 #   print('Fill rate: ', self.fill_rate_baseline, ', Bar fill: ', self.bar_fill)
-                else:
-                    self.bar_fill += self.fill_rate_rest
-                  #  print('Fill rate: ', self.fill_rate_rest, ', Bar fill: ', self.bar_fill)
-
-    # def updateImage(self):
-    #     self.surf.set_colorkey((0, 0, 0), RLEACCEL)
-    #
-    # def updateLoadingBar(self, percent):
-    #     if percent == 0:
-    #         self.surf = pygame.image.load("Resources/loadingbar0.png").convert()
-    #     elif percent == 1:
-    #         self.surf = pygame.image.load("Resources/loadingbar1.png").convert()
-    #     elif percent == 2:
-    #         self.surf = pygame.image.load("Resources/loadingbar2.png").convert()
-    #     elif percent == 3:
-    #         self.surf = pygame.image.load("Resources/loadingbar3.png").convert()
-    #     elif percent == 4:
-    #         self.surf = pygame.image.load("Resources/loadingbar4.png").convert()
-    #     elif percent == 5:
-    #         self.surf = pygame.image.load("Resources/loadingbar5.png").convert()
-    #
-    #     self.updateImage()
+                self.bar_fill += self.fill_rate_rest
+                # print('Fill rate rest: ', self.fill_rate_rest, ', Bar fill: ', self.bar_fill)
