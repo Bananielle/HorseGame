@@ -35,6 +35,7 @@ from pylsl import StreamInfo, StreamOutlet
 #from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
+from ParadigmAndTriggerManager import ParadigmAndTriggerManager
 from BrainComputerInterface import BrainComputerInterface
 from GameParameters import GameParameters
 from Coin import Coin
@@ -157,14 +158,6 @@ if __name__ == '__main__':
                 count += 1
                 # print('score ', score, ' printed')
 
-    # TRIGGERS
-    def startTaskTrigger():
-        outlet.push_sample(x=[3])  # Triggers are buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
-        print('Started task trigger.')
-
-    def startRestTrigger():
-        outlet.push_sample(x=[1])  # Rest trigger
-        print('Started Rest trigger.')
 
 
     # GAME STATE FUNCTIONS
@@ -180,12 +173,13 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
         gameParameters.generate_protocol()
+        paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
 
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype)
 
-        return gamestate, gameParameters, mainGameBackGround  # Reinitialize game parameters and background
+        return gamestate, gameParameters, mainGameBackGround,paradigmManager  # Reinitialize game parameters and background
 
 
     def changeMount(mounttype):
@@ -313,7 +307,6 @@ if __name__ == '__main__':
         performTaskRestSpecificActions()
 
         return gamestate
-
 
 
     def showPathBackground(event):
@@ -539,18 +532,26 @@ if __name__ == '__main__':
 
         if gp.currentTime_s >= gp.duration_BASELINE_s:
             gp.baseline = False
-            if isItTimeForTaskEvent():
-                initiateBasicTaskEvent()
+            if paradigmManager.isItTimeForTaskEvent():
+                paradigmManager.initiateBasicTaskEvent()
+                loadingBar.resetLoadingBar()
                 deleteExistingCoins()
                 coinEvent()
-                resetRestStartTime()
+                paradigmManager.resetRestStartTime()
 
-            if isItTimeForRestEvent():
+                if gp.usePath:
+                    mainGame_background.startPathBackground()
+
+            if paradigmManager.isItTimeForRestEvent():
                 if gp.REST_counter > 0: # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
                     gp.player.HorseIsJumping = True
                     gp.player.HorseIsJumpingUp = True
-                resetTaskStartTime()
-                initiateBasicRestEvent()
+                paradigmManager.resetTaskStartTime()
+                paradigmManager.initiateBasicRestEvent()
+                loadingBar.resetLoadingBar()
+
+                if gp.usePath:
+                    mainGame_background.endPathBackground()
 
 
     def updateLoadingBar_task(loadingBar):
@@ -564,55 +565,6 @@ if __name__ == '__main__':
         loadingBar.fillLoadingBar(task=False)
         pygame.draw.rect(screen, GREY,
                          [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
-
-    def resetTaskStartTime():
-        gp.startTime_TASK = gp.currentTime_s  + gp.duration_REST_s# Reset the start time for event TASK
-
-    def resetRestStartTime():
-        gp.startTime_REST = gp.currentTime_s + gp.duration_TASK_s  # Reset the start time for event TASK
-
-    def resetTaskandRestTime():
-        gp.startTime_TASK = gp.currentTime_s  # Reset the start time for event TASK
-        gp.startTime_REST = gp.currentTime_s  # Set the start time for event REST
-
-
-    def isItTimeForTaskEvent():
-        if gp.task:
-            return False
-
-        if gp.TASK_counter >= gp.totalNum_TRIALS:
-            return False
-
-        if gp.currentTime_s >= gp.startTime_TASK:
-            return True
-
-        #return gp.currentTime_s - gp.startTime_TASK >= gp.duration_TASK_s and gp.TASK_counter < gp.totalNum_TRIALS and gp.task == False
-
-
-    def isItTimeForRestEvent():
-        if gp.rest:
-            return False
-
-        if gp.currentTime_s >= gp.startTime_REST:
-            return True
-
-
-        #return gp.currentTime_s - gp.startTime_REST >= gp.duration_REST_s and gp.REST_counter < gp.totalNum_TRIALS and gp.rest == False
-
-
-    def initiateBasicTaskEvent():
-        gp.task = True
-        gp.rest = False
-        loadingBar.resetLoadingBar()
-        startTaskTrigger()
-        if gp.usePath:
-            mainGame_background.startPathBackground()
-
-        #resetTaskandRestTime()
-        #resetTaskStartTime()
-        gp.TASK_counter += 1  # Increment the counter for event TASK
-        gp.update_Taskcounter()
-        print("T=",gp.currentTime_s,": Event TASK " + gp.TASK_counter.__str__() + " of " + gp.totalNum_TRIALS.__str__())
 
 
     def deleteExistingCoins():
@@ -637,19 +589,6 @@ if __name__ == '__main__':
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
         gp.NrOfCoins += 1
-
-
-    def initiateBasicRestEvent():
-        gp.task = False
-        gp.rest = True
-        startRestTrigger()
-        if gp.usePath:
-            mainGame_background.endPathBackground()
-
-        loadingBar.resetLoadingBar()
-        resetRestStartTime()
-        gp.REST_counter += 1  # Increment the counter for event B
-        print("T=",gp.currentTime_s,": Event REST")
 
 
     def showHowMuchTimeHasPassed(gamestate):
@@ -681,29 +620,29 @@ if __name__ == '__main__':
 
         # Default background drawing parameters
         y=40
-        screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
-        screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
-        screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 20])
-        screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 20])
-        screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
-        screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+        screen.blit(mainGame_background.background_far.image, [mainGame_background.background_far.bgX, 0])
+        screen.blit(mainGame_background.background_far.image, [mainGame_background.background_far.bgX2, 0])
+        screen.blit(mainGame_background.background_middle.image, [mainGame_background.background_middle.bgX, 20])
+        screen.blit(mainGame_background.background_middle.image, [mainGame_background.background_middle.bgX2, 20])
+        screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX, y])
+        screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX2, y])
 
 
         # Adjust some of the background drawing parameters based on the mount background
         if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 0
-            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 0])
-            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
-            screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
-            screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+            screen.blit(mainGame_background.background_middle.image, [mainGame_background.background_middle.bgX, 0])
+            screen.blit(mainGame_background.background_middle.image, [mainGame_background.background_middle.bgX2, 0])
+            screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX, y])
+            screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX2, y])
         if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 20
-            screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
-            screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+            screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX, y])
+            screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX2, y])
         if gp.player.mount_folder == "Resources/Turtle/":
             y = 20
-            screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
-            screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+            screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX, y])
+            screen.blit(mainGame_background.background_foreground.image, [mainGame_background.background_foreground.bgX2, y])
 
 
 
@@ -711,11 +650,6 @@ if __name__ == '__main__':
             screen.blit(mainGame_background.overlay_greysurface,
                         (0, 0))  # Draw the grey overlay surface on top of the background
 
-        if gp.task and gp.usePath:
-            screen.blit(mainGame_background.background_path, [mainGame_background.bgX_foreground, 40])
-            screen.blit(mainGame_background.background_path, [mainGame_background.bgX2_foreground, 40])
-
-        # return mainGame_background
 
         if gp.draw_grid:
             # Draw the grid
@@ -733,7 +667,7 @@ if __name__ == '__main__':
 
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
-                gamestate = GameState.setGameState(GameState.QUITGAME)
+                gamestate = GameState.setGameState(GameState.STARTSCREEN)
 
         if event.type == pygame.QUIT:
             gamestate = GameState.setGameState(GameState.QUITGAME)
@@ -781,11 +715,6 @@ if __name__ == '__main__':
     BCI = BrainComputerInterface()
     BCI.scaleOxyData()
 
-    # Set up trigger stream (note that you need to exactly write "TriggerStream', otherwise Aurora and Turbo-Satori won't recognize it!
-    info = StreamInfo(name='TriggerStream', type='Markers', channel_count=1, channel_format='int32',
-                      source_id='Example')  # sets variables for object info
-    outlet = StreamOutlet(info)  # initialize stream.
-
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
     MountType = Mounts() # Set up mount types to cycle through
@@ -798,7 +727,7 @@ if __name__ == '__main__':
 
     # Set up a new game (will be refreshed after every replay)
     gametype = 'maingame'
-    gamestate, gp, mainGame_background = startANewGame(mounttype,gametype)
+    gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
@@ -818,7 +747,7 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gp, mainGame_background = startANewGame(mounttype,gametype)
+            gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype)
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()
