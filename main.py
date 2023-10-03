@@ -168,11 +168,11 @@ if __name__ == '__main__':
 
 
     # GAME STATE FUNCTIONS
-    def startANewGame():
+    def startANewGame(mounttype):
         print('Starting a new game.')
         gamestate = GameState.setGameState(GameState.MAINGAME)
 
-        player = MainPlayer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
+        player = MainPlayer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem, mounttype)
         rider = Rider(player, SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
 
         gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -180,7 +180,7 @@ if __name__ == '__main__':
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
 
-        mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
+        mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype)
 
         return gamestate, gameParameters, mainGameBackGround  # Reinitialize game parameters and background
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
                 if event.key == K_l:
                     startscreen.kill()
-                    startANewGame()
+                    startANewGame(currentMountType)
                     gamestate = GameState.setGameState(GameState.LOCALIZER)
 
                 if event.key == K_s:  # When you press 's'
@@ -779,7 +779,7 @@ if __name__ == '__main__':
     scoreboard = Scoreboard()
 
     # Set up a new game (will be refreshed after every replay)
-    gamestate, gp, mainGame_background = startANewGame()
+    gamestate, gp, mainGame_background = startANewGame(mounttype)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
@@ -799,7 +799,7 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gp, mainGame_background = startANewGame()
+            gamestate, gp, mainGame_background = startANewGame(mounttype)
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()

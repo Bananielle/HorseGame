@@ -13,7 +13,7 @@ from pygame.locals import (
 # Define the Player object extending pygame.sprite.Sprite
 # Instead of a surface, we use an image for a better looking sprite
 class MainPlayer(pygame.sprite.Sprite):
-    def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT, gameParams, soundSystem):
+    def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT, gameParams, soundSystem, mounttype):
         super(MainPlayer, self).__init__()
         self.borderOfPathForHorse = None
         self.rect = None
@@ -23,16 +23,16 @@ class MainPlayer(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.MountType = 0
+        self.MountType = mounttype
 
         # Let the mount type be determined by based on what the player choose in the starting screen.
-        if self.MountType == 0:
+        if self.MountType == 'horse':
             self.mount_folder = "Resources/Horse/"
-        elif self.MountType == 1:
+        elif self.MountType == 'turtle':
             self.mount_folder = "Resources/Turtle/"
-        elif self.MountType == 2:
+        elif self.MountType == 'camel':
             self.mount_folder = "Resources/Camel/"
-        elif self.MountType == 3:
+        elif self.MountType == 'bear':
             self.mount_folder = "Resources/Bear/"
 
         self.surf = pygame.image.load(self.mount_folder + "Walk1.png").convert()

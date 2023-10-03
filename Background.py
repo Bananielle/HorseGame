@@ -1,12 +1,23 @@
 import pygame
 
 class MainGame_background(pygame.sprite.Sprite):
-    def __init__(self, SCREEN_WIDTH,SCREEN_HEIGHT,gameParams):
+    def __init__(self, SCREEN_WIDTH,SCREEN_HEIGHT,gameParams, mounttype):
         super(MainGame_background, self).__init__()
         self.gameParams = gameParams
         self.SCREEN_WIDTH =SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.folder = "Resources/Horse/"
+        self.MountType = mounttype
+
+        # Let the mount type background be determined by based on what the player choose in the starting screen.
+        if self.MountType == 'horse':
+            self.folder = "Resources/Horse/"
+        elif self.MountType == 'turtle':
+            self.folder = "Resources/Turtle/"
+        elif self.MountType == 'camel':
+            self.folder = "Resources/Camel/"
+        elif self.MountType == 'bear':
+            self.folder = "Resources/Bear/"
+
         self.background_far = pygame.image.load(self.folder + 'background.png')
         #self.background_far = pygame.image.load('Resources/country-platform-back.png')
         self.background_far = pygame.transform.scale(self.background_far,
