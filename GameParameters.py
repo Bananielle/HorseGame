@@ -18,12 +18,12 @@ class GameParameters():
             'duration_TASK_s': 6,
             'duration_REST_s': 15,
             'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 20 ,
+            'duration_BASELINE_s': 2 ,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.draw_grid = True
+        self.draw_grid = False # For debugging purposes
 
         self.hemodynamic_delay = 3
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']

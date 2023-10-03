@@ -673,21 +673,30 @@ if __name__ == '__main__':
     def displayBackgroundsOnScreen():
 
         screen.fill((0, 0, 0))  # black
+        y=40
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
-
-        if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
-            y = 0
-            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 0])
-            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
-        if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
-            y = 20
-        else:
-            y = 40
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 20])
         screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 20])
         screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
         screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+
+
+        # Adjust some of the background parameters based on the mount background
+        if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
+            y = 0
+            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 0])
+            screen.blit(mainGame_background.background_middle, [mainGame_background.bgX2_middle, 0])
+            screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
+            screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+        if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
+            y = 20
+            screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
+            screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+        if gp.player.mount_folder == "Resources/Turtle/":
+            y = 20
+            screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
+            screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
 
         if not gp.task and gp.useGreyOverlay:
             screen.blit(mainGame_background.overlay_greysurface,
