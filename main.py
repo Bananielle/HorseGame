@@ -168,9 +168,12 @@ if __name__ == '__main__':
 
 
     # GAME STATE FUNCTIONS
-    def startANewGame(mounttype):
+    def startANewGame(mounttype,gametype):
         print('Starting a new game.')
-        gamestate = GameState.setGameState(GameState.MAINGAME)
+        if gametype == 'maingame':
+            gamestate = GameState.setGameState(GameState.MAINGAME)
+        if gametype == 'localizer':
+            gamestate = GameState.setGameState(GameState.LOCALIZER)
 
         player = MainPlayer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem, mounttype)
         rider = Rider(player, SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
@@ -201,6 +204,7 @@ if __name__ == '__main__':
 
     def runStartScreen(currentMountType):
         gamestate = GameState.STARTSCREEN
+        gametype = 'maingame'
 
         screen.fill([0, 0, 0])  # Set black background
 
@@ -228,6 +232,7 @@ if __name__ == '__main__':
                 if event.key == K_SPACE:
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.STARTNEWGAME)
+                    gametype = 'maingame'
 
                 if event.key == K_RIGHT:
                     currentMountType = changeMount(currentMountType)
@@ -235,8 +240,8 @@ if __name__ == '__main__':
 
                 if event.key == K_l:
                     startscreen.kill()
-                    startANewGame(currentMountType)
-                    gamestate = GameState.setGameState(GameState.LOCALIZER)
+                    gamestate = GameState.setGameState(GameState.STARTNEWGAME)
+                    gametype = 'localizer'
 
                 if event.key == K_s:  # When you press 's'
                     startscreen.kill()
@@ -244,7 +249,7 @@ if __name__ == '__main__':
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
-        return gamestate, currentMountType
+        return gamestate, currentMountType, gametype
 
 
     def runSettings():
@@ -673,6 +678,8 @@ if __name__ == '__main__':
     def displayBackgroundsOnScreen():
 
         screen.fill((0, 0, 0))  # black
+
+        # Default background drawing parameters
         y=40
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX_far, 0])
         screen.blit(mainGame_background.background_far, [mainGame_background.bgX2_far, 0])
@@ -682,7 +689,7 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
 
 
-        # Adjust some of the background parameters based on the mount background
+        # Adjust some of the background drawing parameters based on the mount background
         if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
             y = 0
             screen.blit(mainGame_background.background_middle, [mainGame_background.bgX_middle, 0])
@@ -697,6 +704,8 @@ if __name__ == '__main__':
             y = 20
             screen.blit(mainGame_background.background_foreground_current, [mainGame_background.bgX_foreground, y])
             screen.blit(mainGame_background.background_foreground_upcoming, [mainGame_background.bgX2_foreground, y])
+
+
 
         if not gp.task and gp.useGreyOverlay:
             screen.blit(mainGame_background.overlay_greysurface,
@@ -788,7 +797,8 @@ if __name__ == '__main__':
     scoreboard = Scoreboard()
 
     # Set up a new game (will be refreshed after every replay)
-    gamestate, gp, mainGame_background = startANewGame(mounttype)
+    gametype = 'maingame'
+    gamestate, gp, mainGame_background = startANewGame(mounttype,gametype)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
@@ -799,7 +809,7 @@ if __name__ == '__main__':
     while run:  # Game loop (= one frame)
 
         if gamestate == GameState.STARTSCREEN:
-            gamestate, mounttype = runStartScreen(mounttype)
+            gamestate, mounttype, gametype = runStartScreen(mounttype)
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()
@@ -808,7 +818,7 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gp, mainGame_background = startANewGame(mounttype)
+            gamestate, gp, mainGame_background = startANewGame(mounttype,gametype)
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()
