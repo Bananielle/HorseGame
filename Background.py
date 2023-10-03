@@ -27,6 +27,8 @@ class MainGame_background(pygame.sprite.Sprite):
                 print("Image " +imagePath + ": width: ", self.width)
             def scaleImage(self,x,y):
                 self.image = pygame.transform.scale(self.image, (x, y))
+                self.width = self.image.get_width() # Update width
+                self.bgX2 = self.width # Update bgX2
 
             def moveBackground(self,speed,a,overlapBuffer):
 
@@ -34,30 +36,34 @@ class MainGame_background(pygame.sprite.Sprite):
                 self.bgX2 -= speed
 
                 if self.bgX < (self.width - a) * -1:  # If our bg is at the -width then reset its position (-a to make the transition more seemless)
-                    print("bgX = ", str(self.bgX), " < ", str((self.width - a) * -1) + " . Reset background.")
+                   # print("bgX = ", str(self.bgX), " < ", str((self.width - a) * -1) + " . Reset background.")
                     self.bgX = self.width - overlapBuffer
+
                 if self.bgX2 < (self.width - a) * -1:  # If our bg is at the -width then reset its position (-a to make the transition more seemless)
-                    print("bgX2 = ", str(self.bgX2), " < ", str((self.width - a) * -1) + " . Reset background.")
+                   # print("bgX2 = ", str(self.bgX2), " < ", str((self.width - a) * -1) + " . Reset background.")
                     self.bgX2 = self.width - overlapBuffer
 
 
         # FAR BACKGROUND
         self.background_far = BackgroundTemplate(self.folder + 'background.png')
         self.background_far.scaleImage(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.background_far.bgX2 = self.background_far.width - 10  # Otherwise there is a gap between the two images
 
         # MIDDLE BACKGROUND
         self.background_middle = BackgroundTemplate(self.folder + 'middleground.png')
         self.background_middle.scaleImage(SCREEN_WIDTH, SCREEN_HEIGHT - int((SCREEN_HEIGHT/10))) # Make sure it's an integer because the fucntion doesn't accept floats
 
         # FOREGROUND
-        self.background_foreground = BackgroundTemplate(self.folder + 'foreground.png')
+        self.background_foreground = BackgroundTemplate(self.folder + 'foreground.png',)
         self.background_foreground.scaleImage(SCREEN_WIDTH + (int(SCREEN_WIDTH / 3.2)), SCREEN_HEIGHT - 0) # Make sure this is an integer, because it doesn't accept floats
+        self.background_foreground.bgX2 = self.background_foreground.width - 40 # Otherwise there is a gap between the two images
 
         # PATH BACKGROUND
         self.background_path = pygame.image.load('Resources/path_start.png')
         self.background_path = pygame.transform.scale(self.background_path, (self.background_path.get_width(),SCREEN_HEIGHT - 25))  # Make sure this is an integer, because it doesn't accept floats
         self.bgX_path = 0
-        self.bgX2_path = self.background_path.get_width() -10
+        self.bgX2_path = self.background_path.get_width()
+
 
         # OTHER
         self.backgroundSpeed =  gameParams.velocity * gameParams.deltaTime + 2
@@ -80,55 +86,11 @@ class MainGame_background(pygame.sprite.Sprite):
 
     def updateAllBackGrounds(self):
 
-        self.background_far.moveBackground(speed=1.4 * self.backgroundSpeed,a=6,overlapBuffer=0)
+        self.background_far.moveBackground(speed=1.4 * self.backgroundSpeed,a=6,overlapBuffer=6)# Use 5 because otherwise there is a gap between the two images
         self.background_middle.moveBackground(speed=1.8 * self.backgroundSpeed, a=6,overlapBuffer=0)
-        self.background_foreground.moveBackground(speed=2 * self.backgroundSpeed, a=6,overlapBuffer=200)
-
+        self.background_foreground.moveBackground(speed=2 * self.backgroundSpeed, a=1,overlapBuffer=100) # Use 100 because otherwise there is a gap between the two images
 
         #print('bgX = ', int(self.bgX_foreground), ' bgX2 = ', int(self.bgX2_foreground))
-
-
-    def move_background(self,isForeground, speed, backgroundWidth, bgX, bgX2):
-        # Make the background move
-        bgX -= speed  # Move both background images back
-        bgX2 -= speed
-
-        # if isForeground: # Th
-        #     # Current background image
-        #     if bgX < (backgroundWidth-6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
-        #        # print('bgX = ', str(bgX), ' < ',str((backgroundWidth-4) * -1))
-        #         bgX = backgroundWidth-200
-        #        # print('bgX = ', str(bgX),'. Going to background statemachine 1. BackgroundStatus = ', str(self.pathBackgroundStatus))
-        #         self.transition_bgX = True
-        #         self.changeBackground_current()
-
-            # # Upcoming background image
-            # if bgX2 < (backgroundWidth-6) * -1:
-            # #    print('bgX2 = ', str(bgX2), ' < ', str((backgroundWidth - 4) * -1))
-            #     bgX2 = backgroundWidth-210
-            #     self.transition_bgX2 = True
-            #  #   print('bgX2 = ', str(bgX2),'. Going to background statemachine 2. BackgroundStatus = ', str(self.pathBackgroundStatus))
-            #     self.changeBackground_upcoming()
-
-        if isForeground:
-            if bgX < (backgroundWidth-6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
-                bgX = backgroundWidth-200
-            if bgX2 < (backgroundWidth - 6) * -1:
-                bgX2 = backgroundWidth-210
-
-        else: # This is only for the backgrounds further away. They don't change.
-            if bgX < (backgroundWidth - 6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
-                bgX = backgroundWidth
-            if bgX2 < (backgroundWidth - 6) * -1:  # If our bg is at the -width then reset its position (-4 to make the transition more seemless)
-                bgX2 = backgroundWidth
-
-        return bgX, bgX2
-
-
-
-
-
-
 
 
 
