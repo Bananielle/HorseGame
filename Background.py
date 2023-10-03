@@ -43,6 +43,7 @@ class MainGame_background(pygame.sprite.Sprite):
                    # print("bgX2 = ", str(self.bgX2), " < ", str((self.width - a) * -1) + " . Reset background.")
                     self.bgX2 = self.width - overlapBuffer
 
+                # test
 
         # FAR BACKGROUND
         self.background_far = BackgroundTemplate(self.folder + 'background.png')
