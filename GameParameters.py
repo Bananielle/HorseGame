@@ -23,7 +23,7 @@ class GameParameters():
             'rest_start_times': {}
         }
 
-        self.draw_grid = False
+        self.draw_grid = True
 
         self.hemodynamic_delay = 3
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']

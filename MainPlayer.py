@@ -23,7 +23,18 @@ class MainPlayer(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.mount_folder = "Resources/Horse/"
+        self.MountType = 0
+
+        # Let the mount type be determined by based on what the player choose in the starting screen.
+        if self.MountType == 0:
+            self.mount_folder = "Resources/Horse/"
+        elif self.MountType == 1:
+            self.mount_folder = "Resources/Turtle/"
+        elif self.MountType == 2:
+            self.mount_folder = "Resources/Camel/"
+        elif self.MountType == 3:
+            self.mount_folder = "Resources/Bear/"
+
         self.surf = pygame.image.load(self.mount_folder + "Walk1.png").convert()
 
         self.prepareImage()
@@ -43,6 +54,8 @@ class MainPlayer(pygame.sprite.Sprite):
         self.HorseIsJumping = False
         self.HorseIsJumpingUp = False
         self.HorseIsJumpingDown = False
+
+
 
     def prepareImage(self):
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)

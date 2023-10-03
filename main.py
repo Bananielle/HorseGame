@@ -45,7 +45,7 @@ from SettingsScreen import Settings_header
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
-from StartScreenPics import PressSpace, Horse, FishAdventure, Settings, ReadyToJump
+from Pictures import PressSpace, FishAdventure, Settings, ReadyToJump, MountPicture
 from MainPlayer import MainPlayer
 
 # Press the green button in the gutter to run the script.
@@ -75,6 +75,7 @@ if __name__ == '__main__':
     # Timing stuff
     prev_time = 0
 
+
     def getBrainInput(fakeBrainInput):
         fakeBrainInput += 1
         return fakeBrainInput
@@ -94,6 +95,20 @@ if __name__ == '__main__':
         def setGameState(self, gamestate):
             print('Going to state: ' + gamestate)
             return gamestate
+
+        # Used to cycle through different game states with a statemachine
+
+
+    # Used to cycle through different mounts
+    class Mounts:
+        HORSE = 'horse'
+        TURTLE = 'turtle'
+        CAMEL = 'camel'
+        BEAR = 'bear'
+
+        def setMount(self, mount):
+            print('Set mount to ' + mount)
+            return mount
 
 
     class Scoreboard():
@@ -170,14 +185,28 @@ if __name__ == '__main__':
         return gamestate, gameParameters, mainGameBackGround  # Reinitialize game parameters and background
 
 
-    def runStartScreen():
+    def changeMount(mounttype):
+
+        if mounttype == Mounts.HORSE:
+            mounttype = MountType.setMount(Mounts.TURTLE)
+        elif mounttype == Mounts.TURTLE:
+            mounttype = MountType.setMount(Mounts.CAMEL)
+        elif mounttype == Mounts.CAMEL:
+            mounttype = MountType.setMount(Mounts.BEAR)
+        elif mounttype == Mounts.BEAR:
+            mounttype = MountType.setMount(Mounts.HORSE)
+
+        return mounttype
+
+
+    def runStartScreen(currentMountType):
         gamestate = GameState.STARTSCREEN
 
         screen.fill([0, 0, 0])  # Set black background
 
         # Create elements to be put on screen
         startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
-        horse = Horse(SCREEN_WIDTH, SCREEN_HEIGHT)
+        mountPic = MountPicture(SCREEN_WIDTH, SCREEN_HEIGHT, currentMountType)
         fishadventure_text = FishAdventure(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Settings(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -188,7 +217,7 @@ if __name__ == '__main__':
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
-        screen.blit(horse.surf, horse.location)
+        screen.blit(mountPic.surf, mountPic.location)
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT - 100))
@@ -199,6 +228,10 @@ if __name__ == '__main__':
                 if event.key == K_SPACE:
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.STARTNEWGAME)
+
+                if event.key == K_RIGHT:
+                    currentMountType = changeMount(currentMountType)
+                    soundSystem.menuSelection.play()
 
                 if event.key == K_l:
                     startscreen.kill()
@@ -211,7 +244,7 @@ if __name__ == '__main__':
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
-        return gamestate
+        return gamestate, currentMountType
 
 
     def runSettings():
@@ -737,6 +770,10 @@ if __name__ == '__main__':
 
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
+    MountType = Mounts() # Set up mount types to cycle through
+    mounttype = MountType.setMount(Mounts.HORSE)
+    print("Starting mount set to ", mounttype)
+
 
     # Make a scoreboard (will remain throughout the game)
     scoreboard = Scoreboard()
@@ -753,7 +790,7 @@ if __name__ == '__main__':
     while run:  # Game loop (= one frame)
 
         if gamestate == GameState.STARTSCREEN:
-            gamestate = runStartScreen()
+            gamestate, mounttype = runStartScreen(mounttype)
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()

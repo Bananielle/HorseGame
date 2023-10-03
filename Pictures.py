@@ -23,12 +23,14 @@ class PressSpace(pygame.sprite.Sprite):
         )
 
 
-class Horse(pygame.sprite.Sprite):
-    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
-        super(Horse, self).__init__()
+class MountPicture(pygame.sprite.Sprite):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT,mounttype):
+        super(MountPicture, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.surf = pygame.image.load("Resources/bighorse.png").convert()
+        self.mountType = "big" + str(mounttype)
+        self.filename = "Resources/" + str(self.mountType) + ".png"
+        self.surf = pygame.image.load(self.filename).convert()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect()
 

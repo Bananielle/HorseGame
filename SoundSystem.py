@@ -15,6 +15,7 @@ class SoundSystem():
         self.coin_sound = simpleaudio.WaveObject.from_wave_file("Resources/collectedJellyfish.wav")
         self.coinCollected = simpleaudio.WaveObject.from_wave_file("Resources/coin.wav")
         self.countdownSound = simpleaudio.WaveObject.from_wave_file("Resources/countdown.wav")
+        self.menuSelection = simpleaudio.WaveObject.from_wave_file("Resources/menu_selection.wav")
         # self.maintheme_slow = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_slow.wav")
         # self.maintheme_fast = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_fast.wav")
         self.drum = simpleaudio.WaveObject.from_wave_file("Resources/drum.wav")
