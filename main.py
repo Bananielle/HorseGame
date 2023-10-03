@@ -182,7 +182,7 @@ if __name__ == '__main__':
         return gamestate, gameParameters, mainGameBackGround,paradigmManager  # Reinitialize game parameters and background
 
 
-    def changeMount(mounttype):
+    def changeMount_right(mounttype):
 
         if mounttype == Mounts.HORSE:
             mounttype = MountType.setMount(Mounts.TURTLE)
@@ -192,6 +192,19 @@ if __name__ == '__main__':
             mounttype = MountType.setMount(Mounts.BEAR)
         elif mounttype == Mounts.BEAR:
             mounttype = MountType.setMount(Mounts.HORSE)
+
+        return mounttype
+
+    def changeMount_left(mounttype):
+
+        if mounttype == Mounts.HORSE:
+            mounttype = MountType.setMount(Mounts.BEAR)
+        elif mounttype == Mounts.TURTLE:
+            mounttype = MountType.setMount(Mounts.HORSE)
+        elif mounttype == Mounts.CAMEL:
+            mounttype = MountType.setMount(Mounts.TURTLE)
+        elif mounttype == Mounts.BEAR:
+            mounttype = MountType.setMount(Mounts.CAMEL)
 
         return mounttype
 
@@ -229,7 +242,11 @@ if __name__ == '__main__':
                     gametype = 'maingame'
 
                 if event.key == K_RIGHT:
-                    currentMountType = changeMount(currentMountType)
+                    currentMountType = changeMount_right(currentMountType)
+                    soundSystem.menuSelection.play()
+
+                if event.key == K_LEFT:
+                    currentMountType = changeMount_left(currentMountType)
                     soundSystem.menuSelection.play()
 
                 if event.key == K_l:
@@ -288,7 +305,6 @@ if __name__ == '__main__':
                 gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
                 gp.achieved_jump_height = 0.5 # For displaying debugging text
 
-            showPathBackground(event)
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -309,14 +325,6 @@ if __name__ == '__main__':
         return gamestate
 
 
-    def showPathBackground(event):
-        # Start the path if p is pressed
-        if event.type == KEYDOWN:
-            # If space to start
-            if event.key == K_p:
-                gp.mainGame_background.startPathBackground()
-            if event.key == K_SPACE:
-                gp.mainGame_background.endPathBackground()
 
     def draw_game_time_text():
         # Draw game time counter text
