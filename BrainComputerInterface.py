@@ -1,6 +1,7 @@
 import pygame
 import _turbosatorinetworkinterface as tsi  # handles getting data from TSI
 import numpy as np
+import CSVwriter
 
 from pygame.locals import (
     K_UP,
@@ -19,7 +20,7 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.NFsignal = {"NFsignal_mean": [], "NFsignal_max": [], "NFSignal_median": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": []}
+        self.NFsignal = {"NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": []}
 
         self.NF_maxLevel_based_on_localizer = 0.3  # This is the max level for the NF signal that people can reach
 
@@ -29,6 +30,11 @@ class BrainComputerInterface():
 
         self.currentTask_signal = 1
         self.currentRest_signal = 1
+
+        # CSV file preparation
+        # Define the field names (header) for your CSV file
+        self.field_names = ['NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
+                       'NFSignal_median_REST', 'NF_MaxThreshold']
 
 
         # Look for a connection to turbo-satori
@@ -77,9 +83,9 @@ class BrainComputerInterface():
         if task:
             self.currentTask_signal = self.NFsignal_mean # Save the current task signal for PSC calculation
 
-            self.NFsignal["NFsignal_mean"].append(self.NFsignal_mean)
-            self.NFsignal["NFsignal_max"].append(self.NFsignal_max)
-            self.NFsignal["NFSignal_median"].append(self.NFSignal_median)
+            self.NFsignal["NFsignal_mean_TASK"].append(self.NFsignal_mean)
+            self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
+            self.NFsignal["NFSignal_median_TASK"].append(self.NFSignal_median)
 
 
 
@@ -116,12 +122,15 @@ class BrainComputerInterface():
 
     def calculate_NF_max_threshold(self):
     # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
-        NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean"]))
-        NFsignal_max = np.mean((self.NFsignal["NFsignal_max"]))
-        NFSignal_median = np.mean((self.NFsignal["NFSignal_median"]))
+        NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean_TASK"]))
+        NFsignal_max = np.mean((self.NFsignal["NFsignal_max_TASK"]))
+        NFSignal_median = np.mean((self.NFsignal["NFSignal_median_TASK"]))
+        self.NFsignal["NF_MaxThreshold"].append(NFsignal_max)
 
         # Print the mean of the NFsignal_mean values
-        print("End of run. NFsignal_mean: " + str(NFsignal_mean) + ", NFsignal_max: " + str(NFsignal_max) + ", NFSignal_median: " + str(NFSignal_median))
+        print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
+
+        self.save_dict_to_csv()
 
         self.set_NF_max_threshold(NFsignal_max)
 
@@ -186,3 +195,9 @@ class BrainComputerInterface():
         print("Sampling rate = "+  str(self.tsi.get_sampling_rate()) + ", so " + str(timeBetweenSamples_ms) + "ms inbetween samples.")
 
         return timeBetweenSamples_ms
+
+
+    # CSV writer
+    def save_dict_to_csv(self):
+        csvWriter = CSVwriter.CSVwriter()
+        csvWriter.save_dict_to_csv("TSI_data.csv", self.field_names, self.NFsignal)

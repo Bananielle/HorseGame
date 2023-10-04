@@ -43,6 +43,7 @@ from Background import MainGame_background
 from LoadingBar import LoadingBar
 from Rider import Rider
 from SettingsScreen import Settings_header
+from CSVwriter import CSVwriter
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
@@ -115,17 +116,23 @@ if __name__ == '__main__':
     class Scoreboard():
         def __init__(self):
             self.scoresList = []
+            self.runList = []
+            self.runNr = 1
             self.font = pygame.font.SysFont('herculanum', 35, bold=True, )
 
         def addScoretoScoreBoard(self, score):
             if not gp.scoreSaved:
                 self.scoresList.append(score)
+                self.runList = self.runNr
+                self.runNr =+ 1
                 gp.scoreSaved = True  # This will reset when the player goes back to the start screen
                 print('Score ', score, ' saved to score list. Is now: ', str(self.scoresList))
+                self.save_dict_to_csv()
 
         def makePinkFont(self, string):
             text = self.font.render(string, True, PINK)  # Pink colour
             return text
+
 
         def displayScoreboard(self):
 
@@ -156,7 +163,17 @@ if __name__ == '__main__':
                             ((SCREEN_WIDTH / 2.6), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
                 newPosition += 30
                 count += 1
+
+
                 # print('score ', score, ' printed')
+    # CSV writer
+        def save_dict_to_csv(self):
+
+            ScoresDictionary = {"Coins collected": self.scoresList}
+            fieldnames = ["Coins collected"]
+
+            csvWriter = CSVwriter()
+            csvWriter.save_dict_to_csv("Scoreboard.csv", fieldnames, ScoresDictionary)
 
 
 
@@ -247,6 +264,14 @@ if __name__ == '__main__':
 
                 if event.key == K_LEFT:
                     currentMountType = changeMount_left(currentMountType)
+                    soundSystem.menuSelection.play()
+
+                if event.key == K_UP:
+                    gp.mainGame_background.timeOfDay = 'Day'
+                    soundSystem.menuSelection.play()
+
+                if event.key == K_DOWN:
+                    gp.mainGame_background.timeOfDay = 'Night'
                     soundSystem.menuSelection.play()
 
                 if event.key == K_l:
@@ -629,12 +654,12 @@ if __name__ == '__main__':
         if gp.useFancyBackground:
             y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height() # Use background layer 2 for height reference
 
-            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX, y])
-            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y])
-            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y])
-            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y])
-            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y])
-            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y])
+            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX, y+100]) # To fit the moon better on to the screen (it lowers it a little bit)
+            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y+100])
+            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y-40])
+            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y-40])
+            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y-40])
+            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y-40])
             screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX, y])
             screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX2, y])
             screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX, y])
@@ -643,7 +668,7 @@ if __name__ == '__main__':
             screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
             if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
-                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y])
+                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y]) # To put the cacti a bit higher
                 screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
                 screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
                 screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
@@ -774,6 +799,9 @@ if __name__ == '__main__':
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
+
+
+
 
     # ========== GAME STATE MACHINE ==============
     gamestate = GameState.STARTSCREEN
