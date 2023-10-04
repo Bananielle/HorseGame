@@ -24,6 +24,7 @@ class GameParameters():
         }
 
         self.draw_grid = False # For debugging purposes
+        self.useFancyBackground = True
 
         self.hemodynamic_delay = 3
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
