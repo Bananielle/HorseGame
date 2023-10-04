@@ -8,6 +8,8 @@ class MainGame_background(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.MountType = mounttype
 
+        print ("MainGame_background created. Mount type = ", self.MountType)
+
         # Let the mount type background be determined by based on what the player choose in the starting screen.
         if self.MountType == 'horse':
             self.folder = "Resources/Horse/"
@@ -38,22 +40,20 @@ class MainGame_background(pygame.sprite.Sprite):
                 self.bgX2 -= speed
 
                 if self.bgX < (self.width - a) * -1:  # If our bg is at the -width then reset its position (-a to make the transition more seemless)
-                   # print("bgX = ", str(self.bgX), " < ", str((self.width - a) * -1) + " . Reset background.")
-                    self.bgX = self.width - overlapBuffer
+                   self.bgX = self.width - overlapBuffer
 
                 if self.bgX2 < (self.width - a) * -1:  # If our bg is at the -width then reset its position (-a to make the transition more seemless)
-                   # print("bgX2 = ", str(self.bgX2), " < ", str((self.width - a) * -1) + " . Reset background.")
-                    self.bgX2 = self.width - overlapBuffer
+                   self.bgX2 = self.width - overlapBuffer
 
 
-        # FAR BACKGROUND
+        # DEFAULT FAR BACKGROUND
         self.background_far = BackgroundTemplate(self.folder + 'background.png',SCREEN_WIDTH,SCREEN_HEIGHT)
         self.background_far.bgX2 = self.background_far.width - 10  # Otherwise there is a gap between the two images
 
-        # MIDDLE BACKGROUND
+        # DEFAULT MIDDLE BACKGROUND
         self.background_middle = BackgroundTemplate(self.folder + 'middleground.png',SCREEN_WIDTH,SCREEN_HEIGHT - int((SCREEN_HEIGHT/10)))# Make sure it's an integer because the fucntion doesn't accept floats
 
-        # FOREGROUND
+        # DEFAULT FOREGROUND
         self.background_foreground = BackgroundTemplate(self.folder + 'foreground.png',SCREEN_WIDTH + (int(SCREEN_WIDTH / 3.2)), SCREEN_HEIGHT - 0) # Make sure this is an integer, because it doesn't accept floats
 
         self.background_foreground.bgX2 = self.background_foreground.width - 40 # Otherwise there is a gap between the two images
@@ -62,23 +62,34 @@ class MainGame_background(pygame.sprite.Sprite):
         self.backgroundSpeed =  gameParams.velocity * gameParams.deltaTime + 2
         self.defaultBackgroundList =  [self.background_far, self.background_middle, self.background_foreground]
 
-        if mounttype == 'horse':
-            if self.gameParams.useFancyBackground:
-                self.folder = "Resources/Horse/Field/"
+        # FANCY BACKGROUNDs]
+        timeOfDay = 'Day'
+        #timeOfDay = 'Night'
 
-                b = 2.2 # Scale factor for the background images
-                c = 2
+        x = 2.2  # Scale factor for the background images
+        y = 1.7
 
-                self.background1 = BackgroundTemplate(self.folder + 'Field Layer 01.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background2 = BackgroundTemplate(self.folder + 'Field Layer 02.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background3 = BackgroundTemplate(self.folder + 'Field Layer 03.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background4 = BackgroundTemplate(self.folder + 'Field Layer 04.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background5 = BackgroundTemplate(self.folder + 'Field Layer 05.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background6 = BackgroundTemplate(self.folder + 'Field Layer 06.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background7 = BackgroundTemplate(self.folder + 'Field Layer 07.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)
-                self.background8 = BackgroundTemplate(self.folder + 'Field Layer 08.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c)# Layer where the animal walks on.
-                self.background9 = BackgroundTemplate(self.folder + 'Field Layer 09.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c) # Layer where the animal walks on.
-                self.background10 = BackgroundTemplate(self.folder + 'Field Layer 10.png',SCREEN_WIDTH*b,SCREEN_HEIGHT*c) # Layer where the animal walks on.
+        self.folder = "Resources/" + mounttype.capitalize() + "/" + timeOfDay + "/"
+        print("Using folder: ", self.folder)
+
+        # All backgrounds have at least 6 layers
+        self.background1 = BackgroundTemplate(self.folder + 'Layer 01.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y) # Don't scale the sky background
+        self.background2 = BackgroundTemplate(self.folder + 'Layer 02.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)
+        self.background3 = BackgroundTemplate(self.folder + 'Layer 03.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)
+        self.background4 = BackgroundTemplate(self.folder + 'Layer 04.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)
+        self.background5 = BackgroundTemplate(self.folder + 'Layer 05.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)
+        self.background6 = BackgroundTemplate(self.folder + 'Layer 06.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)
+
+        if mounttype is not 'turtle':
+            self.background7 = BackgroundTemplate(self.folder + 'Layer 07.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)
+            self.background8 = BackgroundTemplate(self.folder + 'Layer 08.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y)# Layer where the animal walks on.
+            self.background9 = BackgroundTemplate(self.folder + 'Layer 09.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y) # Layer where the animal walks on.
+
+        if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Bear/Night/":
+            self.background10 = BackgroundTemplate(self.folder + 'Layer 10.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y) # Layer where the animal walks on.
+
+        if self.folder == "Resources/Horse/Night/":
+            self.background11 = BackgroundTemplate(self.folder + 'Layer 11.png', SCREEN_WIDTH * x,SCREEN_HEIGHT * y)  # Layer where the animal walks on.
 
 
         # Create a semi-transparent grey surface to overlay on top of the background
@@ -92,17 +103,26 @@ class MainGame_background(pygame.sprite.Sprite):
 
     def updateAllBackGrounds(self):
 
-        if self.MountType == 'horse' and self.gameParams.useFancyBackground:
-            self.background1.moveBackground(speed=1.1 * self.backgroundSpeed,a=6,overlapBuffer=6)
-            self.background2.moveBackground(speed=1.2 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background3.moveBackground(speed=1.3 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background4.moveBackground(speed=1.4 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background5.moveBackground(speed=1.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background6.moveBackground(speed=1.6 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background7.moveBackground(speed=1.7 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background8.moveBackground(speed=1.8 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background9.moveBackground(speed=1.9 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background10.moveBackground(speed=2 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        if self.gameParams.useFancyBackground:
+            self.background1.moveBackground(speed=0.1 * self.backgroundSpeed,a=6,overlapBuffer=6)
+            self.background2.moveBackground(speed=0.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background3.moveBackground(speed=0.8 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background4.moveBackground(speed=1.0 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background5.moveBackground(speed=1.2 * self.backgroundSpeed, a=6, overlapBuffer=6)
+
+            if self.MountType is 'turtle': # Let this layer move faster, because it is the foreground layer.
+                self.background6.moveBackground(speed=2 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            else:
+                self.background6.moveBackground(speed=1.4 * self.backgroundSpeed, a=6, overlapBuffer=6)
+
+            if self.MountType is not 'turtle':
+                self.background7.moveBackground(speed=1.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
+                self.background8.moveBackground(speed=1.6 * self.backgroundSpeed, a=6, overlapBuffer=6)
+                self.background9.moveBackground(speed=1.7 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Bear/Night/":
+                self.background10.moveBackground(speed=2 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            if self.folder == "Resources/Horse/Night/":
+                self.background11.moveBackground(speed=2 * self.backgroundSpeed, a=6, overlapBuffer=6)
         else:
             self.background_far.moveBackground(speed=1.4 * self.backgroundSpeed,a=6,overlapBuffer=6)# Use 5 because otherwise there is a gap between the two images
             self.background_middle.moveBackground(speed=1.8 * self.backgroundSpeed, a=6,overlapBuffer=0)

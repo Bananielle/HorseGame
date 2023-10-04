@@ -626,8 +626,8 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))  # black
 
-        if mounttype == 'horse' and gp.useFancyBackground:
-            y = SCREEN_HEIGHT - mainGame_background.background1.surf.get_height()
+        if gp.useFancyBackground:
+            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height() # Use background layer 2 for height reference
 
             screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX, y])
             screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y])
@@ -641,14 +641,22 @@ if __name__ == '__main__':
             screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX2, y])
             screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
             screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
-            screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y])
-            screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
-            screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
-            screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
-            screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX, y])
-            screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX2, y])
-            screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX, y])
-            screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX2, y])
+
+            if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
+                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y])
+                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
+                screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
+                screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
+                screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX, y])
+                screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX2, y])
+
+            if mainGame_background.folder == "Resources/Horse/Day/" or mainGame_background.folder == "Resources/Bear/Night/":
+                screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX, y])
+                screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX2, y])
+
+            if mainGame_background.folder == "Resources/Horse/Night/":
+                screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX, y])
+                screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX2, y])
         else:
             # Default background drawing parameters
             y=40
@@ -660,21 +668,21 @@ if __name__ == '__main__':
             screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
 
 
-        # Adjust some of the background drawing parameters based on the mount background
-        if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
-            y = 0
-            screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX, 0])
-            screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX2, 0])
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
-        if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
-            y = 20
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
-        if gp.player.mount_folder == "Resources/Turtle/":
-            y = 20
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
+            # Adjust some of the background drawing parameters based on the mount background
+            if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
+                y = 0
+                screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX, 0])
+                screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX2, 0])
+                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
+                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
+            if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
+                y = 20
+                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
+                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
+            if gp.player.mount_folder == "Resources/Turtle/":
+                y = 20
+                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
+                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
 
 
 
