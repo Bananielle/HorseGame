@@ -23,9 +23,9 @@ class PressSpace(pygame.sprite.Sprite):
         )
 
 
-class MountPicture(pygame.sprite.Sprite):
+class AnimalPicture(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT,mounttype):
-        super(MountPicture, self).__init__()
+        super(AnimalPicture, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.mountType = "big" + str(mounttype)
@@ -39,13 +39,29 @@ class MountPicture(pygame.sprite.Sprite):
             (self.SCREEN_HEIGHT * 0.55 - self.surf.get_height())
         )
 
-
-class FishAdventure(pygame.sprite.Sprite):
-    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
-        super(FishAdventure, self).__init__()
+class TimeOfDayPicture(pygame.sprite.Sprite):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT,timeofday):
+        super(TimeOfDayPicture, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.surf = pygame.image.load("Resources/Horse-adventure.png").convert_alpha()
+        self.timeofday = timeofday
+        self.filename = "Resources/" + str(self.timeofday) + ".png"
+        self.surf = pygame.image.load(self.filename).convert_alpha()
+        self.surf.set_alpha(200)
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+        self.rect = self.surf.get_rect()
+
+        self.location = (
+            (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
+            (self.SCREEN_HEIGHT * 0.55 - self.surf.get_height() - 100)
+        )
+
+class Title(pygame.sprite.Sprite):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
+        super(Title, self).__init__()
+        self.SCREEN_WIDTH = SCREEN_WIDTH
+        self.SCREEN_HEIGHT = SCREEN_HEIGHT
+        self.surf = pygame.image.load("Resources/Run_and_jump.png").convert_alpha()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect()
 

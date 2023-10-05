@@ -47,7 +47,7 @@ from CSVwriter import CSVwriter
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
-from Pictures import PressSpace, FishAdventure, Settings, ReadyToJump, MountPicture
+from Pictures import PressSpace, Title, Settings, ReadyToJump, AnimalPicture, TimeOfDayPicture
 from MainPlayer import MainPlayer
 
 # Press the green button in the gutter to run the script.
@@ -243,8 +243,9 @@ if __name__ == '__main__':
 
         # Create elements to be put on screen
         startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
-        mountPic = MountPicture(SCREEN_WIDTH, SCREEN_HEIGHT, currentMountType)
-        fishadventure_text = FishAdventure(SCREEN_WIDTH, SCREEN_HEIGHT)
+        mountPic = AnimalPicture(SCREEN_WIDTH, SCREEN_HEIGHT, currentMountType)
+        timeofdayPic = TimeOfDayPicture(SCREEN_WIDTH, SCREEN_HEIGHT, timeofday)
+        fishadventure_text = Title(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Settings(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         string = "Press L for test environment!"
@@ -255,6 +256,7 @@ if __name__ == '__main__':
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
         screen.blit(mountPic.surf, mountPic.location)
+        screen.blit(timeofdayPic.surf, timeofdayPic.location)
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT - 100))
@@ -854,7 +856,7 @@ if __name__ == '__main__':
 
         pygame.display.flip()
 
-        print('frame rate = ',clock.get_fps())
+       # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()

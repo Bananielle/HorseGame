@@ -42,7 +42,7 @@ class GameParameters():
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
-        self.FPS = 15 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        self.FPS = 60 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
         # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
 
         # Background markers for task and rest periods
