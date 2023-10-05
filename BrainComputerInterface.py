@@ -67,8 +67,9 @@ class BrainComputerInterface():
         self.timewindow_rest = []
 
     def calculateNFsignal(self,task):
+
         if task:
-            NFsignal_raw = np.array(self.timewindow_task)
+            NFsignal_raw = np.array(self.timewindow_task) # Array of all incoming oxy values.
         else: # If measurement is from the rest period
             NFsignal_raw = np.array(self.timewindow_rest)
 
@@ -86,8 +87,6 @@ class BrainComputerInterface():
             self.NFsignal["NFsignal_mean_TASK"].append(self.NFsignal_mean)
             self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
             self.NFsignal["NFSignal_median_TASK"].append(self.NFSignal_median)
-
-
 
         else: # If measurement is from the rest period
             self.currentRest_signal = self.NFsignal_mean # Save the current rest signal for PSC calculation

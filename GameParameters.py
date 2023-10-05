@@ -15,10 +15,10 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 4,
+            'duration_TASK_s': 5,
             'duration_REST_s': 5,
             'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 2 ,
+            'duration_BASELINE_s': 5 ,
             'task_start_times': {},
             'rest_start_times': {}
         }
@@ -54,6 +54,8 @@ class GameParameters():
         self.currentTime_s = 0  #
 
         # Paradigm parameters - constants
+        self.trialCounter_task = 1 # For NF measuring
+        self.trialCounter_rest = 1 # For NF measuring
         self.TASK_counter = 0    # Set the initial values for the event counters
         self.REST_counter = 0
         self.startTime_TASK = self.duration_BASELINE_s  + self.duration_REST_s# Set the start time for event A

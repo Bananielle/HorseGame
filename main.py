@@ -77,6 +77,8 @@ if __name__ == '__main__':
 
     # Timing stuff
     prev_time = 0
+    trialCounter_task = 1
+    trialCounter_rest = 1
 
 
     def getBrainInput(fakeBrainInput):
@@ -248,10 +250,9 @@ if __name__ == '__main__':
         fishadventure_text = Title(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Settings(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        string = "Press L for test environment!"
-        font = pygame.font.SysFont('herculanum', 20, bold=True, )
-        textestEnvironment_txtt = font.render(string, True, PINK)  # Pink colour
-        testEnvironment_txt = font.render("(Press 'L' for test environment)", True, (255, 255, 255))
+        string = "(Press L for localizer)"
+        font = pygame.font.SysFont('ariel', 23, bold=False, )
+        testEnvironment_txt = font.render(string, True, (255, 255, 255))
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
@@ -259,7 +260,7 @@ if __name__ == '__main__':
         screen.blit(timeofdayPic.surf, timeofdayPic.location)
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
-        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT - 100))
+        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT - 90))
 
 
 
@@ -393,23 +394,29 @@ if __name__ == '__main__':
             print("T=",gp.currentTime_s,": Next data time window REST: " + str(gp.datawindow_rest_start_time), "Datawindow REST end time: " + str(gp.datawindow_rest_end_time))
 
     def stopCollectingData():
-        print("T=",gp.currentTime_s,": Calculating NF signal...")
+        print("T=",gp.currentTime_s,": Stop collecting data. Calculating NF signal...")
         BCI.collectTimewindowData = False
         BCI.resetTimewindowDataArray()
 
+    # Protocol generated. Task start times are:{7, 16} and rest start times are: { 2, 11, 20}
+
     def collectTaskTrialData():
         # Send time window to BCI
-        if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time:
+        if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time and not gp.rest:
             BCI.collectTimewindowData = True
             scaled_data = BCI.startMeasuring(task=True)
             print("T=",gp.currentTime_s,": Collecting timewindow data for task. Scaled data: " + str(scaled_data))
 
-        if gp.currentTime_s == gp.datawindow_task_end_time:
-            BCI.calculateNFsignal(task=True)
-            stopCollectingData()
-            PSC = BCI.get_percentage_signal_change()
-            print("T=",gp.currentTime_s,": PSC = " + str(PSC))
-            updateTimeDataWindow_task()
+        if gp.currentTime_s == gp.datawindow_task_end_time: # Don't measure rest data while the task trial has already started
+            if gp.trialCounter_task > len(BCI.NFsignal["NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS: # Check if NF signal has already been measured:
+                BCI.calculateNFsignal(task=True)
+                stopCollectingData()
+                PSC = BCI.get_percentage_signal_change()
+                print("T=",gp.currentTime_s,": PSC = " + str(PSC))
+                updateTimeDataWindow_task()
+                gp.trialCounter_task +=1
+            else:
+                print("NF signal task already calculated.")
 
     def collectRestTrialData():
         # Send time window to BCI
@@ -419,9 +426,13 @@ if __name__ == '__main__':
             print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.datawindow_rest_end_time:
-            BCI.calculateNFsignal(task=False)
-            stopCollectingData()
-            updateTimeDataWindow_rest()
+            if gp.trialCounter_rest > len(BCI.NFsignal["NFsignal_mean_REST"]) and gp.trialCounter_rest <= gp.totalNum_TRIALS+1:  # Check if NF signal has already been measured: (+1 because we have one extra rest trial)
+                BCI.calculateNFsignal(task=False)
+                stopCollectingData()
+                updateTimeDataWindow_rest()
+                gp.trialCounter_task += 1
+            else:
+                print("NF signal rest already calculated.")
 
 
 
