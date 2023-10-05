@@ -101,6 +101,8 @@ class MainGame_background(pygame.sprite.Sprite):
         self.overlay_greysurface.set_alpha(transparency)
         self.overlay_greysurface.fill((transparency, transparency, transparency))
 
+        #test
+
     def updateAllBackGrounds(self):
 
         if self.gameParams.useFancyBackground:
