@@ -30,7 +30,7 @@ class MountPicture(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.mountType = "big" + str(mounttype)
         self.filename = "Resources/" + str(self.mountType) + ".png"
-        self.surf = pygame.image.load(self.filename).convert()
+        self.surf = pygame.image.load(self.filename).convert_alpha()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.surf.get_rect()
 

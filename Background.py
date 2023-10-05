@@ -24,8 +24,8 @@ class MainGame_background(pygame.sprite.Sprite):
         class BackgroundTemplate (pygame.sprite.Sprite):
             def __init__(self, imagePath, scalefactor_x, scalefactor_y):
                 super(BackgroundTemplate, self).__init__()
-                self.surf = pygame.image.load(imagePath)
-                self.surf = pygame.transform.scale(self.surf, (scalefactor_x, scalefactor_y))
+                self.surf = pygame.image.load(imagePath).convert_alpha() # Convert() is needed to improve performance
+                self.surf = pygame.transform.scale(self.surf, (int(scalefactor_x), int(scalefactor_y)))
                 #print("Scaling image to ", scalefactor_x, scalefactor_y)
                 self.rect = self.surf.get_rect()
                 self.bgX = 0 # First image

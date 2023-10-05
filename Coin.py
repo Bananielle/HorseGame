@@ -12,7 +12,7 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT,gameParams, startingPosition_y,rank):
         super(Coin, self).__init__()
         self.gameParams = gameParams
-        self.surf = pygame.image.load("Resources/coin.png").convert()
+        self.surf = pygame.image.load("Resources/coin.png").convert_alpha()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.startingSizeOfCoin = self.surf.get_width()
@@ -35,25 +35,25 @@ class Coin(pygame.sprite.Sprite):
 
     def updatePulsatingCoinAnimation(self):
         if self.coinAnimation == 0:
-            self.surf = pygame.image.load("Resources/coin.png").convert()
+            self.surf = pygame.image.load("Resources/coin.png").convert_alpha()
         elif self.coinAnimation == 1:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_110.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_110.png").convert_alpha()
         elif self.coinAnimation == 2:
             self.surf = pygame.image.load("Resources/coin.png").convert()
         elif self.coinAnimation == 3:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_95.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_95.png").convert_alpha()
         elif self.coinAnimation == 4:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_90.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_90.png").convert_alpha()
         elif self.coinAnimation == 5:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_85.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_85.png").convert_alpha()
         elif self.coinAnimation == 6:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_80.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_80.png").convert_alpha()
         elif self.coinAnimation == 7:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_85.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_85.png").convert_alpha()
         elif self.coinAnimation == 8:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_90.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_90.png").convert_alpha()
         elif self.coinAnimation == 9:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_95.png").convert()
+            self.surf = pygame.image.load("Resources/goldcoin_scaled_95.png").convert_alpha()
 
         self.updateImage()
 

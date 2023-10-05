@@ -13,7 +13,7 @@ class LoadingBar(pygame.sprite.Sprite):
         self.gameParams = gameParams
         self.SCREEN_WIDTH =SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.surf = pygame.image.load('Resources/loadingbar0.png')
+        self.surf = pygame.image.load('Resources/loadingbar0.png').convert_alpha()
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)   # Set
         self.rect = self.surf.get_rect()
 

@@ -35,7 +35,7 @@ class MainPlayer(pygame.sprite.Sprite):
         elif self.MountType == 'bear':
             self.mount_folder = "Resources/Bear/"
 
-        self.surf = pygame.image.load(self.mount_folder + "Walk1.png").convert()
+        self.surf = pygame.image.load(self.mount_folder + "Walk1.png").convert_alpha()
 
         self.prepareImage()
 

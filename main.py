@@ -65,6 +65,7 @@ if __name__ == '__main__':
     # Configure fullscreen. If you don't want fullscreen, set to 0 instead. Otherwise set to pygame.FULLSCREEN
     FULLSCREEN = 0  # pygame.FULLSCREEN
 
+
     # Colour constants
     GOLD = (255, 184, 28)
     PINK = (170, 22, 166)
@@ -257,6 +258,8 @@ if __name__ == '__main__':
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT - 100))
+
+
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -851,7 +854,7 @@ if __name__ == '__main__':
 
         pygame.display.flip()
 
-       # print('frame rate = ',clock.get_fps())
+        print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()
