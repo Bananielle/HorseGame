@@ -1,12 +1,13 @@
 import pygame
 
 class MainGame_background(pygame.sprite.Sprite):
-    def __init__(self, SCREEN_WIDTH,SCREEN_HEIGHT,gameParams, mounttype):
+    def __init__(self, SCREEN_WIDTH,SCREEN_HEIGHT,gameParams, mounttype,timeofday):
         super(MainGame_background, self).__init__()
         self.gameParams = gameParams
         self.SCREEN_WIDTH =SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.MountType = mounttype
+        self.timeOfDay = timeofday
 
         print ("MainGame_background created. Mount type = ", self.MountType)
 
@@ -63,8 +64,8 @@ class MainGame_background(pygame.sprite.Sprite):
         self.defaultBackgroundList =  [self.background_far, self.background_middle, self.background_foreground]
 
         # FANCY BACKGROUNDs]
-        self.timeOfDay = 'Day'
-        self.timeOfDay = 'Night'
+        #self.timeOfDay = 'Day'
+        #self.timeOfDay = 'Night'
 
         x = 2.2  # Scale factor for the background images
         y = 1.7
@@ -99,7 +100,6 @@ class MainGame_background(pygame.sprite.Sprite):
         self.overlay_greysurface = pygame.Surface(WINDOWSIZE)
         self.overlay_greysurface.set_alpha(transparency)
         self.overlay_greysurface.fill((transparency, transparency, transparency))
-
 
     def updateAllBackGrounds(self):
 

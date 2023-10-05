@@ -178,7 +178,7 @@ if __name__ == '__main__':
 
 
     # GAME STATE FUNCTIONS
-    def startANewGame(mounttype,gametype):
+    def startANewGame(mounttype,gametype,timeofday):
         print('Starting a new game.')
         if gametype == 'maingame':
             gamestate = GameState.setGameState(GameState.MAINGAME)
@@ -194,7 +194,8 @@ if __name__ == '__main__':
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
 
-        mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype)
+        print("Time of day input variable = " + timeofday)
+        mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype,timeofday)
 
         return gamestate, gameParameters, mainGameBackGround,paradigmManager  # Reinitialize game parameters and background
 
@@ -225,8 +226,15 @@ if __name__ == '__main__':
 
         return mounttype
 
+    def setTimeOfDay(time):
+        timeOfDay = time
+        print("Time of day set to: ", timeOfDay)
 
-    def runStartScreen(currentMountType):
+        return timeOfDay
+
+
+
+    def runStartScreen(currentMountType, timeofday):
         gamestate = GameState.STARTSCREEN
         gametype = 'maingame'
 
@@ -267,11 +275,11 @@ if __name__ == '__main__':
                     soundSystem.menuSelection.play()
 
                 if event.key == K_UP:
-                    gp.mainGame_background.timeOfDay = 'Day'
+                    timeofday = setTimeOfDay('Day')
                     soundSystem.menuSelection.play()
 
                 if event.key == K_DOWN:
-                    gp.mainGame_background.timeOfDay = 'Night'
+                    timeofday = setTimeOfDay('Night')
                     soundSystem.menuSelection.play()
 
                 if event.key == K_l:
@@ -285,7 +293,7 @@ if __name__ == '__main__':
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
-        return gamestate, currentMountType, gametype
+        return gamestate, currentMountType, gametype,timeofday
 
 
     def runSettings():
@@ -787,6 +795,7 @@ if __name__ == '__main__':
     GameState = GameStates()
     MountType = Mounts() # Set up mount types to cycle through
     mounttype = MountType.setMount(Mounts.HORSE)
+    timeofday = 'Day' # Default background is daytime
     print("Starting mount set to ", mounttype)
 
 
@@ -795,7 +804,7 @@ if __name__ == '__main__':
 
     # Set up a new game (will be refreshed after every replay)
     gametype = 'maingame'
-    gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype)
+    gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype,timeofday)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
@@ -809,7 +818,7 @@ if __name__ == '__main__':
     while run:  # Game loop (= one frame)
 
         if gamestate == GameState.STARTSCREEN:
-            gamestate, mounttype, gametype = runStartScreen(mounttype)
+            gamestate, mounttype, gametype, timeofday = runStartScreen(mounttype,timeofday)
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()
@@ -818,7 +827,7 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype)
+            gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype,timeofday)
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()
