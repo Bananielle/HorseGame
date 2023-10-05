@@ -35,9 +35,30 @@ class MainPlayer(pygame.sprite.Sprite):
         elif self.MountType == 'bear':
             self.mount_folder = "Resources/Bear/"
 
-        self.surf = pygame.image.load(self.mount_folder + "Walk1.png").convert_alpha()
+        # Preload the animal animation images for running
+        self.animal_images_walking = [pygame.image.load(self.mount_folder + 'Walk1.png'),
+                                      pygame.image.load(self.mount_folder +'Walk2.png'),
+                                      pygame.image.load(self.mount_folder +'Walk3.png'),
+                                      pygame.image.load(self.mount_folder +'Walk4.png'),
+                                      pygame.image.load(self.mount_folder +'Walk5.png'),
+                                      pygame.image.load(self.mount_folder +'Walk6.png')]
+        for image in self.animal_images_walking:
+            image.convert()
+            #image.set_colorkey((0,0,0))  #pygame.RLEACCEL in the set_colorkey() method instructs pygame to process [compile] the resulting image taking into account the transparency color so that it will be blitted faster in the future.
 
-        self.prepareImage()
+        self.surf = self.animal_images_walking[0] # Starter image
+        self.scaleImage()
+
+        # Preload the animal animation images for jumping
+        self.animal_images_jumping = [pygame.image.load(self.mount_folder + 'Jump1.png'),
+                                      pygame.image.load(self.mount_folder + 'Jump2.png'),
+                                      pygame.image.load(self.mount_folder + 'Jump3.png'),
+                                      pygame.image.load(self.mount_folder + 'Jump4.png'),
+                                      pygame.image.load(self.mount_folder + 'Jump5.png'),
+                                      pygame.image.load(self.mount_folder + 'Jump6.png')]
+        for image in self.animal_images_jumping:
+            image.convert()
+            #image.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-(self.SCREEN_HEIGHT/10)
         self.startingPosition_x = 280
@@ -56,9 +77,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.HorseIsJumpingDown = False
 
 
-
-    def prepareImage(self):
-        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+    def scaleImage(self):
         self.imageScaleFactor = int(3)
         self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,
                                                        self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
@@ -67,21 +86,21 @@ class MainPlayer(pygame.sprite.Sprite):
         self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
 
     def ridingHorseAnimation(self):
+
         if self.RidingAnimation == 0:
-            self.surf = pygame.image.load(self.mount_folder + "Walk1.png").convert()
+            self.surf = self.animal_images_walking[0]
         elif self.RidingAnimation == 1:
-            self.surf = pygame.image.load(self.mount_folder + "Walk2.png").convert()
+            self.surf = self.animal_images_walking[1]
         elif self.RidingAnimation == 2:
-            self.surf = pygame.image.load(self.mount_folder + "Walk3.png").convert()
+            self.surf = self.animal_images_walking[2]
         elif self.RidingAnimation == 3:
-            self.surf = pygame.image.load(self.mount_folder + "Walk4.png").convert()
+            self.surf = self.animal_images_walking[3]
         elif self.RidingAnimation == 4:
-            self.surf = pygame.image.load(self.mount_folder + "Walk5.png").convert()
+            self.surf = self.animal_images_walking[4]
         elif self.RidingAnimation == 5:
-            self.surf = pygame.image.load(self.mount_folder + "Walk6.png").convert()
+            self.surf = self.animal_images_walking[5]
 
-        self.prepareImage()
-
+        self.scaleImage()
 
         self.RidingAnimation = self.RidingAnimation + 1
         if self.RidingAnimation > 5: # Reset animation
@@ -89,15 +108,6 @@ class MainPlayer(pygame.sprite.Sprite):
 
     # Move the sprite based on keypresses
     def update(self, pressed_keys,brainKeyPress, useBCIinput):
-
-
-        # Also allow for BCI input to make player move up and down if True
-        # if useBCIinput:
-        #     if brainKeyPress == K_UP:
-        #         self.moveUp()
-        #     if brainKeyPress == K_DOWN:
-        #         self.moveDown()
-
 
         if pressed_keys[K_UP]:
             self.HorseIsJumping = True
@@ -169,7 +179,7 @@ class MainPlayer(pygame.sprite.Sprite):
             if self.HorseIsJumpingUp:
                 #if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
 
-                if self.rect.top >  self.calculate_jump_position(NF_level_reached):  # todo: this needs to be dependent on the NF max value (which is a value between 1 and 0)
+                if self.rect.top >  self.calculate_jump_position(NF_level_reached):
                     self.jumpUp()
                     #print(T=",self.gameParams.currentTime_s,": Horse is jumping up. NF_level reached: " + str(int(NF_level_reached*100)) + "%, Achieved jump position = " + str(self.calculate_jump_position(NF_level_reached)))
 
@@ -195,26 +205,26 @@ class MainPlayer(pygame.sprite.Sprite):
     def jumpUp(self):
         if self.RidingAnimation == 0:
             self.moveRight()
-            self.surf = pygame.image.load(self.mount_folder + "Jump1.png").convert()
+            self.surf = self.animal_images_walking[0]
         elif self.RidingAnimation == 1:
-            self.surf = pygame.image.load(self.mount_folder + "Jump2.png").convert()
+            self.surf = self.animal_images_walking[1]
         elif self.RidingAnimation == 2:
-            self.surf = pygame.image.load(self.mount_folder + "Jump2.png").convert()
+            self.surf = self.animal_images_walking[1]
         elif self.RidingAnimation == 3:
-            self.surf = pygame.image.load(self.mount_folder + "Jump3.png").convert()
+            self.surf = self.animal_images_walking[2]
         elif self.RidingAnimation == 4:
-            self.surf = pygame.image.load(self.mount_folder + "Jump3.png").convert()
+            self.surf = self.animal_images_walking[2]
         elif self.RidingAnimation == 5:
-            self.surf = pygame.image.load(self.mount_folder + "Jump4.png").convert()
+            self.surf = self.animal_images_walking[3]
         elif self.RidingAnimation == 6:
-            self.surf = pygame.image.load(self.mount_folder + "Jump5.png").convert()
+            self.surf = self.animal_images_walking[4]
         elif self.RidingAnimation == 7:
-            self.surf = pygame.image.load(self.mount_folder + "Jump6.png").convert()
+            self.surf = self.animal_images_walking[5]
 
 
         self.moveRight()
         self.moveUp()
-        self.prepareImage()
+        self.scaleImage()
 
         self.RidingAnimation = self.RidingAnimation + 1
         if self.RidingAnimation > 4:  # Reset animation
@@ -222,26 +232,26 @@ class MainPlayer(pygame.sprite.Sprite):
 
     def jumpDown(self):
         if self.RidingAnimation == 0:
-            self.surf = pygame.image.load(self.mount_folder + "Jump4.png").convert()
+            self.surf = self.animal_images_walking[3]
         elif self.RidingAnimation == 1:
-            self.surf = pygame.image.load(self.mount_folder + "Jump4.png").convert()
+            self.surf = self.animal_images_walking[3]
         elif self.RidingAnimation == 2:
-            self.surf = pygame.image.load(self.mount_folder + "Jump5.png").convert()
+            self.surf = self.animal_images_walking[4]
         elif self.RidingAnimation == 3:
-            self.surf = pygame.image.load(self.mount_folder + "Jump5.png").convert()
+            self.surf = self.animal_images_walking[4]
         elif self.RidingAnimation == 4:
-            self.surf = pygame.image.load(self.mount_folder + "Jump5.png").convert()
+            self.surf = self.animal_images_walking[4]
         elif self.RidingAnimation == 5:
-            self.surf = pygame.image.load(self.mount_folder + "Jump6.png").convert()
+            self.surf = self.animal_images_walking[5]
         elif self.RidingAnimation == 6:
-            self.surf = pygame.image.load(self.mount_folder + "Jump6.png").convert()
+            self.surf = self.animal_images_walking[5]
         elif self.RidingAnimation == 7:
-            self.surf = pygame.image.load(self.mount_folder + "Jump6.png").convert()
+            self.surf = self.animal_images_walking[5]
 
 
         self.moveRight()
         self.moveDown()
-        self.prepareImage()
+        self.scaleImage()
 
 
         self.RidingAnimation = self.RidingAnimation + 1
