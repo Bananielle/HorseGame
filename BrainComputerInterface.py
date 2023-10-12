@@ -15,6 +15,7 @@ class BrainComputerInterface():
         self.saveIncomingData = True
         self.incomingDataList_betas = []
         self.incomingDataList_oxy = []
+        self.incomingDataList_condition = []
         self.currentInput = 0
         self.previousInput = 0
         self.fakeInput = 0
@@ -58,11 +59,16 @@ class BrainComputerInterface():
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self):
         if self.saveIncomingData:
+            currentTimePoint = self.tsi.get_current_time_point()[0]
+
             betas = self.getBetas()
             oxy = self.scaleOxyData()
+            condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
 
             self.saveIncomingDataToList_betas(betas)
             self.saveIncomingDataToList_oxy(oxy)
+            self.saveIncomingDataToList_condition(condition)
+            #print("Current condition: " + str(condition))
 
     def startMeasuring(self, task):
         scaled_data = self.scaleOxyData()
@@ -83,6 +89,9 @@ class BrainComputerInterface():
 
     def saveIncomingDataToList_oxy(self, data):
         self.incomingDataList_oxy.append(data)
+
+    def saveIncomingDataToList_condition(self, data):
+        self.incomingDataList_condition.append(data)
 
     def resetTimewindowDataArray(self):
         self.timewindow_task = []
@@ -155,8 +164,8 @@ class BrainComputerInterface():
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
         self.save_dict_to_csv()
-        self.save_list_to_csv(self.incomingDataList_betas,"betavalues.csv")
-        self.save_list_to_csv(self.incomingDataList_oxy,"oxyvalues.csv")
+        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_betas)),"betavalues.csv")
+        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_oxy)),"oxyvalues.csv")
 
         self.set_NF_max_threshold(NFsignal_max)
 
@@ -181,7 +190,7 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
 
             selectedChannels = self.tsi.get_selected_channels()[0]
-            betas = self.tsi.get_beta_of_channel(channel=0,beta=1, chromophore=1)
+            betas = self.tsi.get_beta_of_channel(channel=0,beta=1, chromophore=1)[0]
 
             return betas
 
