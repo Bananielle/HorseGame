@@ -20,6 +20,9 @@ class ParadigmAndTriggerManager():
     def resetRestStartTime(self):
         self.gp.startTime_REST = self.gp.currentTime_s + self.gp.duration_TASK_s  # Reset the start time for event TASK
 
+    def resetJumpStartTime(self):
+        self.gp.startTime_JUMP = self.gp.currentTime_s + self.gp.duration_TASK_s
+
     def resetTaskandRestTime(self):
         self.gp.startTime_TASK = self.gp.currentTime_s  # Reset the start time for event TASK
         self.gp.startTime_REST = self.gp.currentTime_s  # Set the start time for event REST

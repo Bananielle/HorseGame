@@ -153,6 +153,9 @@ class MainPlayer(pygame.sprite.Sprite):
         if achieved_NF_level <= 0:
             print("NF signal is below zero:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2
+        if achieved_NF_level.isnull():
+            print("NF signal has NaN value:  ", str(achieved_NF_level))
+            achieved_NF_level = 0.2
 
         # # Calculate the jump position based on the maximum jump height
         # jump_position = (0 + self.SCREEN_HEIGHT * 0.2) + (self.SCREEN_HEIGHT * (1 - achieved_NF_level))
@@ -162,7 +165,7 @@ class MainPlayer(pygame.sprite.Sprite):
         #     print("Jump position is higher than screen limit:  ", str(jump_position))
         #     jump_position = 0 + self.SCREEN_HEIGHT * 0.2
 
-        jump_lower_bound = 4 / 10  # Lower bound of the jump position range
+        jump_lower_bound = 2 / 10  # Lower bound of the jump position range
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
 
         # Map the neurofeedback signal to the jump position range
@@ -194,6 +197,8 @@ class MainPlayer(pygame.sprite.Sprite):
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False
+                    self.gameParams.horseJumpEvent = False
+                    print("Horse is not jumping anymore.")
 
         else:
             self.ridingHorseAnimation()

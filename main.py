@@ -600,15 +600,32 @@ if __name__ == '__main__':
                     mainGame_background.startPathBackground()
 
             if paradigmManager.isItTimeForRestEvent():
-                if gp.REST_counter > 0: # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
-                    gp.player.HorseIsJumping = True
-                    gp.player.HorseIsJumpingUp = True
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
                 loadingBar.resetLoadingBar()
+               # if gp.REST_counter == 1:
+                #    paradigmManager.resetJumpStartTime() # Do this the first time the rest event occurs
+
+            # Check if time for horse jump
+            if gp.REST_counter > 0 and gp.TASK_counter > 0 and isItTimeForJumpEvent():  # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
+                print("Horse jumping = True")
+                gp.player.HorseIsJumping = True
+                gp.player.HorseIsJumpingUp = True
+                paradigmManager.resetJumpStartTime()
 
                 if gp.usePath:
                     mainGame_background.endPathBackground()
+
+    def isItTimeForJumpEvent():
+        timeforjump = False
+        if gp.rest:
+            print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
+            if gp.horseJumpCounter == gp.TASK_counter:
+                if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
+                    gp.horseJumpCounter += 1
+                    print("Time for jump event. Horse jump counter raised to = " + str(gp.horseJumpCounter))
+                    timeforjump = True
+        return timeforjump
 
 
     def updateLoadingBar_task(loadingBar):
