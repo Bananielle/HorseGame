@@ -423,14 +423,14 @@ if __name__ == '__main__':
         if gp.datawindow_rest_start_time <= gp.currentTime_s <= gp.datawindow_rest_end_time:
             BCI.collectTimewindowData = True
             scaled_data = BCI.startMeasuring(task=False)
-            print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Scaled data: " + str(scaled_data))
+            print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.datawindow_rest_end_time:
             if gp.trialCounter_rest > len(BCI.NFsignal["NFsignal_mean_REST"]) and gp.trialCounter_rest <= gp.totalNum_TRIALS+1:  # Check if NF signal has already been measured: (+1 because we have one extra rest trial)
                 BCI.calculateNFsignal(task=False)
                 stopCollectingData()
                 updateTimeDataWindow_rest()
-                gp.trialCounter_task += 1
+                gp.trialCounter_rest += 1
             else:
                 print("NF signal rest already calculated.")
 
@@ -452,6 +452,8 @@ if __name__ == '__main__':
                 gamestate = showHowMuchTimeHasPassed(gamestate)
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
+                if BCI.saveIncomingData:
+                    BCI.continuousMeasuring()  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()
                 collectRestTrialData()
@@ -619,7 +621,7 @@ if __name__ == '__main__':
     def isItTimeForJumpEvent():
         timeforjump = False
         if gp.rest:
-            print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
+            #print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
             if gp.horseJumpCounter == gp.TASK_counter:
                 if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
                     gp.horseJumpCounter += 1

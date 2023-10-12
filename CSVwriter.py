@@ -1,5 +1,6 @@
 import pygame
 import csv
+import pandas as pd
 
 class CSVwriter():
     def __init__(self):
@@ -28,5 +29,20 @@ class CSVwriter():
                         row[key] = None  # or some other placeholder value
                 writer.writerow(row)
 
+        print(f'Data written to ' + file_path)
+
+
+    def save_list_to_csv(self, data, file_name):
+
+        file_path = self.datafolder + file_name
+
+        df = pd.DataFrame(data)
+
+        # Write to CSV
+        #with open(file_path, 'w', newline='') as file:
+         #   writer = csv.writer(file)
+          #  writer.writerows(data)
+
+        df.to_csv(file_path,header=False, index=False)
         print(f'Data written to ' + file_path)
 

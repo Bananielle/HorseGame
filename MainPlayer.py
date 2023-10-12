@@ -1,4 +1,5 @@
 import pygame, random
+import pandas as pd
 
 # Import pygame.locals for easier access to key coordinates. Updated to conform to flake8 and black standards
 from pygame.locals import (
@@ -153,7 +154,7 @@ class MainPlayer(pygame.sprite.Sprite):
         if achieved_NF_level <= 0:
             print("NF signal is below zero:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2
-        if achieved_NF_level.isnull():
+        if pd.isna(achieved_NF_level):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2
 

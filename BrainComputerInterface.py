@@ -11,6 +11,10 @@ from pygame.locals import (
 
 class BrainComputerInterface():
     def __init__(self):
+        self.simulatedData_filepath = "Data/IncomingData.csv"
+        self.saveIncomingData = True
+        self.incomingDataList_betas = []
+        self.incomingDataList_oxy = []
         self.currentInput = 0
         self.previousInput = 0
         self.fakeInput = 0
@@ -20,7 +24,7 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.NFsignal = {"NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": []}
+        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": []}
 
         self.NF_maxLevel_based_on_localizer = 0.3  # This is the max level for the NF signal that people can reach
 
@@ -33,7 +37,7 @@ class BrainComputerInterface():
 
         # CSV file preparation
         # Define the field names (header) for your CSV file
-        self.field_names = ['NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
+        self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
                        'NFSignal_median_REST', 'NF_MaxThreshold']
 
 
@@ -49,7 +53,16 @@ class BrainComputerInterface():
             self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) # I have to give it integers...
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 1000) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+
+    # Do a continous measurement to get oxy data of the whole run
+    def continuousMeasuring(self):
+        if self.saveIncomingData:
+            betas = self.getBetas()
+            oxy = self.scaleOxyData()
+
+            self.saveIncomingDataToList_betas(betas)
+            self.saveIncomingDataToList_oxy(oxy)
 
     def startMeasuring(self, task):
         scaled_data = self.scaleOxyData()
@@ -60,7 +73,16 @@ class BrainComputerInterface():
             else:
                 self.timewindow_rest.append(scaled_data)
 
+       # if self.saveIncomingData:
+         #   self.saveIncomingDataToList(scaled_data)
+
         return scaled_data
+
+    def saveIncomingDataToList_betas(self, data):
+        self.incomingDataList_betas.append(data)
+
+    def saveIncomingDataToList_oxy(self, data):
+        self.incomingDataList_oxy.append(data)
 
     def resetTimewindowDataArray(self):
         self.timewindow_task = []
@@ -124,12 +146,17 @@ class BrainComputerInterface():
         NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean_TASK"]))
         NFsignal_max = np.mean((self.NFsignal["NFsignal_max_TASK"]))
         NFSignal_median = np.mean((self.NFsignal["NFSignal_median_TASK"]))
+        maxtrials = len(self.NFsignal["NFsignal_mean_TASK"])+1 # +2 because Python starts at 0 for the array
+        trialIndex = list(range(1,maxtrials))
+        self.NFsignal["Trials"] = trialIndex
         self.NFsignal["NF_MaxThreshold"].append(NFsignal_max)
 
         # Print the mean of the NFsignal_mean values
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
         self.save_dict_to_csv()
+        self.save_list_to_csv(self.incomingDataList_betas,"betavalues.csv")
+        self.save_list_to_csv(self.incomingDataList_oxy,"oxyvalues.csv")
 
         self.set_NF_max_threshold(NFsignal_max)
 
@@ -137,11 +164,11 @@ class BrainComputerInterface():
         self.NF_maxLevel_based_on_localizer = NFsignal_max
         print("NF_maxLevel set to: " + str(self.NF_maxLevel_based_on_localizer))
 
-    def getCurrentInput(self):
+    def getCurrentOxyInput(self):
         if self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
-            Selected = self.tsi.get_selected_channels()[0]
-            oxy = self.tsi.get_data_oxy(Selected[0], currentTimePoint - 1)[0]
+            selectedChannels = self.tsi.get_selected_channels()[0]
+            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0]
             input = oxy
             #print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
 
@@ -150,9 +177,19 @@ class BrainComputerInterface():
 
         return input
 
+    def getBetas(self):
+        if self.TSIconnectionFound:
+
+            selectedChannels = self.tsi.get_selected_channels()[0]
+            betas = self.tsi.get_beta_of_channel(channel=0,beta=1, chromophore=1)
+
+            return betas
+
+
+
     def scaleOxyData(self):
         if self.TSIconnectionFound:
-            oxy = self.getCurrentInput()
+            oxy = self.getCurrentOxyInput()
             scalefactor = self.tsi.get_oxy_data_scale_factor() # Turbo-Satori's default is 200 as a scale factor
 
             scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
@@ -200,3 +237,9 @@ class BrainComputerInterface():
     def save_dict_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
         csvWriter.save_dict_to_csv("TSI_data.csv", self.field_names, self.NFsignal)
+
+    def save_list_to_csv(self, data,filename):
+
+        csvWriter = CSVwriter.CSVwriter()
+        csvWriter.save_list_to_csv(data,filename)
+
