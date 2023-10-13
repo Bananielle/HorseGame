@@ -362,6 +362,11 @@ if __name__ == '__main__':
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
 
+        if mounttype == 'turtle': # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
+            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
+            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
+            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
+
         return gamestate
 
 
@@ -403,12 +408,12 @@ if __name__ == '__main__':
 
     def collectTaskTrialData():
         # Send time window to BCI
-        if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time:
+        if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
             scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated)
             print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
 
-        if gp.currentTime_s == gp.datawindow_task_end_time: # Don't measure rest data while the task trial has already started
+        if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]: # Don't measure rest data while the task trial has already started
             if gp.trialCounter_task > len(BCI.NFsignal["NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS: # Check if NF signal has already been measured:
                 BCI.calculateNFsignal(task=True)
                 stopCollectingData()
@@ -416,22 +421,27 @@ if __name__ == '__main__':
                 print("T=",gp.currentTime_s,": PSC = " + str(PSC))
                 updateTimeDataWindow_task()
                 gp.trialCounter_task +=1
+                if gp.trialCounter_task >= gp.totalNum_TRIALS:
+                    gp.trialCounter_task = gp.totalNum_TRIALS # Then you've reached the end of the task trials (and since this counter is used for indexing it shouldn't exceed its max)
             else:
                 print("NF signal task already calculated.")
 
     def collectRestTrialData():
         # Send time window to BCI
-        if gp.datawindow_rest_start_time + gp.timeUntilRestDataCollection_s <= gp.currentTime_s <= gp.datawindow_rest_end_time:
+
+        if gp.protocol_file['datawindow_rest_start_times'][gp.trialCounter_rest] <= gp.currentTime_s <  gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]:
             BCI.collectTimewindowData = True
             scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated)
             print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
-        if gp.currentTime_s == gp.datawindow_rest_end_time:
+        if gp.currentTime_s == gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]: # Don't measure rest data while the task trial has already started
             if gp.trialCounter_rest > len(BCI.NFsignal["NFsignal_mean_REST"]) and gp.trialCounter_rest <= gp.totalNum_TRIALS+1:  # Check if NF signal has already been measured: (+1 because we have one extra rest trial)
                 BCI.calculateNFsignal(task=False)
                 stopCollectingData()
                 updateTimeDataWindow_rest()
                 gp.trialCounter_rest += 1
+                if gp.trialCounter_rest >= gp.totalNum_TRIALS:
+                    gp.trialCounter_rest = gp.totalNum_TRIALS # Then you've reached the end of the rest trials (and since this counter is used for indexing it shouldn't exceed its max)
             else:
                 print("NF signal rest already calculated.")
 
@@ -470,6 +480,11 @@ if __name__ == '__main__':
 
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
+
+        if mounttype == 'turtle':  # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
+            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
+            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
+            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
         return gamestate
 

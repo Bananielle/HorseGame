@@ -35,11 +35,23 @@ class ParadigmAndTriggerManager():
 
     def getCurrentSimulatedCondition(self):
       #  print("Current simulated condition (0=rest, 1=task): " + self.protocol_array[self.gp.currentTime_s].__str__())
-        return self.protocol_array[self.gp.currentTime_s]
+        try:
+            condition = self.protocol_array[self.gp.currentTime_s]
+        except:
+            print("Ran out of data.") # If you run out of simulated data, just return 0.
+            condition = 0
+
+        return condition
 
     def getCurrentSimulatedSignalValue(self):
         #print("T= " + str(self.gp.currentTime_s) +  ": Current simulated signal value: " + self.simulatedData_array[self.gp.currentTime_s].__str__())
-        return self.simulatedData_array[self.gp.currentTime_s]
+        try:
+            data = self.simulatedData_array[self.gp.currentTime_s]
+        except:
+            print("Ran out of data.") # If you run out of data, just return 0.
+            data = 0
+
+        return  data
 
     def retrieveSimulatedData(self, file_name):
         file_path = self.dataInputFolder + file_name

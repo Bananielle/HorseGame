@@ -31,7 +31,7 @@ class GameParameters():
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
-        self.timeUntilJump_s = 3 # Time until the horse jumps after the task period ends
+        self.timeUntilJump_s = 4 # todo: not that this should be dependent on when the data window task collection ends
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
         self.duration_REST_s = self.protocol_file['duration_REST_s']
         self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
@@ -63,6 +63,7 @@ class GameParameters():
         self.trialCounter_rest = 1 # For NF measuring
         self.TASK_counter = 0    # Set the initial values for the event counters
         self.REST_counter = 0
+        self.trial_counter = 1
         self.startTime_TASK = self.duration_BASELINE_s  + self.duration_REST_s# Set the start time for event A
         self.startTime_REST = self.duration_BASELINE_s
         self.startTime_JUMP = self.startTime_TASK + self.duration_TASK_s # The start after the first rest + task period
@@ -201,10 +202,10 @@ class GameParameters():
 
         # Add the last rest period
         rest_start_time = baseline_duration + (total_num_trials) * (task_duration + rest_duration)
-        rest_start_times[total_num_trials +2] = rest_start_time
+        rest_start_times[total_num_trials +1] = rest_start_time
 
         # Add the last jump period
-        jump_start_times[total_num_trials] = rest_start_times[total_num_trials+2] + self.timeUntilJump_s
+        jump_start_times[total_num_trials] = rest_start_times[total_num_trials+1] + self.timeUntilJump_s
 
 
 
