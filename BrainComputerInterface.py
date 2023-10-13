@@ -11,8 +11,10 @@ from pygame.locals import (
 
 class BrainComputerInterface():
     def __init__(self):
-        self.simulatedData_filepath = "Data/IncomingData.csv"
+
         self.saveIncomingData = True
+
+        self.simulatedData_filepath = "Data/"
         self.incomingDataList_betas = []
         self.incomingDataList_oxy = []
         self.incomingDataList_condition = []
@@ -20,7 +22,7 @@ class BrainComputerInterface():
         self.previousInput = 0
         self.fakeInput = 0
         self.TSIconnectionFound = True
-        self.timeBetweenSamples_ms = 100000
+        self.timeBetweenSamples_ms = 1000
         self.collectTimewindowData= False
         self.timewindow_task = []
         self.timewindow_rest = []
@@ -51,14 +53,14 @@ class BrainComputerInterface():
             print("Turbo satori connection not found.")
 
         if self.TSIconnectionFound:
-            self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
+            self.timeBetweenSamples_ms = 1000  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 1000) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self):
-        if self.saveIncomingData:
+        if self.saveIncomingData and self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
 
             betas = self.getBetas()
@@ -70,9 +72,13 @@ class BrainComputerInterface():
             self.saveIncomingDataToList_condition(condition)
             #print("Current condition: " + str(condition))
 
-    def startMeasuring(self, task):
-        scaled_data = self.scaleOxyData()
-        #print("     Scaled oxy: " + str(scaled_data))
+    def startMeasuring(self, task, simulatedData):
+        scaled_data = 0
+        if self.TSIconnectionFound:
+            scaled_data = self.scaleOxyData()
+        elif simulatedData is not 0: # But use simulated data instead if it's available
+            scaled_data = simulatedData
+
         if self.collectTimewindowData:
             if task:
                 self.timewindow_task.append(scaled_data)
@@ -245,7 +251,7 @@ class BrainComputerInterface():
     # CSV writer
     def save_dict_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
-        csvWriter.save_dict_to_csv("TSI_data.csv", self.field_names, self.NFsignal)
+        csvWriter.save_dict_to_csv("NF_data.csv", self.field_names, self.NFsignal)
 
     def save_list_to_csv(self, data,filename):
 

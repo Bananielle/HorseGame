@@ -404,7 +404,7 @@ if __name__ == '__main__':
         # Send time window to BCI
         if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time and not gp.rest:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=True)
+            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated)
             print("T=",gp.currentTime_s,": Collecting timewindow data for task. Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.datawindow_task_end_time: # Don't measure rest data while the task trial has already started
@@ -422,7 +422,7 @@ if __name__ == '__main__':
         # Send time window to BCI
         if gp.datawindow_rest_start_time <= gp.currentTime_s <= gp.datawindow_rest_end_time:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=False)
+            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated)
             print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.datawindow_rest_end_time:
@@ -667,6 +667,7 @@ if __name__ == '__main__':
         gp.NrOfCoins += 1
 
 
+    # BASICALLY MY TIMER CLASS
     def showHowMuchTimeHasPassed(gamestate):
 
         # Show the player how much time has passed
@@ -685,6 +686,11 @@ if __name__ == '__main__':
             if (
                     gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
                 soundSystem.countdownSound.play()
+
+            # SIMULATED CONDITIONS AND DATA
+            if gp.useSimulatedData:
+                condition_simulated = paradigmManager.getCurrentSimulatedCondition() # Get the current simulated condition
+                gp.signalValue_simulated = paradigmManager.getCurrentSimulatedSignalValue() # Get the current simulated signal value
 
         return gamestate
 

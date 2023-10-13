@@ -15,13 +15,15 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 5,
+            'duration_TASK_s': 6,
             'duration_REST_s': 5,
             'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 22 ,
+            'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {}
         }
+
+        self.useSimulatedData = False
 
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True
@@ -126,6 +128,9 @@ class GameParameters():
         self.horseJumpCounter = 1
 
         self.mainGame_background = 0
+
+        self.signalValue_simulated =0
+
 
     def update_y_position_horse_text(self):
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top),

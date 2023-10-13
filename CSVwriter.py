@@ -4,12 +4,13 @@ import pandas as pd
 
 class CSVwriter():
     def __init__(self):
-        self.datafolder = "Data/"
+        self.dataOutputFolder = "Data/"
+        self.dataInputFolder = "SimulatedData/"
 
     def save_dict_to_csv(self, file_name, field_names, data_dict):
         # Define the field names (header) for your CSV file
 
-        file_path = self.datafolder + file_name
+        file_path = self.dataOutputFolder + file_name
 
         # Open the CSV file for writing
         with open(file_path, mode='w', newline='') as file:
@@ -34,7 +35,7 @@ class CSVwriter():
 
     def save_list_to_csv(self, data, file_name):
 
-        file_path = self.datafolder + file_name
+        file_path = self.dataOutputFolder + file_name
 
         df = pd.DataFrame(data)
 
@@ -45,4 +46,9 @@ class CSVwriter():
 
         df.to_csv(file_path,header=False, index=False)
         print(f'Data written to ' + file_path)
+
+    def read_csv(self, file_name):
+        file_path = self.dataInputFolder + file_name
+        df = pd.read_csv(file_path)
+        return df
 
