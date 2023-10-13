@@ -193,6 +193,7 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
         gameParameters.generate_protocol()
+        gameParameters.generate_dataCollection_protocol()
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
@@ -402,10 +403,10 @@ if __name__ == '__main__':
 
     def collectTaskTrialData():
         # Send time window to BCI
-        if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time and not gp.rest:
+        if gp.datawindow_task_start_time <= gp.currentTime_s <= gp.datawindow_task_end_time:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=True)
-            print("T=",gp.currentTime_s,": Collecting timewindow data for task. Scaled data: " + str(scaled_data))
+            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated)
+            print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.datawindow_task_end_time: # Don't measure rest data while the task trial has already started
             if gp.trialCounter_task > len(BCI.NFsignal["NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS: # Check if NF signal has already been measured:
@@ -420,9 +421,9 @@ if __name__ == '__main__':
 
     def collectRestTrialData():
         # Send time window to BCI
-        if gp.datawindow_rest_start_time <= gp.currentTime_s <= gp.datawindow_rest_end_time:
+        if gp.datawindow_rest_start_time + gp.timeUntilRestDataCollection_s <= gp.currentTime_s <= gp.datawindow_rest_end_time:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=False)
+            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated)
             print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.datawindow_rest_end_time:
@@ -667,6 +668,7 @@ if __name__ == '__main__':
         gp.NrOfCoins += 1
 
 
+    # BASICALLY MY TIMER CLASS
     def showHowMuchTimeHasPassed(gamestate):
 
         # Show the player how much time has passed
@@ -685,6 +687,11 @@ if __name__ == '__main__':
             if (
                     gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
                 soundSystem.countdownSound.play()
+
+            # SIMULATED CONDITIONS AND DATA
+            if gp.useSimulatedData:
+                condition_simulated = paradigmManager.getCurrentSimulatedCondition() # Get the current simulated condition
+                gp.signalValue_simulated = paradigmManager.getCurrentSimulatedSignalValue() # Get the current simulated signal value
 
         return gamestate
 

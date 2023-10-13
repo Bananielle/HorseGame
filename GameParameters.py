@@ -15,17 +15,21 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 5,
-            'duration_REST_s': 5,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 22 ,
+            'duration_TASK_s': 7,
+            'duration_REST_s': 17,
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'duration_BASELINE_s': 29-17,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
+        self.useSimulatedData = True
+
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True
 
+        self.duration_datawindow_rest = 6
+        self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
         self.timeUntilJump_s = 3 # Time until the horse jumps after the task period ends
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
@@ -38,8 +42,8 @@ class GameParameters():
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
         self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration
 
-        self.datawindow_rest_start_time = self.duration_BASELINE_s  + self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
-        self.datawindow_rest_duration = self.duration_REST_s - self.hemodynamic_delay
+        self.datawindow_rest_start_time = self.duration_BASELINE_s   # No hemodynamic delay!
+        self.datawindow_rest_duration = self.duration_REST_s
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
@@ -127,6 +131,9 @@ class GameParameters():
 
         self.mainGame_background = 0
 
+        self.signalValue_simulated =0
+
+
     def update_y_position_horse_text(self):
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top),
                                                                    True, [0, 0, 0])
@@ -144,6 +151,32 @@ class GameParameters():
 
     def reset(self):
         self.all_sprites.empty()
+
+    def generate_dataCollection_protocol(self):
+        datawindow_task_start_times = {}
+        datawindow_task_end_times = {}
+        datawindow_rest_start_times = {}
+        datawindow_rest_end_times = {}
+
+        task_duration = self.protocol_file['duration_TASK_s']
+        rest_duration = self.protocol_file['duration_REST_s']
+        total_num_trials = self.protocol_file['totalNum_TRIALS']
+
+        for trial_number in range(1, total_num_trials+1):
+            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay
+            datawindow_task_end_times[trial_number] = datawindow_task_start_times[trial_number] + task_duration
+
+            datawindow_rest_end_times[trial_number] = (self.protocol_file['rest_start_times'][trial_number]) + rest_duration
+            datawindow_rest_start_times[trial_number] = datawindow_rest_end_times[trial_number] - self.duration_datawindow_rest
+
+            self.protocol_file['datawindow_task_start_times'] = datawindow_task_start_times
+            self.protocol_file['datawindow_task_end_times'] = datawindow_task_end_times
+            self.protocol_file['datawindow_rest_start_times'] = datawindow_rest_start_times
+            self.protocol_file['datawindow_rest_end_times'] = datawindow_rest_end_times
+
+        print('Protocol for datacollection timings generated. Datawindow task start times are:' + str(
+        datawindow_task_start_times) +  ", datawindow task end times are: " + str(datawindow_task_end_times) + ", datawindow rest start times are: " + str(
+        datawindow_rest_start_times) + " and datawindow rest end times are: " + str(datawindow_rest_end_times))
 
     def generate_protocol(self):
         task_duration = self.protocol_file['duration_TASK_s']
