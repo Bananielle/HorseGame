@@ -176,7 +176,7 @@ if __name__ == '__main__':
             ScoresDictionary = {"Coins collected": self.scoresList}
             fieldnames = ["Coins collected"]
 
-            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
             filename = f"Scoreboard_{current_date}.csv"
 
             csvWriter = CSVwriter()

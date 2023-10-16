@@ -170,7 +170,7 @@ class BrainComputerInterface():
         # Print the mean of the NFsignal_mean values
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
 
         self.save_dict_to_csv()
 
@@ -258,7 +258,7 @@ class BrainComputerInterface():
     # CSV writer
     def save_dict_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
         filename = f"NF_data_{current_date}.csv"
         csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
 
