@@ -35,6 +35,7 @@ from pylsl import StreamInfo, StreamOutlet
 #from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
+import datetime
 from ParadigmAndTriggerManager import ParadigmAndTriggerManager
 from BrainComputerInterface import BrainComputerInterface
 from GameParameters import GameParameters
@@ -175,8 +176,11 @@ if __name__ == '__main__':
             ScoresDictionary = {"Coins collected": self.scoresList}
             fieldnames = ["Coins collected"]
 
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+            filename = f"Scoreboard_{current_date}.csv"
+
             csvWriter = CSVwriter()
-            csvWriter.save_dict_to_csv("Scoreboard.csv", fieldnames, ScoresDictionary)
+            csvWriter.save_dict_to_csv(filename, fieldnames, ScoresDictionary)
 
 
 
@@ -352,12 +356,20 @@ if __name__ == '__main__':
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
-            # Get user input
-            keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
-            gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
-            collectTaskTrialData()
-            collectRestTrialData()
-            gp.rider.update()
+            if event.type == BCI.GET_TURBOSATORI_INPUT:
+                if BCI.saveIncomingData:
+                    BCI.continuousMeasuring()  # Do a continous measurement to get oxy data of the whole run
+                BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
+                collectTaskTrialData()
+                collectRestTrialData()
+
+
+            # # Get user input
+            # keyboard_input = pygame.key.get_pressed(l)  # Get the set of keyboard keys pressed from user
+            # gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
+            # collectTaskTrialData()
+            # collectRestTrialData()
+            # gp.rider.update()
 
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
@@ -505,7 +517,7 @@ if __name__ == '__main__':
                 updateLoadingBar_rest(loadingBar)
 
 
-    def updatePlayerCoinsAndText():
+    def  updatePlayerCoinsAndText():
         # Get user input
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
@@ -674,6 +686,7 @@ if __name__ == '__main__':
         addNewCoin(1, gp.coinStartingPosition_y - 250,6)
         addNewCoin(1, gp.coinStartingPosition_y - 300,7)
         addNewCoin(1, gp.coinStartingPosition_y - 350,8)
+        addNewCoin(1, gp.coinStartingPosition_y - 400, 9)
 
 
     def addNewCoin(coinType, y_position,rank):

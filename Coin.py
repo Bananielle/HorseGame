@@ -33,34 +33,6 @@ class Coin(pygame.sprite.Sprite):
         self.coinAnimation = 0
         self.rank = rank
 
-    def updatePulsatingCoinAnimation(self):
-        if self.coinAnimation == 0:
-            self.surf = pygame.image.load("Resources/coin.png").convert_alpha()
-        elif self.coinAnimation == 1:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_110.png").convert_alpha()
-        elif self.coinAnimation == 2:
-            self.surf = pygame.image.load("Resources/coin.png").convert()
-        elif self.coinAnimation == 3:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_95.png").convert_alpha()
-        elif self.coinAnimation == 4:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_90.png").convert_alpha()
-        elif self.coinAnimation == 5:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_85.png").convert_alpha()
-        elif self.coinAnimation == 6:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_80.png").convert_alpha()
-        elif self.coinAnimation == 7:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_85.png").convert_alpha()
-        elif self.coinAnimation == 8:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_90.png").convert_alpha()
-        elif self.coinAnimation == 9:
-            self.surf = pygame.image.load("Resources/goldcoin_scaled_95.png").convert_alpha()
-
-        self.updateImage()
-
-        self.coinAnimation = self.coinAnimation + 1
-        if self.coinAnimation > 9:  # Reset animation
-            self.coinAnimation = 0
-
     def updateImage(self):
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
@@ -80,8 +52,6 @@ class Coin(pygame.sprite.Sprite):
 
         self.movedUpCounter += 1
 
-        #self.updatePulsatingCoinAnimation()
-
 
         # If coin has not yet reached its endspot
         if self.rect.right > self.endSpot: # If coin has not yet reached its endspot
@@ -89,18 +59,3 @@ class Coin(pygame.sprite.Sprite):
         else: # Otherwise make coinstop on a random spot somewhere on the right side of the screen
             self.reachedFinalSpot = True
 
-            #self.pulsate()
-
-
-
-    # DOESN"T WORK.
-    # def pulsate(self):
-    #     maxSize = self.startingSizeOfCoin * 1.1
-    #     pulseSpeed = 200 # The higher the number the slower the pulsation
-    #
-    #     # Calculate the size of the image based on a sine wave
-    #     pulsate = (math.sin(pygame.time.get_ticks() / pulseSpeed) + 1) / 2
-    #     size = int(pulsate * self.startingSizeOfCoin + maxSize)
-    #
-    #     self.surf = pygame.transform.scale(self.surf, (size, size))
-    #     self.rect = self.surf.get_rect(center=self.rect.center)

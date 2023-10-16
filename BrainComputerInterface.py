@@ -2,6 +2,7 @@ import pygame
 import _turbosatorinetworkinterface as tsi  # handles getting data from TSI
 import numpy as np
 import CSVwriter
+import datetime
 
 from pygame.locals import (
     K_UP,
@@ -12,7 +13,7 @@ from pygame.locals import (
 class BrainComputerInterface():
     def __init__(self):
 
-        self.saveIncomingData = False
+        self.saveIncomingData = True
 
         self.simulatedData_filepath = "Data/"
         self.incomingDataList_betas = []
@@ -169,9 +170,15 @@ class BrainComputerInterface():
         # Print the mean of the NFsignal_mean values
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+
         self.save_dict_to_csv()
-        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_betas)),"betavalues.csv")
-        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_oxy)),"oxyvalues.csv")
+
+        filename = f"betavalues_{current_date}.csv"
+        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_betas)),filename)
+
+        filename = f"oxyvalues{current_date}.csv"
+        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_oxy)),filename)
 
         self.set_NF_max_threshold(NFsignal_max)
 
@@ -251,7 +258,9 @@ class BrainComputerInterface():
     # CSV writer
     def save_dict_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
-        csvWriter.save_dict_to_csv("NF_data.csv", self.field_names, self.NFsignal)
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        filename = f"NF_data_{current_date}.csv"
+        csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
 
     def save_list_to_csv(self, data,filename):
 

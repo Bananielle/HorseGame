@@ -156,15 +156,7 @@ class MainPlayer(pygame.sprite.Sprite):
             achieved_NF_level = 0.2
         if pd.isna(achieved_NF_level):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
-            achieved_NF_level = 0.2
-
-        # # Calculate the jump position based on the maximum jump height
-        # jump_position = (0 + self.SCREEN_HEIGHT * 0.2) + (self.SCREEN_HEIGHT * (1 - achieved_NF_level))
-        #
-        # # Jump should not be higher than 4/5 of the screen
-        # if jump_position < self.SCREEN_HEIGHT * 0.2:
-        #     print("Jump position is higher than screen limit:  ", str(jump_position))
-        #     jump_position = 0 + self.SCREEN_HEIGHT * 0.2
+            achieved_NF_level = 0.2 # TODO Should be 0.2!
 
         jump_lower_bound = 2 / 10  # Lower bound of the jump position range
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range

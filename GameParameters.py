@@ -15,15 +15,15 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 7,
-            'duration_REST_s': 17,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 29-17,
+            'duration_TASK_s': 6,
+            'duration_REST_s': 15,
+            'totalNum_TRIALS': 2, # Set the number of times Task should occur
+            'duration_BASELINE_s': 20,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = True
+        self.useSimulatedData = False
 
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True
@@ -112,7 +112,7 @@ class GameParameters():
         self.nrCoinsCollected = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
-        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4))
+        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) + 10)
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
 
         self.scoreSaved = False
