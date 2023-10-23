@@ -16,14 +16,14 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 15,
-            'totalNum_TRIALS': 3, # Set the number of times Task should occur
-            'duration_BASELINE_s': 20,
+            'duration_REST_s': 16,
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'duration_BASELINE_s': 34-16,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = False
+        self.useSimulatedData = True
 
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True

@@ -14,7 +14,7 @@ from pygame.locals import (
 class BrainComputerInterface():
     def __init__(self):
 
-        self.saveIncomingData = True
+        self.saveIncomingData = False
 
         self.simulatedData_filepath = "Data/"
         self.incomingDataList_betas = []
@@ -31,7 +31,7 @@ class BrainComputerInterface():
         self.startTimeMeasurement = 0
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": []}
 
-        self.NF_maxLevel_based_on_localizer = 0.7  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 0.9  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -77,7 +77,8 @@ class BrainComputerInterface():
     def startMeasuring(self, task, simulatedData):
         scaled_data = 0
         if self.TSIconnectionFound:
-            scaled_data = self.scaleOxyData()
+            scaled_data = self.getBetas()
+            #scaled_data = self.scaleOxyData()
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
 
