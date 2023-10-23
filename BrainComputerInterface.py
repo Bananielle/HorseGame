@@ -175,8 +175,8 @@ class BrainComputerInterface():
         self.set_NF_max_threshold(NFsignal_mean)
 
         # Show boxplot of the NFsignal_mean and NFsignal_max values
-        self.show_boxplot(NFsignal_mean, "Mean amplitude")
-        self.show_boxplot(NFsignal_max, "Max amplitude")
+        self.show_boxplot(NFsignal_mean, "Mean amplitude.")
+        self.show_boxplot(NFsignal_max, "Max amplitude.")
 
         # Save to CSV files
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
