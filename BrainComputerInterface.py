@@ -174,29 +174,33 @@ class BrainComputerInterface():
         # Set the NF max threshold for the NF runs
         self.set_NF_max_threshold(NFsignal_mean)
 
-        # Show boxplot of the NFsignal_mean and NFsignal_max values
-        self.show_boxplot(NFsignal_mean, "Mean amplitude.")
-        self.show_boxplot(NFsignal_max, "Max amplitude.")
-
-        # Save to CSV files
+        # Save NF values to CSV files
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-
         self.save_dict_to_csv()
 
+        # Save the incoming data (both oxy and betas) from the whole run to a csv file
         filename = f"betavalues_{current_date}.csv"
         self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_betas)), filename)
 
         filename = f"oxyvalues{current_date}.csv"
         self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_oxy)), filename)
 
+        # Show boxplot of the NFsignal_mean and NFsignal_max values
+        self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
+        self.show_boxplot(self.NFsignal["NFsignal_max_TASK"], "Max amplitude")
+
     def show_boxplot(self, data, ylabel):
         fig, ax = plt.subplots()
-        ax.boxplot(data)
+        ax.boxplot(data, showfliers=True)
+
+        # Overlay individual data points using swarmplot
+        plt.scatter([1] * len(data), data, color='blue', alpha=0.7)
 
         # Add labels and title
-        ax.set_xlabel('Trial')
+        ax.set_xlabel('Localizer')
         ax.set_ylabel(ylabel)
-        ax.set_title('Localizer: Value per trial')
+        title = [ylabel + " across localizer trials."]
+        ax.set_title(title)
 
         plt.show()
 
