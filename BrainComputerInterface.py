@@ -3,6 +3,7 @@ import _turbosatorinetworkinterface as tsi  # handles getting data from TSI
 import numpy as np
 import CSVwriter
 import datetime
+import matplotlib.pyplot as plt
 
 from pygame.locals import (
     K_UP,
@@ -156,31 +157,48 @@ class BrainComputerInterface():
 
         return achieved_NF_signal
 
-
     def calculate_NF_max_threshold(self):
-    # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
+        # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
         NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean_TASK"]))
         NFsignal_max = np.mean((self.NFsignal["NFsignal_max_TASK"]))
         NFSignal_median = np.mean((self.NFsignal["NFSignal_median_TASK"]))
-        maxtrials = len(self.NFsignal["NFsignal_mean_TASK"])+1 # +2 because Python starts at 0 for the array
-        trialIndex = list(range(1,maxtrials))
+        maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
+        trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
         self.NFsignal["NF_MaxThreshold"].append(NFsignal_max)
 
         # Print the mean of the NFsignal_mean values
-        print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
+        print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(
+            NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
+        # Set the NF max threshold for the NF runs
+        self.set_NF_max_threshold(NFsignal_mean)
+
+        # Show boxplot of the NFsignal_mean and NFsignal_max values
+        self.show_boxplot(NFsignal_mean, "Mean amplitude")
+        self.show_boxplot(NFsignal_max, "Max amplitude")
+
+        # Save to CSV files
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
 
         self.save_dict_to_csv()
 
         filename = f"betavalues_{current_date}.csv"
-        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_betas)),filename)
+        self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_betas)), filename)
 
         filename = f"oxyvalues{current_date}.csv"
-        self.save_list_to_csv(list(zip(self.incomingDataList_condition,self.incomingDataList_oxy)),filename)
+        self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_oxy)), filename)
 
-        self.set_NF_max_threshold(NFsignal_max)
+    def show_boxplot(self, data, ylabel):
+        fig, ax = plt.subplots()
+        ax.boxplot(data)
+
+        # Add labels and title
+        ax.set_xlabel('Trial')
+        ax.set_ylabel(ylabel)
+        ax.set_title('Localizer: Value per trial')
+
+        plt.show()
 
     def set_NF_max_threshold(self,NFsignal_max):
         self.NF_maxLevel_based_on_localizer = NFsignal_max
