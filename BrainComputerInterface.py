@@ -190,7 +190,7 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
             selectedChannels = self.tsi.get_selected_channels()[0]
-            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0]
+            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
             input = oxy
             #print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
 
@@ -203,7 +203,7 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
 
             selectedChannels = self.tsi.get_selected_channels()[0]
-            betas = self.tsi.get_beta_of_channel(channel=0,beta=1, chromophore=1)[0]
+            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=0, chromophore=1)[0]
 
             return betas
 

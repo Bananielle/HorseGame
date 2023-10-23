@@ -183,7 +183,7 @@ class MainPlayer(pygame.sprite.Sprite):
                     self.HorseIsJumpingUp = False
                     self.HorseIsJumpingDown = True
             if self.HorseIsJumpingDown:
-                if self.rect.bottom <= self.borderOfPathForHorse-1:
+                if self.rect.bottom <= self.borderOfPathForHorse - 1:
                     self.jumpDown()
                     #print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
                           #str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
