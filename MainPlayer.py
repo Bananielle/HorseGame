@@ -64,7 +64,8 @@ class MainPlayer(pygame.sprite.Sprite):
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-(self.SCREEN_HEIGHT/10)
         self.startingPosition_x = 280
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
-        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer - 1
+        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer -1
+        self.rect.bottom = self.borderOfPathForHorse # To make sure the horse is in the correct y position ( on the path)
 
 
         #print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
@@ -82,6 +83,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.imageScaleFactor = int(3)
         self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,
                                                        self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
+
 
     def setPlayerSpeed(self):
         self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
@@ -140,7 +142,10 @@ class MainPlayer(pygame.sprite.Sprite):
 
     def keepHorseOnPath(self):
         if self.rect.bottom >= self.borderOfPathForHorse:
-            self.rect.bottom = self.borderOfPathForHorse
+            #print("Horse being kept on path")
+            # self.rect.bottom = self.borderOfPathForHorse
+            self.rect.move_ip(0, -5) # Gently move horse up (instead of instantly changing horse to new position, which can create weird distortions)
+
 
     def calculate_jump_position(self, achieved_NF_level):
         #
@@ -183,7 +188,7 @@ class MainPlayer(pygame.sprite.Sprite):
                     self.HorseIsJumpingUp = False
                     self.HorseIsJumpingDown = True
             if self.HorseIsJumpingDown:
-                if self.rect.bottom <= self.borderOfPathForHorse - 1:
+                if self.rect.bottom < self.borderOfPathForHorse:
                     self.jumpDown()
                     #print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
                           #str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
@@ -192,6 +197,7 @@ class MainPlayer(pygame.sprite.Sprite):
                     self.HorseIsJumping = False
                     self.gameParams.horseJumpEvent = False
                     print("Horse is not jumping anymore.")
+                    print("===========================================================================================")
 
         else:
             self.ridingHorseAnimation()
@@ -263,7 +269,14 @@ class MainPlayer(pygame.sprite.Sprite):
         #self.soundSystem.playBubbleSound(self.soundSystem.move_up_sound)
 
     def moveDown(self):
-        self.rect.move_ip(0, self.playerSpeed)
+        #if self.rect.bottom + self.playerSpeed >= self.borderOfPathForHorse:
+        #    print("Bottom horse = " + str(self.rect.bottom), " ,borderOfPathForHorse = " + str(self.borderOfPathForHorse))
+        #    # print("Horse being kept on path")
+        #    move_by = self.borderOfPathForHorse - self.rect.bottom +10
+        #    self.rect.move_ip(0,move_by)
+       # else:
+            self.rect.move_ip(0, self.playerSpeed-1)
+
       #  print('Moving down.')
        # self.soundSystem.playBubbleSound(self.soundSystem.move_down_sound)
 

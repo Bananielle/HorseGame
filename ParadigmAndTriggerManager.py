@@ -19,8 +19,9 @@ class ParadigmAndTriggerManager():
                       source_id='Example')  # sets variables for object info
         self.outlet = StreamOutlet(self.info)  # initialize stream.
 
-        self.retrieveProtocol("LocalizerAline_Protocol.csv")
-        self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
+        if gameParamaters.useSimulatedData:
+            self.retrieveProtocol("LocalizerAline_Protocol.csv")
+            self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
 
 
     # Retrieves protocol data that is specified for each second.

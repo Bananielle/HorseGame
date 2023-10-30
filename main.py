@@ -78,9 +78,6 @@ if __name__ == '__main__':
 
     # Timing stuff
     prev_time = 0
-    trialCounter_task = 1
-    trialCounter_rest = 1
-
 
     def getBrainInput(fakeBrainInput):
         fakeBrainInput += 1
@@ -358,10 +355,11 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    BCI.continuousMeasuring(trialNr=gp.trialCounter_task)  # Do a continous measurement to get oxy data of the whole run
+                    BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()
-                collectRestTrialData()
+                if gp.collectDataDuringRest:
+                    collectRestTrialData()
 
 
             # # Get user input
@@ -422,15 +420,15 @@ if __name__ == '__main__':
         # Send time window to BCI
         if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trialCounter_task)
+            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
             print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]: # Don't measure rest data while the task trial has already started
             if gp.trialCounter_task > len(BCI.NFsignal["NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS: # Check if NF signal has already been measured:
                 BCI.calculateNFsignal(task=True)
                 stopCollectingData()
-                PSC = BCI.get_percentage_signal_change()
-                print("T=",gp.currentTime_s,": PSC = " + str(PSC))
+                #PSC = BCI.get_percentage_signal_change()
+                #print("T=",gp.currentTime_s,": PSC = " + str(PSC))
                 updateTimeDataWindow_task()
                 gp.trialCounter_task +=1
                 if gp.trialCounter_task >= gp.totalNum_TRIALS:
@@ -443,7 +441,7 @@ if __name__ == '__main__':
 
         if gp.protocol_file['datawindow_rest_start_times'][gp.trialCounter_rest] <= gp.currentTime_s <  gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated,trialNr=gp.trialCounter_rest)
+            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
             print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]: # Don't measure rest data while the task trial has already started
@@ -476,10 +474,11 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    BCI.continuousMeasuring(trialNr=gp.trialCounter_task)  # Do a continous measurement to get oxy data of the whole run
+                    BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()
-                collectRestTrialData()
+                if gp.collectDataDuringRest:
+                    collectRestTrialData()
 
             runParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
@@ -654,6 +653,7 @@ if __name__ == '__main__':
                 if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
                     gp.horseJumpCounter += 1
                     print("Time for jump event. Horse jump counter raised to = " + str(gp.horseJumpCounter))
+                    print("NF level = " + str(gp.achieved_jump_height))
                     timeforjump = True
         return timeforjump
 

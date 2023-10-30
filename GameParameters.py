@@ -15,15 +15,17 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
         self.protocol_file = {
-            'duration_TASK_s': 7,
-            'duration_REST_s': 17,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 28-17,
+            'duration_TASK_s': 6,
+            'duration_REST_s': 6,
+            'totalNum_TRIALS': 12, # Set the number of times Task should occur
+            'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = True
+        self.useSimulatedData = False
+
+        self.collectDataDuringRest = False
 
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True
@@ -63,7 +65,7 @@ class GameParameters():
         self.trialCounter_rest = 1 # For NF measuring
         self.TASK_counter = 0    # Set the initial values for the event counters
         self.REST_counter = 0
-        self.trial_counter = 1
+        self.trial_counter = 0
         self.startTime_TASK = self.duration_BASELINE_s  + self.duration_REST_s# Set the start time for event A
         self.startTime_REST = self.duration_BASELINE_s
         self.startTime_JUMP = self.startTime_TASK + self.duration_TASK_s # The start after the first rest + task period
@@ -75,14 +77,6 @@ class GameParameters():
         self.HORSEANIMATION = pygame.USEREVENT + 3
         pygame.time.set_timer(self.HORSEANIMATION, 100)  # Define how quickly new jellyfish are added (e.g., every 4000ms)
 
-        self.NEWTASKTRIAL = pygame.USEREVENT + 4
-        pygame.time.set_timer(self.NEWTASKTRIAL,10000)
-
-        self.POST_TASK_REST = pygame.USEREVENT + 5
-        pygame.time.set_timer(self.POST_TASK_REST, 15000) # 5s after task
-
-        self.NEW_COINS_DURING_REST = pygame.USEREVENT + 6
-        pygame.time.set_timer(self.POST_TASK_REST, 25000)  # 10s after task
 
 
         # Time
@@ -144,6 +138,7 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_Taskcounter(self):
+        self.trial_counter = self.trial_counter + 1  # Increase trial counter needed for timewindow beta measurements
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
 

@@ -14,7 +14,9 @@ from pygame.locals import (
 class BrainComputerInterface():
     def __init__(self):
 
-        self.saveIncomingData = False
+        self.saveIncomingData = True
+        self.useMean = False # Use the mean amplitude for NF calculation
+        self.useMax = True # Use the max amplitude for NF calculation
 
         self.simulatedData_filepath = "Data/"
         self.incomingDataList_betas = []
@@ -31,7 +33,7 @@ class BrainComputerInterface():
         self.startTimeMeasurement = 0
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": []}
 
-        self.NF_maxLevel_based_on_localizer = 0.9  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 1  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -49,6 +51,7 @@ class BrainComputerInterface():
         # Look for a connection to turbo-satori
         try:
             self.tsi = tsi.TurbosatoriNetworkInterface("127.0.0.1", 55556)
+            print("Turbo satori connection successful.")
         except:
             # None found? Let the user know
             self.TSIconnectionFound = False
@@ -138,6 +141,7 @@ class BrainComputerInterface():
 
         print("NFsignals stored: " + str(self.NFsignal))
 
+    # CURRENTLY NOT USING PSC (using the betas instead)
     def get_percentage_signal_change(self):
         # PSC = (T-B_/B*100%
         T = self.currentTask_signal
@@ -153,7 +157,11 @@ class BrainComputerInterface():
 
 
     def get_achieved_NF_level(self):
-        achieved_NF_signal = self.NFsignal_mean / self.NF_maxLevel_based_on_localizer
+
+        if self.useMean:
+            achieved_NF_signal = self.NFsignal_mean / self.NF_maxLevel_based_on_localizer
+        if self.useMax:
+            achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
         # Add a ceiling to the achieved NF signal
@@ -232,7 +240,7 @@ class BrainComputerInterface():
 
             selectedChannels = self.tsi.get_selected_channels()[0]
             betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0
-            print("Betas: " + str(betas), " for trial: " + str(trialNr))
+            #print("Betas: " + str(betas), " for trial: " + str(trialNr))
             return betas
 
 
@@ -286,7 +294,7 @@ class BrainComputerInterface():
     # CSV writer
     def save_dict_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
         filename = f"NF_data_{current_date}.csv"
         csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
 
