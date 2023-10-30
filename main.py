@@ -358,7 +358,7 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    BCI.continuousMeasuring()  # Do a continous measurement to get oxy data of the whole run
+                    BCI.continuousMeasuring(trialNr=gp.trialCounter_task)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()
                 collectRestTrialData()
@@ -422,7 +422,7 @@ if __name__ == '__main__':
         # Send time window to BCI
         if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated)
+            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trialCounter_task)
             print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]: # Don't measure rest data while the task trial has already started
@@ -443,7 +443,7 @@ if __name__ == '__main__':
 
         if gp.protocol_file['datawindow_rest_start_times'][gp.trialCounter_rest] <= gp.currentTime_s <  gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated)
+            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated,trialNr=gp.trialCounter_rest)
             print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]: # Don't measure rest data while the task trial has already started
@@ -476,7 +476,7 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    BCI.continuousMeasuring()  # Do a continous measurement to get oxy data of the whole run
+                    BCI.continuousMeasuring(trialNr=gp.trialCounter_task)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()
                 collectRestTrialData()

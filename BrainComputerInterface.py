@@ -61,11 +61,11 @@ class BrainComputerInterface():
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 1000) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
     # Do a continous measurement to get oxy data of the whole run
-    def continuousMeasuring(self):
+    def continuousMeasuring(self,trialNr):
         if self.saveIncomingData and self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
 
-            betas = self.getBetas()
+            betas = self.getBetas(trialNr)
             oxy = self.scaleOxyData()
             condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
 
@@ -74,10 +74,10 @@ class BrainComputerInterface():
             self.saveIncomingDataToList_condition(condition)
             #print("Current condition: " + str(condition))
 
-    def startMeasuring(self, task, simulatedData):
+    def startMeasuring(self, task, simulatedData,trialNr):
         scaled_data = 0
         if self.TSIconnectionFound:
-            scaled_data = self.getBetas()
+            scaled_data = self.getBetas(trialNr)
             #scaled_data = self.scaleOxyData()
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
@@ -144,12 +144,16 @@ class BrainComputerInterface():
         B = self.currentRest_signal
         #PSC = (T-B)/B*100
         PSC = T-B # Task signal - rest signal (just like the Turbo-satori software describes in the manual)
-        print(      "Task = " + str(T) + ", Rest = " + str(B) + ", PSC = " + str(PSC))
+        print(      "Task = " + str(T) + ", Rest = " + str(B) + ", PSC = " + str(PSC) + " BUT USING ONLY TASK SIGNAL.")
+
+        # BUT USE ONLY TASK SIGNAL
+        #PSC = T
+
         return PSC
 
 
     def get_achieved_NF_level(self):
-        achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
+        achieved_NF_signal = self.NFsignal_mean / self.NF_maxLevel_based_on_localizer
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
         # Add a ceiling to the achieved NF signal
@@ -222,12 +226,13 @@ class BrainComputerInterface():
 
         return input
 
-    def getBetas(self):
+    # The trial number gets the predictor for each trial (trial 1 for first predictor, trial 2 for second predictor etc)
+    def getBetas(self,trialNr):
         if self.TSIconnectionFound:
 
             selectedChannels = self.tsi.get_selected_channels()[0]
-            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=0, chromophore=1)[0]
-
+            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0
+            print("Betas: " + str(betas), " for trial: " + str(trialNr))
             return betas
 
 
