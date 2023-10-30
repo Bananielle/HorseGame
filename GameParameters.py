@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 6,
-            'totalNum_TRIALS': 12, # Set the number of times Task should occur
+            'totalNum_TRIALS': 2, # Set the number of times Task should occur
             'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {}
@@ -75,7 +75,7 @@ class GameParameters():
         self.NrOfCoins = 4
 
         self.HORSEANIMATION = pygame.USEREVENT + 3
-        pygame.time.set_timer(self.HORSEANIMATION, 100)  # Define how quickly new jellyfish are added (e.g., every 4000ms)
+        pygame.time.set_timer(self.HORSEANIMATION, 70)  # Define how quickly new jellyfish are added (e.g., every 4000ms)
 
 
 

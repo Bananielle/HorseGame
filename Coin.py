@@ -23,7 +23,7 @@ class Coin(pygame.sprite.Sprite):
             )
         )
         print("T=", self.gameParams.currentTime_s, ": New coin added. Width: ", self.rect.width, " Height: ", self.rect.height)
-        self.speed = 3 * gameParams.velocity * gameParams.deltaTime
+        self.speed = 2 * gameParams.velocity * gameParams.deltaTime
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGTH = SCREEN_HEIGHT
@@ -40,9 +40,6 @@ class Coin(pygame.sprite.Sprite):
     # Move the enemy based on speed
     # Remove it when it passes the left edge of the screen
     def update(self):
-
-
-
         if self.movedUpCounter < 20:
             self.rect.move_ip(0, -self.speed/5) # Move down
         else:

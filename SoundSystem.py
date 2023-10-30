@@ -19,6 +19,11 @@ class SoundSystem():
         # self.maintheme_slow = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_slow.wav")
         # self.maintheme_fast = simpleaudio.WaveObject.from_wave_file("Resources/maintheme_fast.wav")
         self.drum = simpleaudio.WaveObject.from_wave_file("Resources/drum.wav")
+        self.galop = simpleaudio.WaveObject.from_wave_file("Resources/galop.wav")
+        self.turtle_run = simpleaudio.WaveObject.from_wave_file("Resources/turtle_run.wav")
+        self.horse_snort = simpleaudio.WaveObject.from_wave_file("Resources/horse_snort.wav")
+        self.horse_cry = simpleaudio.WaveObject.from_wave_file("Resources/horse_cry.wav")
+
 
        # self.playingBubbleSound = self.move_up_sound.play()
         self.playedStartScreenSound =False

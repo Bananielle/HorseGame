@@ -50,17 +50,6 @@ class MainPlayer(pygame.sprite.Sprite):
         self.surf = self.animal_images_walking[0] # Starter image
         self.scaleImage()
 
-        # Preload the animal animation images for jumping
-        self.animal_images_jumping = [pygame.image.load(self.mount_folder + 'Jump1.png'),
-                                      pygame.image.load(self.mount_folder + 'Jump2.png'),
-                                      pygame.image.load(self.mount_folder + 'Jump3.png'),
-                                      pygame.image.load(self.mount_folder + 'Jump4.png'),
-                                      pygame.image.load(self.mount_folder + 'Jump5.png'),
-                                      pygame.image.load(self.mount_folder + 'Jump6.png')]
-        for image in self.animal_images_jumping:
-            image.convert()
-            #image.set_colorkey((0, 0, 0), RLEACCEL)
-
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-(self.SCREEN_HEIGHT/10)
         self.startingPosition_x = 280
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
@@ -163,7 +152,7 @@ class MainPlayer(pygame.sprite.Sprite):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2 # TODO Should be 0.2!
 
-        jump_lower_bound = 2 / 10  # Lower bound of the jump position range
+        jump_lower_bound = 3 / 10  # Lower bound of the jump position range
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
 
         # Map the neurofeedback signal to the jump position range

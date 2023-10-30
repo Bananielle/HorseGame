@@ -150,8 +150,8 @@ if __name__ == '__main__':
             for score in sortedScores:
                 count_str = str(count) + '.'
                 if score == gp.nrCoinsCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
-                    scores_text = self.font.render(str(score) + ' coins collected', True, GOLD)
-                    count_text = self.font.render(count_str, True, GOLD)
+                    scores_text = self.font.render(str(score) + ' coins collected', True, BLACK)
+                    count_text = self.font.render(count_str, True, BLACK)
                     currentScoreAlreadyDisplayed = True
                 else:
                     scores_text = self.makePinkFont(str(score) + ' coins collected')
