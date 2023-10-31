@@ -19,6 +19,10 @@ class BrainComputerInterface():
         self.useMax = True # Use the max amplitude for NF calculation
 
         self.simulatedData_filepath = "Data/"
+        self.previousRetrievedTimePoint = 0
+        self.currentRetrievedTimePoint = 0
+        self.testDataList = []
+        self.reactionTimeList = []
         self.incomingDataList_betas = []
         self.incomingDataList_oxy = []
         self.incomingDataList_condition = []
@@ -61,13 +65,14 @@ class BrainComputerInterface():
             self.timeBetweenSamples_ms = 1000  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 1000) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 500) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self,trialNr):
         if self.saveIncomingData and self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
 
+            self.getNewData()
             betas = self.getBetas(trialNr)
             oxy = self.scaleOxyData()
             condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
@@ -198,6 +203,12 @@ class BrainComputerInterface():
         filename = f"oxyvalues{current_date}.csv"
         self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_oxy)), filename)
 
+        filename = f"reactiontimes{current_date}.csv"
+        self.save_list_to_csv(self.reactionTimeList, filename)
+
+        filename = f"testdatalist{current_date}.csv"
+        self.save_list_to_csv(self.testDataList, filename)
+
         # Show boxplot of the NFsignal_mean and NFsignal_max values
         self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
         self.show_boxplot(self.NFsignal["NFsignal_max_TASK"], "Max amplitude")
@@ -216,6 +227,29 @@ class BrainComputerInterface():
         ax.set_title(title)
 
         plt.show()
+
+    def getCurrentTimePoint(self):
+        currentTimePoint, rt = self.tsi.get_current_time_point()
+        print("Current time point: " + str(currentTimePoint) + ", rt: " + str(rt))
+
+        return currentTimePoint,rt
+
+    def didNewDataArrive(self):
+        self.previousRetrievedTimePoint = self.currentRetrievedTimePoint
+        self.currentRetrievedTimePoint = self.getCurrentTimePoint()
+
+        if self.currentRetrievedTimePoint == self.previousRetrievedTimePoint:
+            return True
+        else:
+            return False
+
+    def getNewData(self):
+        if self.didNewDataArrive():
+            data,rt = self.getCurrentTimePoint()
+            print("New data arrived! Data: " + str(data) + ", rt: " + str(rt))
+            self.testDataList.append(data)
+            self.reactionTimeList.append(rt)
+
 
     def set_NF_max_threshold(self,NFsignal_max):
         self.NF_maxLevel_based_on_localizer = NFsignal_max
