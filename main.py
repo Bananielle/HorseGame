@@ -53,7 +53,7 @@ from MainPlayer import MainPlayer
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print('Starting up Horse Game...')
+    print('Starting up Horse Game... ')
     print('Developed by Danielle Evenblij, 2023')
     print(os.getcwd())
 
