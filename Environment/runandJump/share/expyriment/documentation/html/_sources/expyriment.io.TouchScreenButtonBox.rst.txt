@@ -1,0 +1,8 @@
+expyriment.io.TouchScreenButtonBox
+==================================
+
+.. autoclass:: expyriment.io.TouchScreenButtonBox
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.TouchScreenButtonBox.__init__

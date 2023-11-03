@@ -1,0 +1,947 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Changelog &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Previous versions" href="PreviousVersions.html" />
+    <link rel="prev" title="expyriment.stimuli.Video" href="expyriment.stimuli.Video.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Changelog</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-0-10-0-30-oct-2019">
+<h2>Version 0.10.0 (30 Oct 2019)<a class="headerlink" href="#version-0-10-0-30-oct-2019" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>Expyriment windows with no frame; set
+<code class="docutils literal notranslate"><span class="pre">control.defaults.window_no_frame=True</span></code> before initializing</li>
+<li>download plugins from stash: <code class="docutils literal notranslate"><span class="pre">misc.download_from_stash</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">stimuli.Shape</span></code>: A vertex list can be added when creating a shape object
+using the optional <code class="docutils literal notranslate"><span class="pre">vertex_list</span></code> parameter</li>
+<li>all visual stimuli now have <code class="docutils literal notranslate"><span class="pre">get_surface_array</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">set_surface_array</span></code>
+methods for direct pixel manipulations with numpy</li>
+<li>all visual stimuli have a getter and setter for the position in polar
+coordinates: <code class="docutils literal notranslate"><span class="pre">polar_coordiante</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cartesian2polar</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">polar2cartesian</span></code> in <code class="docutils literal notranslate"><span class="pre">misc.geometry</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">design</span></code>: trials, blocks and experiment objects have the method
+<code class="docutils literal notranslate"><span class="pre">has_factor</span></code> to check if a factor is defined</li>
+<li>after installation the command line interface will be available from the
+system command <code class="docutils literal notranslate"><span class="pre">expyriment</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">io.TextInput</span></code> can now optionally how text right-to-left</li>
+<li><code class="docutils literal notranslate"><span class="pre">io.SerialPort</span></code> has a new method <code class="docutils literal notranslate"><span class="pre">send_line</span></code></li>
+<li>geometry module has convenience functions for predefined geometrical
+shapes used for plotting with <code class="docutils literal notranslate"><span class="pre">stimuli.Shape</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">geometry.lines_intersection_point</span></code> calculates interscetion point of two
+lines</li>
+<li><code class="docutils literal notranslate"><span class="pre">stimuli.Line</span></code> is internally based on <code class="docutils literal notranslate"><span class="pre">stimuli.Shape</span></code> and has the new
+methods <code class="docutils literal notranslate"><span class="pre">get_shape</span></code> and <code class="docutils literal notranslate"><span class="pre">get_connected_shape</span></code></li>
+<li>new function <code class="docutils literal notranslate"><span class="pre">misc.round</span></code>, implementing the old Python 2 rounding behaviour</li>
+<li><code class="docutils literal notranslate"><span class="pre">io.keyboard.check</span></code> now has an argument <code class="docutils literal notranslate"><span class="pre">check_for_keyup</span></code> which will
+check for keyup events instead of keydown events</li>
+<li>new class <code class="docutils literal notranslate"><span class="pre">misc.Colour</span></code>: create colours by names, Hex strings or RGB values;
+the class can also handle HSV, HSL values; the <code class="docutils literal notranslate"><span class="pre">misc.HSVColour</span></code> class is
+thus obsolete</li>
+<li><code class="docutils literal notranslate"><span class="pre">misc.data.preprocessing</span></code> can handle glob wildcard pattern</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>Python’s <code class="docutils literal notranslate"><span class="pre">time.perf_counter</span></code> function will be used as high-precision timer
+if it exists (that is, for Python 3.3+)</li>
+<li>major rewrite of <code class="docutils literal notranslate"><span class="pre">stimuli.Shape</span></code> with several bug fixes; e.g. shapes have no
+<code class="docutils literal notranslate"><span class="pre">line_width</span></code>, <code class="docutils literal notranslate"><span class="pre">contour_colour</span></code> is renamed to <code class="docutils literal notranslate"><span class="pre">debug_contour_colour</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Shape.rect</span></code> is now a <code class="docutils literal notranslate"><span class="pre">pygame.Rect</span></code>; see improved documentation</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">extras</span></code></dt><dd><ul>
+<li>extras need to be explicitly imported</li>
+<li>extras and plugins are not anymore part of expyriment package and can
+be instead downloaded from the Expyriment stash (see
+<code class="docutils literal notranslate"><span class="pre">misc.download_from_stash</span></code>)</li>
+<li>all installed extras will be installed in the local settings folder
+(typically <code class="docutils literal notranslate"><span class="pre">.expyriment</span></code> in the $HOME directory)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>the option <code class="docutils literal notranslate"><span class="pre">ascii_fiter</span></code> in <code class="docutils literal notranslate"><span class="pre">io.TextInput</span></code> has been renamed to
+<code class="docutils literal notranslate"><span class="pre">character_filter</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">frequence_table</span></code> in <code class="docutils literal notranslate"><span class="pre">misc.statistics</span></code> has been renamed to
+<code class="docutils literal notranslate"><span class="pre">frequency_table</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">points_to_vertices</span></code> in <code class="docutils literal notranslate"><span class="pre">misc.geometry</span></code> has been renamed to
+<code class="docutils literal notranslate"><span class="pre">points2vertices</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">position2coordinate</span></code> in <code class="docutils literal notranslate"><span class="pre">misc.geometry</span></code> has been renamed to
+<code class="docutils literal notranslate"><span class="pre">position2coordinates</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">position2coordinates</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">coordinates2position</span></code> have a new optional
+argument to calculate positions relative to a surfaces</li>
+<li><code class="docutils literal notranslate"><span class="pre">stimuli.Circle</span></code>: <code class="docutils literal notranslate"><span class="pre">get_polar_coordiantes</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">set_polar_coordiantes</span></code> are
+obsolete; use <code class="docutils literal notranslate"><span class="pre">polar_position</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">design</span></code>: <code class="docutils literal notranslate"><span class="pre">Trial().get_factor</span></code>, <code class="docutils literal notranslate"><span class="pre">Block().get_factor</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Experiment().get_bws_factor</span></code> now raise an exception if the factor is not
+defined; this can be suppressed by using the parameter
+<code class="docutils literal notranslate"><span class="pre">return_none_if_not_defined</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">misc.geometry.points2vertices</span></code> requires now a list of <code class="docutils literal notranslate"><span class="pre">misc.XYPoints</span></code> and
+not a list of tuples; (use <code class="docutils literal notranslate"><span class="pre">misc.geometry.tuples2points</span></code> to adapt old code)</li>
+<li><code class="docutils literal notranslate"><span class="pre">stimuli.Video</span></code>: attempting to downloaded a missing ffmpeg binary only when
+initializing a Video stimulus with the “mediadecoder” backend</li>
+<li><code class="docutils literal notranslate"><span class="pre">io.Mouse</span></code>: quit events will now be controlled via the method
+<code class="docutils literal notranslate"><span class="pre">Mouse.set_quit_corner_location</span></code>; the class properties
+<code class="docutils literal notranslate"><span class="pre">quit_rect_location</span></code> and <code class="docutils literal notranslate"><span class="pre">quit_rect_size</span></code> are obsolete</li>
+<li>logging of visual stimuli <code class="docutils literal notranslate"><span class="pre">present</span></code> method now after screen update</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Adding field bug in <code class="docutils literal notranslate"><span class="pre">io.TouchscreenButtonBox</span></code></li>
+<li>1-pixel bug when converting Expyriment positions to screen (Pygame)
+positions: <code class="docutils literal notranslate"><span class="pre">position2coordinate</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">coordinate2position</span></code></li>
+<li>control: <code class="docutils literal notranslate"><span class="pre">auto_create_subject_id</span></code> takes now also existing event files into
+account</li>
+<li><code class="docutils literal notranslate"><span class="pre">io.SerialPort</span></code> bug with Python 3</li>
+<li>script path is added to $PYTHONPATH</li>
+<li>representation lists in output CSV files</li>
+<li>bug in <code class="docutils literal notranslate"><span class="pre">io.Keyboard.wait</span></code></li>
+<li>bug when drawing textures to screen (OpenGL) leading to 1-pixel inaccuracies</li>
+<li>bug in <code class="docutils literal notranslate"><span class="pre">stimuli.Ellipse</span></code> with uneven <cite>line_width</cite> argument</li>
+<li><code class="docutils literal notranslate"><span class="pre">io.TextIput</span></code>: argument <code class="docutils literal notranslate"><span class="pre">background_stimulus</span></code> now takes all Expyriment
+stimuli</li>
+<li><code class="docutils literal notranslate"><span class="pre">misc.get_system_info()</span></code> uses <code class="docutils literal notranslate"><span class="pre">PIL.__version__</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">io.TextMenu</span></code> mouse wheel scrolling</li>
+</ul>
+</div>
+<div class="section" id="version-0-9-0-9-mar-2017">
+<h2>Version 0.9.0 (9 Mar 2017)<a class="headerlink" href="#version-0-9-0-9-mar-2017" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>Python 3 compatibility</li>
+<li>New Video stimulus implementation that supports a large range of formats</li>
+<li>new global boolean constant expyriment.PYTHON3 indicates Python version</li>
+<li>new io device: io.extras.TcpServer</li>
+<li>new method to add full factorial designs:
+Block.add_trials_full_factorial &amp; Experiment.add_blocks_full_factorial</li>
+<li>Network interface to Turbo-Satori: io.extras.TurbosatoriNetworkInterface
+(see www.brainvoyager.com/products/turbosatori.html)</li>
+<li>stimuli.Rectangle: Option to have rounded (anti-aliased) corners</li>
+<li>rotate() method of stimuli applies filtering on the content now</li>
+<li>randomize.coin_flip() with bias parameter (“unfair coins”)</li>
+<li>randomize.rand_norm() normally distributed random numbers</li>
+<li>statistics module: std &amp; variance</li>
+<li>Eventfile.log has an optional log_event_tag for the logging of
+inter-event-intervalls. If this is defined a summary of the intervalls
+will be added to the event file.</li>
+<li>All present methods have an optional log_event_tag that will be passed
+to Eventfile.log (see above)</li>
+<li>New function: misc.has_internet_connection()</li>
+<li>Notify when initializing system fonts takes longer</li>
+<li>io.ParallelPort: new method get_driver()</li>
+<li>New function: misc.which()</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>all wait methods (io and Clock) now</dt><dd><ol class="arabic">
+<li>have process_control_events attribute to check for quit events from
+keyboard and mouse</li>
+<li>have function attribute (callback_function) to repeatedly run a
+specific function in every loop iteration</li>
+<li>pump the pygame event queue to (hopefully) prevent the OS to think the
+window is “not responding”</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li>control.set_develop_mode: new skip_wait_methods attribute to omit all wait
+functions in the experiment (for testing)</li>
+<li>rename method: stimulus.replace –&gt; stimulus.reposition</li>
+<li>improvements to io.extras.TcpClient</li>
+<li>move set_skip_wait_functions from misc to io</li>
+<li>move is_idle_running, is_interactive_mode, is_android_running
+from control to misc</li>
+<li>move get_module_hash_dictionary, get_experiment_secure_hash,
+module_hashes_as_string and get_system_info from expyriment to misc</li>
+<li>Testsuite: Visual test will now colour code reported refresh rates</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>unicode bug on Windows for font files</li>
+<li>unicode bug on Windows for Audio and Picture</li>
+<li>bug fix in unicode2str</li>
+<li>bug fix Experiment.add_experiment_info</li>
+<li>bug: issue #65, tempfolder at multiuser systems</li>
+<li>minor bug fixes in _secure_hash.py, _files.py</li>
+<li>Cli: -0 option was not recognized</li>
+<li>Correct anti-aliasing for Circle/Ellipse (now works on every background)</li>
+<li>compatibility with pyserial version 3.0</li>
+<li>ParallelPort: inpoutx64 should now work correctly</li>
+</ul>
+</div>
+<div class="section" id="version-0-8-0-30-jun-2015">
+<h2>Version 0.8.0 (30 Jun 2015)<a class="headerlink" href="#version-0-8-0-30-jun-2015" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>antialiasing option for stimuli.Ellipse() and stimuli.Circle()</li>
+<li>new class: misc.HSVColour. Class to handle HSV colours [hue, saturation, value]</li>
+<li>new function: quitting wait or event loops by callback_function, if this function
+returns an instance of the new class control.CallbackQuitEvent</li>
+<li>new method: all visual stimuli have methods for lowlevel Pygame operations
+get_surface_copy(), set_surface(), get_pixel_array()</li>
+<li>new stimulus: stimuli.extras.ThermometerDisplay</li>
+<li>new io device: io.extras.TbvNetworkClient</li>
+<li>new io device: io.extras.TcpClient</li>
+<li>new stimulus: GaborPatches can be created with stimuli.extras.GaborPatch();
+the stimulus depends on the package “matplotlib”.</li>
+<li>new feature: data_preprocessing method sallow now to read in only certain
+variables (see parameter <cite>read_variables</cite>)</li>
+<li>new feature: Expyriment asks in interactive mode if initializing a fullscreen</li>
+<li>new method: stimulus.visual.scale_to_fullscreen</li>
+<li>new class: design.extras.StimulationProtocol</li>
+<li>new method in data_preprocessing: save to to R data frame</li>
+<li>new method in data_preprocessing: get_experiment_duration</li>
+<li>new method/property: misc.get_monitor_resolution &amp; Screen.monitor_resolution</li>
+<li>new mouse function: experiments can be quited by mouse events (triple click);
+see documentation of property “mouse_quit_event”. This function is only switched
+on per default under Android</li>
+<li>new method visual stimuli.replace</li>
+<li>new method control.is_android_running</li>
+<li>several new options for command line interface</li>
+<li>get_module_hash_dictionary: dictionary secure hashes from all modules
+imported from local folder</li>
+<li>new constant: ALL_KEYPAD_DIGITS</li>
+<li>new helper functions in misc and control</li>
+<li>new feature: control.set_skip_wait_functions</li>
+<li>io.Keyboard has static methods to set and get the quit_key and pause_key</li>
+<li>new feature: too long text lines will be trimmed automatically if the
+max_width parameter has been defined</li>
+<li>new feature: too long words in text boxes will be trimmed automatically,
+this function can be switch off</li>
+<li>new feature: improved functionality of randomize.shuffle_list</li>
+<li>Test suite summarizes delay histograms for visual presentations</li>
+<li>control.defaults.blocking_mode for setting the blocking_mode</li>
+<li>new io.ParallelPort implementation, based on PsychoPy code; it now
+supports reading of 5 status pins (10, 11, 12, 13, 15) and all 8 data pins;
+in addition, the module now works on 64bit Windows system</li>
+<li>Test suite: New ParallelPort test</li>
+<li>stimuli.extra.DotCloud: DotCloud can be multi coloured (see make method)</li>
+<li>lots of documentation improvements</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>ATTENTION: Open_GL is now also used in window mode and will not be switch
+off automatically, if Expyriment is not running in fullscreen mode.</li>
+<li>ATTENTION: extra modules will not anymore be imported automatically. Please
+call <cite>import.&lt;module_name&gt;.extras</cite>, if you want to use extra features.</li>
+<li><dl class="first docutils">
+<dt>ATTENTION: io.screen.open_gl and control.defaults.open_gl have new parameters::</dt><dd>0/False - No OpenGL (no vsync / no blocking)
+1       - OpenGL (vsync / no blocking)
+2/True  - OpenGL (vsync / blocking)
+3       - OpenGL (vsync / alternative blocking)</dd>
+</dl>
+</li>
+<li>ATTENTION: stimuli.Ellipse is now defined by radii (Not backwards compatible!)</li>
+<li>ATTENTION: stimuli.Circle is now defined by radius (Not backwards compatible!)</li>
+<li>ATTENTION: two obsolete stimuli stimuli.Frame and stimuli.Dot (see doc)</li>
+<li>ATTENTION: ParallelPort has been changed a lot and is not backwards compatible
+anymore; the old implementation is still available as
+io.extras.SimpleParallelPort</li>
+<li>the property Shape.size has been renamed to shape.shape_size</li>
+<li>stimuli.Rectangle: is_point_inside is now obsolete</li>
+<li>stimuli.Shape: is_point_inside and is_shape_overlapping are now obsolete</li>
+<li>stimuli.Fixcross: fixcross_size parameter and cross_size property are now
+obsolete</li>
+<li>changes to Simon example</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>bug in io.TouchScreenButton crash if duration expired</li>
+<li>bug in command line interface: order of argument is now irrelevant</li>
+<li>keypad bug in TextInput</li>
+<li>unicode bug in TextMenu</li>
+<li>bug in anti_aliasing shapes</li>
+<li>some method parameters that require a list and didn’t work with tuples</li>
+<li>stimuli with odd dimensions missed a pixel in each dimension in OpenGL mode</li>
+<li>bug in stimuli.Audio.unload() and stimuli.Video.unload()</li>
+<li>bug in io.ParallelPort.poll (now io.extras.SimpleParallelPort)</li>
+<li>bug in Shape: shapes now comensate for the Pygame bug of extended polygons
+along the horizontal axes</li>
+<li>bug in stimuli.extras.DotCloud: colour of dots could not be changed</li>
+</ul>
+</div>
+<div class="section" id="version-0-7-0-2-mar-2014">
+<h2>Version 0.7.0 (2 Mar 2014)<a class="headerlink" href="#version-0-7-0-2-mar-2014" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>new feature in testsuite: Font viewer</li>
+<li>new extra stimulus: stimuli.extras.RandomDotKinematogram</li>
+<li>new timer and experiment clock to ensure monotonic timing</li>
+<li>Clock: new method (static) monotonic_time (this time should be always used)</li>
+<li>data_preprocessing: new exclusion rule, which allows removing trials
+depending on their deviation (std) from mean (e.g., ‘RT &gt; 1.5*std’)</li>
+<li>improvements for OS X in get_system_info()</li>
+<li>proper unicode handling: use unicode strings whenever unicode characters
+are needed</li>
+<li>files: the character encoding is now written to files and used when opening
+them</li>
+<li>FreeFonts are now part of the Expyriment distribution to guarantee the same
+fonts across platforms</li>
+<li>new io class: TouchScreenButtonBox</li>
+<li>new options for control.start(): skip_ready_screen and subject_id to start
+with predefined subject id</li>
+<li>experiments now also have a global mouse object: experiment.mouse</li>
+<li>new property for io.Mouse: is_visible</li>
+<li>Secure hashes for experiments help to ensure that the correct version is
+running in the lab. Secure hashes will be displayed at the start and printed
+in all output files as well as in the command line output.</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>experiment clock now with monotonic timing</li>
+<li>bug in extras.CedrusResponseDevice</li>
+<li>several bugs in documentation</li>
+<li>incompatibility with multiprocessing.Pool</li>
+<li>bug in Visual.add_noise()</li>
+<li>bug in io.SerialPort.read_line()</li>
+<li>bugfix: stimuli.shapes can now be used as background stimuli for io.TextInput
+&amp; io.TextMenu</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>several Android related changes (have no impact for normal use of Expyriment)</li>
+<li>overlapping methods of stimuli now work on absolute_position by default</li>
+</ul>
+</div>
+<div class="section" id="version-0-6-4-5-aug-2013">
+<h2>Version 0.6.4 (5 Aug 2013)<a class="headerlink" href="#version-0-6-4-5-aug-2013" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>log levels can be changed while running experiment via the method
+Experiment.set_logging. Access current  via Experiment.loglevel</li>
+<li>Modification the logging of individual objects while runtime. Most classes
+have now the method set_logging(onoff), to switch on or off the logging.</li>
+<li>design.randomize.rand_element returns a random element from a list</li>
+<li>blocks and trails have the property ‘factor_dict’, which is a dictionary with
+with all factors</li>
+<li>experimental Android support</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>incorrect background colour for TextInput</li>
+<li>Font in TextScreen</li>
+<li>several fixed in documentation</li>
+<li>switching off logging via “expyriment.control.defaults.event_logging = 0” not
+now working</li>
+<li>“numpy version bug” in data.preprocessing</li>
+<li>unicode bug for picture, audio and video filenames</li>
+<li>polling of parallel port</li>
+<li>io.TextMenu font was hardcoded</li>
+</ul>
+</div>
+<div class="section" id="version-0-6-3-14-apr-2013">
+<h2>Version 0.6.3 (14 Apr 2013)<a class="headerlink" href="#version-0-6-3-14-apr-2013" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>misc.geometry contains function to convert between pixel and degrees of
+visual angle: position2visual_angle &amp; visual_angle2position</li>
+<li>io.TextInput has now a position and can be plotted on a background stimulus</li>
+<li>misc.find_font</li>
+<li>misc.list_fonts</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Initializing experiments in the IDLE shell</li>
+<li>TextInput user_text_font and user_text_bold can now be changed</li>
+<li>bugs in font selection</li>
+<li>API reference tool should now also open when there are whitespaces in Python
+executable path</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>renamed TextInput.user_colour –&gt; user_text_colour</li>
+<li>FixCross.cross_size has been renamed to FixCross.size. FixCross.size is
+now a tuple (int, int) and defines both dimensions (x, y) separately.</li>
+<li>Expyriment is checking also the version of all required packages and
+dependencies</li>
+<li>all doc string are now in line with the numpy-doc conventions</li>
+</ul>
+</div>
+<div class="section" id="version-0-6-2-12-dec-2012">
+<h2>Version 0.6.2 (12 Dec 2012)<a class="headerlink" href="#version-0-6-2-12-dec-2012" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>new stimuli.extras.PolygonLine class</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Expyriment could not be imported on Windows 7 64</li>
+<li>misc.geometry.position2coordinate bug</li>
+<li>io.Mouse.self_test bug is fixed</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>stimuli.Line was rewritten to not depend on PolygonRectangle anymore;
+the old Line stimulus is now stimuli.extras.PolygonLine</li>
+</ul>
+</div>
+<div class="section" id="version-0-6-1-9-dec-2012">
+<h2>Version 0.6.1 (9 Dec 2012)<a class="headerlink" href="#version-0-6-1-9-dec-2012" title="Permalink to this headline">¶</a></h2>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Testsuite wouldn’t start anymore</li>
+<li>API reference tool would not start on Windows XP in some cases</li>
+</ul>
+</div>
+<div class="section" id="version-0-6-0-4-dec-2012">
+<h2>Version 0.6.0 (4 Dec 2012)<a class="headerlink" href="#version-0-6-0-4-dec-2012" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>new stimuli.Circle class</li>
+<li>new stimuli.Ellipse class</li>
+<li>new stimuli.extra.PolygonDot class</li>
+<li>new stimuli.extra.PolygonEllipse class</li>
+<li>new stimuli.extra.PolygonRectangle class</li>
+<li>new method: stimuli.Shape.add_vertices to add multiple vertices at once</li>
+<li>an additional suffix for the main data and event files can be set when
+creating an Experiment</li>
+<li>Unfilled Shapes by setting a line_width, when creating a shape</li>
+<li>Shape: new property line_width</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>stimuli.Shape: several fixes, related to surface creation and xy point
+calculation</li>
+<li>Logging of unicode text in TextLine stimulus</li>
+<li>stimuli.TextLine and stimuli.TextBox can now also receive a font file as
+text_font argument</li>
+<li>stimuli.TextLine.copy()</li>
+<li>Bug fixes in self tester of stimuli</li>
+<li>Fixed segmentation fault when repeatedly initializing and ending an experiment</li>
+<li>Fixed surface size shapes</li>
+<li>Fixed incorrect line_width plotting for scaled shapes</li>
+<li>Copying preloaded stimuli in OpenGL mode</li>
+<li>Bug fixed in io.InputFile.get_line()</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>io.DataFile: variable “Subject” is now called “subject_id”</li>
+<li>io.Screen.update() should be even more accurate now (about 0.5 milliseconds)</li>
+<li>misc.data_preprocessing: argument and property “experiment_name” in all
+objects is now called “file_name”</li>
+<li>misc.data_preprocessing.Aggregator can handle files with different suffixes:
+see __inti__ and reset</li>
+<li>stimuli.Dot: is_center_inside, is_overlapping and is_inside are deprecated now</li>
+<li>stimuli.Dot is deprecated now, use stimuli.Circle instead</li>
+<li>stimuli.Shape: is_point_inside and is_shape_overlapping are deprecated now</li>
+<li>stimuli.Shape.native_scaling does now optionally scale also the line_width</li>
+<li>stimuli.Frame: property line_width is now renmes to frame_line_width. Since
+line_width is a property the underlying shape and always 0 (filled shapes)</li>
+<li>stimuli.Frame is deprecated now, use stimuli.Rectangle with line_width &gt; 0</li>
+<li>stimuli.Rectangle was rewritten and is not inherited from Shape anymore;
+the old Rectangle stimulus is now known as stimuli.extras.PolygonRectangle</li>
+</ul>
+</div>
+<div class="section" id="version-0-5-2-13-jun-2012">
+<h2>Version 0.5.2 (13 Jun 2012)<a class="headerlink" href="#version-0-5-2-13-jun-2012" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>data_preprocessing.print_n_trials(variables)</li>
+<li>data_preporcessing.get_variable_data: get data as numpy arrays.</li>
+<li>data_preporcessing.add_variable: add data from numpy.</li>
+<li>read trials from csv file into a block design.block.add_trials_from_csv_file</li>
+<li>block.read_design (counterpart to save_design)</li>
+<li>the main event_file logs now also the standard output and Python errors</li>
+<li>statistic functions are now robust against type violations (like nan_mean)</li>
+<li>design will be automatically saved to event file when experiment starts</li>
+<li>functions to check if IDLE of IPython are running (in control)</li>
+<li>several further new minor features</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Serial Port test can now be quit without quitting the test suite</li>
+<li>FixCross, width vertical line</li>
+<li>Serial Port will be closed when script crashes in IDLE</li>
+<li>Fix for stimuli.extras.VisualMask</li>
+<li>Fix for io.TextInput</li>
+<li>Fixes and adjustments for default logging</li>
+<li>API browser now works on OS X</li>
+<li>API browser fonts on Windows</li>
+<li>several bug fixes in data_preporcessing</li>
+</ul>
+</div>
+<div class="section" id="version-0-5-1-07-mar-2012">
+<h2>Version 0.5.1 (07 Mar 2012)<a class="headerlink" href="#version-0-5-1-07-mar-2012" title="Permalink to this headline">¶</a></h2>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Bug in Serial Port test when no input is received</li>
+<li>Bug for get_verrsion() under Python 2.6 under OS X</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>Text colour for API HTML reference</li>
+</ul>
+</div>
+<div class="section" id="version-0-5-0-06-mar-2012">
+<h2>Version 0.5.0 (06 Mar 2012)<a class="headerlink" href="#version-0-5-0-06-mar-2012" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>new io class: TextMenu</li>
+<li>new function: expyriment.get_system_info()</li>
+<li>new function in control: get_defaults()</li>
+<li>new method in ButtonBox: check()</li>
+<li>new methods in io.Mouse: wait_event, wait_motion</li>
+<li>new misc modules: geometry and statistics</li>
+<li>new Cedrus Response Devices support in io.extras</li>
+<li>new test suite:<ul>
+<li>new method in control: run_testsuite()</li>
+<li>the testsuite can write a protocol with all results and information about
+the system</li>
+</ul>
+</li>
+<li>folder for settings and extra plugins:
+$HOME/.expyriment/ or $HOME/~expyriment/<ul>
+<li>if the file post_import.py exist in this folder it will be executed
+automatically after the import of expyriment</li>
+<li>extra plugins can be now also included in the folder
+$HOME/.expyriment/&lt;module_name&gt;/  (or ~expyriment)</li>
+</ul>
+</li>
+<li>command line interface:<ul>
+<li>see “python -m expyriment.cli -h” for help</li>
+</ul>
+</li>
+<li>better on- and offline documentation:<ul>
+<li>new function: expyriment.show_documentation()</li>
+<li>new Api Reference Tool (API browse and search GUI)</li>
+</ul>
+</li>
+<li>new function in misc.data_preprocessing: write_concatenated_data</li>
+<li>ButtonBox and TriggerInput work now optional with bitwise comparisons</li>
+<li>SerialPort and ParallelPort have a get_available_ports() method</li>
+<li>wait callback functions can now also be registered via the experiment</li>
+<li>some new constants</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>ButtonBox has been replaced by StreamingButtonBox and EventButtonBox</li>
+<li>the experiment is now THE central structure in the framework. Importantly,
+start does not require an experiment anymore and starts instead the
+currently initialized experiment.</li>
+<li>textinput.filter is rename to textinput.ascii_filter</li>
+<li>stimuli.TextBox: Size is now a mandatory parameter</li>
+<li>ending expyriment will now only optionally call sys.exti()</li>
+<li>stimuli.Audio.is_playing() and Audio.wait_end() are replaced by
+control.get_audiosystem_is_playing() and control.wait_end_audiosystem()</li>
+<li>stimuli.Audio.play() now returns a pygame.mixer.Channel object</li>
+<li>control.run_in_develop_mode() is renamed to control.set_develop_mode()</li>
+<li>no config files will be supported anymore</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>the Windows installer will now remove all files from an old installation
+before installing</li>
+<li>IDLE will not freeze anymore, when a script crashes</li>
+<li>several attributes/properties were did not appear in the API reference</li>
+<li>major bug in keyboard.check()</li>
+<li>(possibly) fixed is_playing() method in Audio</li>
+<li>ordering of serial ports in SerialPort.get_available_ports()</li>
+<li>visual problems when graphics card is set to do flipping with tripple buffer</li>
+</ul>
+</div>
+<div class="section" id="version-0-4-0-22-nov-2011">
+<h2>Version 0.4.0 (22 Nov 2011)<a class="headerlink" href="#version-0-4-0-22-nov-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>saving and loading designs, new functions in experiment class (save_design
+and load_design)</li>
+<li>new module: expyriment.misc.data_preprocessing with functions for data
+handling and a new tool to preprocess and aggregate expyriment data
+(class Aggregator). Note: Preliminary version. Use with caution.</li>
+<li>new extra stimulus class: visual mask  (depends on PIL)</li>
+<li>new extra io class: Webcam (depends in PIL and OpenCV)</li>
+<li>new extra io class: MidiIn</li>
+<li>new extra io class: MidiOut</li>
+<li>the repository and the expyriment source code zip file contain examples</li>
+<li>‘setup.py install’ removes old installation</li>
+<li>new function: block.save_trials</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>Extra modules are now hidden</li>
+<li>skipped function experiment.save_trial_list (please use the new
+experiment.save_design instead)</li>
+<li>rename property block.all_factors_as_text –&gt; block.factors_as_text</li>
+<li>rename property experiment.trials_as_text –&gt; experiment.design_as_text</li>
+<li>rename experiment.bws_factor_permutation_randomize –&gt;
+experiment.bws_factor_randomized</li>
+<li>Factor conditions/levels have to be a number (int, float) or a string. No
+other data types are allowed.</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Bug in testing function of visual extra stimuli</li>
+<li>Bug fix, unbalanced between subject factor permutation for hierarchical
+designs by subject_ID</li>
+<li>Bug fix, playing short tones (duration&lt;1 sec.)</li>
+</ul>
+</div>
+<div class="section" id="version-0-3-3-19-oct-2011">
+<h2>Version 0.3.3 (19 Oct 2011)<a class="headerlink" href="#version-0-3-3-19-oct-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>stimuli.Video.wait_frame() stops playback and screen updating
+after the given frame</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Printing experiments with no block factors defined will work now</li>
+</ul>
+</div>
+<div class="section" id="version-0-3-2-12-oct-2011">
+<h2>Version 0.3.2 (12 Oct 2011)<a class="headerlink" href="#version-0-3-2-12-oct-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>stimuli.Audio: wait_end(), is_playing</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>stimuli.Video: present() will now block until the first frame is presented.</li>
+<li>stimuli.Video: play() will not render anything anymore</li>
+<li>stimuli.Tone and stimuli.extras.NoiseTone: duration is now set in ms</li>
+<li>design.Block.get_a_random_trial() is now called get_random_trial()</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Visual stimuli: picture() method works now</li>
+<li>Visual stimuli: copy() method was erroneous</li>
+<li>design.Block.get_summary(): Ordering of trial factors</li>
+<li>design.Block and design.Trial: Factor values can now be dictionaries as well</li>
+<li>stimuli.Tone and stimuli.extras.NoiseTone: Works correctly on Windows now</li>
+<li>design.Block.get_random_trial(): Could crash in some occasions</li>
+<li>Fix underscore at the end of filenames</li>
+</ul>
+</div>
+<div class="section" id="version-0-3-1-8-sep-2011">
+<h2>Version 0.3.1 (8 Sep 2011)<a class="headerlink" href="#version-0-3-1-8-sep-2011" title="Permalink to this headline">¶</a></h2>
+<p>Changed:</p>
+<ul class="simple">
+<li>SerialPort: byte_buffer is now input_history</li>
+<li>ParallelPort: byte_buffer removed (just did not make any sense)</li>
+<li>ButtonBox: buffer and has_buffer attributes are gone</li>
+<li>Buttons of Mouse and GamePad now start from 0</li>
+<li>register_wait_function renamed to register_wait_callback_function</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Critical bug on Windows about parsing of expyriment installation folder</li>
+<li>Critical bug in Block.copy() which would destroy Pygame surface</li>
+<li>Mouse.check_button_pressed(): Mismatch in button numbering</li>
+<li>Dot: Fixed calculation for setting polar coordinates</li>
+<li>ParallelPort: Sending data</li>
+<li>MarkerOutput: Duration computation</li>
+</ul>
+</div>
+<div class="section" id="version-0-3-0-31-aug-2011">
+<h2>Version 0.3.0 (31 Aug 2011)<a class="headerlink" href="#version-0-3-0-31-aug-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>expyriment.control.register_wait_function(): A function registered here
+will be called in each wait method in the framework at least once</li>
+<li>expyriment.control.run_in_develop_mode(): Automatically sets some defaults
+(window_mode=True, open_gl=False, fast_quit=True)</li>
+<li>SerialPort: read_line() will wait for and return full lines</li>
+<li>SerialPort: os_buffer_size attribute will affect the warning behaviour of the
+byte buffer</li>
+<li>ByteBuffer: add_events() can be used to add multiple events at once</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>defaults, constants as well as initialize(), start(), pause() and end() will
+no longer be available via expyriment but only via expyriment.control</li>
+<li>SerialPort: Updating the byte_buffer is now faster and warnings are more precise</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>GamePad.wait_press(): Can now also check for first button (button 0)</li>
+</ul>
+</div>
+<div class="section" id="version-0-2-1-19-aug-2011">
+<h2>Version 0.2.1 (19 Aug 2011)<a class="headerlink" href="#version-0-2-1-19-aug-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>MarkerOutput can now send with a specified duration (needed for EEG systems
+connected via parallel port)</li>
+<li>Advanced trial shuffling</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Critical bug in Trial.copy() which leads to broken surfaces</li>
+<li>Blocking mode for serial port</li>
+<li>Unicode in TextBox? and TextScreen?</li>
+<li>wait_press() in GamePad does now check for more than one button</li>
+</ul>
+</div>
+<div class="section" id="version-0-2-0-26-may-2011">
+<h2>Version 0.2.0 (26 May 2011)<a class="headerlink" href="#version-0-2-0-26-may-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>Overall structure has changed quite a bit. There are now only 5 submodules
+(control, design, io, stimuli, misc). Things like initialize() and start()
+are now in control. Constants are now in misc. Each module has its own
+defaults now.</li>
+</ul>
+<p>Changed:</p>
+<ul class="simple">
+<li>Adding blocks and trexpyrimentials will always add a copy. There is no option
+for adding a reference anymore.</li>
+<li>Block and Trial IDs are now relative to where they are added. For instance,
+two blocks can contain 10 unique trials each, but for both blocks the trial
+IDs will go from 0 to 9.</li>
+<li>Adding stimuli will always add a reference!</li>
+<li>Stimuli have still an absolute unique ID</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>A variety of small bugs have been fixed</li>
+</ul>
+</div>
+<div class="section" id="version-0-1-4-22-may-2011">
+<h2>Version 0.1.4 (22 May 2011)<a class="headerlink" href="#version-0-1-4-22-may-2011" title="Permalink to this headline">¶</a></h2>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Getting a picture from a stimulus was broken</li>
+</ul>
+</div>
+<div class="section" id="version-0-1-3-12-may-2011">
+<h2>Version 0.1.3 (12 May 2011)<a class="headerlink" href="#version-0-1-3-12-may-2011" title="Permalink to this headline">¶</a></h2>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Tempfiles of surfaces are now closed after creation (critical on Windows!)</li>
+</ul>
+</div>
+<div class="section" id="version-0-1-2-11-may-2011">
+<h2>Version 0.1.2 (11 May 2011)<a class="headerlink" href="#version-0-1-2-11-may-2011" title="Permalink to this headline">¶</a></h2>
+<p>Changed:</p>
+<ul class="simple">
+<li>expyriment version now printed on import, not on Experiment creation anymore</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Setup script will not try to check mercurial information by default anymore</li>
+</ul>
+</div>
+<div class="section" id="version-0-1-1-11-may-2011">
+<h2>Version 0.1.1 (11 May 2011)<a class="headerlink" href="#version-0-1-1-11-may-2011" title="Permalink to this headline">¶</a></h2>
+<p>New Features:</p>
+<ul class="simple">
+<li>Throws a useful exception on old or integrated Intel graphics cards that
+do not support OpenGL properly</li>
+</ul>
+<p>Fixed:</p>
+<ul class="simple">
+<li>Experiment.permute_blocks() will not destroy the surfaces of the
+stimuli anymore</li>
+</ul>
+</div>
+<div class="section" id="version-0-1-0-10-may-2011">
+<h2>Version 0.1.0 (10 May 2011)<a class="headerlink" href="#version-0-1-0-10-may-2011" title="Permalink to this headline">¶</a></h2>
+<p>First public release</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="PreviousVersions.html" class="btn btn-neutral float-right" title="Previous versions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.stimuli.Video.html" class="btn btn-neutral float-left" title="expyriment.stimuli.Video" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

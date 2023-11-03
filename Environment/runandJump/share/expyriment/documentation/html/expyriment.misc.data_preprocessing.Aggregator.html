@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.data_preprocessing.Aggregator &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.defaults" href="expyriment.misc.defaults.html" />
+    <link rel="prev" title="expyriment.misc.data_preprocessing" href="expyriment.misc.data_preprocessing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">expyriment.misc.data_preprocessing.Aggregator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a> &raquo;</li>
+        
+      <li>expyriment.misc.data_preprocessing.Aggregator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-misc-data-preprocessing-aggregator">
+<h1>expyriment.misc.data_preprocessing.Aggregator<a class="headerlink" href="#expyriment-misc-data-preprocessing-aggregator" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.misc.data_preprocessing.Aggregator">
+<em class="property">class </em><code class="descclassname">expyriment.misc.data_preprocessing.</code><code class="descname">Aggregator</code><span class="sig-paren">(</span><em>data_folder</em>, <em>file_name</em>, <em>suffix='.xpd'</em>, <em>read_variables=None</em>, <em>names_comprise_glob_pattern=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a tool to aggregate Expyriment data.</p>
+<p>This class is used to handle the multiple data files of a Experiment
+and process (i.e, aggregate) the data for further analysis</p>
+<p class="rubric">Examples</p>
+<p>This tool helps, for instance, to aggregate your data for certain combinations
+of independent variables. E.g., data of a numerical magnitude judgement
+experiment. The code below makes a file with mean and median RTs and a
+second file with the errors and the number of trials</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">expyriment.misc</span> <span class="k">import</span> <span class="n">data_preprocessing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span> <span class="o">=</span> <span class="n">data_preprocessing</span><span class="o">.</span><span class="n">Aggregator</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span> <span class="s2">&quot;./mydata/&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;MagnitudeJudgements&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">set_computed_variables</span><span class="p">([</span><span class="s2">&quot;parity = target_number % 2&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                            <span class="s2">&quot;size = target_number &gt; 65&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">set_independent_variables</span><span class="p">([</span><span class="s2">&quot;hand&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span> <span class="p">,</span> <span class="s2">&quot;parity&quot;</span><span class="p">])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">set_exclusions</span><span class="p">([</span><span class="s2">&quot;trial_counter &lt; 0&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="s2">&quot;error != 0&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="s2">&quot;RT &lt; 2*std&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="s2">&quot;RT &gt; 2*std&quot;</span> <span class="c1"># remove depending std in iv factor</span>
+<span class="gp">&gt;&gt;&gt; </span>                                 <span class="c1"># combination for each subject</span>
+<span class="gp">&gt;&gt;&gt; </span>                   <span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">set_dependent_variables</span><span class="p">([</span><span class="s2">&quot;mean(RT)&quot;</span><span class="p">,</span> <span class="s2">&quot;median(RT)&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;rts.csv&quot;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">set_exclusions</span><span class="p">([</span><span class="s2">&quot;trial_counter &lt; 0&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">set_dependent_variables</span><span class="p">([</span><span class="s2">&quot;sum(error)&quot;</span><span class="p">,</span> <span class="s2">&quot;n_trials&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agg</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;errors.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data_folder</em>, <em>file_name</em>, <em>suffix='.xpd'</em>, <em>read_variables=None</em>, <em>names_comprise_glob_pattern=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an aggregator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data_folder :str</strong></dt><dd><p>folder which contains the data</p>
+</dd>
+<dt><strong>file_name</strong><span class="classifier">str</span></dt><dd><p>name of the files, all files that start with this name will
+be considered for the analysis (cf. aggregator.data_files)</p>
+</dd>
+<dt><strong>suffix</strong><span class="classifier">str, optional</span></dt><dd><p>if specified only files that end with this particular
+suffix will be considered (default=.xpd)</p>
+</dd>
+<dt><strong>read_variables</strong><span class="classifier">array of str, optional</span></dt><dd><p>array of variable names, read only the specified variables</p>
+</dd>
+<dt><strong>names_comprise_glob_pattern</strong><span class="classifier">boolean, optional</span></dt><dd><p>if True, data_folder and file_name are processed as glob pattern
+with wildcards such as “*” or “?”; the suffix parameter will
+be ignored</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.add_variables">
+<code class="descname">add_variables</code><span class="sig-paren">(</span><em>variable_names</em>, <em>data_columns</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.add_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new variable to the data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>variable_names</strong><span class="classifier">str</span></dt><dd><p>name of the new variable(s)</p>
+</dd>
+<dt><strong>data_columns</strong><span class="classifier">numpy.array</span></dt><dd><p>the new data columns as numpy array</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The amount of variables and added columns must match. The added data
+must also match the number of rows. Manually added variables
+will be lost if cases will be excluded afterwards via a call of
+the method <cite>set_exclusions</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.added_variables">
+<em class="property">property </em><code class="descname">added_variables</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.added_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for added variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.aggregate">
+<code class="descname">aggregate</code><span class="sig-paren">(</span><em>output_file=None</em>, <em>column_subject_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.aggregate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregate the data as defined by the design.</p>
+<p>The design will be printed and the resulting data will be return as
+numpy.array together with the variable names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>output_file</strong><span class="classifier">str, optional</span></dt><dd><p>name of data output file. If this output_file is defined the
+function write the results as csv data file</p>
+</dd>
+<dt><strong>column_subject_id</strong><span class="classifier">int, optional</span></dt><dd><p>data column containing the subject id (default=0)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>result</strong><span class="classifier">numpy.array</span></dt><dd></dd>
+<dt><strong>new_variable_names</strong><span class="classifier">list of strings</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.computed_variables">
+<em class="property">property </em><code class="descname">computed_variables</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.computed_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for computed variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.concatenated_data">
+<em class="property">property </em><code class="descname">concatenated_data</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.concatenated_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for concatenated_data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">numpy.array</span></dt><dd></dd>
+<dt><strong>variables</strong><span class="classifier">list of str</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Returns all data of all subjects as numpy.array and all variables
+names (including added variables). According to the defined design, the
+result contains the new computed variables and the subject variables
+from the headers of the Expyriment data files.</p>
+<p>If data have been loaded and no new variable or exclusion has been
+defined the concatenated_data will merely return the previous data
+without re-processing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.data_files">
+<em class="property">property </em><code class="descname">data_files</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.data_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for data_files.</p>
+<p>The list of the data files considered for the analysis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.dependent_variables">
+<em class="property">property </em><code class="descname">dependent_variables</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.dependent_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for dependent variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.exclusions">
+<em class="property">property </em><code class="descname">exclusions</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.exclusions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for exclusions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><em>filename</em>, <em>recode_variables=True</em>, <em>compute_new_variables=True</em>, <em>exclude_trials=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from from a single Expyriment data file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>name of the Expyriment data file</p>
+</dd>
+<dt><strong>recode_variables</strong><span class="classifier">bool, optional</span></dt><dd><p>set to False if defined variable recodings should not be applied
+(default=True)</p>
+</dd>
+<dt><strong>compute_new_variables</strong><span class="classifier">bool, optional</span></dt><dd><p>set to False if new defined variables should not be computed
+(default=True)</p>
+</dd>
+<dt><strong>exclude_trials</strong><span class="classifier">bool, optional</span></dt><dd><p>set to False if exclusion rules should not be applied
+(default=True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">numpy.array</span></dt><dd></dd>
+<dt><strong>var_names</strong><span class="classifier">list</span></dt><dd><p>list of variable names</p>
+</dd>
+<dt><strong>info</strong><span class="classifier">str</span></dt><dd><p>subject info</p>
+</dd>
+<dt><strong>comment</strong><span class="classifier">str</span></dt><dd><p>comments in data</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The function can be only applied on data of aggregator.data_files,
+that is, on the files in the defined data folder that start with
+the experiment name. According to the defined design, the result
+contains recoded data together with the new computed variables, and the
+subject variables from the headers of the Expyriment data files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.get_variable_data">
+<code class="descname">get_variable_data</code><span class="sig-paren">(</span><em>variables</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.get_variable_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the column of data as numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>variables</strong><span class="classifier">list of str</span></dt><dd><p>names of the variables to be extracted</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">numpy.array</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.independent_variables">
+<em class="property">property </em><code class="descname">independent_variables</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.independent_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for independent_variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.print_n_trials">
+<code class="descname">print_n_trials</code><span class="sig-paren">(</span><em>variables</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.print_n_trials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the number of trials in the combinations of the independent
+variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>variables</strong><span class="classifier">str or list</span></dt><dd><p>A string or a list of strings that represent the names of one or
+more data variables (aggregator.variables)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The functions is for instance useful to quickly check the experimental
+design.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>data_folder</em>, <em>file_name</em>, <em>suffix='.xpd'</em>, <em>variables=None</em>, <em>names_comprise_glob_pattern=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the aggregator class and clear design.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data_folder</strong><span class="classifier">str</span></dt><dd><p>folder which contains the data</p>
+</dd>
+<dt><strong>file_name</strong><span class="classifier">str</span></dt><dd><p>name of the files. All files that start with this name
+will be considered for the analysis (cf. aggregator.data_files)</p>
+</dd>
+<dt><strong>suffix</strong><span class="classifier">str, optional</span></dt><dd><p>if specified only files that end with this particular suffix
+will be considered (default=.xpd)</p>
+</dd>
+<dt><strong>variables</strong><span class="classifier">array of str, optional</span></dt><dd><p>array of variable names, process only the specified variables</p>
+</dd>
+<dt><strong>names_comprise_glob_pattern</strong><span class="classifier">boolean, optional</span></dt><dd><p>if True, data_folder and file_name are processed as glob pattern
+with wildcards such as “*” or “?”. The suffix parameter will
+be ignored.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.set_computed_variables">
+<code class="descname">set_computed_variables</code><span class="sig-paren">(</span><em>compute_syntax</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.set_computed_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set syntax to compute new variables.</p>
+<p>The method defines the variables, which will be computed. It can not
+be applied on variables that have been added manually via
+<cite>add_variables</cite>. The method requires a re-reading of the data files
+and might be therefore time consuming.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>compute_syntax</strong><span class="classifier">str or list</span></dt><dd><p>A string or a list of strings that represent the syntax to
+compute the new variables</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Compute Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">new</span><span class="o">-</span><span class="n">variable</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="n">variable</span><span class="p">}</span> <span class="p">{</span><span class="n">relation</span><span class="o">/</span><span class="n">operation</span><span class="p">}</span> <span class="p">{</span><span class="n">variable</span><span class="o">/</span><span class="n">value</span><span class="p">}</span>
+    <span class="p">{</span><span class="n">new</span><span class="o">-</span><span class="n">variable</span><span class="p">}</span> <span class="o">--</span> <span class="n">a</span> <span class="n">new</span> <span class="ow">not</span> <span class="n">yet</span> <span class="n">defined</span> <span class="n">variable</span> <span class="n">name</span>
+    <span class="p">{</span><span class="n">variable</span><span class="p">}</span>     <span class="o">--</span> <span class="n">a</span> <span class="n">defined</span> <span class="n">data</span> <span class="n">variable</span>
+    <span class="p">{</span><span class="n">relation</span><span class="p">}</span>     <span class="o">--</span>  <span class="o">==</span><span class="p">,</span> <span class="o">!=</span><span class="p">,</span> <span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="p">,</span> <span class="o">&gt;=</span><span class="p">,</span> <span class="o">&lt;=</span><span class="p">,</span> <span class="o">=&gt;</span> <span class="ow">or</span> <span class="o">&lt;=</span>
+    <span class="p">{</span><span class="n">operation</span><span class="p">}</span>    <span class="o">--</span> <span class="o">+</span><span class="p">,</span> <span class="o">-</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="o">/</span> <span class="ow">or</span> <span class="o">%</span>
+    <span class="p">{</span><span class="n">value</span><span class="p">}</span>        <span class="o">--</span> <span class="n">string</span> <span class="ow">or</span> <span class="n">numeric</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.set_dependent_variables">
+<code class="descname">set_dependent_variables</code><span class="sig-paren">(</span><em>dv_syntax</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.set_dependent_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set dependent variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dv_syntax</strong><span class="classifier">str or list</span></dt><dd><p>syntax describing the dependent variable by a function and variable,
+e.g. mean(RT)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">function</span><span class="p">}({</span><span class="n">variable</span><span class="p">})</span>
+    <span class="p">{</span><span class="n">function</span><span class="p">}</span> <span class="o">--</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span><span class="p">,</span> <span class="nb">sum</span><span class="p">,</span> <span class="n">std</span> <span class="ow">or</span> <span class="n">n_trials</span>
+                  <span class="n">Note</span><span class="p">:</span> <span class="n">n_trials</span> <span class="n">counts</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">trials</span>
+                  <span class="ow">and</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">require</span> <span class="n">a</span> <span class="n">variable</span> <span class="k">as</span> <span class="n">argument</span>
+    <span class="p">{</span><span class="n">variable</span><span class="p">}</span> <span class="o">--</span> <span class="n">a</span> <span class="n">defined</span> <span class="n">data</span> <span class="n">variable</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.set_exclusions">
+<code class="descname">set_exclusions</code><span class="sig-paren">(</span><em>rule_syntax</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.set_exclusions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set rules to exclude trials from the analysis.</p>
+<p>The method indicates the rows, which are ignored while reading
+the data files. It can therefore not be applied on variables that have
+been added later via <cite>add_variables</cite> and results in a loss of all
+manually added variables. Setting exclusions requires re-reading of
+the data files and might be therefore time consuming. Thus, call this
+method always at the beginning of your analysis script.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>rule_syntax</strong><span class="classifier">str or list</span></dt><dd><p>A string or a list of strings that represent the rules
+to exclude trials</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Rule syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">variable</span><span class="p">}</span> <span class="p">{</span><span class="n">relation</span><span class="p">}</span> <span class="p">{</span><span class="n">variable</span><span class="o">/</span><span class="n">value</span><span class="p">}</span>
+    <span class="p">{</span><span class="n">variable</span><span class="p">}</span>  <span class="o">--</span> <span class="n">a</span> <span class="n">defined</span> <span class="n">data</span> <span class="n">variable</span>
+    <span class="p">{</span><span class="n">relation</span><span class="p">}</span>  <span class="o">--</span>  <span class="o">==</span><span class="p">,</span> <span class="o">!=</span><span class="p">,</span> <span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="p">,</span> <span class="o">&gt;=</span><span class="p">,</span> <span class="o">&lt;=</span><span class="p">,</span> <span class="o">=&gt;</span> <span class="ow">or</span> <span class="o">&lt;=</span>
+    <span class="p">{</span><span class="n">value</span><span class="p">}</span>     <span class="o">--</span> <span class="n">string</span> <span class="ow">or</span> <span class="n">numeric</span>
+
+    <span class="n">If</span> <span class="n">value</span> <span class="ow">is</span> <span class="s2">&quot;</span><span class="si">{numeric}</span><span class="s2"> * std&quot;</span><span class="p">,</span> <span class="n">trails</span> <span class="n">are</span> <span class="n">excluded</span> <span class="ow">in</span> <span class="n">which</span>
+    <span class="n">the</span> <span class="n">variable</span> <span class="ow">is</span> <span class="n">below</span> <span class="ow">or</span> <span class="n">above</span> <span class="p">{</span><span class="n">numeric</span><span class="p">}</span> <span class="n">standard</span> <span class="n">deviations</span>
+    <span class="kn">from</span> <span class="nn">the</span> <span class="n">mean</span><span class="o">.</span> <span class="n">The</span> <span class="n">relations</span> <span class="s2">&quot;==&quot;</span> <span class="ow">and</span> <span class="s2">&quot;!=&quot;</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">allow</span> <span class="ow">in</span>
+    <span class="n">this</span> <span class="n">case</span><span class="o">.</span> <span class="n">The</span> <span class="n">exclusion</span> <span class="n">criterion</span> <span class="ow">is</span> <span class="n">apply</span> <span class="k">for</span> <span class="n">each</span> <span class="n">subject</span>
+    <span class="ow">and</span> <span class="n">factor</span> <span class="n">combination</span> <span class="n">separately</span><span class="o">.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.set_independent_variables">
+<code class="descname">set_independent_variables</code><span class="sig-paren">(</span><em>variables</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.set_independent_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the independent variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>variables</strong><span class="classifier">str or list</span></dt><dd><p>the name(s) of one or more data variables (aggregator.variables)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.set_subject_variables">
+<code class="descname">set_subject_variables</code><span class="sig-paren">(</span><em>variables</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.set_subject_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set subject variables to be considered for the analysis.</p>
+<p>The method sets the subject variables. Subject variables are between
+subject factors or other variables defines in the subject information
+section (#s) of the Expyriment data file. The method requires a
+re-reading of the data files and might be therefore time consuming.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>variables</strong><span class="classifier">str or list</span></dt><dd><p>A string or a list of strings that represent the subject
+variables</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.set_variable_recoding">
+<code class="descname">set_variable_recoding</code><span class="sig-paren">(</span><em>recoding_syntax</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.set_variable_recoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set syntax to recode variables.</p>
+<p>The method defines the variables, which will recoded.  It can not
+be applied on variables that have been added later via
+<cite>add_variables</cite>. Recoding variables requires re-reading of the data
+files and might be therefore time consuming.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>rule_syntax</strong><span class="classifier">str or list</span></dt><dd><p>A string or a list of strings that represent the variable
+recoding syntax</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Recoding syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">variable</span><span class="p">}:</span> <span class="p">{</span><span class="n">old_value1</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="n">new_value1</span><span class="p">},</span> <span class="p">{</span><span class="n">old_value2</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="n">new_value2</span><span class="p">},</span><span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.subject_variables">
+<em class="property">property </em><code class="descname">subject_variables</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.subject_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for subject variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.variable_recodings">
+<em class="property">property </em><code class="descname">variable_recodings</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.variable_recodings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for variable recodings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.variables">
+<em class="property">property </em><code class="descname">variables</code><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for variables.</p>
+<p>The specified variables including the new computer variables and
+between subject variables and added variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.data_preprocessing.Aggregator.write_concatenated_data">
+<code class="descname">write_concatenated_data</code><span class="sig-paren">(</span><em>output_file</em>, <em>delimiter='</em>, <em>'</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.Aggregator.write_concatenated_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenates data and writes it to a csv file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>output_file</strong><span class="classifier">str</span></dt><dd><p>name of data output file</p>
+</dd>
+<dt><strong>delimiter</strong><span class="classifier">str</span></dt><dd><p>delimiter character (default=”,”)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.defaults.html" class="btn btn-neutral float-right" title="expyriment.misc.defaults" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.data_preprocessing.html" class="btn btn-neutral float-left" title="expyriment.misc.data_preprocessing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

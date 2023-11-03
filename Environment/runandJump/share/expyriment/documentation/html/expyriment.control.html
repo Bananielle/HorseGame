@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.control &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.control.defaults" href="expyriment.control.defaults.html" />
+    <link rel="prev" title="expyriment" href="expyriment.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">expyriment.control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.control.defaults.html">expyriment.control.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.control.CallbackQuitEvent.html">expyriment.control.CallbackQuitEvent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+      <li>expyriment.control</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.control">
+<span id="expyriment-control"></span><h1>expyriment.control<a class="headerlink" href="#module-expyriment.control" title="Permalink to this headline">¶</a></h1>
+<p>The control package of expyriment.</p>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.control.defaults.html">expyriment.control.defaults</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.control.CallbackQuitEvent.html">expyriment.control.CallbackQuitEvent</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="expyriment.control.end">
+<code class="descclassname">expyriment.control.</code><code class="descname">end</code><span class="sig-paren">(</span><em>goodbye_text=None</em>, <em>goodbye_delay=None</em>, <em>confirmation=False</em>, <em>fast_quit=None</em>, <em>system_exit=False</em>, <em>pre_quit_function=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>End expyriment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>goodbye_text</strong><span class="classifier">str, optional</span></dt><dd><p>text to present on the screen when quitting</p>
+</dd>
+<dt><strong>goodbye_delay</strong><span class="classifier">int, optional</span></dt><dd><p>period to show the goodbye_text</p>
+</dd>
+<dt><strong>confirmation</strong><span class="classifier">bool, optional</span></dt><dd><p>ask for confirmation (default = False)</p>
+</dd>
+<dt><strong>fast_quit</strong><span class="classifier">bool, optional</span></dt><dd><p>quit faster by hiding the screen before actually quitting
+(default = None)</p>
+</dd>
+<dt><strong>system_exit</strong><span class="classifier">bool, optional</span></dt><dd><p>call Python’s sys.exit() method when ending expyriment (default = False)</p>
+</dd>
+<dt><strong>pre_quit_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to be called before quitting Pygame</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">bool</span></dt><dd><p>True if Expyriment (incl. Pygame) has been quit.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.get_audiosystem_is_playing">
+<code class="descclassname">expyriment.control.</code><code class="descname">get_audiosystem_is_playing</code><span class="sig-paren">(</span><em>channel=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.get_audiosystem_is_playing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the audiosystem is busy playing sounds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>channel</strong><span class="classifier">pygame.mixer.Channel, optional</span></dt><dd><p>specific channel to check</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">bool</span></dt><dd><p>Returns True if any sound is playing.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.get_defaults">
+<code class="descclassname">expyriment.control.</code><code class="descname">get_defaults</code><span class="sig-paren">(</span><em>search_str=''</em>, <em>as_string=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.get_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary with all default values in the current Expyriment
+environment. The keys represent the variables names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>search_str</strong><span class="classifier">str, optional</span></dt><dd><p>search for a specific expression</p>
+</dd>
+<dt><strong>as_string</strong><span class="classifier">bool, optional</span></dt><dd><p>print as string instead of dict</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.initialize">
+<code class="descclassname">expyriment.control.</code><code class="descname">initialize</code><span class="sig-paren">(</span><em>experiment=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize an experiment.</p>
+<p>This initializes an experiment defined by ‘experiment’ as well as the
+underlying expyriment system. If ‘experiment’ is None, a new Experiment
+object will be created and returned. Furthermore, a screen, a clock, a
+keyboard and a event file are created and added to the experiment. The
+initialization screen is shown for a short delay to ensure that Python
+is fully initialized and time accurate. Afterwards, “Preparing
+experiment…” is presented on the screen.</p>
+<p>After experiment initialize the following additional properties are
+available:</p>
+<ul class="simple">
+<li>experiment.screen   – the current screen</li>
+<li>experiment.clock    – the main clock</li>
+<li>experiment.keyboard – the main keyboard</li>
+<li>experiment.mouse    – the main mouse</li>
+<li>experiment.event    – the main event file</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>experiment</strong><span class="classifier">design.Experiment, optional</span></dt><dd><p>the experiment to initialize</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>exp</strong><span class="classifier">design.Experiment</span></dt><dd><p>initialized experiment</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.pause">
+<code class="descclassname">expyriment.control.</code><code class="descname">pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pause a running experiment.</p>
+<p>This will show a pause screen and waits for ENTER to be pressed to
+continue.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.register_wait_callback_function">
+<code class="descclassname">expyriment.control.</code><code class="descname">register_wait_callback_function</code><span class="sig-paren">(</span><em>function</em>, <em>exp=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.register_wait_callback_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a wait callback function.</p>
+<p>The registered wait callback function will be repetitively executed in
+all Expyriment wait and event loops that wait for an external input.
+That is, they are executed by the following functions (at least once!):</p>
+<blockquote>
+<div><ul class="simple">
+<li>control.wait_end_audiosystem</li>
+<li>misc.Clock.wait</li>
+<li>misc.Clock.wait_seconds</li>
+<li>misc.Clock.wait_minutes</li>
+<li>io.Keyboard.wait</li>
+<li>io.Keyboard.wait_char</li>
+<li>io.Mouse.wait_press</li>
+<li>io.SerialPort.read_line</li>
+<li>io.StreamingButtonBox.wait</li>
+<li>io.EventButtonBox.wait</li>
+<li>io.GamePad.wait_press</li>
+<li>io.TriggerInput.wait</li>
+<li>io.TextInput.get</li>
+<li>io.TouchScreenButtonBox.wait</li>
+<li>io.extras.CedrusResponseDevice.wait</li>
+<li>stimuli.Video.wait_frame</li>
+<li>stimuli.Video.wait_end</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>function</strong><span class="classifier">function</span></dt><dd><p>the wait function</p>
+</dd>
+<dt><strong>exp</strong><span class="classifier">design.Experiment, optional</span></dt><dd><p>specific experiment for which to register wait function</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.control.unregister_wait_callback_function" title="expyriment.control.unregister_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unregister_wait_callback_function</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>CAUTION! If wait callback function takes longer than 1 ms to process,
+Expyriment timing will be affected!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.run_test_suite">
+<code class="descclassname">expyriment.control.</code><code class="descname">run_test_suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.run_test_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Expyriment test suite.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.set_develop_mode">
+<code class="descclassname">expyriment.control.</code><code class="descname">set_develop_mode</code><span class="sig-paren">(</span><em>on=True</em>, <em>intensive_logging=False</em>, <em>skip_wait_methods=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.set_develop_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set defaults for a more convenient develop mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>on</strong><span class="classifier">bool, optional</span></dt><dd><p>set develop_mode on (True) or off (False)</p>
+</dd>
+<dt><strong>intensive_logging</strong><span class="classifier">bool, optional</span></dt><dd><p>True sets expyriment.io.defaults.event_logging=2
+(default = False)</p>
+</dd>
+<dt><strong>skip_wait_methods</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, all wait functions in the experiment (i.e. all wait functions
+in <code class="docutils literal notranslate"><span class="pre">expyriment.io</span></code> and the clock) will be omitted (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The function set the following global variables</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">initialize_delay</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">window_mode</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">fast_quit</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">auto_create_subject_id</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">outputfile_time_stamp</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.start">
+<code class="descclassname">expyriment.control.</code><code class="descname">start</code><span class="sig-paren">(</span><em>experiment=None</em>, <em>auto_create_subject_id=None</em>, <em>subject_id=None</em>, <em>skip_ready_screen=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start an experiment.</p>
+<p>This starts an experiment defined by ‘experiment’ and asks for the subject
+number. When the subject number is entered and confirmed by ENTER, a data
+file is created.
+Eventually, “Ready” will be shown on the screen and the method waits for
+ENTER to be pressed.</p>
+<p>After experiment start the following additional properties are available:</p>
+<ul class="simple">
+<li>experiment.subject – the current subject id</li>
+<li>experiment.data    – the main data file</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>experiment</strong><span class="classifier">design.Experiment, optional (DEPRECATED)</span></dt><dd><p>don’t use this parameter, it only exists to keep backward compatibility</p>
+</dd>
+<dt><strong>auto_create_subject_id</strong><span class="classifier">bool, optional</span></dt><dd><p>if True new subject id will be created automatically</p>
+</dd>
+<dt><strong>subject_id</strong><span class="classifier">integer, optional</span></dt><dd><p>start with a specific subject_id;
+no subject id input mask will be presented; subject_id must be an
+integer; setting this parameter overrules auto_create_subject_id</p>
+</dd>
+<dt><strong>skip_ready_screen</strong><span class="classifier">bool, optional</span></dt><dd><p>if True ready screen will be skipped (default=False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>exp</strong><span class="classifier">design.Experiment</span></dt><dd><p>The started experiment will be returned.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.start_audiosystem">
+<code class="descclassname">expyriment.control.</code><code class="descname">start_audiosystem</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.start_audiosystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the audio system.</p>
+<p class="rubric">Notes</p>
+<p>The audiosystem is automatically started when initializing an
+Experiment!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.stop_audiosystem">
+<code class="descclassname">expyriment.control.</code><code class="descname">stop_audiosystem</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.stop_audiosystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the audio system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.unregister_wait_callback_function">
+<code class="descclassname">expyriment.control.</code><code class="descname">unregister_wait_callback_function</code><span class="sig-paren">(</span><em>exp=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.unregister_wait_callback_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister all wait callback functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>exp</strong><span class="classifier">design.Experiment, optional</span></dt><dd><p>specific experiment for which to unregister the wait callback function</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.control.register_wait_callback_function" title="expyriment.control.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_wait_callback_function</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.control.wait_end_audiosystem">
+<code class="descclassname">expyriment.control.</code><code class="descname">wait_end_audiosystem</code><span class="sig-paren">(</span><em>channel=None</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.control.wait_end_audiosystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait until audiosystem has ended playing sounds.</p>
+<p>Blocks until the audiosystem is not busy anymore and only returns then.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>channel</strong><span class="classifier">pygame.mixer.Channel, optional</span></dt><dd><p>specific channel to wait for end of playing</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>This will also by default process control events (quit and pause).
+Thus, keyboard events will be cleared from the cue and cannot be
+received by a Keyboard().check() anymore!</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.control.defaults.html" class="btn btn-neutral float-right" title="expyriment.control.defaults" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.html" class="btn btn-neutral float-left" title="expyriment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

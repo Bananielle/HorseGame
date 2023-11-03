@@ -99,7 +99,7 @@ class ParadigmAndTriggerManager():
     def initiateBasicTaskEvent(self):
         self.gp.task = True
         self.gp.rest = False
-        self.startTaskTrigger()
+        self.startTaskTrigger(triggerNr=self.gp.TASK_counter+6) # +1 because trigger 1 = rest, and 2 doesn't works.so need to start from 3
 
         self.gp.TASK_counter += 1  # Increment the counter for event TASK
         self. gp.update_Taskcounter()
@@ -119,8 +119,8 @@ class ParadigmAndTriggerManager():
 
 
     # TRIGGERS
-    def startTaskTrigger(self):
-        self.outlet.push_sample(x=[3])  # Triggers are buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
+    def startTaskTrigger(self,triggerNr):
+        self.outlet.push_sample(x=[triggerNr])  # Triggers are buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
         print('Started task trigger.')
 
     def startRestTrigger(self):

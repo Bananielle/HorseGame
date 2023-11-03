@@ -1,0 +1,6 @@
+expyriment.misc.extras
+======================
+
+.. automodule:: expyriment.misc.extras
+
+

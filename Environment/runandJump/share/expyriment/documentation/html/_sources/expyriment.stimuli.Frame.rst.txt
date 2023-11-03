@@ -1,0 +1,8 @@
+expyriment.stimuli.Frame
+========================
+
+.. autoclass:: expyriment.stimuli.Frame
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Frame.__init__

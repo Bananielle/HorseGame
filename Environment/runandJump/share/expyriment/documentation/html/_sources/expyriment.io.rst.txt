@@ -1,0 +1,38 @@
+expyriment.io
+=============
+
+.. automodule:: expyriment.io
+
+
+Modules
+---------
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   expyriment.io.defaults
+   expyriment.io.extras
+
+Classes
+---------
+.. toctree::
+   :titlesonly:
+
+   expyriment.io.DataFile
+   expyriment.io.EventButtonBox
+   expyriment.io.EventFile
+   expyriment.io.GamePad
+   expyriment.io.InputFile
+   expyriment.io.Keyboard
+   expyriment.io.MarkerOutput
+   expyriment.io.Mouse
+   expyriment.io.OutputFile
+   expyriment.io.ParallelPort
+   expyriment.io.Screen
+   expyriment.io.SerialPort
+   expyriment.io.StreamingButtonBox
+   expyriment.io.TextInput
+   expyriment.io.TextMenu
+   expyriment.io.TouchScreenButtonBox
+   expyriment.io.TriggerInput
+

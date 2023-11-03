@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.Mouse &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.OutputFile" href="expyriment.io.OutputFile.html" />
+    <link rel="prev" title="expyriment.io.MarkerOutput" href="expyriment.io.MarkerOutput.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.Mouse</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-mouse">
+<h1>expyriment.io.Mouse<a class="headerlink" href="#expyriment-io-mouse" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.Mouse">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">Mouse</code><span class="sig-paren">(</span><em>show_cursor=True</em>, <em>track_button_events=None</em>, <em>track_motion_events=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a mouse input.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">expyriment.control.initialize(exp)</span></code> will automatically create a
+mouse instance and will reference it in exp.mouse for easy access.</p>
+<dl class="method">
+<dt id="expyriment.io.Mouse.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>show_cursor=True</em>, <em>track_button_events=None</em>, <em>track_motion_events=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a mouse input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>show_cursor</strong><span class="classifier">bool, optional</span></dt><dd><p>shows mouse cursor (default = True)</p>
+</dd>
+<dt><strong>track_button_events</strong><span class="classifier">bool, optional</span></dt><dd><p>track button events via Pygame queue (default = True)</p>
+</dd>
+<dt><strong>track_motion_events</strong><span class="classifier">bool, optional</span></dt><dd><p>track motion events via Pygame queue (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>(a) It is strongly suggest to avoid tracking of motions events,
+(track_motion_events=True), because it quickly causes an overflow in
+the Pygame event queue and you might consequently loose important
+events.</p>
+<p>(b) Turning the mouse wheel causes button_down_events. Thus,
+turning the mouse wheel rather extensively causes an overflow of
+the Pygame event queue. You might consider turn off the default
+tracking of mouse button event by calling
+<cite>experiment.mouse.track_button_events = False</cite>.</p>
+<p>(c) See <code class="docutils literal notranslate"><span class="pre">process_quit_event</span></code> for the forced quitting of experiments
+via mouse events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.check_button_pressed">
+<code class="descname">check_button_pressed</code><span class="sig-paren">(</span><em>button_number</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.check_button_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return False or button id if a specific button is currently pressed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>button_number</strong><span class="classifier">int</span></dt><dd><p>the button number (0,1,2) to be checked</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>is_pressed: boolean</strong></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.check_wheel">
+<code class="descname">check_wheel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.check_wheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the mouse wheel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>direction</strong><span class="classifier">str</span></dt><dd><p>“up” or “down” if mouse wheel has been recently rotated
+upwards or downwards otherwise it returns None.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the event cue from mouse events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.get_cursor">
+<code class="descname">get_cursor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.get_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cursor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.get_last_button_down_event">
+<code class="descname">get_last_button_down_event</code><span class="sig-paren">(</span><em>process_quit_event=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.get_last_button_down_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last button down event.
+All earlier button down events will be removed from the queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>process_quit_event</strong><span class="classifier">boolean, optional</span></dt><dd><p>if False, the current location will not be processed for mouse
+quitting events in the case that a button down event has been
+found (default = True).</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>btn_id</strong><span class="classifier">int</span></dt><dd><p>button number (0,1,2) or 3 for wheel up or 4 for wheel down,
+if quit screen mouse action has been performed, the method
+returns -1</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.get_last_button_up_event">
+<code class="descname">get_last_button_up_event</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.get_last_button_up_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last button up event.
+All earlier button up events will be removed from the queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>btn_id</strong><span class="classifier">int</span></dt><dd><p>button number (0,1,2)
+if quit screen mouse action has been performed, the method
+returns -1</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.hide_cursor">
+<code class="descname">hide_cursor</code><span class="sig-paren">(</span><em>track_button_events=False</em>, <em>track_motion_events=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.hide_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the cursor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>track_button_events</strong><span class="classifier">bool, optional</span></dt><dd><p>tracking button events (default = False)</p>
+</dd>
+<dt><strong>track_motion_events</strong><span class="classifier">bool, optional</span></dt><dd><p>tracking motion events (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.is_cursor_visible">
+<em class="property">property </em><code class="descname">is_cursor_visible</code><a class="headerlink" href="#expyriment.io.Mouse.is_cursor_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for is_cursor_visible</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.Mouse.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.position">
+<em class="property">property </em><code class="descname">position</code><a class="headerlink" href="#expyriment.io.Mouse.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.pressed_buttons">
+<em class="property">property </em><code class="descname">pressed_buttons</code><a class="headerlink" href="#expyriment.io.Mouse.pressed_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for pressed_buttons.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.process_quit_event">
+<em class="property">static </em><code class="descname">process_quit_event</code><span class="sig-paren">(</span><em>click_position=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.process_quit_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if mouse exit action has been performed.</p>
+<p>If quit corner location is has been defined via
+<code class="docutils literal notranslate"><span class="pre">Mouse.set_quit_corner_location()</span></code>  (i.e. 0, 1, 2 or 3), clicking
+quickly three times (i.e., within 1 second) in one of the corners of
+the screen forces the experiment to quit.</p>
+<p>The function is called automatically by all mouse get event and wait
+methods (similar to <code class="docutils literal notranslate"><span class="pre">Keyboard.process_control_keys</span></code>).  If no mouse
+functions are called by your program, this function can be polled to
+ensure quitting experiment by mouse.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>click_position</strong><span class="classifier">tuple of int (x,y), optional</span></dt><dd><p>clicked location to be processed. If not defined, the Pygame event
+queue will be checked for mouse down events and the current
+position is taken</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">bool, optional</span></dt><dd><p>True if exit action has been performed
+False otherwise</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.io.Mouse.set_quit_corner_location" title="expyriment.io.Mouse.set_quit_corner_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_quit_corner_location</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.set_cursor">
+<code class="descname">set_cursor</code><span class="sig-paren">(</span><em>size</em>, <em>hotspot</em>, <em>xormasks</em>, <em>andmasks</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.set_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cursor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong><span class="classifier">(int, int)</span></dt><dd><p>size of the cursor</p>
+</dd>
+<dt><strong>hotspot</strong><span class="classifier">(int, int)</span></dt><dd><p>position of the hotspot (0,0 is top left)</p>
+</dd>
+<dt><strong>xormask</strong><span class="classifier">list</span></dt><dd><p>sequence of bytes with cursor xor data masks</p>
+</dd>
+<dt><strong>andmask</strong><span class="classifier">list</span></dt><dd><p>sequence of bytes with cursor bitmask data</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.set_quit_corner_location">
+<em class="property">static </em><code class="descname">set_quit_corner_location</code><span class="sig-paren">(</span><em>corner</em>, <em>corner_rect_size=(None</em>, <em>None)</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.set_quit_corner_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activate the possibility to quit experiment using a mouse event.</p>
+<blockquote>
+<div><p>Defines the corner on which the user has to click to elicit a
+quit dialog.</p>
+<p>If quit corner location has been defined, clicking quickly three
+times (i.e., within 1 second) in the specified corner forces
+experiment to quit.</p>
+<p>To switch off the detection of mouse quit events, please call
+<code class="docutils literal notranslate"><span class="pre">Mouse.set_quit_corner_location(corner=None)</span></code>.</p>
+<p>Changing the corner and rect_size always affects all mouse
+instances.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>corner: int or None</strong></dt><dd><p>location code (0,1, 2 or 3) of the quit corner; the default value
+under Android is 1, otherwise None; see also the notes
+below.</p>
+</dd>
+<dt><strong>corner_rect_size = tuple (int, int), optional</strong></dt><dd><p>size of the field (rect) that detects the quit action in one
+corner of the screen; default = (30, 30)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Mouse quit events are especially useful for experiments on devices
+without hardware keyboard, such as tablet PCs or smartphones.</p>
+<p>Corner location codes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">=</span> <span class="n">upper</span> <span class="n">left</span> <span class="n">corner</span><span class="p">,</span>  <span class="mi">1</span> <span class="o">=</span> <span class="n">upper</span> <span class="n">right</span> <span class="n">corner</span>   <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="mi">2</span> <span class="o">=</span> <span class="n">lower</span> <span class="n">right</span> <span class="n">corner</span><span class="p">,</span> <span class="mi">3</span> <span class="o">=</span> <span class="n">lower</span> <span class="n">left</span> <span class="n">corner</span>    <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">otherwise</span> <span class="n">the</span> <span class="n">detection</span> <span class="n">of</span> <span class="n">mouse</span> <span class="n">quit</span> <span class="n">events</span> <span class="ow">is</span> <span class="n">deactivated</span>
+</pre></div>
+</div>
+<p>The detection of mouse quit events is activated by default under
+Android.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.show_cursor">
+<code class="descname">show_cursor</code><span class="sig-paren">(</span><em>track_button_events=True</em>, <em>track_motion_events=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.show_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the cursor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>track_button_events</strong><span class="classifier">bool, optional</span></dt><dd><p>tracking button events (default = True)</p>
+</dd>
+<dt><strong>track_motion_events</strong><span class="classifier">bool, optional</span></dt><dd><p>tracking motion events (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.track_button_events">
+<em class="property">property </em><code class="descname">track_button_events</code><a class="headerlink" href="#expyriment.io.Mouse.track_button_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for track_button_events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.track_motion_events">
+<em class="property">property </em><code class="descname">track_motion_events</code><a class="headerlink" href="#expyriment.io.Mouse.track_motion_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for track_motion_events.</p>
+<p>Switch on/off the buffering of motion events in the Pygame event queue.</p>
+<p class="rubric">Notes</p>
+<p>It is strongly suggest to avoid tracking of motions events,
+(track_motion_events=True), because it quickly causes an overflow in
+the Pygame event queue and you might consequently loose important
+events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.wait_event">
+<code class="descname">wait_event</code><span class="sig-paren">(</span><em>wait_button=True</em>, <em>wait_motion=True</em>, <em>buttons=None</em>, <em>duration=None</em>, <em>wait_for_buttonup=False</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.wait_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a mouse event (i.e., motion, button press or wheel event).</p>
+<p>Button id coding:</p>
+<ul class="simple">
+<li>None    for no mouse button event or</li>
+<li>0,1,2   for left. middle and right button or</li>
+<li>3       for wheel up or</li>
+<li>4       for wheel down (wheel works only for keydown events).</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>wait_button</strong><span class="classifier">bool, optional</span></dt><dd><p>set ‘False’ to ignore for a button presses (default=True)</p>
+</dd>
+<dt><strong>wait_motion</strong><span class="classifier">bool, optional</span></dt><dd><p>set ‘False’ to ignore for a mouse motions (default=True)</p>
+</dd>
+<dt><strong>buttons</strong><span class="classifier">int or list, optional</span></dt><dd><p>a specific button or list of buttons to wait for</p>
+</dd>
+<dt><strong>duration</strong><span class="classifier">int, optional</span></dt><dd><p>the maximal time to wait in ms</p>
+</dd>
+<dt><strong>wait_for_buttonup</strong><span class="classifier">bool, optional</span></dt><dd><p>if True it waits for button-up default=False)</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.mouse.process_quit_event()</span></code> (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>event_id</strong><span class="classifier">int</span></dt><dd><p>id of the event that quited waiting</p>
+</dd>
+<dt><strong>move</strong><span class="classifier">bool</span></dt><dd><p>True if a motion occurred</p>
+</dd>
+<dt><strong>pos</strong><span class="classifier">(int, int)</span></dt><dd><p>mouse position (tuple)</p>
+</dd>
+<dt><strong>rt</strong><span class="classifier">int</span></dt><dd><p>reaction time</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This will also by default process control events (quit and pause).
+Thus, keyboard events will be cleared from the cue and cannot be
+received by a <code class="docutils literal notranslate"><span class="pre">Keyboard().check()</span></code> anymore!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.wait_motion">
+<code class="descname">wait_motion</code><span class="sig-paren">(</span><em>duration=None</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.wait_motion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a mouse motion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>duration</strong><span class="classifier">int, optional</span></dt><dd><p>maximal time to wait in ms</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.mouse.process_quit_event()</span></code> (default = false)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong><span class="classifier">(int, int)</span></dt><dd><p>mouse position (tuple)</p>
+</dd>
+<dt><strong>rt</strong><span class="classifier">int</span></dt><dd><p>reaction time</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Mouse.wait_press">
+<code class="descname">wait_press</code><span class="sig-paren">(</span><em>buttons=None</em>, <em>duration=None</em>, <em>wait_for_buttonup=False</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Mouse.wait_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a mouse button press or mouse wheel event.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>buttons</strong><span class="classifier">int or list, optional</span></dt><dd><p>a specific button or list of buttons to wait for</p>
+</dd>
+<dt><strong>duration</strong><span class="classifier">int, optional</span></dt><dd><p>maximal time to wait in ms</p>
+</dd>
+<dt><strong>wait_for_buttonup</strong><span class="classifier">bool, optional</span></dt><dd><p>if True it waits for button-up</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.mouse.process_quit_event()</span></code> (default = false)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>event_id</strong><span class="classifier">int</span></dt><dd><p>id of the event that quited waiting</p>
+</dd>
+<dt><strong>pos</strong><span class="classifier">(int, int)</span></dt><dd><p>mouse position (tuple)</p>
+</dd>
+<dt><strong>rt</strong><span class="classifier">int</span></dt><dd><p>reaction time</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>button id coding</p>
+<ul class="simple">
+<li>None    for no mouse button event or</li>
+<li>0,1,2   for left. middle and right button or</li>
+<li>3       for wheel up or</li>
+<li>4       for wheel down (wheel works only for keydown events).</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.OutputFile.html" class="btn btn-neutral float-right" title="expyriment.io.OutputFile" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.MarkerOutput.html" class="btn btn-neutral float-left" title="expyriment.io.MarkerOutput" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

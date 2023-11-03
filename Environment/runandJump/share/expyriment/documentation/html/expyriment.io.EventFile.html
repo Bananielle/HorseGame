@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.EventFile &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.GamePad" href="expyriment.io.GamePad.html" />
+    <link rel="prev" title="expyriment.io.EventButtonBox" href="expyriment.io.EventButtonBox.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.EventFile</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-eventfile">
+<h1>expyriment.io.EventFile<a class="headerlink" href="#expyriment-io-eventfile" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.EventFile">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">EventFile</code><span class="sig-paren">(</span><em>additional_suffix</em>, <em>directory=None</em>, <em>delimiter=None</em>, <em>clock=None</em>, <em>time_stamp=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing an event file.</p>
+<dl class="method">
+<dt id="expyriment.io.EventFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>additional_suffix</em>, <em>directory=None</em>, <em>delimiter=None</em>, <em>clock=None</em>, <em>time_stamp=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an event file.</p>
+<p>Filename: {MAINFILE_NAME}_{SUBJECT_ID}_{TIME_STAMP}{ADD_SUFFIX}.xpd</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>additional_suffix</strong><span class="classifier">str</span></dt><dd><p>additional suffix</p>
+</dd>
+<dt><strong>directory</strong><span class="classifier">str, optional</span></dt><dd><p>directory of the file</p>
+</dd>
+<dt><strong>delimiter</strong><span class="classifier">str, optional</span></dt><dd><p>symbol between timestamp and event</p>
+</dd>
+<dt><strong>clock</strong><span class="classifier">expyriment.Clock, optional</span></dt><dd><p>an experimental clock</p>
+</dd>
+<dt><strong>time_stamp</strong><span class="classifier">bool, optional</span></dt><dd><p>using time stamps, based on the experiment start time,
+not the current time</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.clock">
+<em class="property">property </em><code class="descname">clock</code><a class="headerlink" href="#expyriment.io.EventFile.clock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for clock</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.comment_char">
+<em class="property">property </em><code class="descname">comment_char</code><a class="headerlink" href="#expyriment.io.EventFile.comment_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for comment_char</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.delimiter">
+<em class="property">property </em><code class="descname">delimiter</code><a class="headerlink" href="#expyriment.io.EventFile.delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for delimiter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.directory">
+<em class="property">property </em><code class="descname">directory</code><a class="headerlink" href="#expyriment.io.EventFile.directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.filename">
+<em class="property">property </em><code class="descname">filename</code><a class="headerlink" href="#expyriment.io.EventFile.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for filename</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.fullpath">
+<em class="property">property </em><code class="descname">fullpath</code><a class="headerlink" href="#expyriment.io.EventFile.fullpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for fullpath</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.get_next_subject_number">
+<em class="property">static </em><code class="descname">get_next_subject_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.get_next_subject_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the next subject number based on the existing data and event files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>event</em>, <em>log_event_tag=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log an event.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>event</strong><span class="classifier">anything</span></dt><dd><p>the event to be logged (anything, will be casted to str)</p>
+</dd>
+<dt><strong>log_event_tag</strong><span class="classifier">numeral or string, optional</span></dt><dd><p>if log_event_tag is defined, event file logs the inter-event-intervalls
+and adds a summary of the intervalls at the end of the file</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>log_time</strong><span class="classifier">int</span></dt><dd><p>the time of logging</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.EventFile.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.rename">
+<code class="descname">rename</code><span class="sig-paren">(</span><em>new_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renames the output file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save file to disk.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.standard_file_name">
+<em class="property">property </em><code class="descname">standard_file_name</code><a class="headerlink" href="#expyriment.io.EventFile.standard_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for the standard expyriment outputfile name.</p>
+<p>Filename: {MAINFILE_NAME}_{SUBJECT_ID}_{TIME_STAMP}{suffix}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.suffix">
+<em class="property">property </em><code class="descname">suffix</code><a class="headerlink" href="#expyriment.io.EventFile.suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a warning message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>message</strong><span class="classifier">str</span></dt><dd><p>warning message to log</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write to file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>content</strong><span class="classifier">str</span></dt><dd><p>content to be written (anything, will be casted to str)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.write_comment">
+<code class="descname">write_comment</code><span class="sig-paren">(</span><em>comment</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.write_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a comment line to files.</p>
+<p>(i.e., text is proceeded by comment char).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>comment</strong><span class="classifier">str</span></dt><dd><p>comment to be written (anything, will be casted to str)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.write_line">
+<code class="descname">write_line</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.write_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a text line to files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>content</strong><span class="classifier">str</span></dt><dd><p>content to be written (anything, will be casted to str)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.EventFile.write_list">
+<code class="descname">write_list</code><span class="sig-paren">(</span><em>list_</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.EventFile.write_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a list in a row. Data are separated by a delimiter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list_</strong><span class="classifier">list</span></dt><dd><p>list to be written</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.GamePad.html" class="btn btn-neutral float-right" title="expyriment.io.GamePad" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.EventButtonBox.html" class="btn btn-neutral float-left" title="expyriment.io.EventButtonBox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

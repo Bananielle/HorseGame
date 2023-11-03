@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Currently known problems and limitations &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment" href="expyriment.html" />
+    <link rel="prev" title="Timing and empirical testing of Expyriment" href="Timing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="APIReferenceTool.html">API reference tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testsuite.html">Test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CommandLineInterface.html">Command line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataPreprocessing.html">Data preprocessing and exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Unicode.html">Using non-English characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fonts.html">Using fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Video.html">Presenting videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html">Plugin system (extras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Defaults.html">Defaults (settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Hardware.html">Hardware compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timing.html">Timing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Problems &amp; Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="Advanced.html">Advanced</a> &raquo;</li>
+        
+      <li>Currently known problems and limitations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="currently-known-problems-and-limitations">
+<h1>Currently known problems and limitations<a class="headerlink" href="#currently-known-problems-and-limitations" title="Permalink to this headline">¶</a></h1>
+<p>Here are some current problems and limitations of Expyriment you should be
+aware of. Where possible, we include suggestions on how to deal with or work
+around the issue.</p>
+<div class="section" id="no-native-3d-stimuli">
+<h2>No native 3D stimuli<a class="headerlink" href="#no-native-3d-stimuli" title="Permalink to this headline">¶</a></h2>
+<p>Right now Expyriment only offers static 2D visual stimuli.</p>
+<p>While PyOpenGL can be used direclty to create dynamic 3D stimuli, we are
+planning to add a dedicated 3D stimulus class in the future, to facilitate the
+creation of 3D stimuli.</p>
+</div>
+<div class="section" id="no-support-for-multiple-monitors">
+<h2>No support for multiple monitors<a class="headerlink" href="#no-support-for-multiple-monitors" title="Permalink to this headline">¶</a></h2>
+<p>It is not possible to run Expyriment in fullscreen mode on a specific monitor,
+since the underlying Pygame package is not aware of multiple monitors.</p>
+<p>If the additional monitors are set to extend the desktop, then Expyriment will
+treat everything as one big display (spanned over all monitors).</p>
+<p>If you simply want to run an experiment on a different monitor (e.g. an external
+monitor on a laptop), we suggest to set the additional monitor to clone the primary one.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.html" class="btn btn-neutral float-right" title="expyriment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Timing.html" class="btn btn-neutral float-left" title="Timing and empirical testing of Expyriment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

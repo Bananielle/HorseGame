@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Command line interface &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data preprocessing and exporting" href="DataPreprocessing.html" />
+    <link rel="prev" title="Test suite" href="Testsuite.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="APIReferenceTool.html">API reference tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testsuite.html">Test suite</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Command line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataPreprocessing.html">Data preprocessing and exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Unicode.html">Using non-English characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fonts.html">Using fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Video.html">Presenting videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html">Plugin system (extras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Defaults.html">Defaults (settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Hardware.html">Hardware compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timing.html">Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Problems.html">Problems &amp; Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="Advanced.html">Advanced</a> &raquo;</li>
+        
+      <li>Command line interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-interface">
+<h1>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>The Expyriment command line interface provides a convenient way to run
+experiment scripts and apply default settings, as well as access to a
+selection of other common functionality.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">a</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span><span class="p">]</span>
+           <span class="p">[</span><span class="o">-</span><span class="n">C</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">J</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">R</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">S</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">T</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">A</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">B</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span>
+           <span class="p">[</span><span class="n">SCRIPT</span><span class="p">]</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">SCRIPT</span>      <span class="n">The</span> <span class="n">expyriment</span> <span class="n">script</span> <span class="n">to</span> <span class="n">be</span> <span class="n">executed</span>
+
+<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>  <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">-</span><span class="n">g</span><span class="p">,</span> <span class="o">-</span><span class="mi">0</span>      <span class="n">No</span> <span class="n">OpenGL</span> <span class="p">(</span><span class="n">no</span> <span class="n">vsync</span> <span class="o">/</span> <span class="n">no</span> <span class="n">blocking</span><span class="p">)</span>
+  <span class="o">-</span><span class="mi">1</span>          <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">no</span> <span class="n">blocking</span><span class="p">)</span>
+  <span class="o">-</span><span class="mi">2</span>          <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">blocking</span><span class="p">)</span>
+  <span class="o">-</span><span class="mi">3</span>          <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">alternative</span> <span class="n">blocking</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">t</span>          <span class="n">No</span> <span class="n">time</span> <span class="n">stamps</span> <span class="k">for</span> <span class="n">output</span> <span class="n">files</span>
+  <span class="o">-</span><span class="n">w</span>          <span class="n">Window</span> <span class="n">mode</span>
+  <span class="o">-</span><span class="n">f</span>          <span class="n">Fast</span> <span class="n">mode</span> <span class="p">(</span><span class="n">no</span> <span class="n">initialize</span> <span class="n">delay</span> <span class="ow">and</span> <span class="n">fast</span> <span class="n">quitting</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">a</span>          <span class="n">Auto</span> <span class="n">create</span> <span class="n">subject</span> <span class="n">ID</span>
+  <span class="o">-</span><span class="n">i</span>          <span class="n">Intensive</span> <span class="n">logging</span> <span class="p">(</span><span class="n">log</span> <span class="n">level</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">d</span>          <span class="n">Develop</span> <span class="n">mode</span> <span class="p">(</span><span class="n">equivalent</span> <span class="n">to</span> <span class="o">-</span><span class="n">wfat</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">b</span>          <span class="n">Alternative</span> <span class="n">blocking</span> <span class="n">mode</span> <span class="p">(</span><span class="n">blocking</span> <span class="n">mode</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">C</span>          <span class="n">Create</span> <span class="n">experiment</span> <span class="n">template</span>
+  <span class="o">-</span><span class="n">D</span>          <span class="n">Download</span> <span class="kn">from</span> <span class="nn">Expyriment</span> <span class="n">stash</span>
+  <span class="o">-</span><span class="n">J</span>          <span class="n">Join</span> <span class="n">data</span> <span class="n">files</span> <span class="n">to</span> <span class="n">one</span> <span class="n">single</span> <span class="n">csv</span> <span class="n">file</span>
+  <span class="o">-</span><span class="n">R</span>          <span class="n">Join</span> <span class="n">data</span> <span class="n">files</span> <span class="ow">and</span> <span class="n">create</span> <span class="n">R</span> <span class="n">data</span> <span class="n">frame</span> <span class="p">(</span><span class="ow">in</span> <span class="n">RDS</span> <span class="n">file</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">S</span>          <span class="n">Print</span> <span class="n">system</span> <span class="n">information</span>
+  <span class="o">-</span><span class="n">T</span>          <span class="n">Run</span> <span class="n">the</span> <span class="n">Expyriment</span> <span class="n">Test</span> <span class="n">Suite</span>
+  <span class="o">-</span><span class="n">A</span>          <span class="n">Start</span> <span class="n">the</span> <span class="n">Expyriment</span> <span class="n">API</span> <span class="n">Reference</span> <span class="n">Tool</span>
+  <span class="o">-</span><span class="n">B</span>          <span class="n">Open</span> <span class="n">browser</span> <span class="k">with</span> <span class="n">API</span> <span class="n">reference</span>
+  <span class="o">--</span><span class="n">version</span>   <span class="n">Print</span> <span class="n">version</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="DataPreprocessing.html" class="btn btn-neutral float-right" title="Data preprocessing and exporting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Testsuite.html" class="btn btn-neutral float-left" title="Test suite" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

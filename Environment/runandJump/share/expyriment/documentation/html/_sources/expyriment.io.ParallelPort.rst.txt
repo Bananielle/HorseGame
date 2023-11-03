@@ -1,0 +1,8 @@
+expyriment.io.ParallelPort
+==========================
+
+.. autoclass:: expyriment.io.ParallelPort
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.ParallelPort.__init__

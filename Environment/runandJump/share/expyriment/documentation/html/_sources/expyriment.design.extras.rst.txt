@@ -1,0 +1,6 @@
+expyriment.design.extras
+========================
+
+.. automodule:: expyriment.design.extras
+
+

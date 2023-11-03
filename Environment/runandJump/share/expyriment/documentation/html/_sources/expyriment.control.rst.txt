@@ -1,0 +1,38 @@
+expyriment.control
+==================
+
+.. automodule:: expyriment.control
+
+
+Modules
+---------
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   expyriment.control.defaults
+
+Classes
+---------
+.. toctree::
+   :titlesonly:
+
+   expyriment.control.CallbackQuitEvent
+
+Functions
+-----------
+.. autofunction:: expyriment.control.end
+.. autofunction:: expyriment.control.get_audiosystem_is_playing
+.. autofunction:: expyriment.control.get_defaults
+.. autofunction:: expyriment.control.initialize
+.. autofunction:: expyriment.control.pause
+.. autofunction:: expyriment.control.register_wait_callback_function
+.. autofunction:: expyriment.control.run_test_suite
+.. autofunction:: expyriment.control.set_develop_mode
+.. autofunction:: expyriment.control.start
+.. autofunction:: expyriment.control.start_audiosystem
+.. autofunction:: expyriment.control.stop_audiosystem
+.. autofunction:: expyriment.control.unregister_wait_callback_function
+.. autofunction:: expyriment.control.wait_end_audiosystem
+
+

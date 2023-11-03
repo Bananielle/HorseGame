@@ -1,0 +1,8 @@
+expyriment.io.Keyboard
+======================
+
+.. autoclass:: expyriment.io.Keyboard
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.Keyboard.__init__

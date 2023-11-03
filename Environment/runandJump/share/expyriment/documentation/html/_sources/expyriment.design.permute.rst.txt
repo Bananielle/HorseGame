@@ -1,0 +1,13 @@
+expyriment.design.permute
+=========================
+
+.. automodule:: expyriment.design.permute
+
+
+Functions
+-----------
+.. autofunction:: expyriment.design.permute.balanced_latin_square
+.. autofunction:: expyriment.design.permute.cycled_latin_square
+.. autofunction:: expyriment.design.permute.is_permutation_type
+
+

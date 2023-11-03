@@ -1,0 +1,54 @@
+expyriment.misc
+===============
+
+.. automodule:: expyriment.misc
+
+
+Modules
+---------
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   expyriment.misc.constants
+   expyriment.misc.data_preprocessing
+   expyriment.misc.defaults
+   expyriment.misc.extras
+   expyriment.misc.geometry
+   expyriment.misc.statistics
+
+Classes
+---------
+.. toctree::
+   :titlesonly:
+
+   expyriment.misc.Buffer
+   expyriment.misc.ByteBuffer
+   expyriment.misc.Clock
+   expyriment.misc.Colour
+
+Functions
+-----------
+.. autofunction:: expyriment.misc.add_fonts
+.. autofunction:: expyriment.misc.byte2unicode
+.. autofunction:: expyriment.misc.compare_codes
+.. autofunction:: expyriment.misc.create_colours
+.. autofunction:: expyriment.misc.download_from_stash
+.. autofunction:: expyriment.misc.find_font
+.. autofunction:: expyriment.misc.get_experiment_secure_hash
+.. autofunction:: expyriment.misc.get_module_hash_dictionary
+.. autofunction:: expyriment.misc.get_monitor_resolution
+.. autofunction:: expyriment.misc.get_system_info
+.. autofunction:: expyriment.misc.has_internet_connection
+.. autofunction:: expyriment.misc.is_android_running
+.. autofunction:: expyriment.misc.is_idle_running
+.. autofunction:: expyriment.misc.is_interactive_mode
+.. autofunction:: expyriment.misc.is_ipython_running
+.. autofunction:: expyriment.misc.list_fonts
+.. autofunction:: expyriment.misc.module_hashes_as_string
+.. autofunction:: expyriment.misc.numpad_digit_code2ascii
+.. autofunction:: expyriment.misc.py2py3_sort_array
+.. autofunction:: expyriment.misc.unicode2byte
+.. autofunction:: expyriment.misc.which
+
+

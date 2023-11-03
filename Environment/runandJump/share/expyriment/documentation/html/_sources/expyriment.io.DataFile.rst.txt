@@ -1,0 +1,8 @@
+expyriment.io.DataFile
+======================
+
+.. autoclass:: expyriment.io.DataFile
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.DataFile.__init__

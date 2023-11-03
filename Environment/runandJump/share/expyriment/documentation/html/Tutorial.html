@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Beginner’s tutorial to get started with Expyriment &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example Experiments" href="Examples.html" />
+    <link rel="prev" title="Platform-specific instructions: Android" href="Installation.Android.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="GettingStarted.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Beginner`s tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Examples.html">Example experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="GettingStarted.html">Getting started</a> &raquo;</li>
+        
+      <li>Beginner’s tutorial to get started with Expyriment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="beginner-s-tutorial-to-get-started-with-expyriment">
+<h1>Beginner’s tutorial to get started with Expyriment<a class="headerlink" href="#beginner-s-tutorial-to-get-started-with-expyriment" title="Permalink to this headline">¶</a></h1>
+<p>Since Expyriment is a library for the programming language Python,
+basic Python knowledge will be needed. Python is relatively easy to
+learn, and there are many excellent <a class="reference external" href="http://docs.python-guide.org/en/latest/intro/learning/">Python tutorials</a> online.</p>
+<p>To programme an experiment, any text editor is suitable.
+We, however, suggest a good programming editor or IDE that offers syntax
+highlighting and code completion. If you do not have a favourite editor yet,
+give <a class="reference external" href="https://www.jetbrains.com/pycharm/">Pycharm</a> a try, which is also offered as a free version (community edition)
+that runs on Windows, Linux and OS X.</p>
+<div class="section" id="how-to-get-started-with-expyriment">
+<h2>How to get started with Expyriment?<a class="headerlink" href="#how-to-get-started-with-expyriment" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start right away with a very basic example!</p>
+<p>Write the following code into an empty text file and save the file as
+first_experiment.py:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;First Experiment&quot;</span><span class="p">)</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now run the file by either double clicking on it (if you are on Windows) or by
+typing the following into a command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">first_experiment</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>The following should happen:</p>
+<ul class="simple">
+<li>Expyriment will start up, showing the startup screen and a countdown of 10
+seconds</li>
+<li>“Preparing experiment…” will be presented on the screen (very briefly)</li>
+<li>You will be asked to enter the subject number</li>
+<li>“Ready” will be presented on the screen</li>
+<li>After pressing ENTER “Quitting experiment…” will be presented on the screen</li>
+</ul>
+<p>Let’s see what we just did in more detail:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+</pre></div>
+</div>
+<p>We imported the Expyriment package into Python, such that we can use it
+there.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;First Experiment&quot;</span><span class="p">)</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We created a new Experiment object by calling the Experiment class in the
+submodule design and named it “First Experiment”. Immediately after we
+initialized this experiment to be the active one. This does the following:</p>
+<ul class="simple">
+<li>Present the startup screen with the countdown (which is there to ensure
+that the Python interpreter has enough time to start up properly and will
+be time accurate afterwards)</li>
+<li>Start an experimental clock (which thereafter will be available as
+<code class="docutils literal notranslate"><span class="pre">exp.clock</span></code>)</li>
+<li>Create the screen (which thereafter will be available as <code class="docutils literal notranslate"><span class="pre">exp.screen</span></code>)</li>
+<li>Create an event file (which thereafter will be available as
+<code class="docutils literal notranslate"><span class="pre">exp.events</span></code>)</li>
+<li>Present the “Preparing experiment…” screen</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We started running the currently active (initiated) experiment.
+This does the following:</p>
+<ul class="simple">
+<li>Present a screen to ask for the subject number (which thereafter will be
+available as <code class="docutils literal notranslate"><span class="pre">exp.subject</span></code>) and wait for the RETURN key to be pressed</li>
+<li>Create a data file (which thereafter will be available as <code class="docutils literal notranslate"><span class="pre">exp.data</span></code>)</li>
+<li>Present the “Ready” screen</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We finished our experiment, so we quit Expyriment.
+This will automatically save the data as well as the event file and show
+the “Ending experiment…” screen.</p>
+</div></blockquote>
+<p>Okay great, now let’s actually do something in this experiment. Let’s say we
+want to present a stimulus. Change the code to look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;First Experiment&quot;</span><span class="p">)</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">stim</span><span class="o">.</span><span class="n">present</span><span class="p">()</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you run the programme now the following should happen:</p>
+<ul class="simple">
+<li>Expyriment will start up, showing the startup screen and a countdown of 10
+seconds</li>
+<li>“Preparing experiment…” will be presented on the screen (very briefly)</li>
+<li>You will be asked to enter the subject number</li>
+<li>“Ready” will be presented on the screen</li>
+<li>After pressing ENTER, “Hello World” will be presented on the screen for 1000
+ms</li>
+<li>“Ending experiment…” will be presented on the screen</li>
+</ul>
+<p>Again, let’s look into the new things we added in more detail:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We created a text stimulus with the text “Hello World”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We preloaded the stimulus into memory (to ensure that this does not happen
+when presenting it later, since this may take some time).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stim</span><span class="o">.</span><span class="n">present</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We presented the stimulus on the screen.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We waited for 1000 ms, while the stimulus is still on the screen (since we
+did not present something else afterwards).</p>
+</div></blockquote>
+<p>Let’s add some common experimental design structures to get a bit more
+organized.
+Modify the code to look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;First Experiment&quot;</span><span class="p">)</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+
+<span class="n">block</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the block&quot;</span><span class="p">)</span>
+<span class="n">trial</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">stim</span><span class="o">.</span><span class="n">present</span><span class="p">()</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Running this will show you the same as before. This is, because we only made
+changes in the experimental design, but not in the experiment conduction!</p>
+<p>Here is what we added in detail:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">block</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="s2">&quot;A name for the block&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We created an experimental block by calling the Block class in the design
+submodule and gave the block then name “Block One”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trial</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We created an experimental trial by calling the Trial class in the design
+submodule.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trial</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We added our stimulus to the trial.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">block</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We added our trial to the block.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We added our block to the experiment.</p>
+</div></blockquote>
+<p>We now have a nice hierarchical structure:</p>
+<ul class="simple">
+<li>The experiment with one block</li>
+<li>The block has one trial</li>
+<li>The trial includes one stimulus</li>
+</ul>
+<p>Of course this is only makes sense when more blocks and trials are used.
+Let’s now create two blocks with 2 Trials each. Each of those trials will have
+exactly one stimulus. Change the code to look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;First Experiment&quot;</span><span class="p">)</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+
+<span class="n">block_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the first block&quot;</span><span class="p">)</span>
+<span class="n">trial_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 1, Trial 1&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_one</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">trial_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 1, Trial 2&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_two</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block_one</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_one</span><span class="p">)</span>
+<span class="n">block_one</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_two</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block_one</span><span class="p">)</span>
+
+<span class="n">block_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the second block&quot;</span><span class="p">)</span>
+<span class="n">trial_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 2, Trial 1&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_one</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">trial_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 2, Trial 2&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_two</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block_two</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_one</span><span class="p">)</span>
+<span class="n">block_two</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_two</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block_two</span><span class="p">)</span>
+
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">trial</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">trials</span><span class="p">:</span>
+        <span class="n">trial</span><span class="o">.</span><span class="n">stimuli</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">present</span><span class="p">()</span>
+        <span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When running this the following happens:</p>
+<ul class="simple">
+<li>Expyriment will start up, showing the startup screen and a countdown of 10
+seconds</li>
+<li>“Preparing experiment…” will be presented on the screen</li>
+<li>You will be asked to enter the subject number</li>
+<li>“Ready” will be presented on the screen</li>
+<li>After pressing ENTER, the stimuli are presented in the order: stimuli in
+trial_one and trial_two of block_one followed by the stimuli in trial_one and
+trial_two of block_two. All four are presented for 1000 ms</li>
+<li>“Ending experiment…” will be presented on the screen</li>
+</ul>
+<p>Let’s see what we did exactly:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">block_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the first block&quot;</span><span class="p">)</span>
+<span class="n">trial_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 1, Trial 1&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">rial_one</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">trial_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 1, Trial 2)</span>
+<span class="n">trial_two</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block_one</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_one</span><span class="p">)</span>
+<span class="n">block_one</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_two</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block_one</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We created a block, two trials and two stimuli. We put one of the stimuli
+in each of the trials, the trials into the block and the block into the
+experiment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">block_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the second block&quot;</span><span class="p">)</span>
+<span class="n">trial_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 2, Trial 1</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_one</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">trial_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 2, Trial 2&quot;</span><span class="p">)</span>
+<span class="n">trial_two</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block_two</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_one</span><span class="p">)</span>
+<span class="n">block_two</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_two</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block_two</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We created another block with again two trials and two stimuli and
+connected them like the first one.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">trial</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">trials</span><span class="p">:</span>
+        <span class="n">trial</span><span class="o">.</span><span class="n">stimuli</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">present</span><span class="p">()</span>
+        <span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We loop over all blocks in the experiment (two in our case). For each of
+the blocks, we loop again over all trials in that block (again two in our
+case).  For each trial we present the first stimulus (because we only added
+one to each trial). After each stimulus presentation we wait for 1000 ms.</p>
+</div></blockquote>
+<p>We now want to measure some reaction times after each stimulus presentation.
+Modify the code to look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Text Experiment&quot;</span><span class="p">)</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+
+<span class="n">block_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the first block&quot;</span><span class="p">)</span>
+<span class="n">trial_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 1, Trial 1&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_one</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">trial_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 1, Trial 2&quot;</span><span class="p">)</span>
+<span class="n">trial_two</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block_one</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_one</span><span class="p">)</span>
+<span class="n">block_one</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_two</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block_one</span><span class="p">)</span>
+
+<span class="n">block_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;A name for the second block&quot;</span><span class="p">)</span>
+<span class="n">trial_one</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 2, Trial 1&quot;</span><span class="p">)</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">preload</span><span class="p">()</span>
+<span class="n">trial_one</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">trial_two</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Trial</span><span class="p">()</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">stimuli</span><span class="o">.</span><span class="n">TextLine</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;I am a stimulus in Block 2, Trial 2&quot;</span><span class="p">)</span>
+<span class="n">trial_two</span><span class="o">.</span><span class="n">add_stimulus</span><span class="p">(</span><span class="n">stim</span><span class="p">)</span>
+<span class="n">block_two</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_one</span><span class="p">)</span>
+<span class="n">block_two</span><span class="o">.</span><span class="n">add_trial</span><span class="p">(</span><span class="n">trial_two</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block_two</span><span class="p">)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">trial</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">trials</span><span class="p">:</span>
+        <span class="n">trial</span><span class="o">.</span><span class="n">stimuli</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">present</span><span class="p">()</span>
+        <span class="n">key</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">keyboard</span><span class="o">.</span><span class="n">wait</span><span class="p">([</span><span class="n">expyriment</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">K_LEFT</span><span class="p">,</span>
+                                     <span class="n">expyriment</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">K_RIGHT</span><span class="p">])</span>
+        <span class="n">exp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">block</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">trial</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">rt</span><span class="p">])</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When you run this code, the following happens:</p>
+<ul class="simple">
+<li>Expyriment will start up, showing the startup screen and a countdown of 10
+seconds</li>
+<li>“Preparing experiment…” will be presented on the screen</li>
+<li>You will be asked to enter the subject numtrial_one.add_stimulusber</li>
+<li>“Ready” will be presented on the screen</li>
+<li>After pressing ENTER the stimuli are presented in the order: stimuli in
+trial_one and trial_two of block_one followed by the stimuli in trial_one and
+trial_two of block_two. After each presentation the programme waits for the
+LEFT or RIGHT arrow key to be pressed until it proceeds.</li>
+<li>“Ending experiment…” will be presented on the screen</li>
+</ul>
+<p>Let’s see why this is:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">key</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">keyboard</span><span class="o">.</span><span class="n">wait</span><span class="p">([</span><span class="n">expyriment</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">K_LEFT</span><span class="p">,</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">K_RIGHT</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We waited for a keyboards response which is either the LEFT or the RIGHT
+arrow key (as defined by a list with those two keys as elements).  This
+function returns the key that was pressed as well as the reaction time.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">block</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">trial</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">rt</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We added the name of the block, the id of the trial, the pressed key and
+the reaction time to the data file (by adding a list with those two as
+elements).  The id of a trial is automatically set when the trial is added
+to a block.</p>
+<p>Now have a look at the “data” and “events” directories (in the same
+directory where your first_example.py is located). The “data” directory
+contains data log files, named according to the experiment name, the
+subject number and a timestamp. The file ending is .xpd. (Note: To
+disable time stamps in output filenames, you have change the defauls of
+the io module before you initialize your experiment:
+<code class="docutils literal notranslate"><span class="pre">expyriment.io.defaults.outputfile_time_stamp</span> <span class="pre">=</span> <span class="pre">False</span></code>).  The event
+directory contains event log files with the ending .xpe.
+Open the latest data file to see the data we just logged. Notice that the
+first rows are a header with some information about the file. However, it
+would be nice to also have the variable names of what is logged in there.
+To do this, add the following lines above where you start the experiment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">data_variable_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Block&quot;</span><span class="p">,</span> <span class="s2">&quot;Trial&quot;</span><span class="p">,</span> <span class="s2">&quot;Key&quot;</span><span class="p">,</span> <span class="s2">&quot;RT&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>What this does is to add the given names into the data file header,
+separated by commas.</p>
+</div></blockquote>
+<p>The last thing to mention in this brief tutorial are the default settings.
+Each module (control, design, io, stimuli, misc) has its own defaults.
+Changing these defaults will only have an effect before the corresponding
+object is created. Thus, a safe place is right at the beginning of your file,
+just above creating an experiment. Note also that it is handy to overwrite
+other default settings in the beginning as well, to have one central place for
+important settings. It might also shorten calls to the classes later on. For
+instance, the <code class="docutils literal notranslate"><span class="pre">experiment_name</span></code> can also be set as
+<code class="docutils literal notranslate"><span class="pre">expyriemtn.design.defaults.experiment_name</span> <span class="pre">=</span> <span class="pre">&quot;Test</span> <span class="pre">Experiment</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">name=&quot;Test</span> <span class="pre">Experiment&quot;</span></code> parameter when creating the Experiment is  not
+needed anymore. However, using explicit parameters in the call to classes
+will overwrite any previous default settings!</p>
+<p>One of the most common things to do, while developing is to change
+to develop mode, which changes several default settings in one go (such as
+setting the default presentation mode from fullscreen to a window, and skipping
+the start screen and subject ID query):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">set_develop_mode</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That’s it so far. We are at the end of the getting started tutorial. As a
+summary, have a look at the following code, which again shows the overall
+structure of an Expyriment file with the 3 main parts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+
+<span class="c1"># Any global settings go here</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+<span class="c1"># Create design (blocks and trials)</span>
+<span class="c1"># Create stimuli (and put them into trials)</span>
+<span class="c1"># Create input/output devices (like button boxes etc.)</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="c1"># Experiment conduction</span>
+<span class="c1"># Loop over blocks and trials, present stimuli and get user input</span>
+
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Examples.html" class="btn btn-neutral float-right" title="Example Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Installation.Android.html" class="btn btn-neutral float-left" title="Platform-specific instructions: Android" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

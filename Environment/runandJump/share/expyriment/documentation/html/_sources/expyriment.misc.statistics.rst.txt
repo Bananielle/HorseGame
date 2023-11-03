@@ -1,0 +1,17 @@
+expyriment.misc.statistics
+==========================
+
+.. automodule:: expyriment.misc.statistics
+
+
+Functions
+-----------
+.. autofunction:: expyriment.misc.statistics.frequence_table
+.. autofunction:: expyriment.misc.statistics.frequency_table
+.. autofunction:: expyriment.misc.statistics.mean
+.. autofunction:: expyriment.misc.statistics.median
+.. autofunction:: expyriment.misc.statistics.mode
+.. autofunction:: expyriment.misc.statistics.std
+.. autofunction:: expyriment.misc.statistics.variance
+
+

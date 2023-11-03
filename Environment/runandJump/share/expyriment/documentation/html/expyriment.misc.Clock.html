@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.Clock &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.Colour" href="expyriment.misc.Colour.html" />
+    <link rel="prev" title="expyriment.misc.ByteBuffer" href="expyriment.misc.ByteBuffer.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+      <li>expyriment.misc.Clock</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-misc-clock">
+<h1>expyriment.misc.Clock<a class="headerlink" href="#expyriment-misc-clock" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.misc.Clock">
+<em class="property">class </em><code class="descclassname">expyriment.misc.</code><code class="descname">Clock</code><span class="sig-paren">(</span><em>sync_clock=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic timing class.</p>
+<p>Unit of time is milliseconds.</p>
+<dl class="method">
+<dt id="expyriment.misc.Clock.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>sync_clock=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a clock.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>sync_clock</strong><span class="classifier">misc.Clock, optional</span></dt><dd><p>synchronise clock with existing one</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.cpu_time">
+<em class="property">property </em><code class="descname">cpu_time</code><a class="headerlink" href="#expyriment.misc.Clock.cpu_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>OBSOLETE property: Please use monotonic_time().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.init_localtime">
+<em class="property">property </em><code class="descname">init_localtime</code><a class="headerlink" href="#expyriment.misc.Clock.init_localtime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for init time in local time</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.init_time">
+<em class="property">property </em><code class="descname">init_time</code><a class="headerlink" href="#expyriment.misc.Clock.init_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for init time in milliseconds.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.monotonic_time">
+<em class="property">static </em><code class="descname">monotonic_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock.monotonic_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the time of the high-resolution monotonic timer that is
+used by Expyriment internally.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.reset_stopwatch">
+<code class="descname">reset_stopwatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock.reset_stopwatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Reset the stopwatch.</p>
+<p>The use of the stopwatch does not affect the clock time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.stopwatch_time">
+<em class="property">property </em><code class="descname">stopwatch_time</code><a class="headerlink" href="#expyriment.misc.Clock.stopwatch_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for time in milliseconds since last reset_stopwatch.</p>
+<p>The use of the stopwatch does not affect the clock time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.time">
+<em class="property">property </em><code class="descname">time</code><a class="headerlink" href="#expyriment.misc.Clock.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for current time in milliseconds since clock init.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>waiting_time</em>, <em>callback_function=None</em>, <em>process_control_events=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a certain amount of milliseconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>waiting_time</strong><span class="classifier">int</span></dt><dd><p>time to wait in milliseconds</p>
+</dd>
+<dt><strong>function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>quit_event</strong><span class="classifier">expyriment.control.CallbackQuitEvent object</span></dt><dd><p>the callback quit even in case a wait function has been registered</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.wait_minutes">
+<code class="descname">wait_minutes</code><span class="sig-paren">(</span><em>time_minutes</em>, <em>callback_function=None</em>, <em>process_control_events=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock.wait_minutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a certain amount of minutes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>time_minutes</strong><span class="classifier">int</span></dt><dd><p>time to wait in minutes</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>quit_event</strong><span class="classifier">expyriment.control.CallbackQuitEvent object</span></dt><dd><p>the callback quit even in case a wait function has been registered</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.misc.Clock.wait" title="expyriment.misc.Clock.wait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait</span></code></a>, <a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.Clock.wait_seconds">
+<code class="descname">wait_seconds</code><span class="sig-paren">(</span><em>time_sec</em>, <em>callback_function=None</em>, <em>process_control_events=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.Clock.wait_seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for a certain amount of seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>time_sec</strong><span class="classifier">int</span></dt><dd><p>time to wait in seconds</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>quit_event</strong><span class="classifier">expyriment.control.CallbackQuitEvent object</span></dt><dd><p>the callback quit even in case a wait function has been registered</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.misc.Clock.wait" title="expyriment.misc.Clock.wait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wait</span></code></a>, <a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.Colour.html" class="btn btn-neutral float-right" title="expyriment.misc.Colour" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.ByteBuffer.html" class="btn btn-neutral float-left" title="expyriment.misc.ByteBuffer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

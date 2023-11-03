@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Expyriment plugin system (extras) &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Defaults (settings)" href="Defaults.html" />
+    <link rel="prev" title="Presenting videos in Expyriment" href="Video.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="APIReferenceTool.html">API reference tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testsuite.html">Test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CommandLineInterface.html">Command line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataPreprocessing.html">Data preprocessing and exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Unicode.html">Using non-English characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fonts.html">Using fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Video.html">Presenting videos</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Plugin system (extras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Defaults.html">Defaults (settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Hardware.html">Hardware compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timing.html">Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Problems.html">Problems &amp; Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="Advanced.html">Advanced</a> &raquo;</li>
+        
+      <li>The Expyriment plugin system (extras)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-expyriment-plugin-system-extras">
+<h1>The Expyriment plugin system (extras)<a class="headerlink" href="#the-expyriment-plugin-system-extras" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The design, stimuli, io and misc packages can be extended with plugins
+(additional classes) that can be accessed via the ‘extras’ namespace of each
+package. Expyriment will look for installed plugins in the following
+locations within the <code class="docutils literal notranslate"><span class="pre">.expyriment/extras</span></code> (or <code class="docutils literal notranslate"><span class="pre">~expyriment/extras</span></code>)
+directory located in the current user’s home directory:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">expyriment_extras_design</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">expyriment_extras_stmuli</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">expyriment_extras_io</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">expyriment_extras_misc</span></code></li>
+</ul>
+<p>Any plugins found will be integrated into the <em>.extras</em> namespace of each
+package (e.g. <code class="docutils literal notranslate"><span class="pre">expyriment.stimuli.extras.DotCloud</span></code>).</p>
+<p>There are three ways to import extras:</p>
+<ol class="arabic">
+<li><p class="first">Import all extras in one go:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">import_all_extras</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Import all extras from a specific package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+<span class="kn">import</span> <span class="nn">expyriment.stimuli.extras</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Import a specific plugin:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+<span class="kn">from</span> <span class="nn">expyriment_stimuli_extras.dotcloud</span> <span class="k">import</span> <span class="n">DotCloud</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="download-plugins-from-stash">
+<h2>Download plugins from stash<a class="headerlink" href="#download-plugins-from-stash" title="Permalink to this headline">¶</a></h2>
+<p>Several extra plugins can be found in the <a class="reference external" href="http://stash.expyriment.org">Expyriment stash</a>. When Expyriment
+has been installed with the option <code class="docutils literal notranslate"><span class="pre">download</span></code> (or <code class="docutils literal notranslate"><span class="pre">all</span></code>), all plugins can be
+downloaded automatically by calling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">download_from_stash</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;extras&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively, you can use the <a class="reference external" href="CommandLineInterface.html">Command Line Interface</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span> <span class="o">-</span><span class="n">D</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<p>When developing extra plugins, please consider making them available publicly in
+the <a class="reference external" href="http://stash.expyriment.org">Expyriment stash</a>, by creating a pull request.</p>
+<p>Basically, extra plugins are a simple Python module with a single class, where
+the filename is the class name in lowercase. Additionally a file called
+<code class="docutils literal notranslate"><span class="pre">classname_defaults.py</span></code> can be created which will hold the default values for
+all parameters given when initializing the class. The naming convention is
+<code class="docutils literal notranslate"><span class="pre">classname_parameter</span></code>.</p>
+<p>For design and misc extras this is all there is, but for io and stimuli plugins,
+additional conventions need to be taken care of.</p>
+<div class="section" id="io-extras">
+<h3>io.extras<a class="headerlink" href="#io-extras" title="Permalink to this headline">¶</a></h3>
+<p>IO plugins have to inherit from <code class="docutils literal notranslate"><span class="pre">expyriment.io.Input</span></code> or <code class="docutils literal notranslate"><span class="pre">expyriment.io.Output</span></code>
+or both. This means they can also inherit from any other io class.</p>
+</div>
+<div class="section" id="stimuli-extras">
+<h3>stimuli.extras<a class="headerlink" href="#stimuli-extras" title="Permalink to this headline">¶</a></h3>
+<p>Stimulus plugins have to inherit from <code class="docutils literal notranslate"><span class="pre">expyriment.stimuli.Stimulus</span></code>. This means
+they can also inherit from any other stimulus class.
+Additionally, every visual extra stimulus class (inherited from <code class="docutils literal notranslate"><span class="pre">expyriment.stimuli.Visual</span></code>)
+needs a <code class="docutils literal notranslate"><span class="pre">_create_surface</span></code> method that defines what happens when the stimulus is preloaded,
+plotted or presented.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Defaults.html" class="btn btn-neutral float-right" title="Defaults (settings)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Video.html" class="btn btn-neutral float-left" title="Presenting videos in Expyriment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

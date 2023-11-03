@@ -1,0 +1,8 @@
+expyriment.io.Mouse
+===================
+
+.. autoclass:: expyriment.io.Mouse
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.Mouse.__init__

@@ -1,0 +1,8 @@
+expyriment.design.Experiment
+============================
+
+.. autoclass:: expyriment.design.Experiment
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.design.Experiment.__init__

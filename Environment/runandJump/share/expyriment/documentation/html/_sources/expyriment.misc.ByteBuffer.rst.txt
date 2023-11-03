@@ -1,0 +1,8 @@
+expyriment.misc.ByteBuffer
+==========================
+
+.. autoclass:: expyriment.misc.ByteBuffer
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.misc.ByteBuffer.__init__

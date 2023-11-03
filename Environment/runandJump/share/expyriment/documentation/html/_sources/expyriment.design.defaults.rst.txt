@@ -1,0 +1,45 @@
+expyriment.design.defaults
+==========================
+
+.. automodule:: expyriment.design.defaults
+
+Attributes
+-----------
+.. py:data:: expyriment.design.defaults.block_name
+
+   default value: 'unnamed'
+
+.. py:data:: expyriment.design.defaults.experiment_background_colour
+
+   default value: (0, 0, 0)
+
+.. py:data:: expyriment.design.defaults.experiment_filename_suffix
+
+   default value: None
+
+.. py:data:: expyriment.design.defaults.experiment_foreground_colour
+
+   default value: (150, 150, 150)
+
+.. py:data:: expyriment.design.defaults.experiment_name
+
+   default value: None
+
+.. py:data:: expyriment.design.defaults.experiment_text_font
+
+   default value: 'FreeSans'
+
+.. py:data:: expyriment.design.defaults.experiment_text_size
+
+   default value: 20
+
+.. py:data:: expyriment.design.defaults.max_shuffle_time
+
+   default value: 5000
+
+.. py:data:: expyriment.design.defaults.trial_list_directory
+
+   default value: 'trials'
+
+
+

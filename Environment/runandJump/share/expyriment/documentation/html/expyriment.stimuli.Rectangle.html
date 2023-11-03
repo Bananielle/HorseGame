@@ -1,0 +1,1153 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.stimuli.Rectangle &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.stimuli.Shape" href="expyriment.stimuli.Shape.html" />
+    <link rel="prev" title="expyriment.stimuli.Picture" href="expyriment.stimuli.Picture.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.defaults.html">expyriment.stimuli.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.extras.html">expyriment.stimuli.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Audio.html">expyriment.stimuli.Audio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.BlankScreen.html">expyriment.stimuli.BlankScreen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Canvas.html">expyriment.stimuli.Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Circle.html">expyriment.stimuli.Circle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Dot.html">expyriment.stimuli.Dot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Ellipse.html">expyriment.stimuli.Ellipse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.FixCross.html">expyriment.stimuli.FixCross</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Frame.html">expyriment.stimuli.Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Line.html">expyriment.stimuli.Line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Picture.html">expyriment.stimuli.Picture</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.stimuli.Rectangle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Shape.html">expyriment.stimuli.Shape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.TextBox.html">expyriment.stimuli.TextBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.TextLine.html">expyriment.stimuli.TextLine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.TextScreen.html">expyriment.stimuli.TextScreen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Tone.html">expyriment.stimuli.Tone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.stimuli.Video.html">expyriment.stimuli.Video</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.stimuli.html">expyriment.stimuli</a> &raquo;</li>
+        
+      <li>expyriment.stimuli.Rectangle</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-stimuli-rectangle">
+<h1>expyriment.stimuli.Rectangle<a class="headerlink" href="#expyriment-stimuli-rectangle" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.stimuli.Rectangle">
+<em class="property">class </em><code class="descclassname">expyriment.stimuli.</code><code class="descname">Rectangle</code><span class="sig-paren">(</span><em>size</em>, <em>colour=None</em>, <em>line_width=None</em>, <em>corner_rounding=None</em>, <em>corner_anti_aliasing=None</em>, <em>position=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a rectangle stimulus.</p>
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>size</em>, <em>colour=None</em>, <em>line_width=None</em>, <em>corner_rounding=None</em>, <em>corner_anti_aliasing=None</em>, <em>position=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a rectangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong><span class="classifier">(int, int)</span></dt><dd><p>size (width, height) of the rectangle</p>
+</dd>
+<dt><strong>colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>colour of the rectangle</p>
+</dd>
+<dt><strong>line_width</strong><span class="classifier">int, optional</span></dt><dd><p>line width in pixels; 0 will result in a filled rectangle,
+as does a value &lt; 0 or &gt;= min(size)</p>
+</dd>
+<dt><strong>corner_rounding</strong><span class="classifier">float or (float, float, float, float), optional</span></dt><dd><p>radius of the corners in percent of 0.5 * min(size);</p>
+</dd>
+<dt><strong>corner_anti_aliasing</strong><span class="classifier">int, optional</span></dt><dd><p>anti aliasing parameter for rounded corners
+(good anti_aliasing with 10)</p>
+</dd>
+<dt><strong>position</strong><span class="classifier">(int, int), optional</span></dt><dd><p>position of the stimulus</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.absolute_position">
+<em class="property">property </em><code class="descname">absolute_position</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.absolute_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for absolute_position.</p>
+<p class="rubric">Notes</p>
+<p>The absolute position differs for instance from the (relative) position, if the
+stimulus is plotted ontop of another stimulus, which has not the position (0,0).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.add_noise">
+<code class="descname">add_noise</code><span class="sig-paren">(</span><em>grain_size</em>, <em>percentage</em>, <em>colour</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.add_noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add visual noise on top of the stimulus.</p>
+<p>This function might take very long for large stimuli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>grain_size</strong><span class="classifier">int</span></dt><dd><p>size of the grains for the noise</p>
+</dd>
+<dt><strong>percentage</strong><span class="classifier">int</span></dt><dd><p>percentage of covered area</p>
+</dd>
+<dt><strong>colour</strong><span class="classifier">(int, int, int)</span></dt><dd><p>colour (RGB) of the noise</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.blur">
+<code class="descname">blur</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.blur" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blur the stimulus.</p>
+<p>This blurs the stimulus, by scaling it down and up by the factor of
+‘level’.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>level</strong><span class="classifier">int</span></dt><dd><p>level of bluring</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.clear_surface">
+<code class="descname">clear_surface</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.clear_surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the stimulus surface.</p>
+<p>Surfaces are automatically created after any surface operation
+(presenting, plotting, rotating, scaling, flipping etc.) and preloading.
+If the stimulus was preloaded, this method unloads the stimulus.
+This method is functionally equivalent with unload(keep_surface=False).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.colour">
+<em class="property">property </em><code class="descname">colour</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for colour.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.compress">
+<code class="descname">compress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.compress" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Compress the stimulus.</p>
+<p>This will create a temporary file on the disk where the surface of the
+stimululs is written to.
+The surface will now be read from the disk to free memory.
+Compressed stimuli cannot do surface operations!
+Preloading comressed stimuli is possible and highly recommended.
+Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deep copy of the visual stimulus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>copy</strong><span class="classifier">deep copy of self</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.corner_anti_aliasing">
+<em class="property">property </em><code class="descname">corner_anti_aliasing</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.corner_anti_aliasing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for corner_anti_aliasing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.corner_rounding">
+<em class="property">property </em><code class="descname">corner_rounding</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.corner_rounding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for corner_rounding.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.decompress">
+<code class="descname">decompress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.decompress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decompress the stimulus.</p>
+<p>This will decompress the stimulus.
+The surface will now be read from memory again.
+Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Surface center distance.</p>
+<p>This method computes the distance between the surface center
+of this and another visual stimulus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>other</strong><span class="classifier">stimulus</span></dt><dd><p>the other visual stimulus</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dist</strong><span class="classifier">float</span></dt><dd><p>distance between surface centers</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.flip">
+<code class="descname">flip</code><span class="sig-paren">(</span><em>booleans</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.flip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flip the stimulus.</p>
+<p>This is a surface operation. After this, a surface will be present!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>booleans</strong><span class="classifier">(bool, bool)</span></dt><dd><p>booleans to flip or not</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.get_pixel_array">
+<code class="descname">get_pixel_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.get_pixel_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a 2D array referencing the surface pixel data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pixel_array: Pygame.PixelArray</strong></dt><dd><p>a 2D array referencing the surface pixel data</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>see also set_surface</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.get_surface_array">
+<code class="descname">get_surface_array</code><span class="sig-paren">(</span><em>replace_transparent_with_colour=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.get_surface_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a 3D array containing the surface pixel data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>surface_array</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>a 3D array containing the surface pixel data
+using RGBA coding.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.get_surface_copy">
+<code class="descname">get_surface_copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.get_surface_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a copy of the Pygame surface of the stimulus</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>surface: Pygame.surface</strong></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>see also set_surface</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.has_surface">
+<em class="property">property </em><code class="descname">has_surface</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.has_surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for has_surface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.id">
+<em class="property">property </em><code class="descname">id</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.inside_stimulus">
+<code class="descname">inside_stimulus</code><span class="sig-paren">(</span><em>stimulus</em>, <em>mode='visible'</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.inside_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if stimulus is inside another stimulus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>stimulus</strong><span class="classifier">expyriment stimulus</span></dt><dd><p>the other stimulus</p>
+</dd>
+<dt><strong>mode</strong><span class="classifier">mode (str), optional</span></dt><dd><p>“visible”: based on non-transparent pixels or
+“surface”: based on pixels in pygame surface
+(default = visible”)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">bool</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.is_compressed">
+<em class="property">property </em><code class="descname">is_compressed</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.is_compressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for is_compressed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.is_point_inside">
+<code class="descname">is_point_inside</code><span class="sig-paren">(</span><em>point_xy</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.is_point_inside" title="Permalink to this definition">¶</a></dt>
+<dd><p>“OBSOLETE METHOD: Please use ‘overlapping_with_position’.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.is_preloaded">
+<em class="property">property </em><code class="descname">is_preloaded</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.is_preloaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for is_preloaded.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.line_width">
+<em class="property">property </em><code class="descname">line_width</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for line_width.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.move">
+<code class="descname">move</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves the stimulus in 2D space.</p>
+<p>When using OpenGL, this can take longer then 1ms!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>offset</strong><span class="classifier">tuple (x,y)</span></dt><dd><p>translation along x and y axis</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>see also reposition</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.overlapping_with_position">
+<code class="descname">overlapping_with_position</code><span class="sig-paren">(</span><em>position</em>, <em>mode='visible'</em>, <em>use_absolute_position=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.overlapping_with_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if stimulus is overlapping with a certain position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>position</strong><span class="classifier">(int, int)</span></dt><dd><p>position to check for overlapping</p>
+</dd>
+<dt><strong>mode</strong><span class="classifier">mode (str), optional</span></dt><dd><p>“visible”: based on non-transparent pixels or
+“rectangle”: based on pixels in pygame surface
+(default = visible”)</p>
+</dd>
+<dt><strong>use_absolute_position</strong><span class="classifier">bool, optional</span></dt><dd><p>use absolute_position of stimulus (default) instead of position</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>overlapping</strong><span class="classifier">bool</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+<p>CAUTION: Please note that if a stimulus is plotted on another smaller
+stimulus, such that it is not fully visible on screen, this method will
+still check overlapping of the full stimulus! Due to a current bug in
+Pygame, we can right now not change this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.overlapping_with_stimulus">
+<code class="descname">overlapping_with_stimulus</code><span class="sig-paren">(</span><em>stimulus</em>, <em>mode='visible'</em>, <em>use_absolute_position=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.overlapping_with_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if stimulus is overlapping with another stimulus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>stimulus</strong><span class="classifier">expyriment stimulus</span></dt><dd><p>the other stimulus</p>
+</dd>
+<dt><strong>mode</strong><span class="classifier">mode (str), optional</span></dt><dd><p>“visible”: based on non-transparent pixels or
+“surface”: based on pixels in pygame surface
+(default = visible”)</p>
+</dd>
+<dt><strong>use_absolute_position</strong><span class="classifier">bool, optional</span></dt><dd><p>use absolute_position of stimuli (default) instead of position</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>overlapping</strong><span class="classifier">bool</span></dt><dd><p>are stimuli overlapping or not</p>
+</dd>
+<dt><strong>overlap</strong><span class="classifier">(int, int)</span></dt><dd><p>the overlap (x, y) in pixels. If mode is ‘surface’, the argument
+will always be None.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+<p>CAUTION: Please note that if a stimulus is plotted on another smaller
+stimulus, such that it is not fully visible on screen, this method will
+still check overlapping of the full stimulus! Due to a current bug in
+Pygame, we can right now not change this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.picture">
+<code class="descname">picture</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.picture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the stimulus as Picture stimulus.</p>
+<p>This will create a temporary file on the hard disk where the image is
+saved to.</p>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>stimulus</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the stimulus on the surface of another stimulus.</p>
+<p>Use this to plot more than one stimulus and to present them at the
+same time afterwards by presenting the stimulus on which they were
+plotted on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>stimulus</strong><span class="classifier">expyriment stimulus</span></dt><dd><p>stimulus to whose surface should be plotted</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.polar_position">
+<em class="property">property </em><code class="descname">polar_position</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.polar_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for the position in polar coordinates (radial, angle[degrees])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.position">
+<em class="property">property </em><code class="descname">position</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.preload">
+<code class="descname">preload</code><span class="sig-paren">(</span><em>inhibit_ogl_compress=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.preload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Preload the stimulus to memory.</p>
+<p>This will prepare the stimulus for a fast presentation.
+In OpenGL mode this method creates an OpenGL texture based on the
+surface of the stimulus.
+When OpenGL is switched off, this method will create a surface if it
+doesn’t exists yet.
+If stimuli are not preloaded manually, this will happen
+automatically during presentation. However, stimulus presentation will
+take some time then!</p>
+<p>Always preload your stimuli when a timing accurate presentation is
+needed!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>inhibit_ogl_compress</strong><span class="classifier">bool, optional</span></dt><dd><p>inhibits OpenGL stimuli to be automatically compressed
+(default=False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.present">
+<code class="descname">present</code><span class="sig-paren">(</span><em>clear=True</em>, <em>update=True</em>, <em>log_event_tag=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.present" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present the stimulus on the screen.</p>
+<p>This clears and updates the screen automatically.
+When not preloaded, depending on the size of the stimulus, this method
+can take some time to compute!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>clear</strong><span class="classifier">bool, optional</span></dt><dd><p>if True the screen will be cleared automatically
+(default = True)</p>
+</dd>
+<dt><strong>update</strong><span class="classifier">bool, optional</span></dt><dd><p>if False the screen will be not be updated automatically
+(default = True)</p>
+</dd>
+<dt><strong>log_event_tag</strong><span class="classifier">numeral or string, optional</span></dt><dd><p>if log_event_tag is defined and if logging is switched on for this
+stimulus (default), a summary of the inter-event-intervalls are
+appended at the end of the event file</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.reposition">
+<code class="descname">reposition</code><span class="sig-paren">(</span><em>new_position</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.reposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move stimulus to a new position.</p>
+<p>When using OpenGL, this can take longer then 1ms!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>new_position</strong><span class="classifier">tuple (x,y)</span></dt><dd><p>translation along x and y axis</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>see also move</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.rotate">
+<code class="descname">rotate</code><span class="sig-paren">(</span><em>degree</em>, <em>filter=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate the stimulus.</p>
+<p>This is a surface operation. After this, a surface will be present!
+Rotating goes along with a quality loss. Thus, rotating an already
+rotated stimulus is not a good idea.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>degree</strong><span class="classifier">int</span></dt><dd><p>degree to rotate counterclockwise</p>
+</dd>
+<dt><strong>filter</strong><span class="classifier">bool, optional</span></dt><dd><p>filter the surface content for better quality (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the stimulus as image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>name of the file to write (possible extensions are BMP, TGA, PNG,
+or JPEG with TGA being the default)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.scale">
+<code class="descname">scale</code><span class="sig-paren">(</span><em>factors</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale the stimulus.</p>
+<p>This is a surface operation. After this, a surface will be present!
+Negative scaling values will flip the stimulus.
+Scaling goes along with a quality loss. Thus, scaling an already
+scaled stimulus is not a good idea.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>factors</strong><span class="classifier">(int, int) or (float, float)</span></dt><dd><p>tuple representing the x and y factors to scale or a single number.
+In the case of a single number x and y scaling will be the
+identical (i.e., proportional scaling)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.scale_to_fullscreen">
+<code class="descname">scale_to_fullscreen</code><span class="sig-paren">(</span><em>keep_aspect_ratio=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.scale_to_fullscreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale the stimulus to fullscreen.</p>
+<p>This is a surface operation. After this, a surface will be present!
+Scaling goes along with a quality loss. Thus, scaling an already
+scaled stimulus is not a good idea.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>keep_aspect_ratio</strong><span class="classifier">boolean, optional</span></dt><dd><p>if this boolean is False, stimulus will be stretched so that it
+fills out the whole screen (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.scramble">
+<code class="descname">scramble</code><span class="sig-paren">(</span><em>grain_size</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.scramble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scramble the stimulus.</p>
+<p>Attention: If the surface size is not a multiple of the grain size,
+you may loose some pixels on the edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>grain_size</strong><span class="classifier">int or (int, int)</span></dt><dd><p>size of a grain (use tuple of integers for different width &amp; height)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.set_surface">
+<code class="descname">set_surface</code><span class="sig-paren">(</span><em>surface</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.set_surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the surface of the stimulus</p>
+<p>This method overwrites the surface of the stimulus. It can also handle
+surfaces in form of pygame.PixelArray or Numpy 3D array (RGB or RGBA)
+representations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>surface: pygame.Surface or pygame.PixelArray or numpy.ndarray</strong></dt><dd><p>a representation of the new surface</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>succeeded: boolean</strong></dt><dd><p>setting surface was successful or not</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>CAUTION: This is an expert’s method.
+The method can be used together with get_surface() &amp; get_pixel_array()
+to apply low-level Pygame operations on stimuli. However, users should
+be aware of what they are doing, because the incorrect usage of this
+methods might affect the stability of the experiment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.size">
+<em class="property">property </em><code class="descname">size</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for size.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.surface_size">
+<em class="property">property </em><code class="descname">surface_size</code><a class="headerlink" href="#expyriment.stimuli.Rectangle.surface_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for surface_size.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.stimuli.Rectangle.unload">
+<code class="descname">unload</code><span class="sig-paren">(</span><em>keep_surface=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.stimuli.Rectangle.unload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload the stimulus from memory.</p>
+<p>This will unload preloaded stimuli.
+In OpenGL mode, this method will remove the reference to the OpenGL
+texture and the surface (when ‘keep_surface’ is False).
+When OpenGL is switched off, the reference to the surface will be
+removed (when ‘keep_surface’ is False).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>keep_surface</strong><span class="classifier">bool, optional</span></dt><dd><p>keep the surface after unload (default=False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>time</strong><span class="classifier">int</span></dt><dd><p>the time it took to execute this method</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.stimuli.Rectangle.clear_surface" title="expyriment.stimuli.Rectangle.clear_surface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_surface</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>Depending on the size of the stimulus, this method may take some time
+to compute!</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.stimuli.Shape.html" class="btn btn-neutral float-right" title="expyriment.stimuli.Shape" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.stimuli.Picture.html" class="btn btn-neutral float-left" title="expyriment.stimuli.Picture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

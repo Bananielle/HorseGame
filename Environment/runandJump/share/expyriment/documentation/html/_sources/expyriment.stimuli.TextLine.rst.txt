@@ -1,0 +1,8 @@
+expyriment.stimuli.TextLine
+===========================
+
+.. autoclass:: expyriment.stimuli.TextLine
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.TextLine.__init__

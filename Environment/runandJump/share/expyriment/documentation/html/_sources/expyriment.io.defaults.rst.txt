@@ -1,0 +1,237 @@
+expyriment.io.defaults
+======================
+
+.. automodule:: expyriment.io.defaults
+
+Attributes
+-----------
+.. py:data:: expyriment.io.defaults.datafile_delimiter
+
+   default value: ','
+
+.. py:data:: expyriment.io.defaults.datafile_directory
+
+   default value: 'data'
+
+.. py:data:: expyriment.io.defaults.eventfile_delimiter
+
+   default value: ','
+
+.. py:data:: expyriment.io.defaults.eventfile_directory
+
+   default value: 'events'
+
+.. py:data:: expyriment.io.defaults.keyboard_default_keys
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.markeroutput_default_code
+
+   default value: 1
+
+.. py:data:: expyriment.io.defaults.markeroutput_default_duration
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.mouse_show_cursor
+
+   default value: True
+
+.. py:data:: expyriment.io.defaults.mouse_track_button_events
+
+   default value: True
+
+.. py:data:: expyriment.io.defaults.mouse_track_motion_events
+
+   default value: False
+
+.. py:data:: expyriment.io.defaults.outputfile_comment_char
+
+   default value: '#'
+
+.. py:data:: expyriment.io.defaults.outputfile_eol
+
+   default value: '\n'
+
+.. py:data:: expyriment.io.defaults.outputfile_time_stamp
+
+   default value: True
+
+.. py:data:: expyriment.io.defaults.serialport_baudrate
+
+   default value: 19200
+
+.. py:data:: expyriment.io.defaults.serialport_bytesize
+
+   default value: 8
+
+.. py:data:: expyriment.io.defaults.serialport_dsrdtr
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.serialport_input_history
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.serialport_input_timing
+
+   default value: 1
+
+.. py:data:: expyriment.io.defaults.serialport_os_buffer_size
+
+   default value: 3000
+
+.. py:data:: expyriment.io.defaults.serialport_parity
+
+   default value: 'N'
+
+.. py:data:: expyriment.io.defaults.serialport_rtscts
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.serialport_stopbits
+
+   default value: 1
+
+.. py:data:: expyriment.io.defaults.serialport_timeout
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.serialport_xonxoff
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.streamingbuttonbox_baseline
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.textinput_background_colour
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_character_filter
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_frame_colour
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_gap
+
+   default value: 6
+
+.. py:data:: expyriment.io.defaults.textinput_length
+
+   default value: 25
+
+.. py:data:: expyriment.io.defaults.textinput_message_bold
+
+   default value: False
+
+.. py:data:: expyriment.io.defaults.textinput_message_colour
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_message_font
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_message_italic
+
+   default value: False
+
+.. py:data:: expyriment.io.defaults.textinput_message_right_to_left
+
+   default value: False
+
+.. py:data:: expyriment.io.defaults.textinput_message_text_size
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.io.defaults.textinput_user_right_to_left
+
+   default value: False
+
+.. py:data:: expyriment.io.defaults.textinput_user_text_bold
+
+   default value: False
+
+.. py:data:: expyriment.io.defaults.textinput_user_text_colour
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_user_text_font
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textinput_user_text_size
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textmenu_background_colour
+
+   default value: <expyriment.misc._colour.Colour object at 0x114c31150>
+
+.. py:data:: expyriment.io.defaults.textmenu_gap
+
+   default value: 2
+
+.. py:data:: expyriment.io.defaults.textmenu_heading_font
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textmenu_heading_text_colour
+
+   default value: <expyriment.misc._colour.Colour object at 0x117c1a390>
+
+.. py:data:: expyriment.io.defaults.textmenu_justification
+
+   default value: 1
+
+.. py:data:: expyriment.io.defaults.textmenu_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.io.defaults.textmenu_scroll_menu
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.textmenu_select_background_colour
+
+   default value: <expyriment.misc._colour.Colour object at 0x117c1a350>
+
+.. py:data:: expyriment.io.defaults.textmenu_select_frame_colour
+
+   default value: <expyriment.misc._colour.Colour object at 0x117c1a390>
+
+.. py:data:: expyriment.io.defaults.textmenu_select_frame_line_width
+
+   default value: 0
+
+.. py:data:: expyriment.io.defaults.textmenu_select_text_colour
+
+   default value: [0, 0, 0]
+
+.. py:data:: expyriment.io.defaults.textmenu_text_colour
+
+   default value: <expyriment.misc._colour.Colour object at 0x117c1a310>
+
+.. py:data:: expyriment.io.defaults.textmenu_text_font
+
+   default value: None
+
+.. py:data:: expyriment.io.defaults.textmenu_text_size
+
+   default value: 20
+
+.. py:data:: expyriment.io.defaults.triggerinput_default_code
+
+   default value: 1
+
+
+

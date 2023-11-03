@@ -1,0 +1,17 @@
+expyriment.design.randomize
+===========================
+
+.. automodule:: expyriment.design.randomize
+
+
+Functions
+-----------
+.. autofunction:: expyriment.design.randomize.coin_flip
+.. autofunction:: expyriment.design.randomize.make_multiplied_shuffled_list
+.. autofunction:: expyriment.design.randomize.rand_element
+.. autofunction:: expyriment.design.randomize.rand_int
+.. autofunction:: expyriment.design.randomize.rand_int_sequence
+.. autofunction:: expyriment.design.randomize.rand_norm
+.. autofunction:: expyriment.design.randomize.shuffle_list
+
+

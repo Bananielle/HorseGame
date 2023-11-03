@@ -1,0 +1,8 @@
+expyriment.misc.geometry.XYPoint
+================================
+
+.. autoclass:: expyriment.misc.geometry.XYPoint
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.misc.geometry.XYPoint.__init__

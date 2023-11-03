@@ -1,0 +1,8 @@
+expyriment.io.EventFile
+=======================
+
+.. autoclass:: expyriment.io.EventFile
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.EventFile.__init__

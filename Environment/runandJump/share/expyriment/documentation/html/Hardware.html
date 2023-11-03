@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hardware compatibility &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Timing and empirical testing of Expyriment" href="Timing.html" />
+    <link rel="prev" title="Defaults (settings)" href="Defaults.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="APIReferenceTool.html">API reference tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testsuite.html">Test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CommandLineInterface.html">Command line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataPreprocessing.html">Data preprocessing and exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Unicode.html">Using non-English characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fonts.html">Using fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Video.html">Presenting videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html">Plugin system (extras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Defaults.html">Defaults (settings)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hardware compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timing.html">Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Problems.html">Problems &amp; Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="Advanced.html">Advanced</a> &raquo;</li>
+        
+      <li>Hardware compatibility</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hardware-compatibility">
+<h1>Hardware compatibility<a class="headerlink" href="#hardware-compatibility" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="video-cards">
+<h2>Video cards<a class="headerlink" href="#video-cards" title="Permalink to this headline">¶</a></h2>
+<p>We generally have good experiences with recent NVIDIA or ATI cards.  OpenGL
+mode should work with all drivers that use an OpenGL specification &gt;=
+2.0.  Drivers implementing an older OpenGL specification (&gt;= 1.4) should work
+when the ‘GL_ARB_texture_non_power_of_two’ extension is present.</p>
+<p>On some some integrated Intel cards syncing to the vertical retrace does not seem
+to work with the default settings! In those cases, please try using OpenGL set to
+“vsync / alternative blocking” (<code class="docutils literal notranslate"><span class="pre">control.defaults.open_gl=3</span></code>).</p>
+<div class="section" id="working-configurations">
+<h3>Working configurations<a class="headerlink" href="#working-configurations" title="Permalink to this headline">¶</a></h3>
+<p>Here are some configurations we observed to work:</p>
+<ul class="simple">
+<li>GeForce GT 520 (Linux-x86; Debian default driver)</li>
+<li>GeForce GT 520 (Windows XP; NIVIDA driver 285.62)</li>
+<li>Nvidia GTX 650 (Linux-x86; NVIDIA driver 310.14)</li>
+<li>Nvidia Quadro NVS 290 (Linux-x86; NVIDIA driver 295.40)</li>
+<li>Nvidia Quadro NVS 290 (Windows XP SP3; NVIDIA driver)</li>
+<li>Toshiba Satellite Pro Laptop (Windows 7)</li>
+<li>Apple MacBook Pro 2013 (OS X 10.10; using alternative blocking!)</li>
+</ul>
+<p><strong>We recommend to always use the Expyriment test suite to check the
+performance of your specific configuration!</strong></p>
+</div>
+</div>
+<div class="section" id="external-devices">
+<h2>External devices<a class="headerlink" href="#external-devices" title="Permalink to this headline">¶</a></h2>
+<p>Besides standard <a class="reference external" href="expyriment.io.SerialPort">serial</a> and <a class="reference external" href="expyriment.io.ParallelPort">parallel</a> port communication,
+there is special support for:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#event-button-box">Event button box</a></li>
+<li><a class="reference internal" href="#streaming-button-box">Streaming button box</a></li>
+<li><a class="reference internal" href="#trigger-input">Trigger input</a></li>
+<li><a class="reference internal" href="#marker-output">Marker output</a></li>
+<li><a class="reference internal" href="#cedrus-response-devices">Cedrus response devices</a></li>
+</ul>
+<div class="section" id="event-button-box">
+<h3>Event button box<a class="headerlink" href="#event-button-box" title="Permalink to this headline">¶</a></h3>
+<p>An event button box is a simple device which sends out values (bytes) whenever
+a button is pressed (or released).</p>
+<p>Event button boxes can be used by initializing an
+<a class="reference external" href="expyriment.io.EventButtonBox">expyriment.io.EventButtonBox</a>
+object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bb</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">EventButtonBox</span><span class="p">(</span><span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="s2">&quot;COM1&quot;</span><span class="p">))</span>
+<span class="n">key</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># Wait for any value</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="streaming-button-box">
+<h3>Streaming button box<a class="headerlink" href="#streaming-button-box" title="Permalink to this headline">¶</a></h3>
+<p>A streaming button box constantly sends out a certain baseline value (e.g. 0)
+in predefined intervals (e.g. each 1 ms). Button press (or release) events (if
+present) are added to the baseline.</p>
+<p>Streaming button boxes can be used by initializing an
+<a class="reference external" href="expyriment.io.StreamingButtonBox">expyriment.io.StreamingButtonBox</a> object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bb</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">StreamingButtonBox</span><span class="p">(</span><span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="s2">&quot;COM1&quot;</span><span class="p">),</span>
+                            <span class="n">baseline</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">key</span><span class="p">,</span> <span class="n">rt</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># Wait for any value other than 128</span>
+</pre></div>
+</div>
+<p>This allows for instance for calculating the response timing without relying on
+the computers internal clock, but by “counting” the incoming bytes from the
+button box:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bb</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">StreamingButtonBox</span><span class="p">(</span>
+            <span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="s2">&quot;COM1&quot;</span><span class="p">),</span> <span class="n">baseline</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">bb</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">read_input</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">129</span><span class="p">)</span>   <span class="c1"># Get reaction time by counting</span>
+                                            <span class="c1"># input events since last clear</span>
+</pre></div>
+</div>
+<p>It is important to notice that operating systems only buffer a certain amount
+of bytes (usually 4096). To prevent an overflow of this buffer, the button box
+has to be checked regularly. Additionally, an <code class="docutils literal notranslate"><span class="pre">input_history</span></code> can be used on
+the <a class="reference external" href="expyriment.io.SerialPort">expyriment.io.SerialPort</a> object which is automatically updated
+whenever the serial port is polled or cleared. By setting the
+<code class="docutils literal notranslate"><span class="pre">os_buffer_size</span></code> correctly, a warning will be logged whenever the amount of
+bytes in the OS serial port buffer reaches maximum capacity. <strong>The important
+part now is to update the input_history regularly</strong>.  To gain maximal control,
+this should be done manually at Sending to external deviceappropriate places in
+the code.  However, Expyriment provides also the possibility to register a
+callback function which will be called regularly during all waiting methods in
+the library. By registering the <code class="docutils literal notranslate"><span class="pre">check()</span></code> method of the streaming button box,
+the <code class="docutils literal notranslate"><span class="pre">input_history</span></code> will be updated fairly regular, which should suffice for
+most use cases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">register_wait_callback_function</span><span class="p">(</span><span class="n">bb</span><span class="o">.</span><span class="n">check</span><span class="p">)</span>
+<span class="n">bb</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">input_history</span><span class="o">.</span><span class="n">check_value</span><span class="p">(</span><span class="mi">129</span><span class="p">)</span> <span class="c1"># Check if 129 was</span>
+                                            <span class="c1"># received at any time</span>
+<span class="c1"># RT by counting elements in input history</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">input_history</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">input_nput_history</span><span class="o">.</span><span class="n">check_value</span><span class="p">(</span><span class="mi">129</span><span class="p">,</span>
+                                <span class="n">search_start_position</span><span class="o">=</span><span class="n">start</span><span class="p">)</span> <span class="o">-</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trigger-input">
+<h3>Trigger input<a class="headerlink" href="#trigger-input" title="Permalink to this headline">¶</a></h3>
+<p>Expyriment can wait for triggers from external devices, like for instance an MR
+scanner.</p>
+<p>When updated regularly, Expyriment can also keep track of the amount of
+triggers that have been received. Importantly, this has to be done manually</p>
+<p>Trigger inputs can be used by initializing an <a class="reference external" href="expyriment.io.TriggerInput">expyriment.io.TriggerInput</a>
+object.</p>
+<p><strong>Basic usage</strong></p>
+<p>In most of the cases, a researcher knows when a trigger is to be expected and
+he can wait for it explicitly. Code execution will be blocked until the trigger
+is received:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trigger</span> <span class="o">=</span> <span class="n">exyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">TriggerInput</span><span class="p">(</span><span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="s2">&quot;COM1&quot;</span><span class="p">))</span>
+<span class="n">trigger</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Wait for code 1</span>
+</pre></div>
+</div>
+<p><strong>Advanced usage</strong></p>
+<p>In some cases, code blocking might not be a solution, since a trial has to
+continue while waiting for the trigger. For instance, in an fMRI study, a trial
+might consist of several components and span several TR. One way to solve this
+would be logging constantly all input events in a separate thread.  However,
+this will introduce timing uncertainties, since the operating system is in
+charge of how and when threads communicate. We thus decided against an
+implementation with threads for the same reasons Expyriment does not implement
+a main event loop: Maximal control by the user.  Nevertheless, input events can
+still be buffered without introducing timing uncertainties, given the following
+two conditions:</p>
+<ol class="arabic simple">
+<li>Incoming events are streaming, either by sending some baseline in regular
+intervals (e.g. a 0 each millisecond), or by a regular incoming signal of
+interest (e.g. a constant TR from the MR scanner).</li>
+<li>The input device is polled regularly, such that the serial port OS buffer
+does not overflow. (Most implementations use an OS buffer of 4096 bytes).</li>
+</ol>
+<p>If those two conditions are met, an <code class="docutils literal notranslate"><span class="pre">input_history</span></code> can be used on the
+<a class="reference external" href="expyriment.io.SerialPort">expyriment.io.SerialPort</a> object which is automatically updated whenever
+the serial port is polled or cleared. By setting the <code class="docutils literal notranslate"><span class="pre">os_buffer_size</span></code>
+correctly, a warning will be logged whenever the amount of bytes in the OS
+serial port buffer reaches maximum capacity. <strong>The important part now is to
+update the input_history regularly</strong>. To gain maximal control, this should be
+done manually at appropriate places in the code. However, Expyriment provides
+also the possibility to register a callback function which will be called
+regularly during all waiting methods in the library. By registering the
+<code class="docutils literal notranslate"><span class="pre">get_trigger()</span></code>
+method of the input trigger, the <code class="docutils literal notranslate"><span class="pre">input_history</span></code> will be updated fairly
+regular, which should suffice for most use cases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trigger</span> <span class="o">=</span> <span class="n">exyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">TriggerInput</span><span class="p">(</span><span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="n">external</span><span class="s2">&quot;COM1&quot;</span><span class="p">,</span>
+                <span class="n">input_history</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">os_buffer_size</span><span class="o">=</span><span class="mi">3000</span><span class="p">))</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">register_wait_callback_function</span><span class="p">(</span><span class="n">trigger</span><span class="o">.</span><span class="n">get_triggers</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">trigger</span><span class="o">.</span><span class="n">trigger_count</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="marker-output">
+<h3>Marker output<a class="headerlink" href="#marker-output" title="Permalink to this headline">¶</a></h3>
+<p>Expyriment can send markers to external devices, like for instance EEG
+computers.</p>
+<p>Marker outputs can be used by creating an <a class="reference external" href="expyriment.io.MarkerOutput">expyriment.io.MarkerOutput</a>
+object.</p>
+<p><strong>Basic usage</strong></p>
+<p>Sending out markers is straight forward. Some devices (e.g. EEG systems) expect
+a 0 to be send after the code. We can specify this by telling the output marker
+at what duration this 0 is supposed to be sent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marker</span> <span class="o">=</span> <span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">MarkerOutput</span><span class="p">(</span><span class="n">expyriment</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="s2">&quot;COM1&quot;</span><span class="p">),</span> <span class="n">duration</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">marker</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Send code 1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cedrus-response-devices">
+<h3>Cedrus response devices<a class="headerlink" href="#cedrus-response-devices" title="Permalink to this headline">¶</a></h3>
+<p>Expyriment comes with a high-level wrapper for Cedrus response devices
+<a class="reference external" href="expyriment.io.extras.CedrusResponseDevice">expyriment.io.extras.CedrusResponseDevice</a>, which allows you to easily
+use all Cedrus response devices.</p>
+<p>To use these devices, however, the third-party Python package <a class="reference external" href="https://github.com/cedrus-opensource/pyxid">pyxid</a> needs to
+be installed on the system.</p>
+<p><strong>Installing pyxid</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cedrus-opensource/pyxid/zipball/master">Download</a> pyxid</li>
+<li>Install as described <a class="reference external" href="http://docs.python.org/install/index.html#the-new-standard-distutils">here</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Timing.html" class="btn btn-neutral float-right" title="Timing and empirical testing of Expyriment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Defaults.html" class="btn btn-neutral float-left" title="Defaults (settings)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

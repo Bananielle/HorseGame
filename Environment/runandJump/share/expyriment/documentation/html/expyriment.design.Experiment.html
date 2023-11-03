@@ -1,0 +1,958 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.design.Experiment &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.design.Trial" href="expyriment.design.Trial.html" />
+    <link rel="prev" title="expyriment.design.Block" href="expyriment.design.Block.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.design.html">expyriment.design</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.design.defaults.html">expyriment.design.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.design.extras.html">expyriment.design.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.design.permute.html">expyriment.design.permute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.design.randomize.html">expyriment.design.randomize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.design.Block.html">expyriment.design.Block</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.design.Experiment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.design.Trial.html">expyriment.design.Trial</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.design.html">expyriment.design</a> &raquo;</li>
+        
+      <li>expyriment.design.Experiment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-design-experiment">
+<h1>expyriment.design.Experiment<a class="headerlink" href="#expyriment-design-experiment" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.design.Experiment">
+<em class="property">class </em><code class="descclassname">expyriment.design.</code><code class="descname">Experiment</code><span class="sig-paren">(</span><em>name=None</em>, <em>foreground_colour=None</em>, <em>background_colour=None</em>, <em>text_font=None</em>, <em>text_size=None</em>, <em>filename_suffix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a basic experiment.</p>
+<dl class="method">
+<dt id="expyriment.design.Experiment.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name=None</em>, <em>foreground_colour=None</em>, <em>background_colour=None</em>, <em>text_font=None</em>, <em>text_size=None</em>, <em>filename_suffix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an experiment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>name</strong><span class="classifier">str, optional</span></dt><dd><p>name of the experiment</p>
+</dd>
+<dt><strong>foreground_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd></dd>
+<dt><strong>background_colour</strong><span class="classifier">(int,int,int), optional</span></dt><dd></dd>
+<dt><strong>text_font</strong><span class="classifier">str, optional</span></dt><dd></dd>
+<dt><strong>text_size</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>filename_suffix</strong><span class="classifier">str, optional</span></dt><dd><p>additional suffix that will be added to the main event
+and data filename</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.add_block">
+<code class="descname">add_block</code><span class="sig-paren">(</span><em>block</em>, <em>copies=1</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.add_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a block to the experiment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>block</strong><span class="classifier">design.Block</span></dt><dd><p>block to add</p>
+</dd>
+<dt><strong>copies</strong><span class="classifier">int, optional</span></dt><dd><p>number of copies to add (default = 1)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.add_blocks_full_factorial">
+<code class="descname">add_blocks_full_factorial</code><span class="sig-paren">(</span><em>design_dict</em>, <em>copies=1</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.add_blocks_full_factorial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add blocks of all combinations of a full factorial design.</p>
+<p>Factors will be defined according the design_dict parameter.
+The design is specified by a dictionary. The keys of the dictionary
+indicate the factor names. Each value of the dictionary has to be
+a list of the factor levels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>design_dict</strong><span class="classifier">dictionary</span></dt><dd><p>keys: factor names, values: lists of factor levels</p>
+</dd>
+<dt><strong>copies</strong><span class="classifier">int, optional</span></dt><dd><p>number of copies to add (default = 1)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Block.html#expyriment.design.Block.add_trials_full_factorial" title="expyriment.design.Block.add_trials_full_factorial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Block.add_trials_full_factorial</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.add_bws_factor">
+<code class="descname">add_bws_factor</code><span class="sig-paren">(</span><em>factor_name</em>, <em>conditions</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.add_bws_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a between subject factor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>factor_name</strong><span class="classifier">str</span></dt><dd><p>the name of the between subject factor</p>
+</dd>
+<dt><strong>conditions</strong><span class="classifier">list</span></dt><dd><p>possible conditions of the between subject factor</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.design.Experiment.get_permuted_bws_factor_condition" title="expyriment.design.Experiment.get_permuted_bws_factor_condition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_permuted_bws_factor_condition</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The defined between subject factor conditions will be permuted across
+the subjects when ‘using get_permuted_bws_factor_condition’.
+Factors that are added first are treated as hierarchically higher
+factors while permutation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.add_data_variable_names">
+<code class="descname">add_data_variable_names</code><span class="sig-paren">(</span><em>variable_names</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.add_data_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data variable names to the design.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>variables</strong><span class="classifier">str or lst of str</span></dt><dd><p>variable names</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.add_experiment_info">
+<code class="descname">add_experiment_info</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.add_experiment_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add experiment information to the design.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>text</strong><span class="classifier">string or list of str</span></dt><dd><p>text lines to be added as experiment information</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.background_colour">
+<em class="property">property </em><code class="descname">background_colour</code><a class="headerlink" href="#expyriment.design.Experiment.background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for background_colour.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.block_list_factor_names">
+<em class="property">property </em><code class="descname">block_list_factor_names</code><a class="headerlink" href="#expyriment.design.Experiment.block_list_factor_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for block_list_factor_names.</p>
+<p>Get all factor names defined in all blocks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.blocks">
+<em class="property">property </em><code class="descname">blocks</code><a class="headerlink" href="#expyriment.design.Experiment.blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for blocks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.bws_factor_names">
+<em class="property">property </em><code class="descname">bws_factor_names</code><a class="headerlink" href="#expyriment.design.Experiment.bws_factor_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for factors keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.bws_factor_randomized">
+<em class="property">property </em><code class="descname">bws_factor_randomized</code><a class="headerlink" href="#expyriment.design.Experiment.bws_factor_randomized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for bws_factor_randomized.</p>
+<p class="rubric">Notes</p>
+<p>Is between subject factor randomized? (True/False).</p>
+<p>If True conditions will be assigned randomized
+otherwise (default) conditions will be systematically permuted across
+subjects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.clear_blocks">
+<code class="descname">clear_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.clear_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all blocks from experiment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.clear_bws_factors">
+<code class="descname">clear_bws_factors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.clear_bws_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all between subject factors from design.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.clear_data_variable_names">
+<code class="descname">clear_data_variable_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.clear_data_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all data variable names from design.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.clock">
+<em class="property">property </em><code class="descname">clock</code><a class="headerlink" href="#expyriment.design.Experiment.clock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for global clock.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.data">
+<em class="property">property </em><code class="descname">data</code><a class="headerlink" href="#expyriment.design.Experiment.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for main data file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.data_variable_names">
+<em class="property">property </em><code class="descname">data_variable_names</code><a class="headerlink" href="#expyriment.design.Experiment.data_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for data_variable_names.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.design_as_text">
+<em class="property">property </em><code class="descname">design_as_text</code><a class="headerlink" href="#expyriment.design.Experiment.design_as_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for desing_as_text.</p>
+<p>Trial list as csv table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.events">
+<em class="property">property </em><code class="descname">events</code><a class="headerlink" href="#expyriment.design.Experiment.events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for main event files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.experiment_info">
+<em class="property">property </em><code class="descname">experiment_info</code><a class="headerlink" href="#expyriment.design.Experiment.experiment_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for experiment_info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.filename_suffix">
+<em class="property">property </em><code class="descname">filename_suffix</code><a class="headerlink" href="#expyriment.design.Experiment.filename_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for filename suffix.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.find_block">
+<code class="descname">find_block</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.find_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the position of a block, given the id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>id</strong><span class="classifier">int</span></dt><dd><p>block id to look for</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos: int</strong></dt><dd><p>positions as a list or None if not in block list.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.foreground_colour">
+<em class="property">property </em><code class="descname">foreground_colour</code><a class="headerlink" href="#expyriment.design.Experiment.foreground_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for foreground_colour.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.get_bws_factor">
+<code class="descname">get_bws_factor</code><span class="sig-paren">(</span><em>factor_name</em>, <em>return_none_if_not_defined=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.get_bws_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all conditions of this between subject factor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>factor_name</strong><span class="classifier">str</span></dt><dd><p>factor name</p>
+</dd>
+<dt><strong>return_none_if_not_defined</strong><span class="classifier">boolean (default: False)</span></dt><dd><p>suppresses exception and returns None if factor is not defined.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>conditions</strong><span class="classifier">none or array of all conditions</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.get_permuted_bws_factor_condition">
+<code class="descname">get_permuted_bws_factor_condition</code><span class="sig-paren">(</span><em>factor_name</em>, <em>subject_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.get_permuted_bws_factor_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the between subject factor condition for a subject.</p>
+<p>The condition for the current subject will be returned, if expyriment
+is running and the function is called without a subject_id.
+If the function is called with a subject_id, the condition for this
+particular subject will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>factor_name</strong><span class="classifier">str</span></dt><dd></dd>
+<dt><strong>subject_id</strong><span class="classifier">str, optional</span></dt><dd><p>(default=None)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>cond</strong><span class="classifier">str</span></dt><dd><p>condition for the current subject</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>see add_bws_factor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.has_bws_factor">
+<code class="descname">has_bws_factor</code><span class="sig-paren">(</span><em>factor_name</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.has_bws_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a factor is defined.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>factor_name</strong><span class="classifier">str</span></dt><dd><p>factor name (str)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>bool</strong><span class="classifier">boolean</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.is_callback_registered">
+<em class="property">property </em><code class="descname">is_callback_registered</code><a class="headerlink" href="#expyriment.design.Experiment.is_callback_registered" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property indicates whether a callback function has been
+registered or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.is_initialized">
+<em class="property">property </em><code class="descname">is_initialized</code><a class="headerlink" href="#expyriment.design.Experiment.is_initialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for is_initialized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.is_started">
+<em class="property">property </em><code class="descname">is_started</code><a class="headerlink" href="#expyriment.design.Experiment.is_started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for is_started.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.keyboard">
+<em class="property">property </em><code class="descname">keyboard</code><a class="headerlink" href="#expyriment.design.Experiment.keyboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for global keyboard.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.load_design">
+<code class="descname">load_design</code><span class="sig-paren">(</span><em>filename</em>, <em>encoding=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.load_design" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the design from a csv file containing list of trials.</p>
+<p>The function considers only the defined trial factors and not the
+added stimuli. The existing design will be deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>name (fullpath) of the csv file (str)</p>
+</dd>
+<dt><strong>encoding</strong><span class="classifier">str, optional</span></dt><dd><p>the encoding to be used when reading from the file</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The current version of this function does not handle between_subject
+factors and data_variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.log_design_to_event_file">
+<code class="descname">log_design_to_event_file</code><span class="sig-paren">(</span><em>additional_comment=''</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.log_design_to_event_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log the design (as comment) to the current main event file.</p>
+<p>If no experiment is initialized or no event file exists the function
+will not do anything. This function will be automatically called after
+an experiment has been started.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>additional_comment</strong><span class="classifier">str, optional</span></dt><dd><p>additional comment that will be logged</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#expyriment.design.Experiment.save_design" title="expyriment.design.Experiment.save_design"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_design</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.log_level">
+<em class="property">property </em><code class="descname">log_level</code><a class="headerlink" href="#expyriment.design.Experiment.log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for event logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.mouse">
+<em class="property">property </em><code class="descname">mouse</code><a class="headerlink" href="#expyriment.design.Experiment.mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for global keyboard.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.n_blocks">
+<em class="property">property </em><code class="descname">n_blocks</code><a class="headerlink" href="#expyriment.design.Experiment.n_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for n_blocks.</p>
+<p>Number of blocks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.n_bws_factor_conditions">
+<em class="property">property </em><code class="descname">n_bws_factor_conditions</code><a class="headerlink" href="#expyriment.design.Experiment.n_bws_factor_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for n_bws_factor_conditions.</p>
+<p>Total number of conditions in all bws_factors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.name">
+<em class="property">property </em><code class="descname">name</code><a class="headerlink" href="#expyriment.design.Experiment.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.order_blocks">
+<code class="descname">order_blocks</code><span class="sig-paren">(</span><em>order</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.order_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Order the blocks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>order</strong><span class="classifier">list</span></dt><dd><p>list with the new order of positions</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.permute_blocks">
+<code class="descname">permute_blocks</code><span class="sig-paren">(</span><em>permutation_type</em>, <em>factor_names=None</em>, <em>subject_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.permute_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permute the blocks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>permutation_type</strong><span class="classifier">int (permutation type)</span></dt><dd><p>type of block order permutation (permutation type);
+permutation types defined in misc.constants:
+P_BALANCED_LATIN_SQUARE, P_CYCLED_LATIN_SQUARE, and P_RANDOM</p>
+</dd>
+<dt><strong>factor_names</strong><span class="classifier">list (of strings), optional</span></dt><dd><p>list of the factor names to be considered while permutation;
+if factor_names are not defined (None) all factors will be used.</p>
+</dd>
+<dt><strong>subject_id</strong><span class="classifier">int, optional</span></dt><dd><p>subject number for this permutation;
+if subject_id is defined or none (default) and experiment has
+been started, the current subject number will be used</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.register_wait_callback_function">
+<code class="descname">register_wait_callback_function</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.register_wait_callback_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a wait callback function.</p>
+<p>The registered wait callback function will be repetitively executed in
+all Expyriment wait and event loops that wait for an external input (see below).</p>
+<p>If the callback function returns a control.CallbackQuitEvent the calling wait
+or event loop will be force to quit. The CallbackQuitEvent object will be then
+return (as first return value in the case of multiple return values).</p>
+<p>The following functions will call the currently registered callback function
+(at least once!):</p>
+<blockquote>
+<div><ul class="simple">
+<li>control.wait_end_audiosystem</li>
+<li>misc.Clock.wait</li>
+<li>misc.Clock.wait_seconds</li>
+<li>misc.Clock.wait_minutes</li>
+<li>io.Keyboard.wait</li>
+<li>io.Keyboard.wait_char</li>
+<li>io.StreamingButtonBox.wait</li>
+<li>io.EventButtonBox.wait</li>
+<li>io.GamePad.wait_press</li>
+<li>io.TriggerInput.wait</li>
+<li>io.Mouse.wait_press</li>
+<li>io.SerialPort.read_line</li>
+<li>io.TextInput.get</li>
+<li>io.TouchScreenButtonBox.wait</li>
+<li>io.extras.CedrusResponseDevice.wait</li>
+<li>stimulus.Video.wait_frame</li>
+<li>stimulus.Video.wait_end</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>function</strong><span class="classifier">function</span></dt><dd><p>wait function (function)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.control.CallbackQuitEvent.html#expyriment.control.CallbackQuitEvent" title="expyriment.control.CallbackQuitEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.control.CallbackQuitEvent</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>CAUTION! If wait callback function takes longer than 1 ms to process,
+Expyriment timing will be affected!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.remove_block">
+<code class="descname">remove_block</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.remove_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove block from experiment.</p>
+<p>If no position is given, the last one is removed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position</strong><span class="classifier">int</span></dt><dd><p>position of the block to be removed</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.save_design">
+<code class="descname">save_design</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.save_design" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the design as list of trials to a csv file.</p>
+<p>The function considers only the defined trial factors and not the
+added stimuli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>name (fullpath) of the csv file (str)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The current version of this function does not handle between_subject
+factors and data_variables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.screen">
+<em class="property">property </em><code class="descname">screen</code><a class="headerlink" href="#expyriment.design.Experiment.screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for global screen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.set_log_level">
+<code class="descname">set_log_level</code><span class="sig-paren">(</span><em>loglevel</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.set_log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the log level of the current experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>loglevel</strong><span class="classifier">int</span></dt><dd><p>The log level (0, 1, 2) of the experiment.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>There are three event logging levels:</p>
+<ul class="simple">
+<li>O no event logging</li>
+<li>1 normal event logging (logging of all input &amp; output events)</li>
+<li>2 intensive logging; logs much more; please use this only for
+debugging proposes</li>
+</ul>
+<p>In most cases, it should be avoided to switch of logging (loglevel=0).
+If log files become to big due to certain repetitive events, it is
+suggested to switch of the logging of individual stimuli or IO event.
+(see the method <cite>.set_logging()</cite> of this objects)</p>
+<p>The logging of events can be also changed before initialize via the
+default value <cite>expyriment.control.defaults.event_logging</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.shuffle_blocks">
+<code class="descname">shuffle_blocks</code><span class="sig-paren">(</span><em>max_repetitions=None</em>, <em>n_segments=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.shuffle_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuffle all blocks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>max_repetitions</strong><span class="classifier">int, optional</span></dt><dd><p>see documentation of <cite>randomize.shuffle_list</cite>, default = None</p>
+</dd>
+<dt><strong>n_segments</strong><span class="classifier">int, optional</span></dt><dd><p>see documentation of <cite>randomize.shuffle_list</cite>, default = None</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>success</strong><span class="classifier">bool</span></dt><dd><p>returns if randomization was successful and fulfilled the specified
+constrains (see max_repetitions)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.randomize.html#expyriment.design.randomize.shuffle_list" title="expyriment.design.randomize.shuffle_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.randomize.shuffle_list</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.sort_blocks">
+<code class="descname">sort_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.sort_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the blocks according to their indices from low to high.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.subject">
+<em class="property">property </em><code class="descname">subject</code><a class="headerlink" href="#expyriment.design.Experiment.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for global subject id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.swap_blocks">
+<code class="descname">swap_blocks</code><span class="sig-paren">(</span><em>position1</em>, <em>position2</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.swap_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swap two blocks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position1</strong><span class="classifier">int</span></dt><dd><p>position of first block</p>
+</dd>
+<dt><strong>position2</strong><span class="classifier">int</span></dt><dd><p>position of second block</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.text_font">
+<em class="property">property </em><code class="descname">text_font</code><a class="headerlink" href="#expyriment.design.Experiment.text_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for text_font.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.text_size">
+<em class="property">property </em><code class="descname">text_size</code><a class="headerlink" href="#expyriment.design.Experiment.text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for text_size.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.trial_factor_names">
+<em class="property">property </em><code class="descname">trial_factor_names</code><a class="headerlink" href="#expyriment.design.Experiment.trial_factor_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for trial_factor_nanes.</p>
+<p>Get all factor names defined in the trial lists of all blocks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.design.Experiment.unregister_wait_callback_function">
+<code class="descname">unregister_wait_callback_function</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.design.Experiment.unregister_wait_callback_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister wait function.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.design.Trial.html" class="btn btn-neutral float-right" title="expyriment.design.Trial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.design.Block.html" class="btn btn-neutral float-left" title="expyriment.design.Block" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

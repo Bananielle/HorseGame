@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.SerialPort &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.StreamingButtonBox" href="expyriment.io.StreamingButtonBox.html" />
+    <link rel="prev" title="expyriment.io.Screen" href="expyriment.io.Screen.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.SerialPort</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-serialport">
+<h1>expyriment.io.SerialPort<a class="headerlink" href="#expyriment-io-serialport" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.SerialPort">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">SerialPort</code><span class="sig-paren">(</span><em>port</em>, <em>baudrate=None</em>, <em>bytesize=None</em>, <em>parity=None</em>, <em>stopbits=None</em>, <em>timeout=None</em>, <em>xonxoff=None</em>, <em>rtscts=None</em>, <em>dsrdtr=None</em>, <em>input_history=None</em>, <em>os_buffer_size=None</em>, <em>clock=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a serial port input and output.</p>
+<dl class="method">
+<dt id="expyriment.io.SerialPort.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>port</em>, <em>baudrate=None</em>, <em>bytesize=None</em>, <em>parity=None</em>, <em>stopbits=None</em>, <em>timeout=None</em>, <em>xonxoff=None</em>, <em>rtscts=None</em>, <em>dsrdtr=None</em>, <em>input_history=None</em>, <em>os_buffer_size=None</em>, <em>clock=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a serial port input and output.</p>
+<p>The port argument will accept the number of the port (e.g. 0 for COM1)
+as well as a string describing the full port location (“COM1” or
+“/dev/ttyS0”).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>port</strong><span class="classifier">int or str</span></dt><dd><p>the port name</p>
+</dd>
+<dt><strong>baudrate</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>bytesize</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>parity</strong><span class="classifier">str, optional</span></dt><dd><p>‘E’=even, ‘O’=odd, ‘N’=none</p>
+</dd>
+<dt><strong>stopbits</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>timeout</strong><span class="classifier">int, optional</span></dt><dd><p>the timeout for read(): -1=block</p>
+</dd>
+<dt><strong>xonxoff</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>rtscts</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>dsrdtr</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>input_history</strong><span class="classifier">bool, optional</span></dt><dd><p>True if an input_history should be used</p>
+</dd>
+<dt><strong>os_buffer_size</strong><span class="classifier">int, optional</span></dt><dd><p>the size of the receive input_history provided by the operating
+system in bytes</p>
+</dd>
+<dt><strong>clock</strong><span class="classifier">misc.Clock, optional</span></dt><dd><dl class="docutils">
+<dt>an experimental clock</dt><dd><p>(optional)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>An input_history can be used to overcome the size limitation of the
+receive buffer of the operating system. An input_history consists of a
+misc.ByteBuffer instance.
+In order to not miss any input, the serial port has to be updated
+regularly (i.e. calling read_input() or clear() before the receive
+buffer will be full). If the receive buffer size is set correctly, a
+warning will be given, when the input_history was not updated fast
+enough.
+Importantly, the fuller the receive buffer is, the longer clearing
+and polling will take (this can be more than 1 ms!), since all the
+bytes have to be transferred to the input_history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.baudrate">
+<em class="property">property </em><code class="descname">baudrate</code><a class="headerlink" href="#expyriment.io.SerialPort.baudrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for baudrate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.bytesize">
+<em class="property">property </em><code class="descname">bytesize</code><a class="headerlink" href="#expyriment.io.SerialPort.bytesize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for bytesize.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>skip_input_history=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the serial port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>skip_input_history</strong><span class="classifier">bool, optional</span></dt><dd><p>if True available data will not be copied to the input_history.
+(default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>If an input_history is used, all data in the receive buffer, will be
+added to the history before clearing (via read_input()).</p>
+<p>The copy process might take a few milliseconds. If you need a
+very fast clearing of the device buffer, you should skip copying the
+data into the input_history using the skip_input_history parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.clock">
+<em class="property">property </em><code class="descname">clock</code><a class="headerlink" href="#expyriment.io.SerialPort.clock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for clock.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the serial port.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.dsrdtr">
+<em class="property">property </em><code class="descname">dsrdtr</code><a class="headerlink" href="#expyriment.io.SerialPort.dsrdtr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for dsrdtr.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.get_available_ports">
+<em class="property">static </em><code class="descname">get_available_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.get_available_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of strings representing the available serial ports.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>arr</strong><span class="classifier">list</span></dt><dd><p>a list of strings representing the available serial ports</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>If pyserial is not installed, ‘None’ will be returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.has_input_history">
+<em class="property">property </em><code class="descname">has_input_history</code><a class="headerlink" href="#expyriment.io.SerialPort.has_input_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if a input_history exists or not (True / False).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.input_history">
+<em class="property">property </em><code class="descname">input_history</code><a class="headerlink" href="#expyriment.io.SerialPort.input_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for input_history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.SerialPort.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.os_buffer_size">
+<em class="property">property </em><code class="descname">os_buffer_size</code><a class="headerlink" href="#expyriment.io.SerialPort.os_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for os_buffer_size.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.parity">
+<em class="property">property </em><code class="descname">parity</code><a class="headerlink" href="#expyriment.io.SerialPort.parity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for parity.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.poll">
+<code class="descname">poll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Poll the serial port.</p>
+<p>If a input_history is used, it will be added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">int</span></dt><dd><p>a single integer value of the received byte</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.read_input">
+<code class="descname">read_input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.read_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read all input from serial port.</p>
+<p>If a input_history is used, all received data will be added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">list of int</span></dt><dd><p>a list of integer values of the received bytes</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.read_line">
+<code class="descname">read_line</code><span class="sig-paren">(</span><em>duration=None</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.read_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a line from serial port (until newline) and return byte string.</p>
+<p>The function is waiting for input. Use the duration parameter
+to avoid too long program blocking.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>duration</strong><span class="classifier">int, optional</span></dt><dd><p>try to read for given amount of time (default=None)</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>line</strong><span class="classifier">bytes or str</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This will also by default process control events (quit and pause).
+Thus, keyboard events will be cleared from the cue and cannot be
+received by a Keyboard().check() anymore!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.rtscts">
+<em class="property">property </em><code class="descname">rtscts</code><a class="headerlink" href="#expyriment.io.SerialPort.rtscts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for rtscts.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data via the serial port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int</span></dt><dd><p>the data to be sent</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.send_line">
+<code class="descname">send_line</code><span class="sig-paren">(</span><em>data</em>, <em>carriage_return=False</em>, <em>line_feed=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.send_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a line of data via the serial port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">bytes or str</span></dt><dd><p>the data to be sent</p>
+</dd>
+<dt><strong>carriage_return</strong><span class="classifier">bool, optional</span></dt><dd><p>whether to add a carriage return at end of data (default=True)</p>
+</dd>
+<dt><strong>line_feed</strong><span class="classifier">bool, optional</span></dt><dd><p>whether to add a line feed at end of data (default=True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.serial">
+<em class="property">property </em><code class="descname">serial</code><a class="headerlink" href="#expyriment.io.SerialPort.serial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for serial.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.SerialPort.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.stopbits">
+<em class="property">property </em><code class="descname">stopbits</code><a class="headerlink" href="#expyriment.io.SerialPort.stopbits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for stopbits.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.timeout">
+<em class="property">property </em><code class="descname">timeout</code><a class="headerlink" href="#expyriment.io.SerialPort.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for timeout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.SerialPort.xonxoff">
+<em class="property">property </em><code class="descname">xonxoff</code><a class="headerlink" href="#expyriment.io.SerialPort.xonxoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for xonxoff.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.StreamingButtonBox.html" class="btn btn-neutral float-right" title="expyriment.io.StreamingButtonBox" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.Screen.html" class="btn btn-neutral float-left" title="expyriment.io.Screen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

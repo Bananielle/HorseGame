@@ -1,0 +1,8 @@
+expyriment.io.TextMenu
+======================
+
+.. autoclass:: expyriment.io.TextMenu
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.TextMenu.__init__

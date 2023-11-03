@@ -1,0 +1,8 @@
+expyriment.misc.data_preprocessing.Aggregator
+=============================================
+
+.. autoclass:: expyriment.misc.data_preprocessing.Aggregator
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.misc.data_preprocessing.Aggregator.__init__

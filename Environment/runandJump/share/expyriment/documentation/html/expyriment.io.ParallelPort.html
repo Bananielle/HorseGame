@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.ParallelPort &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.Screen" href="expyriment.io.Screen.html" />
+    <link rel="prev" title="expyriment.io.OutputFile" href="expyriment.io.OutputFile.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.ParallelPort</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-parallelport">
+<h1>expyriment.io.ParallelPort<a class="headerlink" href="#expyriment-io-parallelport" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.ParallelPort">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">ParallelPort</code><span class="sig-paren">(</span><em>address</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a parallel port input and output.</p>
+<p class="rubric">Notes</p>
+<p>CAUTION: On Windows, one of the following parallel port drivers needs to
+be installed: ‘inpout32’ (<a class="reference external" href="http://www.highrez.co.uk/Downloads/InpOut32/">http://www.highrez.co.uk/Downloads/InpOut32/</a>) or
+‘dlportio’ (<a class="reference external" href="http://real.kiev.ua/2010/11/29/dlportio-and-32-bit-windows/">http://real.kiev.ua/2010/11/29/dlportio-and-32-bit-windows/</a>).
+On Linux, the Python package ‘PyParallel’
+(<a class="reference external" href="http://pyserial.sourceforge.net/pyparallel.html">http://pyserial.sourceforge.net/pyparallel.html</a>) has to be installed.</p>
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>address</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a parallel port input and output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>address</strong><span class="classifier">hex or str</span></dt><dd><p>The address of the port to use.</p>
+</dd>
+<dt><strong>reverse</strong><span class="classifier">bool</span></dt><dd><p>Whether the port should be in reverse mode (default=False).
+Reverse mode enables to read from the data pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>On Windows, common port addresses are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LPT1</span> <span class="o">=</span> <span class="mh">0x0378</span> <span class="ow">or</span> <span class="mh">0x03BC</span>
+<span class="n">LPT2</span> <span class="o">=</span> <span class="mh">0x0278</span> <span class="ow">or</span> <span class="mh">0x0378</span>
+<span class="n">LPT3</span> <span class="o">=</span> <span class="mh">0x0278</span>
+</pre></div>
+</div>
+<p>On Linux, port addresses are in the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">parport0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.address">
+<em class="property">property </em><code class="descname">address</code><a class="headerlink" href="#expyriment.io.ParallelPort.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for address.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the parallel port.</p>
+<p>Dummy method required for port interfaces (see e.g. ButtonBox)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.get_available_ports">
+<em class="property">static </em><code class="descname">get_available_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.get_available_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an array of strings representing available parallel ports.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>ports</strong><span class="classifier">list</span></dt><dd><p>array of strings representing the available parallel ports</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>This method does only work on Linux.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.get_driver">
+<em class="property">static </em><code class="descname">get_driver</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.get_driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the driver used for interacting with parallel ports.</p>
+<p>On Windows, one of the following parallel port drivers needs to
+be installed: ‘input32’ (<a class="reference external" href="http://www.highrez.co.uk/Downloads/InpOut32/">http://www.highrez.co.uk/Downloads/InpOut32/</a>) or
+‘dlportio’ (<a class="reference external" href="http://real.kiev.ua/2010/11/29/dlportio-and-32-bit-windows/">http://real.kiev.ua/2010/11/29/dlportio-and-32-bit-windows/</a>).
+On Linux, the Python package ‘PyParallel’
+(<a class="reference external" href="http://pyserial.sourceforge.net/pyparallel.html">http://pyserial.sourceforge.net/pyparallel.html</a>) has to be installed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.has_input_history">
+<em class="property">property </em><code class="descname">has_input_history</code><a class="headerlink" href="#expyriment.io.ParallelPort.has_input_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns always False, because ParallelPort has no input history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.ParallelPort.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.parallel">
+<em class="property">property </em><code class="descname">parallel</code><a class="headerlink" href="#expyriment.io.ParallelPort.parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for parallel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.poll">
+<code class="descname">poll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Poll the parallel port.</p>
+<p>This will read the status pins (11, 10, 12, 13, 15), the data pins (2-9),
+and control pins (1, 14, 16, 17).</p>
+<p>The received data is encoded in 17 bits, corresponding to the 17 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span>  <span class="mi">17</span>    <span class="mi">16</span>    <span class="mi">14</span>     <span class="mi">1</span>     <span class="mi">9</span>     <span class="mi">8</span>     <span class="mi">7</span>     <span class="mi">6</span>     <span class="mi">5</span>
+       <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>     <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span> <span class="mi">65536</span> <span class="mi">32768</span> <span class="mi">16384</span> <span class="mi">8192</span>  <span class="mi">4096</span>  <span class="mi">2048</span>  <span class="mi">1024</span>   <span class="mi">512</span>   <span class="mi">256</span>
+
+<span class="n">Pin</span><span class="p">:</span>  <span class="mi">4</span>    <span class="mi">3</span>    <span class="mi">2</span>   <span class="mi">11</span>   <span class="mi">10</span>   <span class="mi">12</span>   <span class="mi">13</span>   <span class="mi">15</span>
+      <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span> <span class="mi">128</span>  <span class="mi">64</span>   <span class="mi">32</span>   <span class="mi">16</span>    <span class="mi">8</span>    <span class="mi">4</span>    <span class="mi">2</span>    <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int (0-65535)</span></dt><dd><p>The value of all input pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.read_control">
+<code class="descname">read_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.read_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from the control pins.</p>
+<p>Reads control pins 1, 14, 16, 17.</p>
+<p>The received data is encoded in 4 bits, corresponding to the 4 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span> <span class="mi">17</span>  <span class="mi">16</span>  <span class="mi">14</span>   <span class="mi">1</span>
+      <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span>  <span class="mi">8</span>   <span class="mi">4</span>   <span class="mi">2</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int (0-15)</span></dt><dd><p>The value of the control pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.read_data">
+<code class="descname">read_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.read_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the data pins.</p>
+<p>Reads the data pins (2-9) on the parallel port.</p>
+<p>The received data is encoded in 8 bits, corresponding to the 8 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span>  <span class="mi">9</span>   <span class="mi">7</span>   <span class="mi">6</span>   <span class="mi">5</span>   <span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">2</span>   <span class="mi">1</span>
+      <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span> <span class="mi">128</span>  <span class="mi">64</span>  <span class="mi">32</span>  <span class="mi">16</span>  <span class="mi">8</span>   <span class="mi">4</span>   <span class="mi">2</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int</span></dt><dd><p>The value of the data pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.read_pin">
+<code class="descname">read_pin</code><span class="sig-paren">(</span><em>pin</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.read_pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether an input pin is set high(True) or low(False).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>pin</strong><span class="classifier">int</span></dt><dd><p>The number of the input pin to read (2-13 and 15)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>set</strong><span class="classifier">bool</span></dt><dd><p>Whether the pin is set high(True) or low(False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.read_status">
+<code class="descname">read_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.read_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from the status pins.</p>
+<p>Reads all status pins (10, 11, 12, 13, 15).</p>
+<p>The received data is encoded in 5 bits, corresponding to the 5 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span> <span class="mi">11</span>  <span class="mi">10</span>  <span class="mi">12</span>  <span class="mi">13</span>  <span class="mi">15</span>
+      <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span> <span class="mi">16</span>   <span class="mi">8</span>   <span class="mi">4</span>   <span class="mi">2</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int (0-31)</span></dt><dd><p>The value of the status pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.reverse">
+<em class="property">property </em><code class="descname">reverse</code><a class="headerlink" href="#expyriment.io.ParallelPort.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for reverse.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data via all output pins.</p>
+<p>Sets the data pins (2-9) and the control pins (1, 14, 16, 17) on the
+parallel port.</p>
+<p>The data is encoded in 12 bits, corresponding to the 12 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span>  <span class="mi">17</span>   <span class="mi">16</span>   <span class="mi">14</span>    <span class="mi">1</span>    <span class="mi">9</span>    <span class="mi">8</span>    <span class="mi">7</span>    <span class="mi">6</span>    <span class="mi">5</span>    <span class="mi">4</span>    <span class="mi">3</span>    <span class="mi">2</span>
+       <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>    <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span> <span class="mi">2048</span> <span class="mi">1024</span>  <span class="mi">512</span>  <span class="mi">256</span>  <span class="mi">128</span>  <span class="mi">64</span>   <span class="mi">32</span>   <span class="mi">16</span>    <span class="mi">8</span>    <span class="mi">4</span>    <span class="mi">2</span>    <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int (0-2047)</span></dt><dd><p>The data to be send via the output pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.set_control">
+<code class="descname">set_control</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.set_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data via control pins.</p>
+<p>Sets the control pins (1, 14, 16, 17) on the parallel port.</p>
+<p>The data is encoded in 8 bits, corresponding to the 4 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span> <span class="mi">17</span>  <span class="mi">16</span>  <span class="mi">14</span>   <span class="mi">1</span>
+      <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span>  <span class="mi">8</span>   <span class="mi">4</span>   <span class="mi">2</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int (0-15)</span></dt><dd><p>The data to be send via the control pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.set_data">
+<code class="descname">set_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data via data pins.</p>
+<p>Sets the data pins (2-9) on the parallel port.</p>
+<p>The data is encoded in 8 bits, corresponding to the 8 pins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pin</span><span class="p">:</span>  <span class="mi">9</span>   <span class="mi">7</span>   <span class="mi">6</span>   <span class="mi">5</span>   <span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">2</span>   <span class="mi">1</span>
+      <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="n">Bit</span><span class="p">:</span> <span class="mi">128</span>  <span class="mi">64</span>  <span class="mi">32</span>  <span class="mi">16</span>  <span class="mi">8</span>   <span class="mi">4</span>   <span class="mi">2</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">int (0-255)</span></dt><dd><p>The data to be send via the data pins.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.ParallelPort.set_pin">
+<code class="descname">set_pin</code><span class="sig-paren">(</span><em>pin</em>, <em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.ParallelPort.set_pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a desired output pin to be high(True) or low(False).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pin</strong><span class="classifier">int</span></dt><dd><p>The number of the output pin to set (2-9).</p>
+</dd>
+<dt><strong>state</strong><span class="classifier">bool</span></dt><dd><p>Whether the pin is to be set high(True) or low(False).</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.Screen.html" class="btn btn-neutral float-right" title="expyriment.io.Screen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.OutputFile.html" class="btn btn-neutral float-left" title="expyriment.io.OutputFile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

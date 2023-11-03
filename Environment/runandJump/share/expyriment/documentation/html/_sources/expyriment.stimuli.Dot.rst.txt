@@ -1,0 +1,8 @@
+expyriment.stimuli.Dot
+======================
+
+.. autoclass:: expyriment.stimuli.Dot
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Dot.__init__

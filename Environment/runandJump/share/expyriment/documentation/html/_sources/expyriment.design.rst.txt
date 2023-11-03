@@ -1,0 +1,26 @@
+expyriment.design
+=================
+
+.. automodule:: expyriment.design
+
+
+Modules
+---------
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   expyriment.design.defaults
+   expyriment.design.extras
+   expyriment.design.permute
+   expyriment.design.randomize
+
+Classes
+---------
+.. toctree::
+   :titlesonly:
+
+   expyriment.design.Block
+   expyriment.design.Experiment
+   expyriment.design.Trial
+

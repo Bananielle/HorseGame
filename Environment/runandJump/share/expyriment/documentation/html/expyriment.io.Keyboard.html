@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.Keyboard &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.MarkerOutput" href="expyriment.io.MarkerOutput.html" />
+    <link rel="prev" title="expyriment.io.InputFile" href="expyriment.io.InputFile.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.Keyboard</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-keyboard">
+<h1>expyriment.io.Keyboard<a class="headerlink" href="#expyriment-io-keyboard" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.Keyboard">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">Keyboard</code><span class="sig-paren">(</span><em>default_keys=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a keyboard input.</p>
+<p>Calling <cite>expyriment.control.initialize(exp)</cite> will automatically create a
+keyboard instance and will reference it in exp.keyboard for easy access.</p>
+<dl class="method">
+<dt id="expyriment.io.Keyboard.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>default_keys=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a keyboard input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>default_keys</strong><span class="classifier">int or list, optional</span></dt><dd><p>a default key or list of default keys</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.check">
+<code class="descname">check</code><span class="sig-paren">(</span><em>keys=None</em>, <em>check_for_keyup=False</em>, <em>check_for_control_keys=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if keypress is in event queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>keys</strong><span class="classifier">int or list, optional</span></dt><dd><p>a specific key or list of keys to check</p>
+</dd>
+<dt><strong>check_for_keyup</strong><span class="classifier">bool, optional</span></dt><dd><p>if True checks for key-up (default = False)</p>
+</dd>
+<dt><strong>check_for_control_keys</strong><span class="classifier">bool, optional</span></dt><dd><p>checks if control key has been pressed (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>key</strong><span class="classifier">int</span></dt><dd><p>pressed key or None. Only the first occurrence is returned!</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Keys are defined by keyboard constants (please see misc.constants).</p>
+<p>When checking for key-down (default), all key-up events are first
+cleared, and when checking for key-up events, all key-down events are
+first cleared!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the event queue from keyboard events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.default_keys">
+<em class="property">property </em><code class="descname">default_keys</code><a class="headerlink" href="#expyriment.io.Keyboard.default_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for default keys</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.get_pause_key">
+<em class="property">static </em><code class="descname">get_pause_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.get_pause_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently defined pause key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.get_quit_key">
+<em class="property">static </em><code class="descname">get_quit_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.get_quit_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently defined quit key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.Keyboard.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.process_control_keys">
+<em class="property">static </em><code class="descname">process_control_keys</code><span class="sig-paren">(</span><em>key_event=None</em>, <em>quit_confirmed_function=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.process_control_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if quit_key or pause_key has been pressed.</p>
+<p>Reads pygame event cue if no key_event is specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>key_event</strong><span class="classifier">int, optional</span></dt><dd><p>key event to check. If not defined, the Pygame event queue will be
+checked for key down events.</p>
+</dd>
+<dt><strong>quit_confirmed_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to be called if quitting has been confirmed.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong><span class="classifier">bool</span></dt><dd><p>True if quitting or pause screen has been displayed,
+False otherwise</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.read_out_buffered_keys">
+<code class="descname">read_out_buffered_keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.read_out_buffered_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads out all keydown events and clears queue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.set_pause_key">
+<em class="property">static </em><code class="descname">set_pause_key</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.set_pause_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the currently defined pause key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.set_quit_key">
+<em class="property">static </em><code class="descname">set_quit_key</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.set_quit_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the currently defined quit key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>keys=None</em>, <em>duration=None</em>, <em>wait_for_keyup=False</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for keypress(es) (optionally for a certain amount of time).</p>
+<p>This function will wait for a keypress and returns the found key as
+well as the reaction time.
+(This function clears the event queue!)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>keys</strong><span class="classifier">int or list, optional</span></dt><dd><p>a specific key or list of keys to wait for</p>
+</dd>
+<dt><strong>duration</strong><span class="classifier">int, optional</span></dt><dd><p>maximal time to wait in ms</p>
+</dd>
+<dt><strong>wait_for_keyup</strong><span class="classifier">bool, optional</span></dt><dd><p>if True it waits for key-up (default=False)</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>found</strong><span class="classifier">char</span></dt><dd><p>pressed character</p>
+</dd>
+<dt><strong>rt</strong><span class="classifier">int</span></dt><dd><p>reaction time in ms</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>Keys are defined by keyboard constants (please see misc.constants).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.Keyboard.wait_char">
+<code class="descname">wait_char</code><span class="sig-paren">(</span><em>char</em>, <em>duration=None</em>, <em>callback_function=None</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.Keyboard.wait_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for character(s) (optionally for a certain amount of time).</p>
+<p>This function will wait for one or more characters and returns the
+found character as well as the reaction time.
+(This function clears the event queue!)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>char</strong><span class="classifier">int or list</span></dt><dd><p>a specific character or list of characters to wait for</p>
+</dd>
+<dt><strong>duration</strong><span class="classifier">int, optional</span></dt><dd><p>maximal time to wait in ms</p>
+</dd>
+<dt><strong>callback_function</strong><span class="classifier">function, optional</span></dt><dd><p>function to repeatedly execute during waiting loop</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>found</strong><span class="classifier">char</span></dt><dd><p>pressed character</p>
+</dd>
+<dt><strong>rt</strong><span class="classifier">int</span></dt><dd><p>reaction time in ms</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.MarkerOutput.html" class="btn btn-neutral float-right" title="expyriment.io.MarkerOutput" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.InputFile.html" class="btn btn-neutral float-left" title="expyriment.io.InputFile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

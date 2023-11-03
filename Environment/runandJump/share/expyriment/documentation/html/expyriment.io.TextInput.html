@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.TextInput &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.TextMenu" href="expyriment.io.TextMenu.html" />
+    <link rel="prev" title="expyriment.io.StreamingButtonBox" href="expyriment.io.StreamingButtonBox.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.TextInput</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-textinput">
+<h1>expyriment.io.TextInput<a class="headerlink" href="#expyriment-io-textinput" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.TextInput">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">TextInput</code><span class="sig-paren">(</span><em>message=''</em>, <em>position=None</em>, <em>character_filter=None</em>, <em>length=None</em>, <em>message_text_size=None</em>, <em>message_colour=None</em>, <em>message_font=None</em>, <em>message_bold=None</em>, <em>message_italic=None</em>, <em>message_right_to_left=None</em>, <em>user_text_size=None</em>, <em>user_text_bold=None</em>, <em>user_text_font=None</em>, <em>user_text_colour=None</em>, <em>user_right_to_left=None</em>, <em>background_colour=None</em>, <em>frame_colour=None</em>, <em>gap=None</em>, <em>screen=None</em>, <em>background_stimulus=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a text input box.</p>
+<dl class="method">
+<dt id="expyriment.io.TextInput.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>message=''</em>, <em>position=None</em>, <em>character_filter=None</em>, <em>length=None</em>, <em>message_text_size=None</em>, <em>message_colour=None</em>, <em>message_font=None</em>, <em>message_bold=None</em>, <em>message_italic=None</em>, <em>message_right_to_left=None</em>, <em>user_text_size=None</em>, <em>user_text_bold=None</em>, <em>user_text_font=None</em>, <em>user_text_colour=None</em>, <em>user_right_to_left=None</em>, <em>background_colour=None</em>, <em>frame_colour=None</em>, <em>gap=None</em>, <em>screen=None</em>, <em>background_stimulus=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextInput.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a text input box.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>message</strong><span class="classifier">str, optional</span></dt><dd><p>message to show</p>
+</dd>
+<dt><strong>position</strong><span class="classifier">(int, int), optional</span></dt><dd><p>position of the TextInput canvas</p>
+</dd>
+<dt><strong>length</strong><span class="classifier">int, optional</span></dt><dd><p>the length of the text input frame in number of characters</p>
+</dd>
+<dt><strong>character_filter</strong><span class="classifier">list, optional</span></dt><dd><p>list of character codes to filter for</p>
+</dd>
+<dt><strong>message_text_size</strong><span class="classifier">int, optional</span></dt><dd><p>text size of the message</p>
+</dd>
+<dt><strong>message_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>text colour of the message</p>
+</dd>
+<dt><strong>message_font</strong><span class="classifier">str, optional</span></dt><dd><p>text font of the message</p>
+</dd>
+<dt><strong>message_bold</strong><span class="classifier">bool, optional</span></dt><dd><p>True if message text should be bold</p>
+</dd>
+<dt><strong>message_italic</strong><span class="classifier">bool, optional</span></dt><dd><p>True if message text should be italic</p>
+</dd>
+<dt><strong>message_right_to_left</strong><span class="classifier">bool, optional</span></dt><dd><p>whether or not the message text should be presented right-to-left</p>
+</dd>
+<dt><strong>user_text_size</strong><span class="classifier">int, optional</span></dt><dd><p>text size of the user input</p>
+</dd>
+<dt><strong>user_text_font</strong><span class="classifier">str, optional</span></dt><dd><p>text font of the user input</p>
+</dd>
+<dt><strong>user_text_colour</strong><span class="classifier">(int, int ,int), optional</span></dt><dd><p>text colour of the user input</p>
+</dd>
+<dt><strong>user_text_bold</strong><span class="classifier">bool, optional</span></dt><dd><p>True if user text should be bold</p>
+</dd>
+<dt><strong>user_right_to_left</strong><span class="classifier">bool, optional</span></dt><dd><p>whether or not the user text should be presented right-to-left</p>
+</dd>
+<dt><strong>background_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd></dd>
+<dt><strong>frame_colour</strong><span class="classifier">(int, int, int)</span></dt><dd><p>colour of the frame</p>
+</dd>
+<dt><strong>gap</strong><span class="classifier">int, optional</span></dt><dd><p>gap between message and user input</p>
+</dd>
+<dt><strong>screen</strong><span class="classifier">io.Screen, optional</span></dt><dd><p>screen to present on</p>
+</dd>
+<dt><strong>background_stimulus</strong><span class="classifier">visual Expyriment stimulus, optional</span></dt><dd><p>The background stimulus is a second stimulus that will be presented
+together with the TextInput. For both stimuli overlap TextInput
+will appear on top of the background_stimulus</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>This stimulus is not optimized for timing accurate presentation!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.background_colour">
+<em class="property">property </em><code class="descname">background_colour</code><a class="headerlink" href="#expyriment.io.TextInput.background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for background_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.background_stimulus">
+<em class="property">property </em><code class="descname">background_stimulus</code><a class="headerlink" href="#expyriment.io.TextInput.background_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for background_stimulus</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.character_filter">
+<em class="property">property </em><code class="descname">character_filter</code><a class="headerlink" href="#expyriment.io.TextInput.character_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for character filter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.frame_colour">
+<em class="property">property </em><code class="descname">frame_colour</code><a class="headerlink" href="#expyriment.io.TextInput.frame_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for frame_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.gap">
+<em class="property">property </em><code class="descname">gap</code><a class="headerlink" href="#expyriment.io.TextInput.gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for gap</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>default_input=''</em>, <em>process_control_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextInput.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get input from user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>default_input</strong><span class="classifier">str, optional</span></dt><dd><p>default input in the textbox</p>
+</dd>
+<dt><strong>process_control_events</strong><span class="classifier">bool, optional</span></dt><dd><p>process <code class="docutils literal notranslate"><span class="pre">io.Keyboard.process_control_keys()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">io.Mouse.process_quit_event()</span></code> (default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>text_input: str or None</strong></dt><dd><p>returns the entered text string. If get() is interrupted by a
+CallbackQuitEvent from a registered wait-callback-function get()
+returns None.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.register_wait_callback_function" title="expyriment.design.Experiment.register_wait_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.register_wait_callback_function</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This displays and updates the input box automatically. Pressing ENTER
+returns the user input.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.length">
+<em class="property">property </em><code class="descname">length</code><a class="headerlink" href="#expyriment.io.TextInput.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for length</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.TextInput.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message">
+<em class="property">property </em><code class="descname">message</code><a class="headerlink" href="#expyriment.io.TextInput.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message_bold">
+<em class="property">property </em><code class="descname">message_bold</code><a class="headerlink" href="#expyriment.io.TextInput.message_bold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message_bold</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message_colour">
+<em class="property">property </em><code class="descname">message_colour</code><a class="headerlink" href="#expyriment.io.TextInput.message_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message_font">
+<em class="property">property </em><code class="descname">message_font</code><a class="headerlink" href="#expyriment.io.TextInput.message_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message_font</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message_italic">
+<em class="property">property </em><code class="descname">message_italic</code><a class="headerlink" href="#expyriment.io.TextInput.message_italic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message_italic</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message_right_to_left">
+<em class="property">property </em><code class="descname">message_right_to_left</code><a class="headerlink" href="#expyriment.io.TextInput.message_right_to_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message_right_to_left</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.message_text_size">
+<em class="property">property </em><code class="descname">message_text_size</code><a class="headerlink" href="#expyriment.io.TextInput.message_text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for message_text_size</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.position">
+<em class="property">property </em><code class="descname">position</code><a class="headerlink" href="#expyriment.io.TextInput.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for position</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.screen">
+<em class="property">property </em><code class="descname">screen</code><a class="headerlink" href="#expyriment.io.TextInput.screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for screen</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextInput.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.user_right_to_left">
+<em class="property">property </em><code class="descname">user_right_to_left</code><a class="headerlink" href="#expyriment.io.TextInput.user_right_to_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for user_right_to_left</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.user_text_bold">
+<em class="property">property </em><code class="descname">user_text_bold</code><a class="headerlink" href="#expyriment.io.TextInput.user_text_bold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for user_text_bold</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.user_text_colour">
+<em class="property">property </em><code class="descname">user_text_colour</code><a class="headerlink" href="#expyriment.io.TextInput.user_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for user_text_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.user_text_font">
+<em class="property">property </em><code class="descname">user_text_font</code><a class="headerlink" href="#expyriment.io.TextInput.user_text_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for user_text_font</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextInput.user_text_size">
+<em class="property">property </em><code class="descname">user_text_size</code><a class="headerlink" href="#expyriment.io.TextInput.user_text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for user_text_size</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.TextMenu.html" class="btn btn-neutral float-right" title="expyriment.io.TextMenu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.StreamingButtonBox.html" class="btn btn-neutral float-left" title="expyriment.io.StreamingButtonBox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

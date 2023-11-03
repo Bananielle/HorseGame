@@ -1,0 +1,8 @@
+expyriment.control.CallbackQuitEvent
+====================================
+
+.. autoclass:: expyriment.control.CallbackQuitEvent
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.control.CallbackQuitEvent.__init__

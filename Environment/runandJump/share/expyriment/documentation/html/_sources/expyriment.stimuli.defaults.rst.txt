@@ -1,0 +1,281 @@
+expyriment.stimuli.defaults
+===========================
+
+.. automodule:: expyriment.stimuli.defaults
+
+Attributes
+-----------
+.. py:data:: expyriment.stimuli.defaults.canvas_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.canvas_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.circle_anti_aliasing
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.circle_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.circle_line_width
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.circle_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.ellipse_anti_aliasing
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.ellipse_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.ellipse_line_width
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.ellipse_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.fixcross_anti_aliasing
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.fixcross_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.fixcross_line_width
+
+   default value: 2
+
+.. py:data:: expyriment.stimuli.defaults.fixcross_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.fixcross_size
+
+   default value: (20, 20)
+
+.. py:data:: expyriment.stimuli.defaults.line_anti_aliasing
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.line_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.picture_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.rectangle_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.rectangle_corner_anti_aliasing
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.rectangle_corner_rounding
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.rectangle_line_width
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.rectangle_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.shape_anti_aliasing
+
+   default value: 0
+
+.. py:data:: expyriment.stimuli.defaults.shape_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.shape_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.tempdir
+
+   default value: '/var/folders/m1/df_x5njn30s9xhhqs5r6kdw00000gn/T/expyriment_oh6zn5vx'
+
+.. py:data:: expyriment.stimuli.defaults.textbox_background_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textbox_do_not_trim_words
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textbox_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_bold
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_font
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_italic
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_justification
+
+   default value: 1
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_size
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textbox_text_underline
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textline_background_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textline_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.textline_text_bold
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textline_text_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textline_text_font
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textline_text_italic
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textline_text_size
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textline_text_underline
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_background_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_heading_bold
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_heading_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_heading_font
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_heading_italic
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_heading_size
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_heading_underline
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_position
+
+   default value: (0, 0)
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_size
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_bold
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_colour
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_font
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_italic
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_justification
+
+   default value: 1
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_size
+
+   default value: None
+
+.. py:data:: expyriment.stimuli.defaults.textscreen_text_underline
+
+   default value: False
+
+.. py:data:: expyriment.stimuli.defaults.tone_amplitude
+
+   default value: 0.5
+
+.. py:data:: expyriment.stimuli.defaults.tone_bitdepth
+
+   default value: 16
+
+.. py:data:: expyriment.stimuli.defaults.tone_frequency
+
+   default value: 440
+
+.. py:data:: expyriment.stimuli.defaults.tone_samplerate
+
+   default value: 44100
+
+.. py:data:: expyriment.stimuli.defaults.video_backend
+
+   default value: 'mediadecoder'
+
+.. py:data:: expyriment.stimuli.defaults.video_position
+
+   default value: [0, 0]
+
+.. py:data:: expyriment.stimuli.defaults.visual_position
+
+   default value: (0, 0)
+
+
+

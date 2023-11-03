@@ -1,0 +1,81 @@
+expyriment.control.defaults
+===========================
+
+.. automodule:: expyriment.control.defaults
+
+Attributes
+-----------
+.. py:data:: expyriment.control.defaults.audiosystem_autostart
+
+   default value: True
+
+.. py:data:: expyriment.control.defaults.audiosystem_bit_depth
+
+   default value: -16
+
+.. py:data:: expyriment.control.defaults.audiosystem_buffer_size
+
+   default value: 2048
+
+.. py:data:: expyriment.control.defaults.audiosystem_channels
+
+   default value: 2
+
+.. py:data:: expyriment.control.defaults.audiosystem_sample_rate
+
+   default value: 44100
+
+.. py:data:: expyriment.control.defaults.auto_create_subject_id
+
+   default value: False
+
+.. py:data:: expyriment.control.defaults.event_logging
+
+   default value: 1
+
+.. py:data:: expyriment.control.defaults.fast_quit
+
+   default value: False
+
+.. py:data:: expyriment.control.defaults.goodbye_delay
+
+   default value: 3000
+
+.. py:data:: expyriment.control.defaults.goodbye_text
+
+   default value: 'Ending experiment...'
+
+.. py:data:: expyriment.control.defaults.initialize_delay
+
+   default value: 10
+
+.. py:data:: expyriment.control.defaults.open_gl
+
+   default value: 2
+
+.. py:data:: expyriment.control.defaults.pause_key
+
+   default value: None
+
+.. py:data:: expyriment.control.defaults.quit_key
+
+   default value: 27
+
+.. py:data:: expyriment.control.defaults.stdout_logging
+
+   default value: True
+
+.. py:data:: expyriment.control.defaults.window_mode
+
+   default value: False
+
+.. py:data:: expyriment.control.defaults.window_no_frame
+
+   default value: False
+
+.. py:data:: expyriment.control.defaults.window_size
+
+   default value: (800, 600)
+
+
+

@@ -1,0 +1,8 @@
+expyriment.io.OutputFile
+========================
+
+.. autoclass:: expyriment.io.OutputFile
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.OutputFile.__init__

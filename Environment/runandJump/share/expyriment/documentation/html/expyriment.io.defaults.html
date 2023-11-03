@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.defaults &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.extras" href="expyriment.io.extras.html" />
+    <link rel="prev" title="expyriment.io" href="expyriment.io.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextMenu.html">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.defaults</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.io.defaults">
+<span id="expyriment-io-defaults"></span><h1>expyriment.io.defaults<a class="headerlink" href="#module-expyriment.io.defaults" title="Permalink to this headline">¶</a></h1>
+<p>Default settings for the io package.</p>
+<p>This module contains default values for all optional arguments in the init
+function of all classes in this package.</p>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.datafile_delimiter">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">datafile_delimiter</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.datafile_delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘,’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.datafile_directory">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">datafile_directory</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.datafile_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘data’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.eventfile_delimiter">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">eventfile_delimiter</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.eventfile_delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘,’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.eventfile_directory">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">eventfile_directory</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.eventfile_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘events’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.keyboard_default_keys">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">keyboard_default_keys</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.keyboard_default_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.markeroutput_default_code">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">markeroutput_default_code</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.markeroutput_default_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 1</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.markeroutput_default_duration">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">markeroutput_default_duration</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.markeroutput_default_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.mouse_show_cursor">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">mouse_show_cursor</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.mouse_show_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: True</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.mouse_track_button_events">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">mouse_track_button_events</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.mouse_track_button_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: True</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.mouse_track_motion_events">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">mouse_track_motion_events</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.mouse_track_motion_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.outputfile_comment_char">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">outputfile_comment_char</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.outputfile_comment_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘#’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.outputfile_eol">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">outputfile_eol</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.outputfile_eol" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘n’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.outputfile_time_stamp">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">outputfile_time_stamp</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.outputfile_time_stamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: True</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_baudrate">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_baudrate</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_baudrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 19200</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_bytesize">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_bytesize</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_bytesize" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 8</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_dsrdtr">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_dsrdtr</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_dsrdtr" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_input_history">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_input_history</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_input_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_input_timing">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_input_timing</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_input_timing" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 1</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_os_buffer_size">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_os_buffer_size</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_os_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 3000</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_parity">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_parity</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_parity" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘N’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_rtscts">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_rtscts</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_rtscts" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_stopbits">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_stopbits</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_stopbits" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 1</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_timeout">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_timeout</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.serialport_xonxoff">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">serialport_xonxoff</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.serialport_xonxoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.streamingbuttonbox_baseline">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">streamingbuttonbox_baseline</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.streamingbuttonbox_baseline" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_background_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_background_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_character_filter">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_character_filter</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_character_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_frame_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_frame_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_frame_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_gap">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_gap</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 6</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_length">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_length</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 25</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_message_bold">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_message_bold</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_message_bold" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_message_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_message_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_message_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_message_font">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_message_font</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_message_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_message_italic">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_message_italic</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_message_italic" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_message_right_to_left">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_message_right_to_left</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_message_right_to_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_message_text_size">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_message_text_size</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_message_text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_position">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_position</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: (0, 0)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_user_right_to_left">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_user_right_to_left</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_user_right_to_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_bold">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_user_text_bold</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_bold" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_user_text_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_font">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_user_text_font</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_size">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textinput_user_text_size</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textinput_user_text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_background_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_background_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x114c31150&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_gap">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_gap</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 2</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_heading_font">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_heading_font</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_heading_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_heading_text_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_heading_text_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_heading_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a390&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_justification">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_justification</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_justification" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 1</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_position">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_position</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: (0, 0)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_scroll_menu">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_scroll_menu</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_scroll_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_select_background_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_select_background_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_select_background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a350&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_select_frame_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_select_frame_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_select_frame_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a390&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_select_frame_line_width">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_select_frame_line_width</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_select_frame_line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 0</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_select_text_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_select_text_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_select_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: [0, 0, 0]</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_text_colour">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_text_colour</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a310&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_text_font">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_text_font</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_text_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.textmenu_text_size">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">textmenu_text_size</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.textmenu_text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 20</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.io.defaults.expyriment.io.defaults.triggerinput_default_code">
+<code class="descclassname">expyriment.io.defaults.</code><code class="descname">triggerinput_default_code</code><a class="headerlink" href="#expyriment.io.defaults.expyriment.io.defaults.triggerinput_default_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 1</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.extras.html" class="btn btn-neutral float-right" title="expyriment.io.extras" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.html" class="btn btn-neutral float-left" title="expyriment.io" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

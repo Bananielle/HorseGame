@@ -1,0 +1,8 @@
+expyriment.misc.Colour
+======================
+
+.. autoclass:: expyriment.misc.Colour
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.misc.Colour.__init__

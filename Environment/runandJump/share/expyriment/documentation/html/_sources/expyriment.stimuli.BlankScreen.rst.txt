@@ -1,0 +1,8 @@
+expyriment.stimuli.BlankScreen
+==============================
+
+.. autoclass:: expyriment.stimuli.BlankScreen
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.BlankScreen.__init__

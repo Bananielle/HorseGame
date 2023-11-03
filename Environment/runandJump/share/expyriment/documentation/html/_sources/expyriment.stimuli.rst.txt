@@ -1,0 +1,38 @@
+expyriment.stimuli
+==================
+
+.. automodule:: expyriment.stimuli
+
+
+Modules
+---------
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   expyriment.stimuli.defaults
+   expyriment.stimuli.extras
+
+Classes
+---------
+.. toctree::
+   :titlesonly:
+
+   expyriment.stimuli.Audio
+   expyriment.stimuli.BlankScreen
+   expyriment.stimuli.Canvas
+   expyriment.stimuli.Circle
+   expyriment.stimuli.Dot
+   expyriment.stimuli.Ellipse
+   expyriment.stimuli.FixCross
+   expyriment.stimuli.Frame
+   expyriment.stimuli.Line
+   expyriment.stimuli.Picture
+   expyriment.stimuli.Rectangle
+   expyriment.stimuli.Shape
+   expyriment.stimuli.TextBox
+   expyriment.stimuli.TextLine
+   expyriment.stimuli.TextScreen
+   expyriment.stimuli.Tone
+   expyriment.stimuli.Video
+

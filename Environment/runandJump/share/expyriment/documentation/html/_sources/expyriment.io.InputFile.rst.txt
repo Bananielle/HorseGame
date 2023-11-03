@@ -1,0 +1,8 @@
+expyriment.io.InputFile
+=======================
+
+.. autoclass:: expyriment.io.InputFile
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.InputFile.__init__

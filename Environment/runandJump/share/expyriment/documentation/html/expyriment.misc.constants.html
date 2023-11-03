@@ -1,0 +1,1142 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.constants &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.data_preprocessing" href="expyriment.misc.data_preprocessing.html" />
+    <link rel="prev" title="expyriment.misc" href="expyriment.misc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.misc.constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+      <li>expyriment.misc.constants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.misc.constants">
+<span id="expyriment-misc-constants"></span><h1>expyriment.misc.constants<a class="headerlink" href="#module-expyriment.misc.constants" title="Permalink to this headline">¶</a></h1>
+<p>The constants module.</p>
+<p>This module contains expyriment constants.</p>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_BLACK">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_BLACK</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_BLACK" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x114c31150&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_BLUE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_BLUE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_BLUE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a250&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_DARKGREY">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_DARKGREY</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_DARKGREY" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a350&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_EXPYRIMENT_ORANGE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_EXPYRIMENT_ORANGE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_EXPYRIMENT_ORANGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a390&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_EXPYRIMENT_PURPLE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_EXPYRIMENT_PURPLE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_EXPYRIMENT_PURPLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a3d0&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_GREEN">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_GREEN</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_GREEN" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a290&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_GREY">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_GREY</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_GREY" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a310&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_RED">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_RED</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_RED" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x114700b50&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_WHITE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_WHITE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_WHITE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x114700990&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.C_YELLOW">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">C_YELLOW</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.C_YELLOW" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: &lt;expyriment.misc._colour.Colour object at 0x117c1a2d0&gt;</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.EXPYRIMENT_LOGO_FILE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">EXPYRIMENT_LOGO_FILE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.EXPYRIMENT_LOGO_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_0">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_0</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 48</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_1">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_1</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 49</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_2">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_2</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 50</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_3">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_3</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 51</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_4">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_4</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_4" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 52</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_5">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_5</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_5" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 53</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_6">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_6</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_6" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 54</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_7">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_7</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_7" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 55</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_8">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_8</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_8" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 56</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_9">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_9</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_9" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 57</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_ALL_DIGITS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_ALL_DIGITS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_ALL_DIGITS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: [48, 49, 50, 51, 52, 53, 54, 55, 56, 57]</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_ALL_KEYPAD_DIGITS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_ALL_KEYPAD_DIGITS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_ALL_KEYPAD_DIGITS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: [256, 257, 258, 259, 260, 261, 262, 263, 264, 265]</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_ALL_LETTERS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_ALL_LETTERS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_ALL_LETTERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: [97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122]</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_AMPERSAND">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_AMPERSAND</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_AMPERSAND" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 38</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_ASTERISK">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_ASTERISK</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_ASTERISK" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 42</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_AT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_AT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_AT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 64</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_BACKQUOTE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_BACKQUOTE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_BACKQUOTE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 96</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_BACKSLASH">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_BACKSLASH</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_BACKSLASH" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 92</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_BACKSPACE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_BACKSPACE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_BACKSPACE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 8</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_BREAK">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_BREAK</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_BREAK" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 318</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_CAPSLOCK">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_CAPSLOCK</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_CAPSLOCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 301</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_CARET">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_CARET</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_CARET" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 94</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_CLEAR">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_CLEAR</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_CLEAR" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 12</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_COLON">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_COLON</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_COLON" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 58</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_COMMA">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_COMMA</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_COMMA" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 44</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_DELETE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_DELETE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_DELETE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 127</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_DOLLAR">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_DOLLAR</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_DOLLAR" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 36</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_DOWN">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_DOWN</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_DOWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 274</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_END">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_END</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_END" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 279</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_EQUALS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_EQUALS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_EQUALS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 61</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_ESCAPE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_ESCAPE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_ESCAPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 27</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_EURO">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_EURO</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_EURO" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 321</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_EXCLAIM">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_EXCLAIM</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_EXCLAIM" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 33</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F1">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F1</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F1" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 282</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F10">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F10</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F10" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 291</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F11">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F11</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F11" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 292</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F12">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F12</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F12" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 293</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F13">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F13</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F13" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 294</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F14">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F14</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F14" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 295</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F15">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F15</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F15" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 296</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F2">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F2</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F2" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 283</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F3">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F3</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F3" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 284</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F4">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F4</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F4" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 285</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F5">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F5</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F5" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 286</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F6">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F6</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F6" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 287</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F7">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F7</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F7" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 288</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F8">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F8</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F8" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 289</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_F9">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_F9</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_F9" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 290</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_GREATER">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_GREATER</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_GREATER" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 62</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_HASH">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_HASH</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_HASH" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 35</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_HELP">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_HELP</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_HELP" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 315</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_HOME">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_HOME</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_HOME" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 278</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_INSERT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_INSERT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_INSERT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 277</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP0">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP0</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP0" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 256</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP1">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP1</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP1" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 257</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP2">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP2</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP2" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 258</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP3">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP3</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP3" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 259</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP4">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP4</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP4" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 260</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP5">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP5</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP5" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 261</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP6">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP6</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP6" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 262</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP7">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP7</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP7" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 263</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP8">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP8</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP8" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 264</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP9">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP9</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP9" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 265</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_DIVIDE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_DIVIDE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_DIVIDE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 267</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_ENTER">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_ENTER</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_ENTER" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 271</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_EQUALS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_EQUALS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_EQUALS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 272</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_MINUS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_MINUS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_MINUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 269</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_MULTIPLY">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_MULTIPLY</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_MULTIPLY" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 268</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_PERIOD">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_PERIOD</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_PERIOD" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 266</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_KP_PLUS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_KP_PLUS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_KP_PLUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 270</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LALT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LALT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LALT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 308</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LCTRL">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LCTRL</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LCTRL" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 306</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LEFT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LEFT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LEFT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 276</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LEFTBRACKET">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LEFTBRACKET</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LEFTBRACKET" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 91</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LEFTPAREN">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LEFTPAREN</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LEFTPAREN" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 40</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LESS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LESS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LESS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 60</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LMETA">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LMETA</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LMETA" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 310</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LSHIFT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LSHIFT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LSHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 304</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_LSUPER">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_LSUPER</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_LSUPER" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 311</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_MENU">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_MENU</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_MENU" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 319</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_MINUS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_MINUS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_MINUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 45</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_MODE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_MODE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_MODE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 313</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_NUMLOCK">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_NUMLOCK</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_NUMLOCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 300</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_PAGEDOWN">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_PAGEDOWN</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_PAGEDOWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 281</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_PAGEUP">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_PAGEUP</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_PAGEUP" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 280</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_PAUSE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_PAUSE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_PAUSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 19</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_PERIOD">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_PERIOD</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_PERIOD" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 46</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_PLUS">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_PLUS</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_PLUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 43</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_POWER">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_POWER</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_POWER" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 320</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_PRINT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_PRINT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_PRINT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 316</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_QUESTION">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_QUESTION</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_QUESTION" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 63</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_QUOTE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_QUOTE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_QUOTE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 39</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_QUOTEDBL">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_QUOTEDBL</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_QUOTEDBL" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 34</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RALT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RALT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RALT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 307</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RCTRL">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RCTRL</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RCTRL" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 305</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RETURN">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RETURN</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RETURN" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 13</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RIGHT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RIGHT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RIGHT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 275</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RIGHTBRACKET">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RIGHTBRACKET</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RIGHTBRACKET" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 93</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RIGHTPAREN">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RIGHTPAREN</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RIGHTPAREN" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 41</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RMETA">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RMETA</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RMETA" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 309</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RSHIFT">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RSHIFT</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RSHIFT" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 303</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_RSUPER">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_RSUPER</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_RSUPER" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 312</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_SCROLLOCK">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_SCROLLOCK</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_SCROLLOCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 302</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_SEMICOLON">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_SEMICOLON</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_SEMICOLON" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 59</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_SLASH">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_SLASH</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_SLASH" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 47</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_SPACE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_SPACE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_SPACE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 32</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_SYSREQ">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_SYSREQ</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_SYSREQ" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 317</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_TAB">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_TAB</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_TAB" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 9</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_UNDERSCORE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_UNDERSCORE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_UNDERSCORE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 95</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_UP">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_UP</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_UP" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 273</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_a">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_a</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_a" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 97</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_b">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_b</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_b" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 98</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_c">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_c</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 99</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_d">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_d</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_d" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 100</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_e">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_e</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_e" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 101</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_f">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_f</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_f" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 102</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_g">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_g</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_g" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 103</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_h">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_h</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_h" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 104</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_i">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_i</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_i" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 105</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_j">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_j</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_j" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 106</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_k">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_k</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_k" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 107</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_l">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_l</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_l" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 108</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_m">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_m</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 109</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_n">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_n</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 110</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_o">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_o</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_o" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 111</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_p">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_p</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 112</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_q">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_q</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_q" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 113</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_r">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_r</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_r" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 114</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_s">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_s</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 115</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_t">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_t</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 116</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_u">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_u</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_u" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 117</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_v">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_v</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_v" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 118</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_w">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_w</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_w" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 119</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_x">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_x</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 120</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_y">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_y</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 121</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.K_z">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">K_z</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.K_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 122</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.P_BALANCED_LATIN_SQUARE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">P_BALANCED_LATIN_SQUARE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.P_BALANCED_LATIN_SQUARE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘balanced-latin-square’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.P_CYCLED_LATIN_SQUARE">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">P_CYCLED_LATIN_SQUARE</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.P_CYCLED_LATIN_SQUARE" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘cycled-latin-square’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.misc.constants.expyriment.misc.constants.P_RANDOM">
+<code class="descclassname">expyriment.misc.constants.</code><code class="descname">P_RANDOM</code><a class="headerlink" href="#expyriment.misc.constants.expyriment.misc.constants.P_RANDOM" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘random’</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.data_preprocessing.html" class="btn btn-neutral float-right" title="expyriment.misc.data_preprocessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.html" class="btn btn-neutral float-left" title="expyriment.misc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

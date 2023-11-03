@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Timing and empirical testing of Expyriment &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Currently known problems and limitations" href="Problems.html" />
+    <link rel="prev" title="Hardware compatibility" href="Hardware.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="APIReferenceTool.html">API reference tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testsuite.html">Test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CommandLineInterface.html">Command line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataPreprocessing.html">Data preprocessing and exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Unicode.html">Using non-English characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fonts.html">Using fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Video.html">Presenting videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html">Plugin system (extras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Defaults.html">Defaults (settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Hardware.html">Hardware compatibility</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Problems.html">Problems &amp; Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="Advanced.html">Advanced</a> &raquo;</li>
+        
+      <li>Timing and empirical testing of Expyriment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="timing-and-empirical-testing-of-expyriment">
+<h1>Timing and empirical testing of Expyriment<a class="headerlink" href="#timing-and-empirical-testing-of-expyriment" title="Permalink to this headline">¶</a></h1>
+<p><strong>How accurate is the timing in Expyriment?</strong></p>
+<p>In general, the Expyriment clock can feature up to 1 ms accuracy. The exact
+timing, however, is subject to various factors, which we discuss here.</p>
+<p>Time and compatibility issues can be conveniently tested using the
+<a class="reference internal" href="Testsuite.html"><span class="doc">Expyriment test suite</span></a>.</p>
+<div class="section" id="stimulus-presentation">
+<h2>Stimulus presentation<a class="headerlink" href="#stimulus-presentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="visual">
+<h3>Visual<a class="headerlink" href="#visual" title="Permalink to this headline">¶</a></h3>
+<p>Computer screens are updated according to their refresh rate. What happens then
+is that the whole screen is redrawn line by line all the time. For example,
+with a refresh rate of 60Hz, the screen is redrawn 60 times per second (1000ms)
+and the duration it takes to redraw it line by line is 16.66 ms (1000/60).
+When attempting to redraw the screen while it is currently already being
+updated (the lines are drawn) the result might lead to artifacts, since the
+update occurs immediately, leading to parts of both, the new and the old screen
+content, being visible. What is even worse is that you will never know in which
+phase of the redrawing the new redraw was started. Thus, you cannot be sure
+when exactly the new content is fully visible on screen. This should be the
+behaviour of Expyriment, when OpenGL is switched off
+(<code class="docutils literal notranslate"><span class="pre">control.defaults.open_gl=0</span></code>; see <a class="reference internal" href="Defaults.html"><span class="doc">Defaults (settings)</span></a>)</p>
+<p>The first step towards getting around this problem is to synchronize the actual
+redraw to the vertical retrace of the screen. This means that a change in
+content will never happen immediately, but always only when the retrace is at
+the top left position. When synchronizing to the vertical retrace, the graphic
+card is told to update the screen the next time it starts redrawing the first
+line. This should be the behaviour of Expyriment, when OpenGL is switched on
+and set to “vsync / no blocking” (<code class="docutils literal notranslate"><span class="pre">control.defaults.open_gl=1</span></code>; see <a class="reference internal" href="Defaults.html"><span class="doc">Defaults (settings)</span></a>).
+While this will solve the problem of artifacts, you will still face the
+problem of not knowing when exactly something was visible on the screen, since
+the graphic card handles this synchronization itself in the background.</p>
+<p>Solving this problem is the exact (and only) reason why Expyriment will use
+OpenGL set to “vsync / blocking” (<code class="docutils literal notranslate"><span class="pre">control.defaults.open_gl=2</span></code>; see <a class="reference internal" href="Defaults.html"><span class="doc">Defaults (settings)</span></a>) by default.
+It allows to wait for the vertical retrace to actually happen before
+proceeding with the code that tells the graphics card to update the screen
+(this is also known as blocking on the vertical retrace). This means that
+whenever something should be presented on screen, no matter in which line the
+redraw is at this point in time, the graphic card will wait for the redraw to
+be in the first line and then present the stimulus. Since the code is
+blocking, the time Expyriment reports the stimulus to be presented on screen
+will always be the time when the redraw is starting at the first line.
+Coming back to the example of the small dot in the center of the screen:
+Expyriment will correctly report a longer presentation time when the redraw
+has been just over the center line when the screen update was issued.</p>
+<p>In some rare cases, this blocking mechanism will not work. This is due to
+specifics of the video card driver implementation. Should blocking on the
+vertical retrace indeed not work (as can be revealed by the
+<a class="reference internal" href="Testsuite.html"><span class="doc">Expyriment test suite</span></a>), an alternative blocking mechanism
+is available by using OpenGL set to “vsync / alternative blocking”
+(<code class="docutils literal notranslate"><span class="pre">control.defaults.open_gl=3</span></code>; see <a class="reference internal" href="Defaults.html"><span class="doc">Defaults (settings)</span></a>).</p>
+<p><em>It is important to set your graphic card’s driver settings to support
+synchronizing to the vertical retrace (“Sync to VBlank” or “V-sync”) and to
+switch off any power saving schemes on the graphic card.</em>
+<em>Also, please be aware that blocking on the vertical retrace is not accurate
+in window mode!</em></p>
+<p><strong>Test results</strong></p>
+<p>We tested the visual timing by presented a white and a black fullscreen
+rectangle directly after each other. The brightness of the left upper edge of
+the screen was recorded using an optic sensor attached to an oscilloscope.
+After each screen presentation, a marker was send via the serial port to the
+oscilloscope. Testing was done on an Intel Core Duo PC with an Nvidia Quadro
+NVS 290 graphics card, running Microsoft Windows XP SP3. The monitor used was a
+Samsung SyncMaster 2233. Expyriment was running in the default OpenGL mode
+(<code class="docutils literal notranslate"><span class="pre">control.defaults.open_gl=2</span></code>; see <a class="reference internal" href="Defaults.html"><span class="doc">Defaults (settings)</span></a>).</p>
+<p>The results revealed:</p>
+<ul class="simple">
+<li>When presenting a stimulus, updating the screen does successfully block code
+execution until the vertical retrace actually happens. This can be seen in
+Figure 1, where the marker (yellow) lines up with the onset and offset of an
+increase in brightness (turquoise) which represent the onset of the white and
+the onset of the black screen, respectively.</li>
+<li>Presenting (preloaded) stimuli can accurately be done each refresh rate
+(Figure 2).</li>
+</ul>
+<p>Visual stimulus presentation is time locked to the vertical retrace.</p>
+<img alt="_images/timing_visual1.png" src="_images/timing_visual1.png" />
+<p>Visual stimuli can be presented each refresh rate.</p>
+<img alt="_images/timing_visual2.png" src="_images/timing_visual2.png" />
+</div>
+</div>
+<div class="section" id="audio">
+<h2>Audio<a class="headerlink" href="#audio" title="Permalink to this headline">¶</a></h2>
+<p>Playing back audio is handled by PyGame. The present() and play() methods of
+auditory stimuli will return immediately. Since the audio stream has to be sent
+to the hardware, there will still be a delay before the audio can be heard.
+Unfortunately, the latency of the sound onset is not known by Expyriment.
+However, it is assumed to be relatively stable over time. Setting the audio
+buffersize to a smaller value than the default can decrease the delay, but
+might result in distorted audio.</p>
+<p><em>It is important to set your samplerate, bitdepth and audio buffersize
+correctly. Setting the buffersize too low will result in distorted audio!</em></p>
+<p><strong>Test results</strong></p>
+<p>We tested the audio timing by repeatedly playing back a beep tone (a 1 second
+sine wave). The output of the sound card was measured by an oscilloscope.
+Before starting playback of the beep, a marker was send via the serial port to
+the oscilloscope.  Testing was done on an Intel Core Duo PC with a Soundblaster
+Audigy sound card, running Microsoft Windows XP SP3. In Expyriment, the
+samplerate was set to 44100 Hz, bitdepth to 16 bit and the buffersize equaled 128.</p>
+<p>The results revealed:</p>
+<ul class="simple">
+<li>Audio playback was subject to a latency of maximally 20 ms. Figure 1 shows
+the maximal measured latency between the start of the playback (yellow) and
+the onset of the sound (turquoise).</li>
+<li>This latency was relatively stable with a jitter of 5 ms. Figure 2 shows the
+minimal latency we could measure.</li>
+</ul>
+<p>Maximal measured audio latency.</p>
+<img alt="_images/timing_audio2.png" src="_images/timing_audio2.png" />
+<p>Minimal measured audio latency</p>
+<img alt="_images/timing_audio1.png" src="_images/timing_audio1.png" />
+<div class="section" id="video">
+<h3>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h3>
+<p>Video presentation is a tricky subject. In Expyriment, the present() method of
+a video stimulus will start playback and present the first (current) frame on
+the screen. Thus, visual onset of this frame can be synchronized with the
+vertical retrace (see visual stimulus presentation above). Each following frame
+has to be plotted on the screen and the screen has to be updated. The
+wait_end() method of a video stimulus will automatically present each frame on
+the screen until the video is over. When Expyriment is in OpenGL mode “vsync /
+(alternative) blocking”, the process of plotting each frame might take longer
+than one refresh rate which will result in dropping frames (e.g. frames not
+being presented at all). To control for this, the wait_end() method will
+report and log if any frames were dropped during video playback.</p>
+</div>
+</div>
+<div class="section" id="measuring-user-input">
+<h2>Measuring user input<a class="headerlink" href="#measuring-user-input" title="Permalink to this headline">¶</a></h2>
+<p>In Expyriment all inputs (keybard, mouse, gameport, serial port, parallel port)
+can be checked by directly polling them (via the wait() methods of the
+corresponding io object). This allows for the most accurate timing possible.
+Since Python wraps C functions for getting the system time, the accuracy is
+even more precise than milliseconds (which is the unit Expyriment uses).</p>
+<p>Expyriment does <em>not</em> have a main event loop (i.e. it will not automatically
+check for any incoming events in the background)! This was a design decision,
+since we think that in 99% of all cases the time of the user input is specified
+in the design and thus know beforehand (e.g. a response after a stimulus
+onset). Adding an event loop would make things unnecessarily more complicated
+for those 99%.</p>
+<p>However, we also thought of those cases that need to check user input during
+other operations: All events can manually be pushed from either Pygame’s event
+cue (keyboard, mouse, joystick) or the operating system’s buffer (serial port,
+parallel port) into an EventBuffer object. Doing this regularly is up to the
+user.</p>
+<div class="section" id="keyboard">
+<h3>Keyboard<a class="headerlink" href="#keyboard" title="Permalink to this headline">¶</a></h3>
+<p>Keyboards (PS2 and USB) are known to have poor timing accuracy. Usually these
+are in the range of several 100th of a second.</p>
+<p><strong>Test results</strong></p>
+<p>We tested the timing of a Logitec USB keyboard in Windows XP SP3 using optical
+tracking.</p>
+<p>Our results revealed:</p>
+<ul class="simple">
+<li>A timing accuracy between 20 and 26 ms.</li>
+</ul>
+</div>
+<div class="section" id="mouse">
+<h3>Mouse<a class="headerlink" href="#mouse" title="Permalink to this headline">¶</a></h3>
+<p>On most operating systems, USB mice are polled at a rate of 8 ms. Mice with
+special drivers might be set to poll more often.</p>
+<p><strong>Test results</strong></p>
+<p>We tested the mouse accuracy of a standard USB mouse on Windows XP SP3 by
+measuring the time between reported position changes.</p>
+<p>Our results revealed:</p>
+<ul class="simple">
+<li>The expected standard accuracy of 8 ms.</li>
+<li>Using a Logitec G700 USB mouse with a dedicated driver, polling rates could A
+be reduced, leading to an increased accuracy of 1 ms.</li>
+</ul>
+</div>
+<div class="section" id="serial-port">
+<h3>Serial port<a class="headerlink" href="#serial-port" title="Permalink to this headline">¶</a></h3>
+<p>The serial port is very accurate and thus suited for timing accurate
+measurements. If a computer does not have a serial port, USB-to-serial
+converter can be used (e.g. from Sweex or Keyspan). However, the timing
+accuracy of these depends on the implementation and drivers used!</p>
+<p><em>It is important to deactivate any additional FIFO buffers or delays, provided
+by the port driver!</em></p>
+<p><strong>Test results</strong></p>
+<p>We tested the timing of a UART 16550A serial port (a real one, not a
+USB-to-serial converter!) on Windows XP SP3 by sending a byte to a connected
+loopback device which immediately sends the byte back. We then measured the
+time between sending and receiving. We repeated this process 1000 times.</p>
+<p>Our results revealed:</p>
+<ul class="simple">
+<li>With a baudrate of 115200, the maximal measured time between sending and
+receiving a byte was 0.283894736842 ms.</li>
+<li>With a baudrate of 19200, the maximal measured time between sending and
+receiving a byte was 0.689593984962 ms.</li>
+</ul>
+</div>
+<div class="section" id="parallel-port">
+<h3>Parallel port<a class="headerlink" href="#parallel-port" title="Permalink to this headline">¶</a></h3>
+<p>The parallel port works by directly applying a current (writing) and measuring
+if a current is applied (sending) to several pins on the connector. Expyriment
+is only able to read from Acknowledge, Paper-Out and Selected pins!</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Problems.html" class="btn btn-neutral float-right" title="Currently known problems and limitations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Hardware.html" class="btn btn-neutral float-left" title="Hardware compatibility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

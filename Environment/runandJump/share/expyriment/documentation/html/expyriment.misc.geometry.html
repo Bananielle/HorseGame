@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.geometry &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.geometry.XYPoint" href="expyriment.misc.geometry.XYPoint.html" />
+    <link rel="prev" title="expyriment.misc.extras" href="expyriment.misc.extras.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.misc.geometry</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="expyriment.misc.geometry.XYPoint.html">expyriment.misc.geometry.XYPoint</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+      <li>expyriment.misc.geometry</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.misc.geometry">
+<span id="expyriment-misc-geometry"></span><h1>expyriment.misc.geometry<a class="headerlink" href="#module-expyriment.misc.geometry" title="Permalink to this headline">¶</a></h1>
+<p>The geometry module.</p>
+<p>This module contains miscellaneous geometry functions for expyriment.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.geometry.XYPoint.html">expyriment.misc.geometry.XYPoint</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="expyriment.misc.geometry.cartesian2polar">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">cartesian2polar</code><span class="sig-paren">(</span><em>xy</em>, <em>radians=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.cartesian2polar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a cartesian coordinate (x,y) to a polar coordinate
+(radial, angle[degrees]).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>xy</strong><span class="classifier">(float, float)</span></dt><dd><p>cartesian coordinate (x,y)</p>
+</dd>
+<dt><strong>radians</strong><span class="classifier">boolean</span></dt><dd><p>use radians instead of degrees for the angle</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>polar</strong><span class="classifier">(float, float)</span></dt><dd><p>polar coordinate (radial, angle[degrees])</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.coordinates2position">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">coordinates2position</code><span class="sig-paren">(</span><em>coordinates</em>, <em>surface_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.coordinates2position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert coordinates on the screen or surface to an
+Expyriment position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>coordinates</strong><span class="classifier">(int, int)</span></dt><dd><p>coordinates (x,y) to convert</p>
+</dd>
+<dt><strong>surface_size: (int, int), optional</strong></dt><dd><p>size of the surface one which position is defined
+if None (default), the position will be calculated relative
+to the screen</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position</strong><span class="classifier">[int, int]</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.lines_intersect">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">lines_intersect</code><span class="sig-paren">(</span><em>pa</em>, <em>pb</em>, <em>pc</em>, <em>pd</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.lines_intersect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if two line segments are intersecting</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>pa</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 1 of line 1</p>
+</dd>
+<dt><strong>pb</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 2 of line 1</p>
+</dd>
+<dt><strong>pc</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 1 of line 2</p>
+</dd>
+<dt><strong>pb</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 2 of line 2</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>check</strong><span class="classifier">bool</span></dt><dd><p>True if lines intersect</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.lines_intersection_point">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">lines_intersection_point</code><span class="sig-paren">(</span><em>pa</em>, <em>pb</em>, <em>pc</em>, <em>pd</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.lines_intersection_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the intersection point of two lines (a-b) and (c-d)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>pa</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 1 of line 1</p>
+</dd>
+<dt><strong>pb</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 2 of line 1</p>
+</dd>
+<dt><strong>pc</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 1 of line 2</p>
+</dd>
+<dt><strong>pb</strong><span class="classifier">misc.geometry.XYPoint</span></dt><dd><p>point 2 of line 2</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>intersec_point: misc.geometry.XYPoint</strong></dt><dd><p>intersection point</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.points2vertices">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">points2vertices</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.points2vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns vertex representation of the points (list of misc.XYPoints)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>points</strong><span class="classifier">(int, int)</span></dt><dd><p>list of points</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list</span></dt><dd><p>list of vertices</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.points_to_vertices">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">points_to_vertices</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.points_to_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>OBSOLETE FUNCTION! Please use <cite>points2vertices</cite>!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.polar2cartesian">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">polar2cartesian</code><span class="sig-paren">(</span><em>polar</em>, <em>radians=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.polar2cartesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a polar coordinate (radial, angle[degrees]) to a polar
+coordinate (x, y)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>polar</strong><span class="classifier">(float, float)</span></dt><dd><p>polar coordinate (radial, angle[degrees])</p>
+</dd>
+<dt><strong>radians</strong><span class="classifier">boolean</span></dt><dd><p>use radians instead of degrees for the angle</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>xy</strong><span class="classifier">(float, float)</span></dt><dd><p>cartesian coordinate (x,y)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.position2coordinate">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">position2coordinate</code><span class="sig-paren">(</span><em>coordinate</em>, <em>surface_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.position2coordinate" title="Permalink to this definition">¶</a></dt>
+<dd><p>“OBSOLETE FUNCTION: Please use ‘position2coordinates’.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.position2coordinates">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">position2coordinates</code><span class="sig-paren">(</span><em>position</em>, <em>surface_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.position2coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an Expyriment position to coordinates on the
+screen or surface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>position</strong><span class="classifier">(int, int)</span></dt><dd><p>position (x,y) to convert</p>
+</dd>
+<dt><strong>surface_size: (int, int), optional</strong></dt><dd><p>size of the surface one which coordinates should be calculated
+if None (default), the coordinats will be calculated relative
+to the screen</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coordinates</strong><span class="classifier">[int, int]</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.position2visual_angle">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">position2visual_angle</code><span class="sig-paren">(</span><em>position</em>, <em>viewing_distance</em>, <em>monitor_size</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.position2visual_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an expyriment position (pixel) to a visual angle from center.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>position</strong><span class="classifier">(int, int)</span></dt><dd><p>position (x,y) to convert</p>
+</dd>
+<dt><strong>viewing_distance</strong><span class="classifier">numeric</span></dt><dd><p>viewing distance in cm</p>
+</dd>
+<dt><strong>monitior_size</strong><span class="classifier">numeric</span></dt><dd><p>physical size of the monitor in cm (x, y)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>angle</strong><span class="classifier">(float, float)</span></dt><dd><p>visual angle for x &amp; y dimension</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.tuples2points">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">tuples2points</code><span class="sig-paren">(</span><em>list_of_tuples</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.tuples2points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of tuples (x,y) to a list of misc.XYPoints</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_cross">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_cross</code><span class="sig-paren">(</span><em>size</em>, <em>line_width</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_cross" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a cross.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>size</strong><span class="classifier">(int, int)</span></dt><dd><p>xy, length of the horizontal (x) and vertical (y) line</p>
+</dd>
+<dt><strong>line_width</strong><span class="classifier">int</span></dt><dd><p>width of the lines</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.stimuli.FixCross.html#expyriment.stimuli.FixCross" title="expyriment.stimuli.FixCross"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.stimuli.FixCross</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_frame">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_frame</code><span class="sig-paren">(</span><em>size</em>, <em>frame_thickness</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a frame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>size</strong><span class="classifier">(int, int)</span></dt><dd><p>size (width, height) of the rectangle</p>
+</dd>
+<dt><strong>frame_thickness</strong><span class="classifier">int</span></dt><dd><p>the thickness of the frame</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_parallelogram">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_parallelogram</code><span class="sig-paren">(</span><em>angle</em>, <em>length1</em>, <em>length2</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_parallelogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a parallelogram A, B, C, D.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">A</span> <span class="o">---</span> <span class="n">B</span>
+  <span class="o">.</span>     <span class="o">.</span>
+ <span class="o">.</span>     <span class="o">.</span>
+<span class="n">D</span> <span class="o">---</span> <span class="n">C</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>angle</strong><span class="classifier">float</span></dt><dd><p>the angle between the lines AB and BC in degrees</p>
+</dd>
+<dt><strong>length1</strong><span class="classifier">float</span></dt><dd><p>the length between AB</p>
+</dd>
+<dt><strong>length2</strong><span class="classifier">float</span></dt><dd><p>the length between BC</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_rectangle">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_rectangle</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_rectangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a rectangle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>size</strong><span class="classifier">(int, int)</span></dt><dd><p>size (width, height) of the rectangle</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_regular_polygon">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_regular_polygon</code><span class="sig-paren">(</span><em>n_edges</em>, <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_regular_polygon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a regular polygon.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>n_edges</strong><span class="classifier">int</span></dt><dd><p>the number of edges</p>
+</dd>
+<dt><strong>length</strong><span class="classifier">float</span></dt><dd><p>the length of one side of the polygon</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_trapezoid">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_trapezoid</code><span class="sig-paren">(</span><em>width_top</em>, <em>width_bottom</em>, <em>height</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_trapezoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a trapezoid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>width_top: int</strong></dt><dd><p>width of the top edge</p>
+</dd>
+<dt><strong>width_bottom: int</strong></dt><dd><p>width of the bottom edge</p>
+</dd>
+<dt><strong>height</strong><span class="classifier">int</span></dt><dd><p>height of the trapezoid</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.vertices_triangle">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">vertices_triangle</code><span class="sig-paren">(</span><em>angle</em>, <em>length1</em>, <em>length2</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.vertices_triangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of vertices describing a triangle A, B, C.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">---</span> <span class="n">B</span>
+     <span class="o">.</span>
+    <span class="o">.</span>
+   <span class="n">C</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>angle</strong><span class="classifier">float</span></dt><dd><p>the angle between the lines AB and BC in degrees</p>
+</dd>
+<dt><strong>length1</strong><span class="classifier">float</span></dt><dd><p>the length between AB</p>
+</dd>
+<dt><strong>length2</strong><span class="classifier">float</span></dt><dd><p>the length between BC</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>vtx</strong><span class="classifier">list of vertices</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The resulting vertices can be plotted with the class
+stimuli.Shape(vertex_list=…).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.geometry.visual_angle2position">
+<code class="descclassname">expyriment.misc.geometry.</code><code class="descname">visual_angle2position</code><span class="sig-paren">(</span><em>visual_angle</em>, <em>viewing_distance</em>, <em>monitor_size</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.visual_angle2position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an position defined as visual angle from center to expyriment
+position (pixel).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>visual_angle</strong><span class="classifier">(numeric, numeric)</span></dt><dd><p>position in visual angle (x,y) to convert</p>
+</dd>
+<dt><strong>viewing_distance</strong><span class="classifier">numeric</span></dt><dd><p>viewing distance in cm</p>
+</dd>
+<dt><strong>monitior_size</strong><span class="classifier">(numeric, numeric)</span></dt><dd><p>physical size of the monitor in cm (x, y)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position</strong><span class="classifier">(float, float)</span></dt><dd><p>position (x,y)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.geometry.XYPoint.html" class="btn btn-neutral float-right" title="expyriment.misc.geometry.XYPoint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.extras.html" class="btn btn-neutral float-left" title="expyriment.misc.extras" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

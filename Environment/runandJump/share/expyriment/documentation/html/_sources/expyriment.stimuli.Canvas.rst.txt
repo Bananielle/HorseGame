@@ -1,0 +1,8 @@
+expyriment.stimuli.Canvas
+=========================
+
+.. autoclass:: expyriment.stimuli.Canvas
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Canvas.__init__

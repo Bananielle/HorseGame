@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Platform-specific instructions: OS X &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Platform-specific instructions: Android" href="Installation.Android.html" />
+    <link rel="prev" title="Platform-specific instructions: Linux" href="Installation.Linux.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="GettingStarted.html">Getting started</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Installation.html">Installation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Installation.Windows.html">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.Linux.html">Linux</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Mac OS X</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Installation.Android.html">Android</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial.html">Beginner`s tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Examples.html">Example experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="GettingStarted.html">Getting started</a> &raquo;</li>
+        
+          <li><a href="Installation.html">Installation</a> &raquo;</li>
+        
+      <li>Platform-specific instructions: OS X</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="platform-specific-instructions-os-x">
+<span id="osx"></span><h1>Platform-specific instructions: OS X<a class="headerlink" href="#platform-specific-instructions-os-x" title="Permalink to this headline">¶</a></h1>
+<p>Expyriment can be installed for Python 2 or Python 3. In both cases there are
+two different ways to install Expyriment. The recommended method requires an
+active internet connection. If you need to install Expyriment on a computer that
+has no internet connection (like lab PCs), please use the alternative method.</p>
+<p>Each method will rely on an additional (different) Python environment and will
+not alter the Python environment provided by Apple.</p>
+<div class="section" id="python-2">
+<h2>Python 2<a class="headerlink" href="#python-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="default-installation-online">
+<h3>Default installation (online)<a class="headerlink" href="#default-installation-online" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Install <a class="reference external" href="https://dl.bintray.com/xquartz/downloads/XQuartz-2.7.10.dmg">XQuartz</a></p>
+</li>
+<li><p class="first">Install Xcode Command Line Tools by running the following in a terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In a terminal, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ruby</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span>
+<span class="n">brew</span> <span class="n">tap</span> <span class="n">Homebrew</span><span class="o">/</span><span class="n">python</span>
+<span class="n">brew</span> <span class="n">update</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">python</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">expyriment</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(Omit <code class="docutils literal notranslate"><span class="pre">[all]</span></code> to install without additional optional features)</p>
+</li>
+<li><p class="first">To make the Homebrew Python the one that is called when typing “python”, in a
+terminal, add the following to <code class="docutils literal notranslate"><span class="pre">~/.bash_profile</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PATH=/usr/local/bin:$PATH
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="alternative-installation-offline">
+<h3>Alternative installation (offline)<a class="headerlink" href="#alternative-installation-offline" title="Permalink to this headline">¶</a></h3>
+<p><strong>On an PC with internet connection (same OS, architecture and Python version!)</strong></p>
+<ol class="arabic">
+<li><p class="first">On the Desktop, create a directory called <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Download <a class="reference external" href="https://www.python.org/ftp/python/2.7.17/python-2.7.17-macosx10.9.pkg">Python 2.7.17</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Download <a class="reference external" href="https://www.activestate.com/products/tcl/downloads/">Tcl</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Download <a class="reference external" href="https://dl.bintray.com/xquartz/downloads/XQuartz-2.7.10.dmg">XQuartz</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">In a terminal, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">download</span> <span class="o">-</span><span class="n">d</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">Expyriment_Installation</span> <span class="n">expyriment</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(Omit <code class="docutils literal notranslate"><span class="pre">[all]</span></code> to install without additional optional features)</p>
+</li>
+<li><p class="first">To use enhanced video playback, download <a class="reference external" href="https://evermeet.cx/ffmpeg/ffmpeg-4.2.1.zip">ffmpeg</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Copy the directory <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code> from the Desktop to a portable storage device</p>
+</li>
+</ol>
+<p><strong>On the target PC</strong></p>
+<ol class="arabic">
+<li><p class="first">Copy the directory <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code> from the portable storage device to the Desktop</p>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation/python-2.7.17-macosx10.9.pkg</span></code></p>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation/ActiveTcl*.dmg</span></code></p>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation/XQuartz-2.7.10.dmg</span></code></p>
+</li>
+<li><p class="first">In a command prompt, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">Expyriment_Installation</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">expyriment</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(Omit <code class="docutils literal notranslate"><span class="pre">[all]</span></code> to install without additional optional features)</p>
+</li>
+<li><p class="first">To use enhanced video playback, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">Expyriment_Installation</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xf</span> <span class="n">ffmpeg</span><span class="o">-</span><span class="mf">4.2</span><span class="o">.</span><span class="mf">1.</span><span class="n">zip</span>
+<span class="n">mv</span> <span class="n">ffmpeg</span> <span class="n">ffprobe</span> <span class="n">ffserver</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">echo</span> <span class="s1">&#39;export PATH=$PATH:~/.local/bin&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bash_profile</span>
+<span class="n">source</span> <span class="o">~/.</span><span class="n">bash_profile</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="python-3">
+<h2>Python 3<a class="headerlink" href="#python-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Default installation (online)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Install <a class="reference external" href="https://dl.bintray.com/xquartz/downloads/XQuartz-2.7.10.dmg">XQuartz</a></p>
+</li>
+<li><p class="first">Install Xcode Command Line Tools by running the following in a terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In a terminal, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ruby</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span>
+<span class="n">brew</span> <span class="n">tap</span> <span class="n">Homebrew</span><span class="o">/</span><span class="n">python</span>
+<span class="n">brew</span> <span class="n">update</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">python3</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">pygame</span> <span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">python</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">expyriment</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div>(Omit <code class="docutils literal notranslate"><span class="pre">[all]</span></code> to install without additional optional features)</div></blockquote>
+<ol class="arabic" start="4">
+<li><p class="first">To make the Homebrew Python the one that is called when typing “python”, in a
+terminal, add the following to <code class="docutils literal notranslate"><span class="pre">~/.bash_profile</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export PATH=/usr/local/bin:$PATH
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h3>Alternative installation (offline)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p><strong>On an PC with internet connection (same OS, architecture and Python version!)</strong></p>
+<ol class="arabic">
+<li><p class="first">On the Desktop, create a directory called <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Download <a class="reference external" href="https://www.python.org/ftp/python/3.7.5/python-3.7.5-macosx10.9.pkg">Python 3.7.5</a> to  <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Download <a class="reference external" href="https://www.activestate.com/products/tcl/downloads/">Tcl</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Download <a class="reference external" href="https://dl.bintray.com/xquartz/downloads/XQuartz-2.7.10.dmg">XQuartz</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">In a terminal, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">download</span> <span class="o">-</span><span class="n">d</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">Expyriment_Installation</span> <span class="n">expyriment</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(Omit <code class="docutils literal notranslate"><span class="pre">[all]</span></code> to install without additional optional features)</p>
+</li>
+<li><p class="first">To use enhanced video playback, download <a class="reference external" href="https://evermeet.cx/ffmpeg/ffmpeg-4.2.1.zip">ffmpeg</a> to <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code></p>
+</li>
+<li><p class="first">Copy the directory <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code> from the Desktop to a portable storage device</p>
+</li>
+</ol>
+<p><strong>On the target PC</strong></p>
+<ol class="arabic">
+<li><p class="first">Copy the directory <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation</span></code> from the portable storage device to the Desktop</p>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation/python-3.7.5-macosx10.9.pkg</span></code></p>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation/ActiveTcl*.dmg</span></code></p>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">Expyriment_Installation/XQuartz-2.7.10.dmg</span></code></p>
+</li>
+<li><p class="first">In a command prompt, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">Expyriment_Installation</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">expyriment</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(Omit <code class="docutils literal notranslate"><span class="pre">[all]</span></code> to install without additional optional features)</p>
+</li>
+<li><p class="first">To use enhanced video playback, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">Expyriment_Installation</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xf</span> <span class="n">ffmpeg</span><span class="o">-</span><span class="mf">4.2</span><span class="o">.</span><span class="mf">1.</span><span class="n">zip</span>
+<span class="n">mv</span> <span class="n">ffmpeg</span> <span class="n">ffprobe</span> <span class="n">ffserver</span> <span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">echo</span> <span class="s1">&#39;export PATH=$PATH:~/.local/bin&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bash_profile</span>
+<span class="n">source</span> <span class="o">~/.</span><span class="n">bash_profile</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<p><strong>Be aware of multiple Python installations</strong></p>
+<blockquote>
+<div><p>If, after installation, you get errors about Expyriment (or one of its dependencies)
+not being installed, chances are you try to import Expyriment in the “wrong”
+(i.e. Apple’s) Python environment.</p>
+<p>Make sure you are calling <code class="docutils literal notranslate"><span class="pre">/usr/local/bin/python</span></code>.</p>
+</div></blockquote>
+<p><strong>Do not start your experiments out of IDLE</strong></p>
+<blockquote>
+<div><p>If you are using the IDLE editor that comes with the Python installation,
+be aware that IDLE itself is written in Python. Starting your Expyriment
+programme out of IDLE (by clicking on “Run” or by pressing F5), might thus
+lead to improper timing!</p>
+<p>We therefore strongly suggest to run Expyriment programmes from the command
+line when testing participants.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Installation.Android.html" class="btn btn-neutral float-right" title="Platform-specific instructions: Android" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Installation.Linux.html" class="btn btn-neutral float-left" title="Platform-specific instructions: Linux" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

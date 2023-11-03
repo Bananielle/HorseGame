@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.constants" href="expyriment.misc.constants.html" />
+    <link rel="prev" title="expyriment.io.TriggerInput" href="expyriment.io.TriggerInput.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">expyriment.misc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+      <li>expyriment.misc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.misc">
+<span id="expyriment-misc"></span><h1>expyriment.misc<a class="headerlink" href="#module-expyriment.misc" title="Permalink to this headline">¶</a></h1>
+<p>The misc package.</p>
+<p>This package contains miscellaneous classes, modules and functions.</p>
+<p>See also expyriment.misc.extras for more misc.</p>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="expyriment.misc.add_fonts">
+<code class="descclassname">expyriment.misc.</code><code class="descname">add_fonts</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.add_fonts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add fonts to Expyriment.</p>
+<p>All truetype fonts found in the given folder will be added to
+Expyriment, such that they are found when only giving their name
+(i.e. without the full path).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>folder</strong><span class="classifier">str or unicode</span></dt><dd><p>the full path to the folder to search for</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.byte2unicode">
+<code class="descclassname">expyriment.misc.</code><code class="descname">byte2unicode</code><span class="sig-paren">(</span><em>s</em>, <em>fse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.byte2unicode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.compare_codes">
+<code class="descclassname">expyriment.misc.</code><code class="descname">compare_codes</code><span class="sig-paren">(</span><em>input_code</em>, <em>standard_codes</em>, <em>bitwise_comparison=True</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.compare_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to compare input_code with a standard codes.</p>
+<p>Returns a boolean and operates by default bitwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_code</strong><span class="classifier">int</span></dt><dd><p>code or bitpattern</p>
+</dd>
+<dt><strong>standard_codes</strong><span class="classifier">int or list</span></dt><dd><p>code/bitpattern or list of codes/bitpattern</p>
+</dd>
+<dt><strong>bitwise_comparison</strong><span class="classifier">bool, optional</span></dt><dd><p>(default = True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.create_colours">
+<code class="descclassname">expyriment.misc.</code><code class="descname">create_colours</code><span class="sig-paren">(</span><em>amount</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.create_colours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create different and equally spaced RGB colours.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>amount</strong><span class="classifier">int</span></dt><dd><p>the number of colours to create</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>colours</strong><span class="classifier">list</span></dt><dd><p>a list of colours, each in the form [r, g, b]</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.download_from_stash">
+<code class="descclassname">expyriment.misc.</code><code class="descname">download_from_stash</code><span class="sig-paren">(</span><em>content='all'</em>, <em>branch=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.download_from_stash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download content from the Expyriment stash.</p>
+<p>Content will be stored in an Expyriment settings diretory (<cite>.expyriment</cite>
+or <cite>~expyriment</cite>, located in the current user’s home directory).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>content</strong><span class="classifier">str, optional</span></dt><dd><p>the content to install (“examples”, “extras”, “tools”, or “all”)
+(default=”all”)</p>
+</dd>
+<dt><strong>branch</strong><span class="classifier">str, optional</span></dt><dd><p>a specific branch to get the content from (if not set, the branch
+corresponding to the current Expyriment release is used)
+(default=None)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.find_font">
+<code class="descclassname">expyriment.misc.</code><code class="descname">find_font</code><span class="sig-paren">(</span><em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.find_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find an installed font given a font name.</p>
+<p>This will try to match a font installed on the system that is similar to
+the given font name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>font</strong><span class="classifier">str</span></dt><dd><p>name of the font</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>font</strong><span class="classifier">str</span></dt><dd><p>the font that is most similar
+If no font is found, an empty string will be returned.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.get_experiment_secure_hash">
+<code class="descclassname">expyriment.misc.</code><code class="descname">get_experiment_secure_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.get_experiment_secure_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fingerprint, that is, the first six places of the secure
+hash (sha1) of the main file of the current experiment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>hash: string or None</strong></dt><dd><p>first six places of the experiment secure hash or None, if no main
+file can be found</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Fingerprints of experiments help to ensure that the correct version is
+running in the lab. Hash codes are written to all output files and
+printed in the command line output. If you want to check post hoc the
+version of your experiment, create the secure hash (sha1) of your
+expyriment .py-file and compare the first six place with the code in the
+output file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.get_module_hash_dictionary">
+<code class="descclassname">expyriment.misc.</code><code class="descname">get_module_hash_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.get_module_hash_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary with the fingerprints of all modules imported
+from the local folded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>hashes: dict</strong></dt><dd><p>hash dict with all imported modules
+keys = file names, values = sha hashes</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>See get_experiment_secure_hash() for further information about Expyriment
+secure hashes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.get_monitor_resolution">
+<code class="descclassname">expyriment.misc.</code><code class="descname">get_monitor_resolution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.get_monitor_resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the monitor resolution</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>resolution: (int, int)</strong></dt><dd><p>monitor resolution, screen resolution</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.get_system_info">
+<code class="descclassname">expyriment.misc.</code><code class="descname">get_system_info</code><span class="sig-paren">(</span><em>as_string=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.get_system_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print system information to standard out and return as a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>as_string</strong><span class="classifier">boolean, optional</span></dt><dd><p>Print as string instead of dict (default = False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.has_internet_connection">
+<code class="descclassname">expyriment.misc.</code><code class="descname">has_internet_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.has_internet_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if computer is connected to internet.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.is_android_running">
+<code class="descclassname">expyriment.misc.</code><code class="descname">is_android_running</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.is_android_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if Exypriment runs on Android.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.is_idle_running">
+<code class="descclassname">expyriment.misc.</code><code class="descname">is_idle_running</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.is_idle_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if IDLE is running.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.is_interactive_mode">
+<code class="descclassname">expyriment.misc.</code><code class="descname">is_interactive_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.is_interactive_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if Python is running in interactive mode (such as IDLE or
+IPthon)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>interactive_mode</strong><span class="classifier">boolean</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.is_ipython_running">
+<code class="descclassname">expyriment.misc.</code><code class="descname">is_ipython_running</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.is_ipython_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if IPython is running.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.list_fonts">
+<code class="descclassname">expyriment.misc.</code><code class="descname">list_fonts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.list_fonts" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all fonts installed on the system.</p>
+<p>Returns a dictionary where the key is the font name and the value is the
+absolute path to the font file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.module_hashes_as_string">
+<code class="descclassname">expyriment.misc.</code><code class="descname">module_hashes_as_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.module_hashes_as_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>helper function that converts dict to str</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.numpad_digit_code2ascii">
+<code class="descclassname">expyriment.misc.</code><code class="descname">numpad_digit_code2ascii</code><span class="sig-paren">(</span><em>keycode</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.numpad_digit_code2ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert numpad keycode to the ascii code of that particular number</p>
+<p>If it is not a keypad digit code, no conversion takes place and the
+same code will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>ascii_code</strong><span class="classifier">int</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.py2py3_sort_array">
+<code class="descclassname">expyriment.misc.</code><code class="descname">py2py3_sort_array</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.py2py3_sort_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts an array with different types using the string representation
+under Python2 and Python3. Sorts in place!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>array: the sorted array</strong></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.unicode2byte">
+<code class="descclassname">expyriment.misc.</code><code class="descname">unicode2byte</code><span class="sig-paren">(</span><em>u</em>, <em>fse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.unicode2byte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.which">
+<code class="descclassname">expyriment.misc.</code><code class="descname">which</code><span class="sig-paren">(</span><em>programme</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.which" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locate a programme file in the user’s path.</p>
+<p>This mimics behaviour of UNIX’s ‘which’ command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>programme</strong><span class="classifier">str</span></dt><dd><p>the programme to file to locate</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>path</strong><span class="classifier">str or None</span></dt><dd><p>the full path to the programme file or None if not found</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.constants.html" class="btn btn-neutral float-right" title="expyriment.misc.constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.TriggerInput.html" class="btn btn-neutral float-left" title="expyriment.io.TriggerInput" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

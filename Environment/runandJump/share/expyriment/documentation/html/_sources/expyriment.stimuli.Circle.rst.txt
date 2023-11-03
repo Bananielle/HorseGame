@@ -1,0 +1,8 @@
+expyriment.stimuli.Circle
+=========================
+
+.. autoclass:: expyriment.stimuli.Circle
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Circle.__init__

@@ -1,0 +1,8 @@
+expyriment.stimuli.Picture
+==========================
+
+.. autoclass:: expyriment.stimuli.Picture
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Picture.__init__

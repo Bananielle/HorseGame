@@ -1,0 +1,31 @@
+Metadata-Version: 2.1
+Name: expyriment
+Version: 0.10.0
+Summary: A Python library for cognitive and neuroscientific experiments
+Home-page: http://www.expyriment.org
+Author: Florian Krause, Oliver Lindemann
+Author-email: florian@expyriment.org, oliver@expyriment.org
+License: GNU GPLv3
+Platform: UNKNOWN
+Requires-Dist: future (<1,>=0.15)
+Requires-Dist: pygame (<2,>=1.9)
+Requires-Dist: pyopengl (<4,>=3.0)
+Provides-Extra: all
+Requires-Dist: numpy (<2,>=1.6) ; extra == 'all'
+Requires-Dist: pyserial (<4,>=3) ; extra == 'all'
+Requires-Dist: pyparallel (<1,>=0.2) ; extra == 'all'
+Requires-Dist: sounddevice (<1,>=0.3) ; extra == 'all'
+Requires-Dist: mediadecoder (<1,>=0.1) ; extra == 'all'
+Provides-Extra: data_preprocessing
+Requires-Dist: numpy (<2,>=1.6) ; extra == 'data_preprocessing'
+Provides-Extra: parallelport_linux
+Requires-Dist: pyparallel (<1,>=0.2) ; extra == 'parallelport_linux'
+Provides-Extra: serialport
+Requires-Dist: pyserial (<4,>=3) ; extra == 'serialport'
+Provides-Extra: video
+Requires-Dist: sounddevice (<1,>=0.3) ; extra == 'video'
+Requires-Dist: mediadecoder (<1,>=0.1) ; extra == 'video'
+
+UNKNOWN
+
+

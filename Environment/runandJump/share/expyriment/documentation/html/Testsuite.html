@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Test suite &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command line interface" href="CommandLineInterface.html" />
+    <link rel="prev" title="API reference tool" href="APIReferenceTool.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advanced.html">Advanced</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="APIReferenceTool.html">API reference tool</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CommandLineInterface.html">Command line interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataPreprocessing.html">Data preprocessing and exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Unicode.html">Using non-English characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fonts.html">Using fonts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Video.html">Presenting videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html">Plugin system (extras)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Defaults.html">Defaults (settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Hardware.html">Hardware compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timing.html">Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Problems.html">Problems &amp; Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="Advanced.html">Advanced</a> &raquo;</li>
+        
+      <li>Test suite</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="test-suite">
+<h1>Test suite<a class="headerlink" href="#test-suite" title="Permalink to this headline">¶</a></h1>
+<p>The Expyriment test suite is a guided tool for testing your computer’s
+abilities and performance. This includes timing accuracy of visual stimulus
+presentation, audio playback functionality, mouse functionality and
+serial/parallel port functionality.</p>
+<p>Eventually, all test results can be saved as a protocol, together with some
+information about the system.</p>
+<img alt="_images/test_suite.png" src="_images/test_suite.png" />
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="starting-the-test-suite">
+<h3>Starting the test suite<a class="headerlink" href="#starting-the-test-suite" title="Permalink to this headline">¶</a></h3>
+<p>The test suite can either be started from within an experiment, or from an
+interactive Python session (for instance with IPython). To start the test
+suite, just call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">expyriment</span>
+<span class="n">expyriment</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">run_test_suite</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Alternatively, you can start the test suite from the command line using the
+<a class="reference internal" href="CommandLineInterface.html"><span class="doc">Command line interface</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ expyriment.cli -T
+</pre></div>
+</div>
+<p><strong>Please note that all changes to the</strong> <a class="reference internal" href="Defaults.html"><span class="doc">Defaults (settings)</span></a> <strong>prior to starting the test suite apply!</strong></p>
+</div>
+<div class="section" id="menu-overview">
+<h3>Menu overview<a class="headerlink" href="#menu-overview" title="Permalink to this headline">¶</a></h3>
+<p>Here is a brief explanation of the available options:</p>
+<ol class="arabic simple">
+<li><strong>Visual stimulus presentation</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Tests the visual stimulus presentation timing specifics of the system</li>
+</ul>
+<dl class="docutils">
+<dt>The following results will be reported:</dt><dd><ul class="simple">
+<li><em>Estimated Screen Refresh Rate</em>: The refresh rate of the screen in Hz and
+the approximated time of a single refresh in milliseconds. The most common refresh
+rate is arguably 60Hz (marked green), but specialised displays might also have
+refresh rates between 50 and 120 Hz (marked orange). Reported refresh rates outside
+of this range (marged red) are most probably erroneous.</li>
+<li><em>Detected Framebuffer Pages</em>: The amount of buffers used for drawing to the
+screen; if only one buffer is used, new stimuli will be drawn directly to the
+screen; if two buffers (double buffer) are used, new stimuli will be drawn to
+an additional page, and a screen update will replace the screen with this page
+and put the screen contents into the page (i.e. the two buffers are swapped);
+if three buffers (tripple buffer) are used, new stimuli will be drawn to a third
+page, and a screen update will replace the screen with this page, and put the
+screen contents into the second page (i.e. a history of 2 former screens is
+kept)</li>
+<li><em>Average Reporting Inaccuracy</em>: The average time in milliseconds between Expyriment
+reporting that the stimulus has been presented (i.e. the present() method
+returns) and the actual time the stimulus could actually been physically
+shown on the screen, given the refresh rate; an inaccuracy of 0 milliseconds (marked
+green) will indicate that blocking on the vertical retrace functions
+properly; an inaccuracy of 1 millisecond or more (marked red) will indicate that
+blocking on the vertical does not function properly</li>
+<li><em>Unexplained Presentation Delays</em>: The amount in percent of presentations
+that will take longer than a single refresh rate</li>
+<li>A histogram showing the obtained presentation timings</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><strong>Auditory stimulus presentation</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Tests functionality of audio playback</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><strong>Font viewer</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Test installed fonts</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><strong>Mouse test</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Tests mouse accuracy (polling time)</li>
+<li>Tests functionality of mouse buttons</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li><strong>Parallel Port test</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Tests functionality of devices connected via the parallel port</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li><strong>Serial port test</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Tests functionality of devices connected via the serial port</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="7">
+<li><strong>Write protocol</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Saves all test results, as well as information about the system, as a text
+file.</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="8">
+<li><strong>Quit</strong></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Quits the test suite</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="CommandLineInterface.html" class="btn btn-neutral float-right" title="Command line interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="APIReferenceTool.html" class="btn btn-neutral float-left" title="API reference tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

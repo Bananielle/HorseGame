@@ -1,0 +1,8 @@
+expyriment.stimuli.Tone
+=======================
+
+.. autoclass:: expyriment.stimuli.Tone
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Tone.__init__

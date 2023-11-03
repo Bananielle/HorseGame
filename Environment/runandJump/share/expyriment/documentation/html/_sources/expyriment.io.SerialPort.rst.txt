@@ -1,0 +1,8 @@
+expyriment.io.SerialPort
+========================
+
+.. autoclass:: expyriment.io.SerialPort
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.io.SerialPort.__init__

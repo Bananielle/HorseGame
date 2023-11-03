@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.data_preprocessing &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.data_preprocessing.Aggregator" href="expyriment.misc.data_preprocessing.Aggregator.html" />
+    <link rel="prev" title="expyriment.misc.constants" href="expyriment.misc.constants.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.misc.data_preprocessing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="expyriment.misc.data_preprocessing.Aggregator.html">expyriment.misc.data_preprocessing.Aggregator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+      <li>expyriment.misc.data_preprocessing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.misc.data_preprocessing">
+<span id="expyriment-misc-data-preprocessing"></span><h1>expyriment.misc.data_preprocessing<a class="headerlink" href="#module-expyriment.misc.data_preprocessing" title="Permalink to this headline">¶</a></h1>
+<p>Data Preprocessing Module.</p>
+<p>This module contains several classes and functions that help
+to handle, preprocessing and aggregate Expyriment data files.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="expyriment.misc.data_preprocessing.Aggregator.html">expyriment.misc.data_preprocessing.Aggregator</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="expyriment.misc.data_preprocessing.get_experiment_duration">
+<code class="descclassname">expyriment.misc.data_preprocessing.</code><code class="descname">get_experiment_duration</code><span class="sig-paren">(</span><em>event_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.get_experiment_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts the experiment duration from event file and returns the time in
+minutes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>info_filename</strong><span class="classifier">str</span></dt><dd><p>name (fullpath) of the Expyriment event file</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>minutes</strong><span class="classifier">float</span></dt><dd><p>experiment duration in minutes</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.data_preprocessing.read_datafile">
+<code class="descclassname">expyriment.misc.data_preprocessing.</code><code class="descname">read_datafile</code><span class="sig-paren">(</span><em>filename</em>, <em>only_header_and_variable_names=False</em>, <em>encoding=None</em>, <em>read_variables=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.read_datafile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read an Expyriment data file.</p>
+<p>Returns the data, the variable names, the subject info &amp; the comments:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>name (fullpath) of the Expyriment data file</p>
+</dd>
+<dt><strong>only_header_and_variable_names</strong><span class="classifier">bool, optional</span></dt><dd><p>if True the function reads only the header and variable names
+(default=False)</p>
+</dd>
+<dt><strong>encoding</strong><span class="classifier">str, optional</span></dt><dd><p>the encoding with which the contents of the file will be read</p>
+</dd>
+<dt><strong>read_variables</strong><span class="classifier">array of str, optional</span></dt><dd><p>array of variable names, read only the specified variables</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong><span class="classifier">list of list</span></dt><dd><p>data array</p>
+</dd>
+<dt><strong>variables</strong><span class="classifier">list of str</span></dt><dd><p>variable names list</p>
+</dd>
+<dt><strong>subject_info</strong><span class="classifier">dict</span></dt><dd><p>dictionary with subject information (incl. date and between
+subject factors)</p>
+</dd>
+<dt><strong>comments</strong><span class="classifier">str</span></dt><dd><p>string with remaining comments</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.data_preprocessing.write_concatenated_data">
+<code class="descclassname">expyriment.misc.data_preprocessing.</code><code class="descname">write_concatenated_data</code><span class="sig-paren">(</span><em>data_folder</em>, <em>file_name</em>, <em>output_file=None</em>, <em>delimiter='</em>, <em>'</em>, <em>to_R_data_frame=False</em>, <em>names_comprise_glob_pattern=False</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.write_concatenated_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenate data and write it to a csv file.</p>
+<p>All files that start with this name will be considered for the
+analysis (cf. aggregator.data_files)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data_folder</strong><span class="classifier">str</span></dt><dd><p>folder which contains of the data (str)</p>
+</dd>
+<dt><strong>file_name</strong><span class="classifier">str</span></dt><dd><p>name of the files; all files that start with this name will
+be considered</p>
+</dd>
+<dt><strong>output_file</strong><span class="classifier">str, optional</span></dt><dd><p>name of data output file; if no specified data will the save
+to {file_name}.csv</p>
+</dd>
+<dt><strong>delimiter</strong><span class="classifier">str, optional</span></dt><dd><p>delimiter character (default=”,”)</p>
+</dd>
+<dt><strong>to_R_data_frame: bool, optional</strong></dt><dd><p>if True, data will be converted to a R data frame that is saved
+in a RDS file</p>
+</dd>
+<dt><strong>names_comprise_glob_pattern</strong><span class="classifier">boolean, optional</span></dt><dd><p>if True, data_folder and file_name are processed as glob pattern
+with wildcards such as “*” or “?”</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The function is useful to combine the experimental data and prepare for
+further processing with other software.
+It basically wraps Aggregator.write_concatenated_data.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="expyriment.misc.data_preprocessing.write_csv_file">
+<code class="descclassname">expyriment.misc.data_preprocessing.</code><code class="descname">write_csv_file</code><span class="sig-paren">(</span><em>filename</em>, <em>data</em>, <em>varnames=None</em>, <em>delimiter='</em>, <em>'</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.data_preprocessing.write_csv_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write 2D data array to csv file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>name (fullpath) of the data file</p>
+</dd>
+<dt><strong>data</strong><span class="classifier">list of list</span></dt><dd><p>2D array with data (list of list)</p>
+</dd>
+<dt><strong>varnames</strong><span class="classifier">list of str, optional</span></dt><dd><p>array of strings representing variable names</p>
+</dd>
+<dt><strong>delimiter</strong><span class="classifier">str, optional</span></dt><dd><p>delimiter character (default=”,”)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.data_preprocessing.Aggregator.html" class="btn btn-neutral float-right" title="expyriment.misc.data_preprocessing.Aggregator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.constants.html" class="btn btn-neutral float-left" title="expyriment.misc.constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

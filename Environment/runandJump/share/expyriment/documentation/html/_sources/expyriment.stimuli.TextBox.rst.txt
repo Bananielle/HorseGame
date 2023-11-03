@@ -1,0 +1,8 @@
+expyriment.stimuli.TextBox
+==========================
+
+.. autoclass:: expyriment.stimuli.TextBox
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.TextBox.__init__

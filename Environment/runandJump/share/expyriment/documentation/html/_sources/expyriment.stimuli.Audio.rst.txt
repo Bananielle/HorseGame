@@ -1,0 +1,8 @@
+expyriment.stimuli.Audio
+========================
+
+.. autoclass:: expyriment.stimuli.Audio
+   :members:
+   :inherited-members:
+
+   .. automethod:: expyriment.stimuli.Audio.__init__

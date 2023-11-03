@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.geometry.XYPoint &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.statistics" href="expyriment.misc.statistics.html" />
+    <link rel="prev" title="expyriment.misc.geometry" href="expyriment.misc.geometry.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">expyriment.misc.geometry.XYPoint</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.ByteBuffer.html">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.geometry.html">expyriment.misc.geometry</a> &raquo;</li>
+        
+      <li>expyriment.misc.geometry.XYPoint</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-misc-geometry-xypoint">
+<h1>expyriment.misc.geometry.XYPoint<a class="headerlink" href="#expyriment-misc-geometry-xypoint" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.misc.geometry.XYPoint">
+<em class="property">class </em><code class="descclassname">expyriment.misc.geometry.</code><code class="descname">XYPoint</code><span class="sig-paren">(</span><em>x=None</em>, <em>y=None</em>, <em>xy=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.XYPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Expyriment point class</p>
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>x=None</em>, <em>y=None</em>, <em>xy=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a XYPoint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>x</strong><span class="classifier">numeric</span></dt><dd></dd>
+<dt><strong>y</strong><span class="classifier">numeric</span></dt><dd></dd>
+<dt><strong>xy</strong><span class="classifier">(numeric, numeric)</span></dt><dd><p>xy = (x,y)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>use <cite>x</cite>, <cite>y</cite> values (two numberic) or the tuple xy=(x,y)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return euclidian distance to the points (p).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>p</strong><span class="classifier">misc.XYPoint</span></dt><dd><p>movement vector</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dist</strong><span class="classifier">float</span></dt><dd><p>distance to other point p</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.is_inside_polygon">
+<code class="descname">is_inside_polygon</code><span class="sig-paren">(</span><em>point_list</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.is_inside_polygon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if point is inside a given polygon.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>point_list</strong><span class="classifier">list</span></dt><dd><p>point list defining the polygon</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>check</strong><span class="classifier">bool</span></dt><dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.move">
+<code class="descname">move</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the point along the coordinates specified by the vector v.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>v</strong><span class="classifier">misc.XYPoint</span></dt><dd><p>movement vector</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.polar">
+<em class="property">property </em><code class="descname">polar</code><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.polar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for polar coordinate the point</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.rotate">
+<code class="descname">rotate</code><span class="sig-paren">(</span><em>degree</em>, <em>rotation_centre=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate the point counterclockwise in degree around rotation_centre.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>degree</strong><span class="classifier">int</span></dt><dd><p>degree of rotation (default=(0, 0) )</p>
+</dd>
+<dt><strong>rotation_center</strong><span class="classifier">(numeric, numeric)</span></dt><dd><p>rotation center (x, y)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.tuple">
+<em class="property">property </em><code class="descname">tuple</code><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for the tuple (x, y)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.x">
+<em class="property">property </em><code class="descname">x</code><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for x</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.geometry.XYPoint.y">
+<em class="property">property </em><code class="descname">y</code><a class="headerlink" href="#expyriment.misc.geometry.XYPoint.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for y</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.statistics.html" class="btn btn-neutral float-right" title="expyriment.misc.statistics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.geometry.html" class="btn btn-neutral float-left" title="expyriment.misc.geometry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.misc.ByteBuffer &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.misc.Clock" href="expyriment.misc.Clock.html" />
+    <link rel="prev" title="expyriment.misc.Buffer" href="expyriment.misc.Buffer.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.constants.html">expyriment.misc.constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.data_preprocessing.html">expyriment.misc.data_preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.defaults.html">expyriment.misc.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.extras.html">expyriment.misc.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.geometry.html">expyriment.misc.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.statistics.html">expyriment.misc.statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Buffer.html">expyriment.misc.Buffer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.misc.ByteBuffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Clock.html">expyriment.misc.Clock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.misc.Colour.html">expyriment.misc.Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.misc.html">expyriment.misc</a> &raquo;</li>
+        
+      <li>expyriment.misc.ByteBuffer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-misc-bytebuffer">
+<h1>expyriment.misc.ByteBuffer<a class="headerlink" href="#expyriment-misc-bytebuffer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.misc.ByteBuffer">
+<em class="property">class </em><code class="descclassname">expyriment.misc.</code><code class="descname">ByteBuffer</code><span class="sig-paren">(</span><em>name='ByteBuffer'</em>, <em>clock=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a buffer for bytes.</p>
+<p>The ByteBuffer class is also used for the input_histoy of serial and
+parallel ports.</p>
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name='ByteBuffer'</em>, <em>clock=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a buffer for bytes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>the name of the buffer</p>
+</dd>
+<dt><strong>clock</strong><span class="classifier">expyriment.Clock object (optional)</span></dt><dd><p>an experimental clock</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.add_event">
+<code class="descname">add_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.add_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an event to the buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>event</strong><span class="classifier">anything</span></dt><dd><p>the event to add</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.add_events">
+<code class="descname">add_events</code><span class="sig-paren">(</span><em>events</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.add_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a list of events to the buffer.</p>
+<p>All events get the same time stamp!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>events</strong><span class="classifier">list</span></dt><dd><p>the event list to add</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.check_set">
+<code class="descname">check_set</code><span class="sig-paren">(</span><em>search_byte</em>, <em>search_start_position=0</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.check_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if bits are set in buffer bytes and return position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>search_byte</strong><span class="classifier">int</span></dt><dd><p>the byte to search for</p>
+</dd>
+<dt><strong>search_start_position</strong><span class="classifier">int (optional)</span></dt><dd><p>position to start search from (int)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position</strong><span class="classifier">int</span></dt><dd><p>the position of element with set bits</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.check_unset">
+<code class="descname">check_unset</code><span class="sig-paren">(</span><em>search_byte</em>, <em>search_start_position=0</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.check_unset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if bits are NOT set in buffer bytes and return position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>search_byte</strong><span class="classifier">int</span></dt><dd><p>the byte to search for</p>
+</dd>
+<dt><strong>search_start_position</strong><span class="classifier">int (optional)</span></dt><dd><p>position to start search from</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position</strong><span class="classifier">int</span></dt><dd><p>the position of element with unset bits</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.check_value">
+<code class="descname">check_value</code><span class="sig-paren">(</span><em>value</em>, <em>search_start_position=0</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.check_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if value is in buffer bytes and return the position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>value</strong><span class="classifier">int</span></dt><dd><p>the value to check</p>
+</dd>
+<dt><strong>search_start_position</strong><span class="classifier">int (optional)</span></dt><dd><p>position to start search from</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>position</strong><span class="classifier">int</span></dt><dd><p>the position of element with value</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the buffer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.clock">
+<em class="property">property </em><code class="descname">clock</code><a class="headerlink" href="#expyriment.misc.ByteBuffer.clock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for clock</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.get_element">
+<code class="descname">get_element</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.get_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an element (code, rt) from the buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>position</strong><span class="classifier">int</span></dt><dd><p>the position to get the element from</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>element</strong><span class="classifier">(anything, float)</span></dt><dd><p>The element to get from the buffer</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.get_last_event">
+<code class="descname">get_last_event</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.get_last_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the last event (code, rt) in the buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>element</strong><span class="classifier">(anything, float)</span></dt><dd><p>the last element of the buffer</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.get_size">
+<code class="descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of elements in the buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>size</strong><span class="classifier">int</span></dt><dd><p>the size of the buffer</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.get_whole_buffer">
+<code class="descname">get_whole_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.misc.ByteBuffer.get_whole_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a copy of the buffer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>copy</strong><span class="classifier">list</span></dt><dd><p>the copy of the buffer</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.memory">
+<em class="property">property </em><code class="descname">memory</code><a class="headerlink" href="#expyriment.misc.ByteBuffer.memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for memory [list of tuples (code, rt)]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.misc.ByteBuffer.name">
+<em class="property">property </em><code class="descname">name</code><a class="headerlink" href="#expyriment.misc.ByteBuffer.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.misc.Clock.html" class="btn btn-neutral float-right" title="expyriment.misc.Clock" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.misc.Buffer.html" class="btn btn-neutral float-left" title="expyriment.misc.Buffer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

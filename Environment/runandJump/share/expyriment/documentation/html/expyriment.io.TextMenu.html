@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.io.TextMenu &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.io.TouchScreenButtonBox" href="expyriment.io.TouchScreenButtonBox.html" />
+    <link rel="prev" title="expyriment.io.TextInput" href="expyriment.io.TextInput.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="expyriment.control.html">expyriment.control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.io.html">expyriment.io</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.defaults.html">expyriment.io.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.extras.html">expyriment.io.extras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.DataFile.html">expyriment.io.DataFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventButtonBox.html">expyriment.io.EventButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.EventFile.html">expyriment.io.EventFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.GamePad.html">expyriment.io.GamePad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.InputFile.html">expyriment.io.InputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Keyboard.html">expyriment.io.Keyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.MarkerOutput.html">expyriment.io.MarkerOutput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Mouse.html">expyriment.io.Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.OutputFile.html">expyriment.io.OutputFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.ParallelPort.html">expyriment.io.ParallelPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.Screen.html">expyriment.io.Screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.SerialPort.html">expyriment.io.SerialPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.StreamingButtonBox.html">expyriment.io.StreamingButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TextInput.html">expyriment.io.TextInput</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.io.TextMenu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TouchScreenButtonBox.html">expyriment.io.TouchScreenButtonBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.io.TriggerInput.html">expyriment.io.TriggerInput</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.io.html">expyriment.io</a> &raquo;</li>
+        
+      <li>expyriment.io.TextMenu</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="expyriment-io-textmenu">
+<h1>expyriment.io.TextMenu<a class="headerlink" href="#expyriment-io-textmenu" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="expyriment.io.TextMenu">
+<em class="property">class </em><code class="descclassname">expyriment.io.</code><code class="descname">TextMenu</code><span class="sig-paren">(</span><em>heading</em>, <em>menu_items</em>, <em>width</em>, <em>position=None</em>, <em>text_size=None</em>, <em>gap=None</em>, <em>heading_font=None</em>, <em>text_font=None</em>, <em>background_colour=None</em>, <em>text_colour=None</em>, <em>heading_text_colour=None</em>, <em>select_background_colour=None</em>, <em>select_text_colour=None</em>, <em>select_frame_colour=None</em>, <em>select_frame_line_width=None</em>, <em>justification=None</em>, <em>scroll_menu=None</em>, <em>background_stimulus=None</em>, <em>mouse=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class implementing a text menu.</p>
+<dl class="method">
+<dt id="expyriment.io.TextMenu.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>heading</em>, <em>menu_items</em>, <em>width</em>, <em>position=None</em>, <em>text_size=None</em>, <em>gap=None</em>, <em>heading_font=None</em>, <em>text_font=None</em>, <em>background_colour=None</em>, <em>text_colour=None</em>, <em>heading_text_colour=None</em>, <em>select_background_colour=None</em>, <em>select_text_colour=None</em>, <em>select_frame_colour=None</em>, <em>select_frame_line_width=None</em>, <em>justification=None</em>, <em>scroll_menu=None</em>, <em>background_stimulus=None</em>, <em>mouse=None</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextMenu.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a text menu.</p>
+<p>This creates a menu with items to be selected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>heading</strong><span class="classifier">str</span></dt><dd><p>menu heading</p>
+</dd>
+<dt><strong>menu_items</strong><span class="classifier">str or list</span></dt><dd><p>list with menu items</p>
+</dd>
+<dt><strong>width</strong><span class="classifier">int</span></dt><dd><p>width of the menu</p>
+</dd>
+<dt><strong>position</strong><span class="classifier">(int, int), optional</span></dt><dd></dd>
+<dt><strong>text_size</strong><span class="classifier">int, optional</span></dt><dd></dd>
+<dt><strong>background_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>background colour of the menu</p>
+</dd>
+<dt><strong>gap</strong><span class="classifier">int, optional</span></dt><dd><p>size of gap (pixel) between heading and item list</p>
+</dd>
+<dt><strong>heading_font</strong><span class="classifier">str, optional</span></dt><dd><p>font to be used for the heading</p>
+</dd>
+<dt><strong>text_font</strong><span class="classifier">str, optional</span></dt><dd><p>font to be used for the text</p>
+</dd>
+<dt><strong>text_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>text colour of the items</p>
+</dd>
+<dt><strong>heading_text_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>text colour of the heading</p>
+</dd>
+<dt><strong>select_background_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>background colour of the currently selected item</p>
+</dd>
+<dt><strong>select_text_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>text colour of the currently selected item</p>
+</dd>
+<dt><strong>select_frame_colour</strong><span class="classifier">(int, int, int), optional</span></dt><dd><p>colour of the frame around the selected item</p>
+</dd>
+<dt><strong>select_frame_line_width</strong><span class="classifier">int, optional</span></dt><dd><p>line width of the frame around the selected item</p>
+</dd>
+<dt><strong>justification</strong><span class="classifier">int, optional</span></dt><dd><p>text justification: 0 (left), 1 (center), 2 (right)</p>
+</dd>
+<dt><strong>scroll_menu</strong><span class="classifier">int, optional</span></dt><dd><p>maximum length of a item list before a scroll menu will
+be display. If the parameter is 0 of False scroll menu
+will not be displayed</p>
+</dd>
+<dt><strong>background_stimulus</strong><span class="classifier">visual expyriment stimulus, optional</span></dt><dd><p>The background stimulus is a second stimulus that will be presented
+together with the TextMenu. For both stimuli overlap TextMenu
+will appear on top of the background_stimulus</p>
+</dd>
+<dt><strong>mouse</strong><span class="classifier">expyriment.io.Mouse object or True, optional</span></dt><dd><p>If True or a mouse object is given, the menu will be controlled
+by the mouse</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.background_colour">
+<em class="property">property </em><code class="descname">background_colour</code><a class="headerlink" href="#expyriment.io.TextMenu.background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for background_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.background_stimulus">
+<em class="property">property </em><code class="descname">background_stimulus</code><a class="headerlink" href="#expyriment.io.TextMenu.background_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for background_stimulus</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.gap">
+<em class="property">property </em><code class="descname">gap</code><a class="headerlink" href="#expyriment.io.TextMenu.gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for gap</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>preselected_item=0</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextMenu.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present the menu and return the selected item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>preselected_item</strong><span class="classifier">int, optional</span></dt><dd><p>item that is preselected when showing menu</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>selected</strong><span class="classifier">int</span></dt><dd><p>integer representing the selected item in the list</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.heading">
+<em class="property">property </em><code class="descname">heading</code><a class="headerlink" href="#expyriment.io.TextMenu.heading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for heading</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.heading_text_colour">
+<em class="property">property </em><code class="descname">heading_text_colour</code><a class="headerlink" href="#expyriment.io.TextMenu.heading_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for heading_text_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.justification">
+<em class="property">property </em><code class="descname">justification</code><a class="headerlink" href="#expyriment.io.TextMenu.justification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for justification</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.logging">
+<em class="property">property </em><code class="descname">logging</code><a class="headerlink" href="#expyriment.io.TextMenu.logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.menu_items">
+<em class="property">property </em><code class="descname">menu_items</code><a class="headerlink" href="#expyriment.io.TextMenu.menu_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for menu_items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.position">
+<em class="property">property </em><code class="descname">position</code><a class="headerlink" href="#expyriment.io.TextMenu.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for position</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.scroll_menu">
+<em class="property">property </em><code class="descname">scroll_menu</code><a class="headerlink" href="#expyriment.io.TextMenu.scroll_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for scroll_menu</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.select_background_colour">
+<em class="property">property </em><code class="descname">select_background_colour</code><a class="headerlink" href="#expyriment.io.TextMenu.select_background_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for select_background_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.select_frame_colour">
+<em class="property">property </em><code class="descname">select_frame_colour</code><a class="headerlink" href="#expyriment.io.TextMenu.select_frame_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for select_frame_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.select_frame_line_width">
+<em class="property">property </em><code class="descname">select_frame_line_width</code><a class="headerlink" href="#expyriment.io.TextMenu.select_frame_line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for select_frame_line_width</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.select_text_colour">
+<em class="property">property </em><code class="descname">select_text_colour</code><a class="headerlink" href="#expyriment.io.TextMenu.select_text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for select_text_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.set_logging">
+<code class="descname">set_logging</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="headerlink" href="#expyriment.io.TextMenu.set_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logging of this object on or off</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>onoff</strong><span class="classifier">bool</span></dt><dd><p>set logging on (True) or off (False)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="expyriment.design.Experiment.html#expyriment.design.Experiment.set_log_level" title="expyriment.design.Experiment.set_log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expyriment.design.Experiment.set_log_level</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.text_colour">
+<em class="property">property </em><code class="descname">text_colour</code><a class="headerlink" href="#expyriment.io.TextMenu.text_colour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for text_colour</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="expyriment.io.TextMenu.text_size">
+<em class="property">property </em><code class="descname">text_size</code><a class="headerlink" href="#expyriment.io.TextMenu.text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for text_size</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.io.TouchScreenButtonBox.html" class="btn btn-neutral float-right" title="expyriment.io.TouchScreenButtonBox" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.io.TextInput.html" class="btn btn-neutral float-left" title="expyriment.io.TextInput" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

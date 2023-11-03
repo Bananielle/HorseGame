@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>expyriment.control.defaults &mdash; Expyriment 0.10.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="expyriment.control.CallbackQuitEvent" href="expyriment.control.CallbackQuitEvent.html" />
+    <link rel="prev" title="expyriment.control" href="expyriment.control.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Expyriment
+          
+
+          
+            
+            <img src="_static/xpy_button.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced.html">Advanced</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="expyriment.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="expyriment.control.html">expyriment.control</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">expyriment.control.defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expyriment.control.CallbackQuitEvent.html">expyriment.control.CallbackQuitEvent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.design.html">expyriment.design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.io.html">expyriment.io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.misc.html">expyriment.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expyriment.stimuli.html">expyriment.stimuli</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PreviousVersions.html">Previous versions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Expyriment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="expyriment.html">expyriment</a> &raquo;</li>
+        
+          <li><a href="expyriment.control.html">expyriment.control</a> &raquo;</li>
+        
+      <li>expyriment.control.defaults</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-expyriment.control.defaults">
+<span id="expyriment-control-defaults"></span><h1>expyriment.control.defaults<a class="headerlink" href="#module-expyriment.control.defaults" title="Permalink to this headline">¶</a></h1>
+<p>Default settings for the control package.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">audiosystem_autostart</span> <span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">start</span> <span class="n">the</span> <span class="n">audiosystem</span> <span class="n">when</span> <span class="n">Expyriment</span> <span class="ow">is</span> <span class="n">initialized</span>
+
+<span class="n">audiosystem_bit_depth</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">audio</span> <span class="n">bit</span> <span class="n">depth</span><span class="p">;</span> <span class="n">negative</span> <span class="n">values</span> <span class="n">mean</span> <span class="n">signed</span> <span class="n">sample</span> <span class="n">values</span>
+
+<span class="n">audiosystem_buffer_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">audio</span> <span class="n">buffer</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">samples</span>
+
+<span class="n">audiosystem_channels</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">audio</span> <span class="n">channels</span>
+
+<span class="n">audiosystem_sample_rate</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">audio</span> <span class="n">sample</span> <span class="n">rate</span>
+
+<span class="n">auto_create_subject_id</span> <span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">create</span> <span class="n">a</span> <span class="n">subject</span> <span class="nb">id</span> <span class="n">automatically</span> <span class="n">when</span> <span class="n">starting</span> <span class="n">an</span> <span class="n">experiment</span>
+
+<span class="n">event_logging</span> <span class="p">:</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">bool</span>
+    <span class="n">O</span><span class="o">/</span><span class="kc">False</span> <span class="o">=</span> <span class="n">no</span> <span class="n">event</span> <span class="n">logging</span>
+    <span class="mi">1</span>       <span class="o">=</span> <span class="n">normal</span> <span class="n">event</span> <span class="n">logging</span> <span class="p">(</span><span class="n">logging</span> <span class="n">of</span> <span class="nb">all</span> <span class="nb">input</span> <span class="o">&amp;</span> <span class="n">output</span> <span class="n">events</span><span class="p">)</span>
+    <span class="mi">2</span>       <span class="o">=</span> <span class="n">intensive</span> <span class="n">logging</span><span class="p">;</span> <span class="n">logs</span> <span class="n">much</span> <span class="n">more</span><span class="p">;</span> <span class="n">use</span> <span class="n">only</span> <span class="k">for</span> <span class="n">debugging</span>
+              <span class="n">purposes</span>
+
+    <span class="n">NOTES</span>
+    <span class="o">=====</span>
+    <span class="n">In</span> <span class="n">most</span> <span class="n">cases</span><span class="p">,</span> <span class="n">it</span> <span class="n">should</span> <span class="n">be</span> <span class="n">avoided</span> <span class="n">to</span> <span class="n">switch</span> <span class="n">of</span> <span class="n">logging</span> <span class="p">(</span><span class="n">loglevel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span>
+    <span class="n">If</span> <span class="n">log</span> <span class="n">files</span> <span class="n">become</span> <span class="n">to</span> <span class="n">big</span> <span class="n">due</span> <span class="n">to</span> <span class="n">certain</span> <span class="n">repetitive</span> <span class="n">events</span><span class="p">,</span> <span class="n">it</span> <span class="ow">is</span>
+    <span class="n">suggested</span> <span class="n">to</span> <span class="n">switch</span> <span class="n">of</span> <span class="n">the</span> <span class="n">logging</span> <span class="n">of</span> <span class="n">individual</span> <span class="n">stimuli</span> <span class="ow">or</span> <span class="n">IO</span> <span class="n">event</span>
+    <span class="p">(</span><span class="n">see</span> <span class="n">the</span> <span class="n">method</span> <span class="o">.</span><span class="n">set_logging</span><span class="p">()</span> <span class="n">of</span> <span class="n">this</span> <span class="nb">object</span><span class="p">)</span><span class="o">.</span>
+    <span class="n">The</span> <span class="n">logging</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">events</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span> <span class="n">changed</span> <span class="n">via</span>
+    <span class="n">expyriment</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">Experiment</span><span class="p">()</span><span class="o">.</span><span class="n">set_logging</span><span class="o">.</span>
+
+<span class="n">fast_quit</span> <span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">quit</span> <span class="n">immediately</span> <span class="n">without</span> <span class="n">showing</span> <span class="n">a</span> <span class="n">goodbye</span> <span class="n">message</span>
+
+<span class="n">goodbye_delay</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">duration</span> <span class="p">(</span><span class="ow">in</span> <span class="n">milliseconds</span><span class="p">)</span> <span class="n">to</span> <span class="n">show</span> <span class="n">the</span> <span class="n">goodbye</span> <span class="n">text</span>
+
+<span class="n">goodbye_text</span> <span class="p">:</span> <span class="nb">str</span>
+    <span class="n">the</span> <span class="n">text</span> <span class="n">to</span> <span class="n">be</span> <span class="n">shown</span> <span class="n">when</span> <span class="n">ending</span> <span class="n">an</span> <span class="n">experiment</span>
+
+<span class="n">initialize_delay</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">a</span> <span class="n">delay</span> <span class="p">(</span><span class="ow">in</span> <span class="n">seconds</span><span class="p">)</span> <span class="n">to</span> <span class="n">wait</span> <span class="n">before</span> <span class="n">running</span> <span class="n">an</span> <span class="n">experiment</span> <span class="n">to</span> <span class="n">give</span>
+    <span class="n">Python</span> <span class="n">time</span> <span class="n">to</span> <span class="n">start</span> <span class="n">properly</span>
+
+    <span class="n">NOTES</span>
+    <span class="o">=====</span>
+    <span class="n">Python</span> <span class="n">needs</span> <span class="n">about</span> <span class="mi">10</span> <span class="n">seconds</span> <span class="n">to</span> <span class="n">start</span> <span class="n">up</span> <span class="n">properly</span><span class="o">.</span> <span class="n">Before</span> <span class="n">that</span><span class="p">,</span>
+    <span class="n">timing</span> <span class="n">accuracy</span> <span class="n">can</span> <span class="n">be</span> <span class="n">worse</span><span class="o">.</span>
+
+<span class="n">open_gl</span> <span class="p">:</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">bool</span>
+    <span class="mi">0</span><span class="o">/</span><span class="kc">False</span> <span class="o">=</span> <span class="n">no</span> <span class="n">OpenGL</span> <span class="p">(</span><span class="n">no</span> <span class="n">vsync</span> <span class="o">/</span> <span class="n">no</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="mi">1</span>       <span class="o">=</span> <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">no</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="mi">2</span>       <span class="o">=</span> <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="mi">3</span>       <span class="o">=</span> <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">alternative</span> <span class="n">blocking</span><span class="p">)</span>
+
+    <span class="n">NOTES</span>
+    <span class="o">=====</span>
+    <span class="n">no</span> <span class="n">OpenGL</span> <span class="p">(</span><span class="n">no</span> <span class="n">vsync</span> <span class="o">/</span> <span class="n">no</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="o">----------------------------------</span>
+    <span class="o">*</span> <span class="n">Short</span> <span class="n">preloading</span> <span class="n">times</span>
+        <span class="n">Pygame</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">write</span> <span class="n">directly</span> <span class="n">to</span> <span class="n">the</span> <span class="n">display</span>
+    <span class="o">*</span> <span class="n">Unsynchronized</span> <span class="n">display</span> <span class="n">updating</span>
+        <span class="n">Pixels</span> <span class="n">are</span> <span class="n">starting</span> <span class="n">to</span> <span class="n">change</span> <span class="n">at</span> <span class="n">wherever</span> <span class="n">the</span> <span class="n">vertical</span> <span class="n">retrace</span> <span class="ow">is</span>
+        <span class="n">at</span> <span class="n">the</span> <span class="n">moment</span> <span class="n">of</span> <span class="n">presentation</span>
+
+    <span class="n">This</span> <span class="n">mode</span> <span class="n">can</span> <span class="n">be</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">dynamic</span> <span class="n">displays</span><span class="p">,</span> <span class="n">where</span> <span class="n">an</span> <span class="n">accurate</span>
+    <span class="n">stimulus</span> <span class="n">timing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">required</span><span class="p">,</span> <span class="n">but</span> <span class="n">rather</span> <span class="n">very</span> <span class="n">fast</span> <span class="n">display</span> <span class="n">changes</span>
+    <span class="n">have</span> <span class="n">high</span> <span class="n">priority</span> <span class="ow">and</span> <span class="n">stimuli</span> <span class="n">have</span> <span class="n">to</span> <span class="n">be</span> <span class="n">created</span> <span class="ow">and</span> <span class="n">on</span> <span class="n">the</span> <span class="n">fly</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span>
+    <span class="n">questionnairs</span><span class="p">,</span> <span class="n">video</span> <span class="n">game</span><span class="o">-</span><span class="n">like</span> <span class="n">scenarios</span><span class="p">)</span><span class="o">.</span>
+
+    <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">no</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="o">----------------------------</span>
+    <span class="o">*</span> <span class="n">Longer</span> <span class="n">preloading</span> <span class="n">times</span>
+        <span class="n">OpenGL</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">write</span> <span class="n">to</span> <span class="n">the</span> <span class="n">display</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">conversion</span> <span class="n">to</span> <span class="n">an</span>
+        <span class="n">OpenGL</span> <span class="n">texture</span> <span class="ow">is</span> <span class="n">needed</span>
+    <span class="o">*</span> <span class="n">Synchronized</span> <span class="n">display</span> <span class="n">updating</span>
+        <span class="n">Pixels</span> <span class="n">are</span> <span class="n">starting</span> <span class="n">to</span> <span class="n">change</span> <span class="n">always</span> <span class="n">when</span> <span class="n">the</span> <span class="n">vertical</span> <span class="n">retrace</span> <span class="ow">is</span>
+        <span class="n">at</span> <span class="n">the</span> <span class="n">left</span> <span class="n">top</span> <span class="n">corner</span>
+    <span class="o">*</span> <span class="n">Innaccurate</span> <span class="n">presentation</span> <span class="n">time</span> <span class="n">reporting</span>
+        <span class="n">Exact</span> <span class="n">time</span> <span class="n">of</span> <span class="n">pixels</span> <span class="n">changing</span> <span class="n">on</span> <span class="n">screen</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span>
+
+    <span class="n">This</span> <span class="n">mode</span> <span class="n">can</span> <span class="n">be</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">dynamic</span> <span class="n">displays</span><span class="p">,</span> <span class="n">where</span> <span class="n">an</span> <span class="n">accurate</span>
+    <span class="n">stimulus</span> <span class="n">timing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">required</span><span class="p">,</span> <span class="n">but</span> <span class="n">rather</span> <span class="n">fast</span> <span class="ow">and</span> <span class="n">fluid</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span>
+    <span class="n">non</span><span class="o">-</span><span class="n">tearing</span><span class="p">)</span> <span class="n">display</span> <span class="n">changes</span> <span class="n">have</span> <span class="n">high</span> <span class="n">priority</span> <span class="ow">and</span> <span class="n">preloaded</span> <span class="n">stimuli</span>
+    <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">well</span><span class="o">-</span><span class="n">controlled</span> <span class="n">motion</span> <span class="n">stimuli</span><span class="p">)</span><span class="o">.</span>
+
+    <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="o">-------------------------</span>
+    <span class="o">*</span> <span class="n">Longer</span> <span class="n">preloading</span> <span class="n">times</span>
+        <span class="n">OpenGL</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">write</span> <span class="n">to</span> <span class="n">the</span> <span class="n">display</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">conversion</span> <span class="n">to</span> <span class="n">an</span>
+        <span class="n">OpenGL</span> <span class="n">texture</span> <span class="ow">is</span> <span class="n">needed</span>
+    <span class="o">*</span> <span class="n">Synchronized</span> <span class="n">display</span> <span class="n">updating</span>
+        <span class="n">Pixels</span> <span class="n">are</span> <span class="n">starting</span> <span class="n">to</span> <span class="n">change</span> <span class="n">always</span> <span class="n">when</span> <span class="n">the</span> <span class="n">vertical</span> <span class="n">retrace</span> <span class="ow">is</span>
+        <span class="n">at</span> <span class="n">the</span> <span class="n">left</span> <span class="n">top</span> <span class="n">corner</span>
+    <span class="o">*</span> <span class="n">Accurate</span> <span class="n">presentation</span> <span class="n">time</span> <span class="n">reporting</span>
+        <span class="n">present</span><span class="p">()</span> <span class="n">method</span> <span class="n">will</span> <span class="n">only</span> <span class="k">return</span> <span class="n">when</span> <span class="nb">all</span> <span class="n">drawing</span> <span class="n">has</span> <span class="n">been</span>
+        <span class="n">finished</span>
+
+    <span class="n">This</span> <span class="n">can</span> <span class="n">be</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">static</span> <span class="n">stimulus</span> <span class="n">presentation</span><span class="p">,</span> <span class="n">where</span> <span class="n">getting</span> <span class="n">an</span>
+    <span class="n">accurate</span>  <span class="n">presentation</span> <span class="n">time</span> <span class="n">report</span> <span class="ow">is</span> <span class="n">of</span> <span class="n">highest</span> <span class="n">priority</span><span class="o">.</span> <span class="n">Since</span> <span class="n">this</span>
+    <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">case</span> <span class="k">for</span> <span class="n">most</span> <span class="n">psychological</span> <span class="ow">and</span> <span class="n">neuroscientific</span> <span class="n">settings</span><span class="p">,</span>
+    <span class="n">it</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">default</span> <span class="n">mode</span> <span class="n">used</span> <span class="n">by</span> <span class="n">Expyriment</span><span class="o">.</span>
+
+    <span class="n">OpenGL</span> <span class="p">(</span><span class="n">vsync</span> <span class="o">/</span> <span class="n">alternative</span> <span class="n">blocking</span><span class="p">)</span>
+    <span class="o">-------------------------------------</span>
+    <span class="o">*</span> <span class="n">Longer</span> <span class="n">preloading</span> <span class="n">times</span>
+        <span class="n">OpenGL</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">write</span> <span class="n">to</span> <span class="n">the</span> <span class="n">display</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">conversion</span> <span class="n">to</span> <span class="n">an</span>
+        <span class="n">OpenGL</span> <span class="n">texture</span> <span class="ow">is</span> <span class="n">needed</span>
+    <span class="o">*</span> <span class="n">Synchronized</span> <span class="n">display</span> <span class="n">updating</span>
+        <span class="n">Pixels</span> <span class="n">are</span> <span class="n">starting</span> <span class="n">to</span> <span class="n">change</span> <span class="n">always</span> <span class="n">when</span> <span class="n">the</span> <span class="n">vertical</span> <span class="n">retrace</span> <span class="ow">is</span>
+        <span class="n">at</span> <span class="n">the</span> <span class="n">left</span> <span class="n">top</span> <span class="n">corner</span>
+    <span class="o">*</span> <span class="n">Accurate</span> <span class="n">presentation</span> <span class="n">time</span> <span class="n">reporting</span> <span class="p">(</span><span class="n">alternative</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">present</span><span class="p">()</span> <span class="n">method</span> <span class="n">will</span> <span class="n">only</span> <span class="k">return</span> <span class="n">when</span> <span class="nb">all</span> <span class="n">drawing</span> <span class="n">has</span> <span class="n">been</span>
+        <span class="n">finished</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">then</span> <span class="n">empty</span> <span class="n">back</span> <span class="n">buffer</span> <span class="ow">is</span> <span class="n">available</span> <span class="k">for</span> <span class="n">drawing</span>
+        <span class="n">on</span> <span class="n">it</span> <span class="n">again</span>
+
+    <span class="n">This</span> <span class="n">can</span> <span class="n">be</span> <span class="n">useful</span> <span class="k">for</span> <span class="n">static</span> <span class="n">stimulus</span> <span class="n">presentation</span><span class="p">,</span> <span class="n">where</span> <span class="n">getting</span> <span class="n">an</span>
+    <span class="n">accurate</span> <span class="n">presentation</span> <span class="n">time</span> <span class="n">report</span> <span class="ow">is</span> <span class="n">of</span> <span class="n">highest</span> <span class="n">priority</span> <span class="ow">and</span> <span class="n">the</span>
+    <span class="n">former</span> <span class="n">mode</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">work</span> <span class="n">correctly</span> <span class="p">(</span><span class="n">due</span> <span class="n">to</span> <span class="n">different</span> <span class="n">video</span> <span class="n">card</span>
+    <span class="n">driver</span> <span class="n">implementations</span><span class="p">)</span><span class="o">.</span>
+
+<span class="n">pause_key</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">key</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">pausing</span> <span class="n">an</span> <span class="n">experiment</span>
+
+<span class="n">quit_key</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">key</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">ending</span> <span class="n">an</span> <span class="n">experiment</span>
+
+<span class="n">refresh_key</span> <span class="p">:</span> <span class="nb">int</span>
+    <span class="n">the</span> <span class="n">key</span> <span class="n">to</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">refreshing</span> <span class="n">the</span> <span class="n">screen</span>
+
+<span class="n">stdout_logging</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">log</span> <span class="n">errors</span> <span class="ow">and</span> <span class="n">warnings</span> <span class="n">which</span> <span class="n">go</span> <span class="n">to</span> <span class="n">the</span> <span class="n">standard</span> <span class="n">output</span> <span class="p">(</span><span class="n">terminal</span>
+    <span class="n">window</span><span class="p">)</span>
+
+<span class="n">window_mode</span> <span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">run</span> <span class="n">experiment</span> <span class="ow">in</span> <span class="n">window</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">fullscreen</span>
+
+<span class="n">window_size</span> <span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">window</span> <span class="n">when</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">window</span> <span class="n">mode</span>
+
+<span class="n">window_no_frame</span> <span class="p">:</span> <span class="nb">bool</span>
+    <span class="k">if</span> <span class="kc">True</span> <span class="n">windows</span> <span class="ow">in</span> <span class="n">window</span> <span class="n">mode</span> <span class="n">will</span> <span class="n">be</span> <span class="n">displayed</span> <span class="n">without</span> <span class="n">a</span> <span class="n">frame</span><span class="p">;</span>
+    <span class="n">this</span> <span class="n">parameter</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">affect</span> <span class="n">fullscreen</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.audiosystem_autostart">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">audiosystem_autostart</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.audiosystem_autostart" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: True</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.audiosystem_bit_depth">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">audiosystem_bit_depth</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.audiosystem_bit_depth" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: -16</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.audiosystem_buffer_size">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">audiosystem_buffer_size</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.audiosystem_buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 2048</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.audiosystem_channels">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">audiosystem_channels</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.audiosystem_channels" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 2</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.audiosystem_sample_rate">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">audiosystem_sample_rate</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.audiosystem_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 44100</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.auto_create_subject_id">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">auto_create_subject_id</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.auto_create_subject_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.event_logging">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">event_logging</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.event_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 1</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.fast_quit">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">fast_quit</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.fast_quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.goodbye_delay">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">goodbye_delay</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.goodbye_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 3000</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.goodbye_text">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">goodbye_text</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.goodbye_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: ‘Ending experiment…’</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.initialize_delay">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">initialize_delay</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.initialize_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 10</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.open_gl">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">open_gl</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.open_gl" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 2</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.pause_key">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">pause_key</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.pause_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: None</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.quit_key">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">quit_key</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.quit_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: 27</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.stdout_logging">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">stdout_logging</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.stdout_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: True</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.window_mode">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">window_mode</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.window_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.window_no_frame">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">window_no_frame</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.window_no_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: False</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="expyriment.control.defaults.expyriment.control.defaults.window_size">
+<code class="descclassname">expyriment.control.defaults.</code><code class="descname">window_size</code><a class="headerlink" href="#expyriment.control.defaults.expyriment.control.defaults.window_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value: (800, 600)</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="expyriment.control.CallbackQuitEvent.html" class="btn btn-neutral float-right" title="expyriment.control.CallbackQuitEvent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="expyriment.control.html" class="btn btn-neutral float-left" title="expyriment.control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Florian Krause &amp; Oliver Lindemann
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
