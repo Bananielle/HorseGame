@@ -17,8 +17,8 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 10,
-            'totalNum_TRIALS': 12, # Set the number of times Task should occur
-            'duration_BASELINE_s': 5,
+            'totalNum_TRIALS': 2, # Set the number of times Task should occur
+            'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {}
         }
@@ -103,11 +103,14 @@ class GameParameters():
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top), True, [0,0,0])
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
+        self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS
+        self.coinsCollectedInCurrentTrial = 0
         self.nrCoinsCollected = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
         self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) + 10)
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
+        self.coinsBeingCounted = False
 
         self.scoreSaved = False
         self.printedNFdata = False
@@ -127,6 +130,10 @@ class GameParameters():
         self.mainGame_background = 0
 
         self.signalValue_simulated =0
+
+
+    def startCountingCoins(self):
+        self.coinsBeingCounted = True
 
 
     def update_y_position_horse_text(self):

@@ -28,6 +28,7 @@ In SoundSystem
 
 ------------------------------------------------------------------------------------------------------------------------
 """
+import csv
 
 import pygame, random, os
 from pylsl import StreamInfo, StreamOutlet
@@ -120,6 +121,7 @@ if __name__ == '__main__':
             self.runList = []
             self.runNr = 1
             self.font = pygame.font.SysFont('herculanum', 35, bold=True, )
+            self.coinsPerTrialPerRuns = []
 
         def addScoretoScoreBoard(self, score):
             if not gp.scoreSaved:
@@ -128,7 +130,11 @@ if __name__ == '__main__':
                 self.runNr =+ 1
                 gp.scoreSaved = True  # This will reset when the player goes back to the start screen
                 print('Score ', score, ' saved to score list. Is now: ', str(self.scoresList))
-                self.save_dict_to_csv()
+                self.save_scoresPerRun_to_csv()
+                print('Coins per trial: ' + str(gp.nrCoinsPerTrial))
+                self.coinsPerTrialPerRuns.append(gp.nrCoinsPerTrial)
+                print('Coins per trial per run: ' + str(self.coinsPerTrialPerRuns))
+
 
         def makePinkFont(self, string):
             text = self.font.render(string, True, PINK)  # Pink colour
@@ -168,7 +174,7 @@ if __name__ == '__main__':
 
                 # print('score ', score, ' printed')
     # CSV writer
-        def save_dict_to_csv(self):
+        def save_scoresPerRun_to_csv(self):
 
             ScoresDictionary = {"Coins collected": self.scoresList}
             fieldnames = ["Coins collected"]
@@ -179,7 +185,6 @@ if __name__ == '__main__':
             csvWriter = CSVwriter()
             csvWriter.save_dict_to_csv(filename, fieldnames, ScoresDictionary)
 
-#testt
 
     # GAME STATE FUNCTIONS
     def startANewGame(mounttype,gametype,timeofday):
@@ -198,11 +203,12 @@ if __name__ == '__main__':
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
+        BCI = BrainComputerInterface()
 
         print("Time of day input variable = " + timeofday)
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype,timeofday)
 
-        return gamestate, gameParameters, mainGameBackGround,paradigmManager  # Reinitialize game parameters and background
+        return gamestate, gameParameters, mainGameBackGround,paradigmManager, BCI  # Reinitialize game parameters and background
 
 
     def changeMount_right(mounttype):
@@ -436,6 +442,10 @@ if __name__ == '__main__':
             else:
                 print("NF signal task already calculated.")
 
+    def resetCoinsPerTrialCount():
+        print("Resetting coinsCollectedInCurrentTrial (was " + str(gp.coinsCollectedInCurrentTrial) + " to 0.")
+        gp.coinsCollectedInCurrentTrial = 0  # Rest the counter
+
     def collectRestTrialData():
         # Send time window to BCI
 
@@ -524,6 +534,12 @@ if __name__ == '__main__':
         gp.coin.update()  # Update the position of coins
         checkForCoinCollision()  # Check if any coins have collided with the player
 
+        # Coins counting management during each trial
+        if gp.coinsBeingCounted:
+            BCI.addCoinsCollectedDuringCurrentTrial(gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
+            resetCoinsPerTrialCount()  # Reset the counter for the number of coins collected during the current trial
+            gp.coinsBeingCounted = False
+
         # Draw all our sprites
         for entity in gp.all_sprites:
             screen.blit(entity.surf, entity.rect)
@@ -539,6 +555,8 @@ if __name__ == '__main__':
                 coin.kill()
                 soundSystem.coinCollected.play()
                 gp.nrCoinsCollected += 1
+                gp.coinsCollectedInCurrentTrial += 1
+                gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
 
                 if coin.rank == 8:
                     print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
@@ -576,7 +594,7 @@ if __name__ == '__main__':
         # Save the score for the player
         scoreboard.addScoretoScoreBoard(gp.nrCoinsCollected)
 
-        if not gp.printedNFdata:
+        if not gp.printedNFdata: # If you didn't print the data yet (needs to happen only once)
             print("NFsignals stored: " + str(BCI.NFsignal))
             BCI.calculate_NF_max_threshold()
             gp.printedNFdata = True
@@ -632,7 +650,8 @@ if __name__ == '__main__':
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
                 loadingBar.resetLoadingBar()
-               # if gp.REST_counter == 1:
+
+            # if gp.REST_counter == 1:
                 #    paradigmManager.resetJumpStartTime() # Do this the first time the rest event occurs
 
             # Check if time for horse jump
@@ -874,7 +893,7 @@ if __name__ == '__main__':
 
     # Set up a new game (will be refreshed after every replay)
     gametype = 'maingame'
-    gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype,timeofday)
+    gamestate, gp, mainGame_background,paradigmManager,BCI = startANewGame(mounttype,gametype,timeofday)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
@@ -897,7 +916,7 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gp, mainGame_background,paradigmManager = startANewGame(mounttype,gametype,timeofday)
+            gamestate, gp, mainGame_background,paradigmManager, BCI = startANewGame(mounttype,gametype,timeofday)
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()
