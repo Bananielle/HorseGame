@@ -22,7 +22,7 @@ class ParadigmAndTriggerManager():
         if gameParamaters.useSimulatedData:
             self.retrieveProtocol("LocalizerAline_Protocol.csv")
             #self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
-            self.retrieveSimulatedData("NF_run_Dani_2023-11-15.csv")
+            self.retrieveSimulatedData("nf_run_dani.csv")
 
 
 
@@ -49,7 +49,7 @@ class ParadigmAndTriggerManager():
     def getCurrentSimulatedSignalValue(self):
         #print("T= " + str(self.gp.currentTime_s) +  ": Current simulated signal value: " + self.simulatedData_array[self.gp.currentTime_s].__str__())
         try:
-            data = self.simulatedData_array[self.gp.currentTime_s]
+            data = self.simulatedData_array[self.gp.currentTime_s+-1] # -1 because otherwise it is one timepoint too early
         except:
             print("Ran out of data.") # If you run out of data, just return 0.
             data = 0

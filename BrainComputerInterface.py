@@ -55,7 +55,7 @@ class BrainComputerInterface():
         #self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
         #               'NFSignal_median_REST', 'NF_MaxThreshold',"CoinsCollected"]
 
-        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK',
+        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK','NFSignal_median_TASK',
                              'NF_MaxThresholdUsed', "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
 
         # Look for a connection to turbo-satori
@@ -93,7 +93,7 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
             #scaled_data = self.getBetas(trialNr)
             #scaled_data = self.scaleOxyData()
-            scaled_data = self.getNewData()
+            scaled_data = self.getNewDataForNF()
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
 
@@ -285,6 +285,25 @@ class BrainComputerInterface():
             print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt), ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate))
 
             return scaled_data
+
+    def getNewDataForNF(self):
+        timepoint, rt = self.getCurrentTimePoint()
+        sampling_rate = self.tsi.get_sampling_rate()[0]
+
+        # Get oxy
+        selectedChannels = self.tsi.get_selected_channels()[0]
+        oxy = self.tsi.get_data_oxy(selectedChannels[0], timepoint - 1)[0]
+
+        # Apply scale factor to oxy
+        scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
+        scaled_data = float(oxy) * float(
+            scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
+
+
+        print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt),
+              ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate))
+
+        return scaled_data
 
 
     def set_NF_max_threshold(self,NFsignal_max):
