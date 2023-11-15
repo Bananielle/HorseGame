@@ -165,6 +165,7 @@ class MainPlayer(pygame.sprite.Sprite):
         return jump_position
 
     def performJumpSequence(self, NF_level_reached):
+        maxJumpHeightAchieved = self.calculate_jump_position(NF_level_reached)
         if self.HorseIsJumping:
             if self.HorseIsJumpingUp:
                 #if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
@@ -195,6 +196,8 @@ class MainPlayer(pygame.sprite.Sprite):
                 #print("T=",self.gameParams.currentTime_s,": Horse is moving back to starting point.")
                 self.moveLeft()
                 self.moveLeft()
+
+        return maxJumpHeightAchieved
 
     def jumpUp(self):
         if self.RidingAnimation == 0:

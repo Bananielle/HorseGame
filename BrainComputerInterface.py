@@ -12,12 +12,13 @@ from pygame.locals import (
 )
 
 class BrainComputerInterface():
-    def __init__(self):
+    def __init__(self,typeOfRun):
 
         self.saveIncomingData = True
         self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = True # Use the max amplitude for NF calculation
 
+        self.typeOfRun = typeOfRun # localizer or maingame (NF) run
         self.simulatedData_filepath = "Data/"
         self.previousRetrievedTimePoint = 0
         self.currentRetrievedTimePoint = 0
@@ -36,7 +37,9 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": [],"CoinsCollected":[]}
+        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [],
+                         "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThresholdUsed": [],
+                         "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
 
         self.NF_maxLevel_based_on_localizer = 1  # This is the max level for the NF signal that people can reach
 
@@ -52,8 +55,8 @@ class BrainComputerInterface():
         #self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
         #               'NFSignal_median_REST', 'NF_MaxThreshold',"CoinsCollected"]
 
-        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK',
-                             'NF_MaxThreshold', "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
+        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK',
+                             'NF_MaxThresholdUsed', "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
 
         # Look for a connection to turbo-satori
         try:
@@ -121,6 +124,12 @@ class BrainComputerInterface():
         self.NFsignal["CoinsCollected"].append(coinsCollectedInCurrentTrial)  # Save the number of coins collected for each trial
         print("Coins collected for this trial: " + str(coinsCollectedInCurrentTrial))
         print("NFsignal dictionary: " + str(self.NFsignal))
+
+    def addAchievedNFlevel(self, achievedNFLevel):
+        self.NFsignal["AchievedNFLevel"].append(achievedNFLevel)  # Save the number of coins collected for each trial
+
+    def addMaxJumpHeightAchieved(self, maxJumpHeightAchieved):
+        self.NFsignal["MaxJumpHeightAchieved"].append(maxJumpHeightAchieved)  # Save the number of coins collected for each trial
 
     def calculateNFsignal(self, task):
 
@@ -192,35 +201,34 @@ class BrainComputerInterface():
         maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
-        self.NFsignal["NF_MaxThreshold"].append(NFsignal_max)
 
         # Print the mean of the NFsignal_mean values
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(
             NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
-        # Set the NF max threshold for the NF runs
-        self.set_NF_max_threshold(NFsignal_mean)
+        print("Max signal amplitude reached: " + str(NFsignal_max))
 
         # Save NF values to CSV files
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        self.save_dict_to_csv()
+        self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
+        self.save_NFdatalog_to_csv()
 
         # Save the incoming data (both oxy and betas) from the whole run to a csv file
-        filename = f"betavalues_{current_date}.csv"
-        self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_betas)), filename)
+        #filename = f"betavalues_{current_date}.csv"
+        #self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_betas)), filename)
 
-        filename = f"oxyvalues{current_date}.csv"
-        self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_oxy)), filename)
+        #filename = f"oxyvalues{current_date}.csv"
+        #self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_oxy)), filename)
 
-        filename = f"reactiontimes{current_date}.csv"
-        self.save_list_to_csv(self.reactionTimeList, filename)
+        #filename = f"reactiontimes{current_date}.csv"
+        #self.save_list_to_csv(self.reactionTimeList, filename)
 
         filename = f"testdatalist{current_date}.csv"
         data = list(zip(self.timepointList,self.testDataList,self.reactionTimeList))
         self.save_list_to_csv(data, filename)
 
-        filename = f"timepointlist{current_date}.csv"
-        self.save_list_to_csv(self.timepointList, filename)
+       # filename = f"timepointlist{current_date}.csv"
+       # self.save_list_to_csv(self.timepointList, filename)
 
         # Show boxplot of the NFsignal_mean and NFsignal_max values
         #self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
@@ -351,12 +359,15 @@ class BrainComputerInterface():
 
         return timeBetweenSamples_ms
 
-
+# =============================  MAIN LOG for NF and game data
     # CSV writer
-    def save_dict_to_csv(self):
+    def save_NFdatalog_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
-        filename = f"NF_data_{current_date}.csv"
+        if self.typeOfRun == "localizer":
+            filename = f"NF_datalog_localizer_{current_date}.csv"
+        else:
+            filename = f"NF_datalog_NFrun_{current_date}.csv"
         csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
 
     def save_list_to_csv(self, data,filename):

@@ -115,7 +115,8 @@ class GameParameters():
         self.scoreSaved = False
         self.printedNFdata = False
 
-        self.achieved_jump_height = 1
+        self.achievedNFlevel = 1
+        self.maxJumpHeightAchieved = 0
 
         # Counter ( for countin down the seconds until game over)
         self.SECOND_HAS_PASSED = pygame.USEREVENT
@@ -141,7 +142,7 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_jump_position_text(self):
-        self.achieved_jump_height_text = self.debuggingFont.render("Percent Signal Change (PSC) = " + str(self.achieved_jump_height),
+        self.achieved_jump_height_text = self.debuggingFont.render("Percent Signal Change (PSC) = " + str(self.achievedNFlevel),
                                                                    True, [0, 0, 0])
 
     def update_Taskcounter(self):
