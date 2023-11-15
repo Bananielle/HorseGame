@@ -155,7 +155,7 @@ if __name__ == '__main__':
             # Put each score on the screen in descending order
             for score in sortedScores:
                 count_str = str(count) + '.'
-                if score == gp.nrCoinsCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
+                if score == gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
                     scores_text = self.font.render(str(score) + ' coins collected', True, BLACK)
                     count_text = self.font.render(count_str, True, BLACK)
                     currentScoreAlreadyDisplayed = True
@@ -203,7 +203,7 @@ if __name__ == '__main__':
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
-        BCI = BrainComputerInterface()
+        BCI = BrainComputerInterface(gametype)
 
         print("Time of day input variable = " + timeofday)
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype,timeofday)
@@ -349,8 +349,9 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
-                gp.achieved_jump_height = 0.5 # For displaying debugging text
+                gp.achievedNFlevel = 0.5  # For displaying debugging text
+                gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
+
 
 
             # Show the player how much time has passed
@@ -494,8 +495,8 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.achieved_jump_height = BCI.get_achieved_NF_level()
-                gp.player.performJumpSequence(NF_level_reached=gp.achieved_jump_height)
+                gp.achievedNFlevel = BCI.get_achieved_NF_level()
+                gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=gp.achievedNFlevel)
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -534,9 +535,11 @@ if __name__ == '__main__':
         gp.coin.update()  # Update the position of coins
         checkForCoinCollision()  # Check if any coins have collided with the player
 
-        # Coins counting management during each trial
+        # Coins counting management during each trial -> send to logger (that will save it to a csv file for later)
         if gp.coinsBeingCounted:
             BCI.addCoinsCollectedDuringCurrentTrial(gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
+            BCI.addAchievedNFlevel(gp.achievedNFlevel)
+            BCI.addMaxJumpHeightAchieved(gp.maxJumpHeightAchieved)
             resetCoinsPerTrialCount()  # Reset the counter for the number of coins collected during the current trial
             gp.coinsBeingCounted = False
 
@@ -554,7 +557,7 @@ if __name__ == '__main__':
             if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
                 soundSystem.coinCollected.play()
-                gp.nrCoinsCollected += 1
+                gp.nrCoinsCollectedThroughoutRun += 1
                 gp.coinsCollectedInCurrentTrial += 1
                 gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
 
@@ -565,18 +568,19 @@ if __name__ == '__main__':
                     break
 
                 # Show the player how many coins have been collected
-                text = str(gp.nrCoinsCollected).rjust(3)
-                gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
+                text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+                gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
 
     def killAllCoins():
         for coin in gp.coin:
             coin.kill()
             soundSystem.coinCollected.play()
-            gp.nrCoinsCollected += 1
+            gp.nrCoinsCollectedThroughoutRun += 1
+            gp.coinsCollectedInCurrentTrial += 1
             # Show the player how many coins have been collected
-            text = str(gp.nrCoinsCollected).rjust(3)
-            gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
+            text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+            gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
 
     def runGameOver():
@@ -592,7 +596,7 @@ if __name__ == '__main__':
         screen.blit(replay.surf, replay.surf_center)
 
         # Save the score for the player
-        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollected)
+        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun)
 
         if not gp.printedNFdata: # If you didn't print the data yet (needs to happen only once)
             print("NFsignals stored: " + str(BCI.NFsignal))
@@ -672,7 +676,7 @@ if __name__ == '__main__':
                 if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
                     gp.horseJumpCounter += 1
                     print("Time for jump event. Horse jump counter raised to = " + str(gp.horseJumpCounter))
-                    print("NF level = " + str(gp.achieved_jump_height))
+                    print("NF level = " + str(gp.achievedNFlevel))
                     timeforjump = True
         return timeforjump
 
@@ -877,7 +881,7 @@ if __name__ == '__main__':
 
     soundSystem = SoundSystem()
 
-    BCI = BrainComputerInterface()
+    BCI = BrainComputerInterface("maingame")
     BCI.scaleOxyData()
 
     # Set up gamestates to cycle through in main loop
