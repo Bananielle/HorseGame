@@ -36,7 +36,7 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": []}
+        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [], "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThreshold": [],"CoinsCollected":[]}
 
         self.NF_maxLevel_based_on_localizer = 1  # This is the max level for the NF signal that people can reach
 
@@ -49,9 +49,11 @@ class BrainComputerInterface():
 
         # CSV file preparation
         # Define the field names (header) for your CSV file
-        self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
-                       'NFSignal_median_REST', 'NF_MaxThreshold']
+        #self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
+        #               'NFSignal_median_REST', 'NF_MaxThreshold',"CoinsCollected"]
 
+        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK',
+                             'NF_MaxThreshold', "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
 
         # Look for a connection to turbo-satori
         try:
@@ -66,7 +68,7 @@ class BrainComputerInterface():
             self.timeBetweenSamples_ms = 1000  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 100) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 1000) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self,trialNr):
@@ -115,7 +117,12 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
 
-    def calculateNFsignal(self,task):
+    def addCoinsCollectedDuringCurrentTrial(self,coinsCollectedInCurrentTrial):
+        self.NFsignal["CoinsCollected"].append(coinsCollectedInCurrentTrial)  # Save the number of coins collected for each trial
+        print("Coins collected for this trial: " + str(coinsCollectedInCurrentTrial))
+        print("NFsignal dictionary: " + str(self.NFsignal))
+
+    def calculateNFsignal(self, task):
 
         if task:
             NFsignal_raw = np.array(self.timewindow_task) # Array of all incoming oxy values.
@@ -136,6 +143,7 @@ class BrainComputerInterface():
             self.NFsignal["NFsignal_mean_TASK"].append(self.NFsignal_mean)
             self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
             self.NFsignal["NFSignal_median_TASK"].append(self.NFSignal_median)
+
 
         else: # If measurement is from the rest period
             self.currentRest_signal = self.NFsignal_mean # Save the current rest signal for PSC calculation
@@ -215,8 +223,8 @@ class BrainComputerInterface():
         self.save_list_to_csv(self.timepointList, filename)
 
         # Show boxplot of the NFsignal_mean and NFsignal_max values
-        self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
-        self.show_boxplot(self.NFsignal["NFsignal_max_TASK"], "Max amplitude")
+        #self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
+        #self.show_boxplot(self.NFsignal["NFsignal_max_TASK"], "Max amplitude")
 
     def show_boxplot(self, data, ylabel):
         fig, ax = plt.subplots()
@@ -354,5 +362,5 @@ class BrainComputerInterface():
     def save_list_to_csv(self, data,filename):
 
         csvWriter = CSVwriter.CSVwriter()
-        csvWriter.save_list_to_csv(data,filename)
+        csvWriter.save_list_to_csv(data, filename)
 

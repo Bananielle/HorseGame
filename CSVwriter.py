@@ -39,12 +39,24 @@ class CSVwriter():
 
         df = pd.DataFrame(data)
 
-        # Write to CSV
-        #with open(file_path, 'w', newline='') as file:
-         #   writer = csv.writer(file)
-          #  writer.writerows(data)
-
         df.to_csv(file_path,header=False, index=False)
+        print(f'Data written to ' + file_path)
+
+    def save_coinsList_to_csv(self, data, file_name,column_names=None, index_name=None):
+
+        file_path = self.dataOutputFolder + file_name
+
+        df = pd.DataFrame(data)
+
+        # Set column names if provided
+        if column_names:
+            df.columns = column_names
+
+        # Set index name if provided
+        if index_name:
+            df.index.name = index_name
+
+        df.to_csv(file_path, header=False, index=False)
         print(f'Data written to ' + file_path)
 
     def read_csv(self, file_name):

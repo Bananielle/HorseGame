@@ -120,7 +120,7 @@ class ParadigmAndTriggerManager():
 
     # TRIGGERS
     def startTaskTrigger(self):
-        self.outlet.push_sample(x=[3])  # Triggers are buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
+        self.outlet.push_sample(x=[3])  # Triggers are still buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
         print('Started task trigger.')
 
     def startRestTrigger(self):
