@@ -16,14 +16,14 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 10,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 2,
+            'duration_REST_s': 15,
+            'totalNum_TRIALS': 5, # Set the number of times Task should occur
+            'duration_BASELINE_s': 15,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = False
+        self.useSimulatedData = True
 
         self.collectDataDuringRest = False
 
@@ -96,7 +96,7 @@ class GameParameters():
         self.counterText = str('-').rjust(3)
         self.mainFont = pygame.font.SysFont('herculanum', 30, bold=True, )
         self.debuggingFont = pygame.font.SysFont('arial', 15, bold=False, )
-        self.jellyfishCollectedFont = pygame.font.SysFont('herculanum', 40, bold=True, )
+        self.coinsCollectedFont = pygame.font.SysFont('herculanum', 40, bold=True, )
         self.gameTimeCounterText = self.mainFont.render(self.counterText, True, PINK)
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
@@ -105,7 +105,7 @@ class GameParameters():
 
         self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS
         self.coinsCollectedInCurrentTrial = 0
-        self.nrCoinsCollected = 0
+        self.nrCoinsCollectedThroughoutRun = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
         self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) + 10)

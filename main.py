@@ -155,7 +155,7 @@ if __name__ == '__main__':
             # Put each score on the screen in descending order
             for score in sortedScores:
                 count_str = str(count) + '.'
-                if score == gp.nrCoinsCollected and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
+                if score == gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
                     scores_text = self.font.render(str(score) + ' coins collected', True, BLACK)
                     count_text = self.font.render(count_str, True, BLACK)
                     currentScoreAlreadyDisplayed = True
@@ -557,7 +557,7 @@ if __name__ == '__main__':
             if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
                 soundSystem.coinCollected.play()
-                gp.nrCoinsCollected += 1
+                gp.nrCoinsCollectedThroughoutRun += 1
                 gp.coinsCollectedInCurrentTrial += 1
                 gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
 
@@ -568,18 +568,19 @@ if __name__ == '__main__':
                     break
 
                 # Show the player how many coins have been collected
-                text = str(gp.nrCoinsCollected).rjust(3)
-                gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
+                text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+                gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
 
     def killAllCoins():
         for coin in gp.coin:
             coin.kill()
             soundSystem.coinCollected.play()
-            gp.nrCoinsCollected += 1
+            gp.nrCoinsCollectedThroughoutRun += 1
+            gp.coinsCollectedInCurrentTrial += 1
             # Show the player how many coins have been collected
-            text = str(gp.nrCoinsCollected).rjust(3)
-            gp.nrCoinsCollectedText = gp.jellyfishCollectedFont.render(text, True, RED)
+            text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+            gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
 
     def runGameOver():
@@ -595,7 +596,7 @@ if __name__ == '__main__':
         screen.blit(replay.surf, replay.surf_center)
 
         # Save the score for the player
-        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollected)
+        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun)
 
         if not gp.printedNFdata: # If you didn't print the data yet (needs to happen only once)
             print("NFsignals stored: " + str(BCI.NFsignal))

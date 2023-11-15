@@ -21,7 +21,9 @@ class ParadigmAndTriggerManager():
 
         if gameParamaters.useSimulatedData:
             self.retrieveProtocol("LocalizerAline_Protocol.csv")
-            self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
+            #self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
+            self.retrieveSimulatedData("NF_run_Dani_2023-11-15.csv")
+
 
 
     # Retrieves protocol data that is specified for each second.
@@ -35,7 +37,7 @@ class ParadigmAndTriggerManager():
         self.protocol_array = conditions
 
     def getCurrentSimulatedCondition(self):
-        print("Current simulated condition (0=rest, 1-10=task): " + self.protocol_array[self.gp.currentTime_s].__str__())
+        #print("Current simulated condition (0=rest, 1-10=task): " + self.protocol_array[self.gp.currentTime_s].__str__())
         try:
             condition = self.protocol_array[self.gp.currentTime_s]
         except:
