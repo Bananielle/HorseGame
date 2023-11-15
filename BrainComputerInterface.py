@@ -12,12 +12,13 @@ from pygame.locals import (
 )
 
 class BrainComputerInterface():
-    def __init__(self,typeOfRun):
+    def __init__(self,typeOfRun,useSimulatedData):
 
-        self.saveIncomingData = False
+        self.saveIncomingData = True
         self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = True # Use the max amplitude for NF calculation
 
+        self.useSimulatedData = useSimulatedData
         self.typeOfRun = typeOfRun # localizer or maingame (NF) run
         self.simulatedData_filepath = "Data/"
         self.previousRetrievedTimePoint = 0
@@ -384,10 +385,16 @@ class BrainComputerInterface():
     def save_NFdatalog_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+
         if self.typeOfRun == "localizer":
             filename = f"NF_datalog_localizer_{current_date}.csv"
+            if self.useSimulatedData:
+                filename = f"NF_datalog_localizer_simulated_{current_date}.csv"
         else:
-            filename = f"NF_datalog_NFrun_{current_date}.csv"
+            if self.useSimulatedData:
+                filename = f"NF_datalog_NFrun_simulated_{current_date}.csv"
+            else:
+                filename = f"NF_datalog_NFrun_{current_date}.csv"
         csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
 
     def save_list_to_csv(self, data,filename):

@@ -203,7 +203,7 @@ if __name__ == '__main__':
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
-        BCI = BrainComputerInterface(gametype)
+        BCI = BrainComputerInterface(gametype,gameParameters.useSimulatedData)
 
         print("Time of day input variable = " + timeofday)
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype,timeofday)
@@ -881,9 +881,6 @@ if __name__ == '__main__':
 
     soundSystem = SoundSystem()
 
-    BCI = BrainComputerInterface("maingame")
-    BCI.scaleOxyData()
-
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
     MountType = Mounts() # Set up mount types to cycle through
@@ -901,6 +898,9 @@ if __name__ == '__main__':
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
+
+    BCI = BrainComputerInterface(gametype,gp.useSimulatedData)
+    BCI.scaleOxyData()
 
 
 

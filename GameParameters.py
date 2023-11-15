@@ -23,7 +23,7 @@ class GameParameters():
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = True
+        self.useSimulatedData = False
 
         self.collectDataDuringRest = False
 
