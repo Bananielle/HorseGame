@@ -7,9 +7,9 @@ from pygame.locals import (
     RLEACCEL,
 )
 
-class LoadingBar(pygame.sprite.Sprite):
+class ProgressBar(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH,SCREEN_HEIGHT,gameParams):
-        super(LoadingBar, self).__init__()
+        super(ProgressBar, self).__init__()
         self.gameParams = gameParams
         self.SCREEN_WIDTH =SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -26,15 +26,18 @@ class LoadingBar(pygame.sprite.Sprite):
         self.fill_rate_rest = self.bar_width / ((gameParams.duration_REST_s - 0 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
 
         # Put the center of surf at the left corner of the display
-        self.surf_center = (30,20)
-        self.barfilling_x = 37
-        self.barfilling_y = 35
+        #self.surf_center = (30,20)
+        self.bar_x = 200
+        self.bar_y = 440
+        self.surf_center = (self.bar_x,self.bar_y)
+        self.barfilling_x = self.bar_x + 7
+        self.barfilling_y = self.bar_y  + 15
 
 
-    def resetLoadingBar(self):
+    def resetProgressBar(self):
         self.bar_fill = 0
 
-    def fillLoadingBar(self,task):
+    def fillProgressBar(self, task):
         if self.bar_fill < self.bar_width:
             if task: # If loading bar of task:
                 self.bar_fill += self.fill_rate_task

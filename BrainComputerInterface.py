@@ -12,13 +12,15 @@ from pygame.locals import (
 )
 
 class BrainComputerInterface():
-    def __init__(self,typeOfRun,useSimulatedData):
+    def __init__(self,typeOfRun,gameParameters):
 
-        self.saveIncomingData = True
+
         self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = True # Use the max amplitude for NF calculation
+        self.gp = gameParameters
 
-        self.useSimulatedData = useSimulatedData
+        self.useSimulatedData = self.gp.useSimulatedData
+        self.saveIncomingData = self.gp.saveIncomingData
         self.typeOfRun = typeOfRun # localizer or maingame (NF) run
         self.simulatedData_filepath = "Data/"
         self.previousRetrievedTimePoint = 0
@@ -128,7 +130,7 @@ class BrainComputerInterface():
         print("NFsignal dictionary: " + str(self.NFsignal))
 
     def addAchievedNFlevel(self, achievedNFLevel):
-        self.NFsignal["AchievedNFLevel"].append(achievedNFLevel)  # Save the number of coins collected for each trial
+        self.NFsignal["AchievedNFLevel"].append('{:.3f}'.format(achievedNFLevel))  # Save the number of coins collected for each trial
 
     def addMaxJumpHeightAchieved(self, maxJumpHeightAchieved):
         self.NFsignal["MaxJumpHeightAchieved"].append(maxJumpHeightAchieved)  # Save the number of coins collected for each trial
@@ -151,9 +153,9 @@ class BrainComputerInterface():
         if task:
             self.currentTask_signal = self.NFsignal_mean # Save the current task signal for PSC calculation
 
-            self.NFsignal["NFsignal_mean_TASK"].append(self.NFsignal_mean)
-            self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
-            self.NFsignal["NFSignal_median_TASK"].append(self.NFSignal_median)
+            self.NFsignal["NFsignal_mean_TASK"].append(float('{:.3f}'.format(self.NFsignal_mean)))
+            self.NFsignal["NFsignal_max_TASK"].append(float('{:.3f}'.format(self.NFsignal_max)))
+            self.NFsignal["NFSignal_median_TASK"].append(float('{:.3f}'.format(self.NFSignal_median)))
 
 
         else: # If measurement is from the rest period

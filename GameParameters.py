@@ -16,14 +16,15 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 15,
+            'duration_REST_s': 8,
             'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 15,
+            'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = False
+        self.useSimulatedData = True
+        self.saveIncomingData= False
 
         self.collectDataDuringRest = False
 
@@ -56,7 +57,7 @@ class GameParameters():
         self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
-        self.useLoadingBar = True # If true, then a loading bar will appear during the task trial
+        self.useProgressBar = True # If true, then a loading bar will appear during the task trial
 
         self.currentTime_s = 0  #
 
@@ -142,7 +143,7 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_jump_position_text(self):
-        self.achieved_jump_height_text = self.debuggingFont.render("Percent Signal Change (PSC) = " + str(self.achievedNFlevel),
+        self.achieved_jump_height_text = self.debuggingFont.render("Achieved NF level = " + str('{:.2f}'.format(self.achievedNFlevel)),
                                                                    True, [0, 0, 0])
 
     def update_Taskcounter(self):

@@ -42,7 +42,7 @@ from BrainComputerInterface import BrainComputerInterface
 from GameParameters import GameParameters
 from Coin import Coin
 from Background import MainGame_background
-from LoadingBar import LoadingBar
+from ProgressBar import ProgressBar
 from Rider import Rider
 from SettingsScreen import Settings_header
 from CSVwriter import CSVwriter
@@ -203,7 +203,7 @@ if __name__ == '__main__':
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
-        BCI = BrainComputerInterface(gametype,gameParameters.useSimulatedData)
+        BCI = BrainComputerInterface(gametype,gameParameters)
 
         print("Time of day input variable = " + timeofday)
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype,timeofday)
@@ -392,13 +392,13 @@ if __name__ == '__main__':
         # Draw game time counter text
         screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
         screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
-        screen.blit(gp.nrTrialsCompletedText, (20, 60))
+        screen.blit(gp.nrTrialsCompletedText, (20, 20))
 
     def draw_debugging_text():
         gp.update_y_position_horse_text()
         gp.update_jump_position_text()
-        screen.blit(gp.horse_upper_position_text, (20, 100))
-        screen.blit(gp.achieved_jump_height_text, (20, 120))
+        screen.blit(gp.horse_upper_position_text, (20, 60))
+        screen.blit(gp.achieved_jump_height_text, (20, 80))
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
@@ -515,16 +515,16 @@ if __name__ == '__main__':
         readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         if gp.task:
-            if gp.useLoadingBar:
-                screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar_task(loadingBar)
+            if gp.useProgressBar:
+                screen.blit(progressBar.surf, progressBar.surf_center)
+                updateProgressBar_task(progressBar)
             if gp.useExclamationMark and not gp.player.HorseIsJumping:
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         if gp.rest:
-            if gp.useLoadingBar:
-                screen.blit(loadingBar.surf, loadingBar.surf_center)
-                updateLoadingBar_rest(loadingBar)
+            if gp.useProgressBar:
+                screen.blit(progressBar.surf, progressBar.surf_center)
+                updateProgressBar_rest(progressBar)
 
 
     def  updatePlayerCoinsAndText():
@@ -589,6 +589,7 @@ if __name__ == '__main__':
         # Sounds
         soundSystem.fadeIntoGameOverMusicTheme()
         soundSystem.playedStartScreenSound = False
+        gp.useProgressBar = False # Turn off progress bar
 
         gameover = GameOver(SCREEN_WIDTH, SCREEN_HEIGHT)
         replay = PressSpaceToReplay(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -642,7 +643,7 @@ if __name__ == '__main__':
             gp.baseline = False
             if paradigmManager.isItTimeForTaskEvent():
                 paradigmManager.initiateBasicTaskEvent()
-                loadingBar.resetLoadingBar()
+                progressBar.resetProgressBar()
                 deleteExistingCoins()
                 coinEvent()
                 paradigmManager.resetRestStartTime()
@@ -653,7 +654,7 @@ if __name__ == '__main__':
             if paradigmManager.isItTimeForRestEvent():
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
-                loadingBar.resetLoadingBar()
+                progressBar.resetProgressBar()
 
             # if gp.REST_counter == 1:
                 #    paradigmManager.resetJumpStartTime() # Do this the first time the rest event occurs
@@ -681,15 +682,15 @@ if __name__ == '__main__':
         return timeforjump
 
 
-    def updateLoadingBar_task(loadingBar):
-        loadingBar.fillLoadingBar(task=True)
+    def updateProgressBar_task(loadingBar):
+        loadingBar.fillProgressBar(task=True)
         pygame.draw.rect(screen, GREEN,
                          [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
 
 
-    def updateLoadingBar_rest(loadingBar):
+    def updateProgressBar_rest(loadingBar):
 
-        loadingBar.fillLoadingBar(task=False)
+        loadingBar.fillProgressBar(task=False)
         pygame.draw.rect(screen, GREY,
                          [loadingBar.barfilling_x, loadingBar.barfilling_y, loadingBar.bar_fill, loadingBar.bar_height])
 
@@ -726,6 +727,9 @@ if __name__ == '__main__':
         if gp.currentTime_s == gp.durationGame_s:
             gamestate = GameState.GAMEOVER
             gp.player.kill()
+            progressBar.kill()
+            progressBar.update()
+
         else:
             gp.currentTime_s += 1
             text = str(gp.currentTime_s).rjust(3)
@@ -897,9 +901,9 @@ if __name__ == '__main__':
     gamestate, gp, mainGame_background,paradigmManager,BCI = startANewGame(mounttype,gametype,timeofday)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
-    loadingBar = LoadingBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
+    progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
 
-    BCI = BrainComputerInterface(gametype,gp.useSimulatedData)
+    BCI = BrainComputerInterface(gametype,gp)
     BCI.scaleOxyData()
 
 

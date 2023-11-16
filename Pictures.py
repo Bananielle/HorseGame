@@ -96,5 +96,5 @@ class ReadyToJump():
 
         self.surf_center = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2.9,
-            ((self.SCREEN_HEIGHT * 0.7) - self.surf.get_height())
+            ((self.SCREEN_HEIGHT * 0.7) - self.surf.get_height()) - 10
         )
