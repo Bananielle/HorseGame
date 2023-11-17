@@ -963,4 +963,5 @@ if __name__ == '__main__':
     pygame.quit()
 
     # Close the console log file when done
-    log_file.close()
+    if allowLogSaving:
+        log_file.close()
