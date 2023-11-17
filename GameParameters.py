@@ -16,9 +16,9 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 8,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 2,
+            'duration_REST_s': 15,
+            'totalNum_TRIALS': 6, # Set the number of times Task should occur
+            'duration_BASELINE_s': 15,
             'task_start_times': {},
             'rest_start_times': {}
         }
@@ -112,6 +112,7 @@ class GameParameters():
         self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) + 10)
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
         self.coinsBeingCounted = False
+        self.freezeCoins = False
 
         self.scoreSaved = False
         self.printedNFdata = False

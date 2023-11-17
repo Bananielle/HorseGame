@@ -358,8 +358,6 @@ if __name__ == '__main__':
                 gp.achievedNFlevel = 0.5  # For displaying debugging text
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
-
-
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
                 gamestate = showHowMuchTimeHasPassed(gamestate)
@@ -558,7 +556,7 @@ if __name__ == '__main__':
         draw_debugging_text()
 
 
-    def checkForCoinCollision():
+    def  checkForCoinCollision():
         for coin in gp.coin:
             if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
@@ -669,6 +667,7 @@ if __name__ == '__main__':
             if gp.REST_counter > 0 and gp.TASK_counter > 0 and isItTimeForJumpEvent():  # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
                 print("Horse jumping = True")
                 gp.player.HorseIsJumping = True
+                gp.freezeCoins = True # Make the coins stop moving, so that the achieved NF level and horse jump height always amounts to the exact same amount of coins collected.
                 gp.player.HorseIsJumpingUp = True
                 paradigmManager.resetJumpStartTime()
 

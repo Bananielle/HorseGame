@@ -185,6 +185,7 @@ class MainPlayer(pygame.sprite.Sprite):
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False
+                    self.gameParams.freezeCoins = False # Make the coins move up and down again
                     self.gameParams.horseJumpEvent = False
                     self.gameParams.startCountingCoins()
                     print("Horse is not jumping anymore.")
