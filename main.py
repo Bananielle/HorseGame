@@ -861,8 +861,8 @@ if __name__ == '__main__':
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
     if FULLSCREEN == 0:
-        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3)
-        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3)
+        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 4) # TODO: was originally 3
+        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /4) # TODO: was originally 3
     else:  # If fullscreen is selected, adjust all size parameters to fullscreen
         SCREEN_WIDTH = infoObject.current_w
         SCREEN_HEIGHT = infoObject.current_h

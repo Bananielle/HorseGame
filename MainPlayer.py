@@ -37,7 +37,7 @@ class MainPlayer(pygame.sprite.Sprite):
             self.mount_folder = "Resources/Bear/"
 
         # Preload the animal animation images for running
-        self.animal_images_walking = [pygame.image.load(self.mount_folder + 'Walk1.png'),
+        self.animal_images_walking = [pygame.image.load(self.mount_folder +'Walk1.png'),
                                       pygame.image.load(self.mount_folder +'Walk2.png'),
                                       pygame.image.load(self.mount_folder +'Walk3.png'),
                                       pygame.image.load(self.mount_folder +'Walk4.png'),
@@ -68,11 +68,13 @@ class MainPlayer(pygame.sprite.Sprite):
         self.HorseIsJumpingDown = False
 
 
+    # Makes sure that each image, be that horse, turtle, camel or bear, is scaled to the exact same size, so that
+    #when it jumps, the exact same jump height is achieved across all animals and the same amount of coins is always collected.
     def scaleImage(self):
-        self.imageScaleFactor = int(3)
-        self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,
-                                                       self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
-
+        self. animal_height = self.SCREEN_HEIGHT/3.5 # Or hardcoded: 192
+        self.animal_width = (self.SCREEN_WIDTH/ 6.5) - 30 # Or hardcoded: 125
+        self.surf = pygame.transform.scale(self.surf, (self.animal_height, self.animal_width))
+        #print("Size of animal image: ", self.surf.get_width(), ",", self.surf.get_height())
 
     def setPlayerSpeed(self):
         self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
