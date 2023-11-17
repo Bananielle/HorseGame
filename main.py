@@ -30,7 +30,7 @@ In SoundSystem
 """
 import csv
 
-import pygame, random, os
+import pygame, random, os, sys
 from pylsl import StreamInfo, StreamOutlet
 
 #from pylsl import StreamInfo, StreamOutlet  # import required classes
@@ -80,10 +80,16 @@ if __name__ == '__main__':
     # Timing stuff
     prev_time = 0
 
-    def getBrainInput(fakeBrainInput):
-        fakeBrainInput += 1
-        return fakeBrainInput
+    # Saves the output from the console to a logfile.
+    allowLogSaving = False
 
+    if allowLogSaving:
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+        log_file_path = f"Data/PyCharm Logs/logfile_{current_date}.txt"  # Specify the file path where you want to save the log
+        log_file = open(log_file_path,'w')  # Open the file in write mode, this will also create the file if it doesn't exist
+
+        sys.stdout = log_file                              # Redirect stdout and stderr to the log file
+        sys.stderr = log_file
 
     # Used to cycle through different game states with a statemachine
     class GameStates:
@@ -956,3 +962,6 @@ if __name__ == '__main__':
     print('quitting game')
 
     pygame.quit()
+
+    # Close the console log file when done
+    log_file.close()

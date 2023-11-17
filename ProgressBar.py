@@ -28,7 +28,7 @@ class ProgressBar(pygame.sprite.Sprite):
         # Put the center of surf at the left corner of the display
         #self.surf_center = (30,20)
         self.bar_x = 200
-        self.bar_y = 440
+        self.bar_y = SCREEN_HEIGHT/2 + 50
         self.surf_center = (self.bar_x,self.bar_y)
         self.barfilling_x = self.bar_x + 7
         self.barfilling_y = self.bar_y  + 15

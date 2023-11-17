@@ -54,7 +54,7 @@ class GameParameters():
         # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
 
         # Background markers for task and rest periods
-        self.useExclamationMark = True # Shows a bright exclamation mark when a task starts
+        self.useExclamationMark = False # Shows a bright exclamation mark when a task starts
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useProgressBar = True # If true, then a loading bar will appear during the task trial
