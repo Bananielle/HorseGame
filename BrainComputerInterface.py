@@ -64,10 +64,12 @@ class BrainComputerInterface():
         # Look for a connection to turbo-satori
         try:
             self.tsi = tsi.TurbosatoriNetworkInterface("127.0.0.1", 55556)
+            self.selectedChannels = self.tsi.get_selected_channels()[0]
             print("Turbo satori connection successful.")
         except:
             # None found? Let the user know
             self.TSIconnectionFound = False
+            self.selectedChannels= 0
             print("Turbo satori connection not found.")
 
         if self.TSIconnectionFound:
@@ -274,8 +276,7 @@ class BrainComputerInterface():
             sampling_rate = self.tsi.get_sampling_rate()[0]
 
             # Get oxy
-            selectedChannels = self.tsi.get_selected_channels()[0]
-            oxy = self.tsi.get_data_oxy(selectedChannels[0], timepoint-1)[0]
+            oxy = self.tsi.get_data_oxy(self.selectedChannels[0], timepoint-1)[0]
 
             # Apply scale factor to oxy
             scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
@@ -294,8 +295,7 @@ class BrainComputerInterface():
         sampling_rate = self.tsi.get_sampling_rate()[0]
 
         # Get oxy
-        selectedChannels = self.tsi.get_selected_channels()[0]
-        oxy = self.tsi.get_data_oxy(selectedChannels[0], timepoint - 1)[0]
+        oxy = self.tsi.get_data_oxy(self.selectedChannels[0], timepoint - 1)[0]
 
         # Apply scale factor to oxy
         scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
@@ -316,8 +316,7 @@ class BrainComputerInterface():
     def getCurrentOxyInput(self):
         if self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
-            selectedChannels = self.tsi.get_selected_channels()[0]
-            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
+            oxy = self.tsi.get_data_oxy(self.selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
             input = oxy
             #print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
 
@@ -330,8 +329,7 @@ class BrainComputerInterface():
     def getBetas(self,trialNr):
         if self.TSIconnectionFound:
 
-            selectedChannels = self.tsi.get_selected_channels()[0]
-            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
+            betas = self.tsi.get_beta_of_channel(self.selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
             #print("Betas: " + str(betas), " for trial: " + str(trialNr))
             return betas
 
