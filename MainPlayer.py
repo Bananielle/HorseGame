@@ -71,8 +71,8 @@ class MainPlayer(pygame.sprite.Sprite):
     # Makes sure that each image, be that horse, turtle, camel or bear, is scaled to the exact same size, so that
     #when it jumps, the exact same jump height is achieved across all animals and the same amount of coins is always collected.
     def scaleImage(self):
-        self. animal_height = self.SCREEN_HEIGHT/3.5 # Or hardcoded: 192
-        self.animal_width = (self.SCREEN_WIDTH/ 6.5) - 30 # Or hardcoded: 125
+        self. animal_height = self.SCREEN_HEIGHT/ 4 #3.5 # Mac,  Or hardcoded: 192
+        self.animal_width = (self.SCREEN_WIDTH/ 10) #6.5) - 30, Mac # Or hardcoded: 125
         self.surf = pygame.transform.scale(self.surf, (self.animal_height, self.animal_width))
         #print("Size of animal image: ", self.surf.get_width(), ",", self.surf.get_height())
 
@@ -154,7 +154,7 @@ class MainPlayer(pygame.sprite.Sprite):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2 # TODO Should be 0.2!
 
-        jump_lower_bound = 3 / 10  # Lower bound of the jump position range
+        jump_lower_bound = 5 / 10  # Lower bound of the jump position range
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
 
         # Map the neurofeedback signal to the jump position range

@@ -565,7 +565,7 @@ if __name__ == '__main__':
                 gp.coinsCollectedInCurrentTrial += 1
                 gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
 
-                if coin.rank == 8:
+                if coin.rank == gp.totalNumCoins:
                     print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
                     soundSystem.coin_sound.play() # Play extra sound
                     killAllCoins()
@@ -707,15 +707,14 @@ if __name__ == '__main__':
 
     def coinEvent():
         gp.coinStartingPosition_y -= 0
-        addNewCoin(1, gp.coinStartingPosition_y,1)
-        addNewCoin(1, gp.coinStartingPosition_y - 50,2)
-        addNewCoin(1, gp.coinStartingPosition_y - 100,3)
-        addNewCoin(1, gp.coinStartingPosition_y - 150,4)
-        addNewCoin(1, gp.coinStartingPosition_y - 200,5)
-        addNewCoin(1, gp.coinStartingPosition_y - 250,6)
-        addNewCoin(1, gp.coinStartingPosition_y - 300,7)
-        addNewCoin(1, gp.coinStartingPosition_y - 350,8)
-        addNewCoin(1, gp.coinStartingPosition_y - 400, 9)
+        stepSize = 0
+
+        # add all the coins
+        for coinNr in range(gp.totalNumCoins):
+            addNewCoin(1, gp.coinStartingPosition_y - stepSize, coinNr+1) # +1 because indexing starts at 0
+            print("Coin nr " + str(coinNr) + " added at y position " + str(gp.coinStartingPosition_y - stepSize))
+
+            stepSize += 50
 
 
     def addNewCoin(coinType, y_position,rank):
@@ -723,6 +722,8 @@ if __name__ == '__main__':
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
         gp.NrOfCoins += 1
+
+
 
 
     # BASICALLY MY TIMER CLASS
@@ -860,9 +861,12 @@ if __name__ == '__main__':
     infoObject = pygame.display.Info()
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
+    # Get the monitor screen size information
     if FULLSCREEN == 0:
-        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 4) # TODO: was originally 3
-        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /4) # TODO: was originally 3
+        #SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3) #  Adjust the screen size to the monitor size
+        #SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3) #
+        SCREEN_WIDTH = 1280 # Hard code this into the game, so that it stays the same on all monitors
+        SCREEN_HEIGHT = 720
     else:  # If fullscreen is selected, adjust all size parameters to fullscreen
         SCREEN_WIDTH = infoObject.current_w
         SCREEN_HEIGHT = infoObject.current_h
@@ -872,11 +876,9 @@ if __name__ == '__main__':
     # Clock
     clock = pygame.time.Clock()  # Set up the clock for tracking time
 
-    # Screen
-    SURFACE = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
     ratio = SCREEN_WIDTH / SCREEN_HEIGHT
     # Create the screen object. The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE,
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),
                                      FULLSCREEN,
                                      display=0)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 

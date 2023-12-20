@@ -31,6 +31,8 @@ class GameParameters():
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True
 
+        self.totalNumCoins = 10
+
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
@@ -109,7 +111,7 @@ class GameParameters():
         self.nrCoinsCollectedThroughoutRun = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
-        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) + 10)
+        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) +60)
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
         self.coinsBeingCounted = False
         self.freezeCoins = False
