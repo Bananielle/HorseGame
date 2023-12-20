@@ -64,10 +64,6 @@ if __name__ == '__main__':
         K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, K_SPACE, K_l, K_s, K_p, KEYDOWN, QUIT,
     )
 
-    # Configure fullscreen. If you don't want fullscreen, set to 0 instead. Otherwise set to pygame.FULLSCREEN
-    FULLSCREEN = 0  # pygame.FULLSCREEN
-
-
     # Colour constants
     GOLD = (255, 184, 28)
     PINK = (170, 22, 166)
@@ -77,7 +73,7 @@ if __name__ == '__main__':
     GREEN = (0, 255, 0)
     GREY = (128, 128, 128)
 
-    # Timing stuff
+    # Timing parameters (for the game clock)
     prev_time = 0
 
     # Saves the output from the console to a logfile.
@@ -399,10 +395,11 @@ if __name__ == '__main__':
         screen.blit(gp.nrTrialsCompletedText, (20, 20))
 
     def draw_debugging_text():
-        gp.update_y_position_horse_text()
-        gp.update_jump_position_text()
-        screen.blit(gp.horse_upper_position_text, (20, 60))
-        screen.blit(gp.achieved_jump_height_text, (20, 80))
+        if gp.debuggingText:
+            gp.update_y_position_horse_text()
+            gp.update_jump_position_text()
+            screen.blit(gp.horse_upper_position_text, (20, 60))
+            screen.blit(gp.achieved_jump_height_text, (20, 80))
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
@@ -861,15 +858,12 @@ if __name__ == '__main__':
     infoObject = pygame.display.Info()
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
-    # Get the monitor screen size information
-    if FULLSCREEN == 0:
-        #SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3) #  Adjust the screen size to the monitor size
-        #SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3) #
-        SCREEN_WIDTH = 1280 # Hard code this into the game, so that it stays the same on all monitors
-        SCREEN_HEIGHT = 720
-    else:  # If fullscreen is selected, adjust all size parameters to fullscreen
-        SCREEN_WIDTH = infoObject.current_w
-        SCREEN_HEIGHT = infoObject.current_h
+# Get the monitor screen size information
+    #SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3) #  Adjust the screen size to the monitor size
+    #SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3) #
+    SCREEN_WIDTH = 1280 # Hard code this into the game, so that it stays the same on all monitors
+    SCREEN_HEIGHT = 720
+
 
     print('Screen width = ' + str(SCREEN_WIDTH) + ', screen height = ' + str(SCREEN_HEIGHT))
 
@@ -879,7 +873,6 @@ if __name__ == '__main__':
     ratio = SCREEN_WIDTH / SCREEN_HEIGHT
     # Create the screen object. The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),
-                                     FULLSCREEN,
                                      display=0)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 
     # Grid configuration
