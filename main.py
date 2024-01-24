@@ -643,6 +643,7 @@ if __name__ == '__main__':
         if gp.currentTime_s >= gp.duration_BASELINE_s:
             gp.baseline = False
             if paradigmManager.isItTimeForTaskEvent():
+                soundSystem.startsound.play()
                 paradigmManager.initiateBasicTaskEvent()
                 progressBar.resetProgressBar()
                 deleteExistingCoins()

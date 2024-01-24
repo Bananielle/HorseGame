@@ -16,9 +16,9 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 15,
+            'duration_REST_s': 5,
             'totalNum_TRIALS': 6, # Set the number of times Task should occur
-            'duration_BASELINE_s': 15,
+            'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {}
         }
