@@ -152,7 +152,7 @@ class MainPlayer(pygame.sprite.Sprite):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2 # TODO Should be 0.2!
 
-        jump_lower_bound = 3 / 10  # Lower bound of the jump position range
+        jump_lower_bound = 5 / 10  # Lower bound of the jump position range
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
 
         # Map the neurofeedback signal to the jump position range

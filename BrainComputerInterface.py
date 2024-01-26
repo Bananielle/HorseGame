@@ -14,7 +14,7 @@ from pygame.locals import (
 class BrainComputerInterface():
     def __init__(self,typeOfRun):
 
-        self.saveIncomingData = False
+        self.saveIncomingData = True
         self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = True # Use the max amplitude for NF calculation
 
@@ -41,7 +41,7 @@ class BrainComputerInterface():
                          "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
 
-        self.NF_maxLevel_based_on_localizer = 0.3  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 1  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -78,22 +78,22 @@ class BrainComputerInterface():
         if self.saveIncomingData and self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
 
-            self.getNewData()
+            self.getNewData(trialNr)
             #betas = self.getBetas(trialNr)
-            oxy = self.scaleOxyData()
-            condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
+            #oxy = self.scaleOxyData()
+            #condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
 
-#            self.saveIncomingDataToList_betas(betas)
-            self.saveIncomingDataToList_oxy(oxy)
-            self.saveIncomingDataToList_condition(condition)
+            #self.saveIncomingDataToList_betas(betas)
+            #self.saveIncomingDataToList_oxy(oxy)
+            #self.saveIncomingDataToList_condition(condition)
             #print("Current condition: " + str(condition))
 
     def startMeasuring(self, task, simulatedData,trialNr):
         scaled_data = 0
         if self.TSIconnectionFound:
-            #scaled_data = self.getBetas(trialNr)
+            scaled_data = self.getBetas(trialNr)
             #scaled_data = self.scaleOxyData()
-            scaled_data = self.getNewDataForNF()
+            #scaled_data = self.getNewDataForNF()
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
 
@@ -224,8 +224,10 @@ class BrainComputerInterface():
         #filename = f"reactiontimes{current_date}.csv"
         #self.save_list_to_csv(self.reactionTimeList, filename)
 
+        print(self.testDataList)
         filename = f"testdatalist{current_date}.csv"
         data = list(zip(self.timepointList,self.testDataList,self.reactionTimeList))
+        print(data)
         self.save_list_to_csv(data, filename)
 
        # filename = f"timepointlist{current_date}.csv"
@@ -265,7 +267,7 @@ class BrainComputerInterface():
         else:
             return False
 
-    def getNewData(self):
+    def getNewData(self,trialNr):
         if self.didNewDataArrive():
             timepoint,rt = self.getCurrentTimePoint()
             sampling_rate = self.tsi.get_sampling_rate()[0]
@@ -277,6 +279,8 @@ class BrainComputerInterface():
             # Apply scale factor to oxy
             scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
             scaled_data = float(oxy) * float(scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
+
+            scaled_data = self.getBetas(trialNr)
 
             self.testDataList.append(scaled_data)
             self.timepointList.append(timepoint)

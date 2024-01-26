@@ -17,13 +17,13 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 15,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 15,
+            'totalNum_TRIALS': 6, # Set the number of times Task should occur
+            'duration_BASELINE_s': 10,
             'task_start_times': {},
             'rest_start_times': {}
         }
 
-        self.useSimulatedData = True
+        self.useSimulatedData = False
 
         self.collectDataDuringRest = False
 
