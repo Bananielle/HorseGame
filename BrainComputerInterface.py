@@ -4,7 +4,7 @@ import numpy as np
 import CSVwriter
 import datetime
 import matplotlib.pyplot as plt
-
+import random
 from pygame.locals import (
     K_UP,
     K_DOWN,
