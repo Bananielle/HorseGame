@@ -178,7 +178,7 @@ class GameParameters():
 
         for trial_number in range(1, total_num_trials+1):
             datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay
-            datawindow_task_end_times[trial_number] = datawindow_task_start_times[trial_number] + task_duration
+            datawindow_task_end_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + task_duration + self.hemodynamic_delay
 
             #datawindow_rest_end_times[trial_number] = (self.protocol_file['task_start_times'][trial_number]) - 1
           #  datawindow_rest_start_times[trial_number] = datawindow_rest_end_times[trial_number] - self.duration_datawindow_rest
@@ -213,10 +213,11 @@ class GameParameters():
                 rest_start_time = previous_rest_start_time
                 jittered_rest_duration = rest_duration_without_jitter # No jitter for the first rest period
             else:
-                jittered_rest_duration = random.randint(min_rest_duration, max_rest_duration)
                 self.jittered_rest_list.append(jittered_rest_duration)
                 print('Jittered rest duration = ', str(jittered_rest_duration))
                 rest_start_time = previous_rest_start_time + task_duration + jittered_rest_duration
+
+                jittered_rest_duration = random.randint(min_rest_duration, max_rest_duration) # Generate a new jittered rest duration for the next iteration
 
             previous_rest_start_time = rest_start_time # update the previous_rest_start_time
 
