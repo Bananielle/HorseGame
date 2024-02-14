@@ -17,9 +17,14 @@ class BrainComputerInterface():
 
         self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = True # Use the max amplitude for NF calculation
-        self.gp = gameParameters
 
-        self.useSimulatedData = self.gp.useSimulatedData
+        self.NF_maxLevel_based_on_localizer = 0.6  # This is the max level for the NF signal that people can reach
+
+        self.NFsignal_mean = 1
+        self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
+        self.NFSignal_median =1
+
+        self.gp = gameParameters
         self.saveIncomingData = self.gp.saveIncomingData
         self.typeOfRun = typeOfRun # localizer or maingame (NF) run
         self.simulatedData_filepath = "Data/"
@@ -43,12 +48,6 @@ class BrainComputerInterface():
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [],
                          "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
-
-        self.NF_maxLevel_based_on_localizer = 0.3  # This is the max level for the NF signal that people can reach
-
-        self.NFsignal_mean = 1
-        self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
-        self.NFSignal_median =1
 
         self.currentTask_signal = 1
         self.currentRest_signal = 1
@@ -81,22 +80,22 @@ class BrainComputerInterface():
         if self.saveIncomingData and self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
 
-            self.getNewData()
+            self.getNewData(trialNr)
             #betas = self.getBetas(trialNr)
-            oxy = self.scaleOxyData()
-            condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
+            #oxy = self.scaleOxyData()
+            #condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
 
-#            self.saveIncomingDataToList_betas(betas)
-            self.saveIncomingDataToList_oxy(oxy)
-            self.saveIncomingDataToList_condition(condition)
+            #self.saveIncomingDataToList_betas(betas)
+            #self.saveIncomingDataToList_oxy(oxy)
+            #self.saveIncomingDataToList_condition(condition)
             #print("Current condition: " + str(condition))
 
     def startMeasuring(self, task, simulatedData,trialNr):
         scaled_data = 0
         if self.TSIconnectionFound:
-            #scaled_data = self.getBetas(trialNr)
+            scaled_data = self.getBetas(trialNr)
             #scaled_data = self.scaleOxyData()
-            scaled_data = self.getNewDataForNF()
+            #scaled_data = self.getNewDataForNF()
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
 
@@ -130,7 +129,7 @@ class BrainComputerInterface():
         print("NFsignal dictionary: " + str(self.NFsignal))
 
     def addAchievedNFlevel(self, achievedNFLevel):
-        self.NFsignal["AchievedNFLevel"].append('{:.3f}'.format(achievedNFLevel))  # Save the number of coins collected for each trial
+        self.NFsignal["AchievedNFLevel"].append(achievedNFLevel)  # Save the number of coins collected for each trial
 
     def addMaxJumpHeightAchieved(self, maxJumpHeightAchieved):
         self.NFsignal["MaxJumpHeightAchieved"].append(maxJumpHeightAchieved)  # Save the number of coins collected for each trial
@@ -153,9 +152,9 @@ class BrainComputerInterface():
         if task:
             self.currentTask_signal = self.NFsignal_mean # Save the current task signal for PSC calculation
 
-            self.NFsignal["NFsignal_mean_TASK"].append(float('{:.3f}'.format(self.NFsignal_mean)))
-            self.NFsignal["NFsignal_max_TASK"].append(float('{:.3f}'.format(self.NFsignal_max)))
-            self.NFsignal["NFSignal_median_TASK"].append(float('{:.3f}'.format(self.NFSignal_median)))
+            self.NFsignal["NFsignal_mean_TASK"].append(self.NFsignal_mean)
+            self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
+            self.NFsignal["NFSignal_median_TASK"].append(self.NFSignal_median)
 
 
         else: # If measurement is from the rest period
@@ -213,7 +212,8 @@ class BrainComputerInterface():
         print("Max signal amplitude reached: " + str(NFsignal_max))
 
         # Save NF values to CSV files
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+        print(current_date)
         self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
         self.save_NFdatalog_to_csv()
 
@@ -227,8 +227,10 @@ class BrainComputerInterface():
         #filename = f"reactiontimes{current_date}.csv"
         #self.save_list_to_csv(self.reactionTimeList, filename)
 
-        filename = f"testdatalist{current_date}.csv"
+        print(self.testDataList)
+        filename = f"RunRecording_betas_{current_date}.csv"
         data = list(zip(self.timepointList,self.testDataList,self.reactionTimeList))
+        print(data)
         self.save_list_to_csv(data, filename)
 
        # filename = f"timepointlist{current_date}.csv"
@@ -268,7 +270,7 @@ class BrainComputerInterface():
         else:
             return False
 
-    def getNewData(self):
+    def getNewData(self,trialNr):
         if self.didNewDataArrive():
             timepoint,rt = self.getCurrentTimePoint()
             sampling_rate = self.tsi.get_sampling_rate()[0]
@@ -280,6 +282,8 @@ class BrainComputerInterface():
             # Apply scale factor to oxy
             scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
             scaled_data = float(oxy) * float(scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
+
+            scaled_data = self.getBetas(trialNr)
 
             self.testDataList.append(scaled_data)
             self.timepointList.append(timepoint)
@@ -332,7 +336,7 @@ class BrainComputerInterface():
 
             selectedChannels = self.tsi.get_selected_channels()[0]
             betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
-            #print("Betas: " + str(betas), " for trial: " + str(trialNr))
+            print("Betas: " + str(betas), " for trial: " + str(trialNr))
             return betas
 
 
@@ -387,16 +391,10 @@ class BrainComputerInterface():
     def save_NFdatalog_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
-
         if self.typeOfRun == "localizer":
             filename = f"NF_datalog_localizer_{current_date}.csv"
-            if self.useSimulatedData:
-                filename = f"NF_datalog_localizer_simulated_{current_date}.csv"
         else:
-            if self.useSimulatedData:
-                filename = f"NF_datalog_NFrun_simulated_{current_date}.csv"
-            else:
-                filename = f"NF_datalog_NFrun_{current_date}.csv"
+            filename = f"NF_datalog_NFrun_{current_date}.csv"
         csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
 
     def save_list_to_csv(self, data,filename):

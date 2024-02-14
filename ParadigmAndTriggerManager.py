@@ -22,7 +22,7 @@ class ParadigmAndTriggerManager():
         if gameParamaters.useSimulatedData:
             self.retrieveProtocol("LocalizerAline_Protocol.csv")
             #self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
-            self.retrieveSimulatedData("NF_run_Dani_2023-11-15.csv")
+            self.retrieveSimulatedData("nf_run_dani.csv")
 
 
 
@@ -101,12 +101,12 @@ class ParadigmAndTriggerManager():
     def initiateBasicTaskEvent(self):
         self.gp.task = True
         self.gp.rest = False
-        self.startTaskTrigger()
+
 
         self.gp.TASK_counter += 1  # Increment the counter for event TASK
         self. gp.update_Taskcounter()
         print("T=",self.gp.currentTime_s,": Event TASK " + self.gp.TASK_counter.__str__() + " of " + self.gp.totalNum_TRIALS.__str__())
-
+        self.startTaskTrigger(self.gp.TASK_counter)
 
 
     def initiateBasicRestEvent(self):
@@ -121,9 +121,9 @@ class ParadigmAndTriggerManager():
 
 
     # TRIGGERS
-    def startTaskTrigger(self):
-        self.outlet.push_sample(x=[3])  # Triggers are still buggy in Turbo-satori but Aurora they work properly. (0 doesn't exist in TSI, and 1 = rest)
-        print('Started task trigger.')
+    def startTaskTrigger(self,triggerNr):
+        self.outlet.push_sample(x=[triggerNr+1])  #+1 because  1 = rest
+        print('Started task trigger nr' + str(triggerNr+1))
 
     def startRestTrigger(self):
         self.outlet.push_sample(x=[1])  # Rest trigger

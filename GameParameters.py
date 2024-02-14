@@ -1,5 +1,5 @@
 import pygame
-
+import random
 # Colours
 
 GOLD = (255, 184, 28)
@@ -16,25 +16,28 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 8,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 2,
+            'duration_REST_s': 16,
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'duration_BASELINE_s': 15,
             'task_start_times': {},
-            'rest_start_times': {}
+            'rest_start_times': {},
+            'jitter_s': 2
         }
 
-        self.useSimulatedData = True
-        self.saveIncomingData= False
+        self.useSimulatedData = False
+        self.saveIncomingData= True
 
         self.collectDataDuringRest = False
 
         self.draw_grid = False # For debugging purposes
         self.useFancyBackground = True
 
+        self.totalNumCoins = 10
+
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
-        self.timeUntilJump_s = 4 # todo: not that this should be dependent on when the data window task collection ends
+        self.timeUntilJump_s = 4 # todo: note that this should be dependent on when the data window task collection ends
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
         self.duration_REST_s = self.protocol_file['duration_REST_s']
         self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
@@ -58,6 +61,7 @@ class GameParameters():
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useProgressBar = True # If true, then a loading bar will appear during the task trial
+        self.debuggingText = False # If true, then debugging text will appear during the task trial
 
         self.currentTime_s = 0  #
 
@@ -70,6 +74,10 @@ class GameParameters():
         self.startTime_TASK = self.duration_BASELINE_s  + self.duration_REST_s# Set the start time for event A
         self.startTime_REST = self.duration_BASELINE_s
         self.startTime_JUMP = self.startTime_TASK + self.duration_TASK_s # The start after the first rest + task period
+
+        self.jittered_rest_list = []
+
+
 
         self.ADDCOIN = pygame.USEREVENT + 2
         pygame.time.set_timer(self.ADDCOIN, 600) # Define how quickly new jellyfish are added (e.g., every 4000ms)
@@ -109,9 +117,10 @@ class GameParameters():
         self.nrCoinsCollectedThroughoutRun = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
-        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) + 10)
+        self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) +60)
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
         self.coinsBeingCounted = False
+        self.freezeCoins = False
 
         self.scoreSaved = False
         self.printedNFdata = False
@@ -169,15 +178,15 @@ class GameParameters():
 
         for trial_number in range(1, total_num_trials+1):
             datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay
-            datawindow_task_end_times[trial_number] = datawindow_task_start_times[trial_number] + task_duration
+            datawindow_task_end_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + task_duration + self.hemodynamic_delay
 
-            datawindow_rest_end_times[trial_number] = (self.protocol_file['rest_start_times'][trial_number]) + rest_duration
-            datawindow_rest_start_times[trial_number] = datawindow_rest_end_times[trial_number] - self.duration_datawindow_rest
+            #datawindow_rest_end_times[trial_number] = (self.protocol_file['task_start_times'][trial_number]) - 1
+          #  datawindow_rest_start_times[trial_number] = datawindow_rest_end_times[trial_number] - self.duration_datawindow_rest
 
             self.protocol_file['datawindow_task_start_times'] = datawindow_task_start_times
             self.protocol_file['datawindow_task_end_times'] = datawindow_task_end_times
-            self.protocol_file['datawindow_rest_start_times'] = datawindow_rest_start_times
-            self.protocol_file['datawindow_rest_end_times'] = datawindow_rest_end_times
+          #  self.protocol_file['datawindow_rest_start_times'] = datawindow_rest_start_times
+          #  self.protocol_file['datawindow_rest_end_times'] = datawindow_rest_end_times
 
         print('Protocol for datacollection timings generated. Datawindow task start times are:' + str(
         datawindow_task_start_times) +  ", datawindow task end times are: " + str(datawindow_task_end_times) + ", datawindow rest start times are: " + str(
@@ -185,33 +194,51 @@ class GameParameters():
 
     def generate_protocol(self):
         task_duration = self.protocol_file['duration_TASK_s']
-        rest_duration = self.protocol_file['duration_REST_s']
+        rest_duration_without_jitter = self.protocol_file['duration_REST_s']
         baseline_duration = self.protocol_file['duration_BASELINE_s']
         total_num_trials = self.protocol_file['totalNum_TRIALS']
+
+        min_rest_duration = rest_duration_without_jitter - self.protocol_file['jitter_s']
+        max_rest_duration = rest_duration_without_jitter + self.protocol_file['jitter_s']
 
         task_start_times = {}
         rest_start_times = {}
         jump_start_times = {}
+        previous_rest_start_time = baseline_duration + 0
+        jittered_rest_duration= 0
 
         for trial_number in range(1, total_num_trials + 1):
 
-            rest_start_time = baseline_duration + (trial_number - 1) * (task_duration + rest_duration)
+            if trial_number == 1: # The first trial rest period is right after the baseline.
+                rest_start_time = previous_rest_start_time
+                jittered_rest_duration = rest_duration_without_jitter # No jitter for the first rest period
+            else:
+                self.jittered_rest_list.append(jittered_rest_duration)
+                print('Jittered rest duration = ', str(jittered_rest_duration))
+                rest_start_time = previous_rest_start_time + task_duration + jittered_rest_duration
+
+                jittered_rest_duration = random.randint(min_rest_duration, max_rest_duration) # Generate a new jittered rest duration for the next iteration
+
+            previous_rest_start_time = rest_start_time # update the previous_rest_start_time
+
             rest_start_times[trial_number] = rest_start_time
             if trial_number > 1:
                 jump_start_times[trial_number-1] = rest_start_time + self.timeUntilJump_s
 
-            task_start_time = rest_start_time + rest_duration
+            task_start_time = rest_start_time + jittered_rest_duration
             task_start_times[trial_number] = task_start_time
 
+            print("   Rest start time, trial " + str(trial_number) + " = " + str(rest_start_time))
+            print("     Task start time, trial " + str(trial_number) + " = " + str(task_start_time))
 
         # Add the last rest period
-        rest_start_time = baseline_duration + (total_num_trials) * (task_duration + rest_duration)
+        rest_start_time = previous_rest_start_time + task_duration + jittered_rest_duration
         rest_start_times[total_num_trials +1] = rest_start_time
 
         # Add the last jump period
         jump_start_times[total_num_trials] = rest_start_times[total_num_trials+1] + self.timeUntilJump_s
 
-
+        print("Jittered rest list = " + str(self.jittered_rest_list))
 
         self.protocol_file['task_start_times'] = task_start_times
         self.protocol_file['rest_start_times'] = rest_start_times

@@ -64,10 +64,6 @@ if __name__ == '__main__':
         K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, K_SPACE, K_l, K_s, K_p, KEYDOWN, QUIT,
     )
 
-    # Configure fullscreen. If you don't want fullscreen, set to 0 instead. Otherwise set to pygame.FULLSCREEN
-    FULLSCREEN = 0  # pygame.FULLSCREEN
-
-
     # Colour constants
     GOLD = (255, 184, 28)
     PINK = (170, 22, 166)
@@ -77,7 +73,7 @@ if __name__ == '__main__':
     GREEN = (0, 255, 0)
     GREY = (128, 128, 128)
 
-    # Timing stuff
+    # Timing parameters (for the game clock)
     prev_time = 0
 
     # Saves the output from the console to a logfile.
@@ -358,8 +354,6 @@ if __name__ == '__main__':
                 gp.achievedNFlevel = 0.5  # For displaying debugging text
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=0.5)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
-
-
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
                 gamestate = showHowMuchTimeHasPassed(gamestate)
@@ -401,10 +395,11 @@ if __name__ == '__main__':
         screen.blit(gp.nrTrialsCompletedText, (20, 20))
 
     def draw_debugging_text():
-        gp.update_y_position_horse_text()
-        gp.update_jump_position_text()
-        screen.blit(gp.horse_upper_position_text, (20, 60))
-        screen.blit(gp.achieved_jump_height_text, (20, 80))
+        if gp.debuggingText:
+            gp.update_y_position_horse_text()
+            gp.update_jump_position_text()
+            screen.blit(gp.horse_upper_position_text, (20, 60))
+            screen.blit(gp.achieved_jump_height_text, (20, 80))
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
@@ -558,7 +553,7 @@ if __name__ == '__main__':
         draw_debugging_text()
 
 
-    def checkForCoinCollision():
+    def  checkForCoinCollision():
         for coin in gp.coin:
             if coin.rect.colliderect(gp.player.rect):
                 coin.kill()
@@ -567,7 +562,7 @@ if __name__ == '__main__':
                 gp.coinsCollectedInCurrentTrial += 1
                 gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
 
-                if coin.rank == 8:
+                if coin.rank == gp.totalNumCoins:
                     print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
                     soundSystem.coin_sound.play() # Play extra sound
                     killAllCoins()
@@ -593,7 +588,7 @@ if __name__ == '__main__':
         gamestate = GameState.GAMEOVER
 
         # Sounds
-        soundSystem.fadeIntoGameOverMusicTheme() #test test test
+        soundSystem.fadeIntoGameOverMusicTheme()
         soundSystem.playedStartScreenSound = False
         gp.useProgressBar = False # Turn off progress bar
 
@@ -648,6 +643,7 @@ if __name__ == '__main__':
         if gp.currentTime_s >= gp.duration_BASELINE_s:
             gp.baseline = False
             if paradigmManager.isItTimeForTaskEvent():
+                soundSystem.startsound.play()
                 paradigmManager.initiateBasicTaskEvent()
                 progressBar.resetProgressBar()
                 deleteExistingCoins()
@@ -669,6 +665,7 @@ if __name__ == '__main__':
             if gp.REST_counter > 0 and gp.TASK_counter > 0 and isItTimeForJumpEvent():  # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
                 print("Horse jumping = True")
                 gp.player.HorseIsJumping = True
+                gp.freezeCoins = True # Make the coins stop moving, so that the achieved NF level and horse jump height always amounts to the exact same amount of coins collected.
                 gp.player.HorseIsJumpingUp = True
                 paradigmManager.resetJumpStartTime()
 
@@ -708,15 +705,14 @@ if __name__ == '__main__':
 
     def coinEvent():
         gp.coinStartingPosition_y -= 0
-        addNewCoin(1, gp.coinStartingPosition_y,1)
-        addNewCoin(1, gp.coinStartingPosition_y - 50,2)
-        addNewCoin(1, gp.coinStartingPosition_y - 100,3)
-        addNewCoin(1, gp.coinStartingPosition_y - 150,4)
-        addNewCoin(1, gp.coinStartingPosition_y - 200,5)
-        addNewCoin(1, gp.coinStartingPosition_y - 250,6)
-        addNewCoin(1, gp.coinStartingPosition_y - 300,7)
-        addNewCoin(1, gp.coinStartingPosition_y - 350,8)
-        addNewCoin(1, gp.coinStartingPosition_y - 400, 9)
+        stepSize = 0
+
+        # add all the coins
+        for coinNr in range(gp.totalNumCoins):
+            addNewCoin(1, gp.coinStartingPosition_y - stepSize, coinNr+1) # +1 because indexing starts at 0
+            print("Coin nr " + str(coinNr) + " added at y position " + str(gp.coinStartingPosition_y - stepSize))
+
+            stepSize += 50
 
 
     def addNewCoin(coinType, y_position,rank):
@@ -724,6 +720,8 @@ if __name__ == '__main__':
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
         gp.NrOfCoins += 1
+
+
 
 
     # BASICALLY MY TIMER CLASS
@@ -861,24 +859,21 @@ if __name__ == '__main__':
     infoObject = pygame.display.Info()
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
-    if FULLSCREEN == 0:
-        SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3)
-        SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3)
-    else:  # If fullscreen is selected, adjust all size parameters to fullscreen
-        SCREEN_WIDTH = infoObject.current_w
-        SCREEN_HEIGHT = infoObject.current_h
+# Get the monitor screen size information
+    #SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3) #  Adjust the screen size to the monitor size
+    #SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3) #
+    SCREEN_WIDTH = 1280 # Hard code this into the game, so that it stays the same on all monitors
+    SCREEN_HEIGHT = 720
+
 
     print('Screen width = ' + str(SCREEN_WIDTH) + ', screen height = ' + str(SCREEN_HEIGHT))
 
     # Clock
     clock = pygame.time.Clock()  # Set up the clock for tracking time
 
-    # Screen
-    SURFACE = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
     ratio = SCREEN_WIDTH / SCREEN_HEIGHT
     # Create the screen object. The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE,
-                                     FULLSCREEN,
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),
                                      display=0)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 
     # Grid configuration
@@ -959,9 +954,10 @@ if __name__ == '__main__':
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()
     pygame.mixer.quit()
-    print('quitting game')
+    print('Quitting game now.')
 
     pygame.quit()
 
     # Close the console log file when done
-    log_file.close()
+    if allowLogSaving:
+        log_file.close()

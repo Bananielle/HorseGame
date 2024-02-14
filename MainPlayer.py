@@ -37,7 +37,7 @@ class MainPlayer(pygame.sprite.Sprite):
             self.mount_folder = "Resources/Bear/"
 
         # Preload the animal animation images for running
-        self.animal_images_walking = [pygame.image.load(self.mount_folder + 'Walk1.png'),
+        self.animal_images_walking = [pygame.image.load(self.mount_folder +'Walk1.png'),
                                       pygame.image.load(self.mount_folder +'Walk2.png'),
                                       pygame.image.load(self.mount_folder +'Walk3.png'),
                                       pygame.image.load(self.mount_folder +'Walk4.png'),
@@ -68,11 +68,13 @@ class MainPlayer(pygame.sprite.Sprite):
         self.HorseIsJumpingDown = False
 
 
+    # Makes sure that each image, be that horse, turtle, camel or bear, is scaled to the exact same size, so that
+    #when it jumps, the exact same jump height is achieved across all animals and the same amount of coins is always collected.
     def scaleImage(self):
-        self.imageScaleFactor = int(3)
-        self.surf = pygame.transform.scale(self.surf, (self.surf.get_width() * self.imageScaleFactor,
-                                                       self.surf.get_height() * self.imageScaleFactor))  # But this greatly reduces the image quality...
-
+        self. animal_height = self.SCREEN_HEIGHT/ 4 #3.5 # Mac,  Or hardcoded: 192
+        self.animal_width = (self.SCREEN_WIDTH/ 10) #6.5) - 30, Mac # Or hardcoded: 125
+        self.surf = pygame.transform.scale(self.surf, (int(self.animal_height), int(self.animal_width)))
+        #print("Size of animal image: ", self.surf.get_width(), ",", self.surf.get_height())
 
     def setPlayerSpeed(self):
         self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
@@ -152,7 +154,7 @@ class MainPlayer(pygame.sprite.Sprite):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2 # TODO Should be 0.2!
 
-        jump_lower_bound = 3 / 10  # Lower bound of the jump position range
+        jump_lower_bound = 5 / 10  # Lower bound of the jump position range
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
 
         # Map the neurofeedback signal to the jump position range
@@ -185,6 +187,7 @@ class MainPlayer(pygame.sprite.Sprite):
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False
+                    self.gameParams.freezeCoins = False # Make the coins move up and down again
                     self.gameParams.horseJumpEvent = False
                     self.gameParams.startCountingCoins()
                     print("Horse is not jumping anymore.")
