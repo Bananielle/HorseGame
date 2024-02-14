@@ -593,7 +593,7 @@ if __name__ == '__main__':
         gamestate = GameState.GAMEOVER
 
         # Sounds
-        soundSystem.fadeIntoGameOverMusicTheme()
+        soundSystem.fadeIntoGameOverMusicTheme() #test test test
         soundSystem.playedStartScreenSound = False
         gp.useProgressBar = False # Turn off progress bar
 
