@@ -335,8 +335,14 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
 
             selectedChannels = self.tsi.get_selected_channels()[0]
+            print('Selected channel = ' + str(selectedChannels[0]))
             betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
-            print("Betas: " + str(betas), " for trial: " + str(trialNr))
+            print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
+
+            # For debugging
+            betas_one = self.tsi.get_beta_of_channel(selectedChannels[0], beta=0, chromophore=1)[0]  #  Only get the beta's for all trials as one condition
+            print("Betas (one condition): " + str(betas_one), " for trial: " + str(trialNr))
+
             return betas
 
 
