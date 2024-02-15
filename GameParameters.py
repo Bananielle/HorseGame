@@ -18,7 +18,7 @@ class GameParameters():
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
             'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 15,
+            'duration_BASELINE_s': 2,
             'task_start_times': {},
             'rest_start_times': {},
             'jitter_s': 2
@@ -34,6 +34,7 @@ class GameParameters():
 
         self.totalNumCoins = 10
 
+        self.gameType = ' ' # 'maingame' (NF) or 'localizer'
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3

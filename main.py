@@ -201,6 +201,7 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
         gameParameters.generate_protocol()
+        gameParameters.gameType = gametype
         gameParameters.generate_dataCollection_protocol()
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
