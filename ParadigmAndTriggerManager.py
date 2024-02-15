@@ -118,7 +118,7 @@ class ParadigmAndTriggerManager():
         self.gp.REST_counter += 1  # Increment the counter for event B
         print("T=",self.gp.currentTime_s,": Event REST")
 
-
+    # test test
 
     # TRIGGERS
     def startTaskTrigger(self):
