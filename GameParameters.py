@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 6, # Set the number of times Task should occur
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur
             'duration_BASELINE_s': 15,
             'task_start_times': {},
             'rest_start_times': {},
@@ -62,7 +62,7 @@ class GameParameters():
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useProgressBar = True # If true, then a loading bar will appear during the task trial
-        self.debuggingText = True # If true, then debugging text will appear during the task trial
+        self.debuggingText = False # If true, then debugging text will appear during the task trial
 
         self.currentTime_s = 0  #
 

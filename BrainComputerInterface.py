@@ -15,16 +15,16 @@ class BrainComputerInterface():
     def __init__(self,typeOfRun,gameParameters):
 
 
-        self.useMean = True # Use the mean amplitude for NF calculation
+        self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = False # Use the max amplitude for NF calculation
-        self.useLatestDataPoint = False # Use the latest data point for NF calculation
+        self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-        self.NF_maxLevel_based_on_localizer = 0.6  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 0.39  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
         self.NFSignal_median =1
-        NFSignal_latestValue = 1
+        self.NFSignal_latestValue = 1
 
         self.gp = gameParameters
         self.saveIncomingData = self.gp.saveIncomingData
@@ -170,7 +170,7 @@ class BrainComputerInterface():
         if self.useMax:
             achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
         if self.useLatestDataPoint: # takes the latest data point for each trial
-            achieved_NF_signal = self.NFsiganl_latestValue / self.NF_maxLevel_based_on_localizer
+            achieved_NF_signal = self.NFSignal_latestValue / self.NF_maxLevel_based_on_localizer
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
         # Add a ceiling and floor to the achieved NF signal
@@ -328,8 +328,8 @@ class BrainComputerInterface():
             print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
 
             # For debugging
-            betas_one = self.tsi.get_beta_of_channel(selectedChannels[0], beta=0, chromophore=1)[0]  #  Only get the beta's for all trials as one condition
-            print("Betas (one condition): " + str(betas_one), " for trial: " + str(trialNr))
+           # betas_one = self.tsi.get_beta_of_channel(selectedChannels[0], beta=0, chromophore=1)[0]  #  Only get the beta's for all trials as one condition
+           # print("Betas (one condition): " + str(betas_one), " for trial: " + str(trialNr))
 
             return betas
 
