@@ -62,7 +62,7 @@ class GameParameters():
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useProgressBar = True # If true, then a loading bar will appear during the task trial
-        self.debuggingText = False # If true, then debugging text will appear during the task trial
+        self.debuggingText = True # If true, then debugging text will appear during the task trial
 
         self.currentTime_s = 0  #
 

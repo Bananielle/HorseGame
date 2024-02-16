@@ -22,7 +22,7 @@ class ParadigmAndTriggerManager():
         if gameParamaters.useSimulatedData:
             self.retrieveProtocol("LocalizerAline_Protocol.csv")
             #self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
-            self.retrieveSimulatedData("nf_run_dani.csv")
+            self.retrieveSimulatedData("NF_run_Dani_2023-11-15.csv")
 
 
 

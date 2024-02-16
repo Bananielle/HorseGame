@@ -15,14 +15,16 @@ class BrainComputerInterface():
     def __init__(self,typeOfRun,gameParameters):
 
 
-        self.useMean = False # Use the mean amplitude for NF calculation
-        self.useMax = True # Use the max amplitude for NF calculation
+        self.useMean = True # Use the mean amplitude for NF calculation
+        self.useMax = False # Use the max amplitude for NF calculation
+        self.useLatestDataPoint = False # Use the latest data point for NF calculation
 
         self.NF_maxLevel_based_on_localizer = 0.6  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
         self.NFSignal_median =1
+        NFSignal_latestValue = 1
 
         self.gp = gameParameters
         self.saveIncomingData = self.gp.saveIncomingData
@@ -45,8 +47,8 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFSignal_median_TASK": [],
-                         "NFsignal_mean_REST": [], "NFsignal_max_REST": [], "NFSignal_median_REST": [], "NF_MaxThresholdUsed": [],
+        self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
+                         "NFsignal_latestValue_TASK": [], "NF_MaxThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
 
         self.currentTask_signal = 1
@@ -57,7 +59,7 @@ class BrainComputerInterface():
         #self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
         #               'NFSignal_median_REST', 'NF_MaxThreshold',"CoinsCollected"]
 
-        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK','NFSignal_median_TASK',
+        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK','NFsignal_median_TASK','NFsignal_latestValue_TASK',
                              'NF_MaxThresholdUsed', "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
 
         # Look for a connection to turbo-satori
@@ -70,10 +72,10 @@ class BrainComputerInterface():
             print("Turbo satori connection not found.")
 
         if self.TSIconnectionFound:
-            self.timeBetweenSamples_ms = 1000  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+            self.timeBetweenSamples_ms = 200  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 1000) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 200) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self,trialNr):
@@ -144,9 +146,10 @@ class BrainComputerInterface():
         self.NFsignal_mean = np.mean(NFsignal_raw)
         self.NFsignal_max = np.max(NFsignal_raw)
         self.NFSignal_median = np.median(NFsignal_raw)
+        self.NFSignal_latestValue = NFsignal_raw[-1] # The latest value of the array
 
         print("NFsignal_raw: " + str(NFsignal_raw))
-        print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: " + str(self.NFSignal_median))
+        print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: " + str(self.NFSignal_median) + ", NFSignal_latestValue: " + str(self.NFSignal_latestValue))
 
         # Save the variables to a dictionary
         if task:
@@ -154,32 +157,10 @@ class BrainComputerInterface():
 
             self.NFsignal["NFsignal_mean_TASK"].append(self.NFsignal_mean)
             self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
-            self.NFsignal["NFSignal_median_TASK"].append(self.NFSignal_median)
-
-
-        else: # If measurement is from the rest period
-            self.currentRest_signal = self.NFsignal_mean # Save the current rest signal for PSC calculation
-
-            self.NFsignal["NFsignal_mean_REST"].append(self.NFsignal_mean)
-            self.NFsignal["NFsignal_max_REST"].append(self.NFsignal_max)
-            self.NFsignal["NFSignal_median_REST"].append(self.NFSignal_median)
-
+            self.NFsignal["NFsignal_median_TASK"].append(self.NFSignal_median)
+            self.NFsignal["NFsignal_latestValue_TASK"].append(self.NFSignal_latestValue)
 
         print("NFsignals stored: " + str(self.NFsignal))
-
-    # CURRENTLY NOT USING PSC (using the betas instead)
-    def get_percentage_signal_change(self):
-        # PSC = (T-B_/B*100%
-        T = self.currentTask_signal
-        B = self.currentRest_signal
-        #PSC = (T-B)/B*100
-        PSC = T-B # Task signal - rest signal (just like the Turbo-satori software describes in the manual)
-        print(      "Task = " + str(T) + ", Rest = " + str(B) + ", PSC = " + str(PSC) + " BUT USING ONLY TASK SIGNAL.")
-
-        # BUT USE ONLY TASK SIGNAL
-        #PSC = T
-
-        return PSC
 
 
     def get_achieved_NF_level(self):
@@ -188,11 +169,15 @@ class BrainComputerInterface():
             achieved_NF_signal = self.NFsignal_mean / self.NF_maxLevel_based_on_localizer
         if self.useMax:
             achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
+        if self.useLatestDataPoint: # takes the latest data point for each trial
+            achieved_NF_signal = self.NFsiganl_latestValue / self.NF_maxLevel_based_on_localizer
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
-        # Add a ceiling to the achieved NF signal
+        # Add a ceiling and floor to the achieved NF signal
         if achieved_NF_signal > 1:
             achieved_NF_signal = 1
+        if achieved_NF_signal < 0:
+            achieved_NF_signal = 0
 
         return achieved_NF_signal
 
@@ -200,17 +185,19 @@ class BrainComputerInterface():
         # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
         NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean_TASK"]))
         NFsignal_max = np.mean((self.NFsignal["NFsignal_max_TASK"]))
-        NFSignal_median = np.mean((self.NFsignal["NFSignal_median_TASK"]))
+        NFSignal_median = np.mean((self.NFsignal["NFsignal_median_TASK"]))
+        NFSignal_mean_latestValue = np.mean((self.NFsignal["NFsignal_latestValue_TASK"])) # Mean of the all latest value of each trial
         maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
 
         # Print the mean of the NFsignal_mean values
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(
-            NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
+            NFsignal_max) + ", NFsignal_median_TASK: " + str(NFSignal_median) + ", NFsignal_mean_latestValue: " + str(NFSignal_mean_latestValue))
 
-        print("Max signal amplitude reached: " + str(NFsignal_max))
-        print("Mean signal amplitude reached: " + str(NFsignal_mean))
+        print("Max signal amplitude reached of max betas: " + str(NFsignal_max))
+        print("Mean signal amplitude reached of mean betas: " + str(NFsignal_mean))
+        print("Mean signal amplitude reached of latest beta data point: " + str(NFSignal_mean_latestValue))
 
         # Save NF values to CSV files
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
