@@ -43,15 +43,15 @@ class Coin(pygame.sprite.Sprite):
 
         freezeCoins = self.gameParams.freezeCoins
 
-        if not freezeCoins:
-            if self.movedUpCounter < 20:
-                self.rect.move_ip(0, -self.speed/5) # Move down
-            else:
-                self.rect.move_ip(0, self.speed/5) # Move up
-                if self.movedUpCounter > 37:
-                    self.movedUpCounter = 0
-
-            self.movedUpCounter += 1
+        # if not freezeCoins:
+        #     if self.movedUpCounter < 20:
+        #         self.rect.move_ip(0, -self.speed/5) # Move down
+        #     else:
+        #         self.rect.move_ip(0, self.speed/5) # Move up
+        #         if self.movedUpCounter > 37:
+        #             self.movedUpCounter = 0
+        #
+        #     self.movedUpCounter += 1
 
 
         # If coin has not yet reached its endspot

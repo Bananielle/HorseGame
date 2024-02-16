@@ -210,6 +210,7 @@ class BrainComputerInterface():
             NFsignal_max) + ", NFSignal_median_TASK: " + str(NFSignal_median))
 
         print("Max signal amplitude reached: " + str(NFsignal_max))
+        print("Mean signal amplitude reached: " + str(NFsignal_mean))
 
         # Save NF values to CSV files
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
