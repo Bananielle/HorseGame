@@ -19,7 +19,7 @@ class BrainComputerInterface():
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-        self.NF_maxLevel_based_on_localizer = 0.39  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 1.06  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -384,7 +384,7 @@ class BrainComputerInterface():
     # CSV writer
     def save_NFdatalog_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
         if self.typeOfRun == "localizer":
             filename = f"NF_datalog_localizer_{current_date}.csv"
         else:
