@@ -392,7 +392,10 @@ if __name__ == '__main__':
     def draw_game_time_text():
         # Draw game time counter text
         screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
-        screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
+        if gametype == 'localizer':
+            screen.blit(gp.nrCoinsCollectedText_LOCALIZER, (SCREEN_WIDTH - 70, 50))
+        if gametype == 'maingame':
+            screen.blit(gp.nrCoinsCollectedText_NF, (SCREEN_WIDTH - 70, 50))
         screen.blit(gp.nrTrialsCompletedText, (20, 20))
 
     def draw_debugging_text():
@@ -571,7 +574,11 @@ if __name__ == '__main__':
 
                 # Show the player how many coins have been collected
                 text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
-                gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
+
+                if gametype == 'localizer':
+                    gp.nrCoinsCollectedText_LOCALIZER = gp.coinsCollectedFont.render(text, True, RED)
+                if gametype == 'maingame':
+                    gp.nrCoinsCollectedText_NF = gp.coinsCollectedFont.render(text, True, GOLD)
 
 
     def killAllCoins():
@@ -582,7 +589,7 @@ if __name__ == '__main__':
             gp.coinsCollectedInCurrentTrial += 1
             # Show the player how many coins have been collected
             text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
-            gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
+            gp.nrCoinsCollectedText_LOCALIZER = gp.coinsCollectedFont.render(text, True, RED)
 
 
     def runGameOver():

@@ -54,7 +54,7 @@ class GameParameters():
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
-        self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        self.FPS = 20 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
         # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
 
         # Background markers for task and rest periods
@@ -63,6 +63,7 @@ class GameParameters():
         self.usePath = False # If true, then a path will appear during the task trial
         self.useProgressBar = True # If true, then a loading bar will appear during the task trial
         self.debuggingText = False # If true, then debugging text will appear during the task trial
+
 
         self.currentTime_s = 0  #
 
@@ -117,7 +118,8 @@ class GameParameters():
         self.coinsCollectedInCurrentTrial = 0
         self.nrCoinsCollectedThroughoutRun = 0
         self.coinAlreadyBeingAdded = False
-        self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
+        self.nrCoinsCollectedText_LOCALIZER = self.mainFont.render(self.counterText, True, PINK)
+        self.nrCoinsCollectedText_NF = self.mainFont.render(self.counterText, True, GOLD)
         self.coinOriginalStartingPosition_y = (SCREEN_HEIGHT - (SCREEN_HEIGHT*0.4) +60)
         self.coinStartingPosition_y = self.coinOriginalStartingPosition_y
         self.coinsBeingCounted = False
