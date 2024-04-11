@@ -119,8 +119,10 @@ if __name__ == '__main__':
 
     class Scoreboard():
         def __init__(self):
+            self.taskList = []
             self.scoresList = []
             self.runList = []
+            self.task_coins_dictionary = {}
             self.runNr = 1
             self.font = pygame.font.SysFont('herculanum', 35, bold=True, )
             self.coinsPerTrialPerRuns = []
@@ -128,6 +130,7 @@ if __name__ == '__main__':
         def addScoretoScoreBoard(self, score):
             if not gp.scoreSaved:
                 self.scoresList.append(score)
+                self.taskList.append(gp.taskUsed)
                 self.runList = self.runNr
                 self.runNr =+ 1
                 gp.scoreSaved = True  # This will reset when the player goes back to the start screen
@@ -136,6 +139,8 @@ if __name__ == '__main__':
                 print('Coins per trial: ' + str(gp.nrCoinsPerTrial))
                 self.coinsPerTrialPerRuns.append(gp.nrCoinsPerTrial)
                 print('Coins per trial per run: ' + str(self.coinsPerTrialPerRuns))
+
+                self.task_coins_dictionary[gp.taskUsed] = score #Dictionary of task used and it's associated run score
 
 
         def makePinkFont(self, string):
@@ -153,24 +158,33 @@ if __name__ == '__main__':
             newPosition = 30
             count = 1
             sortedScores = sorted(self.scoresList, reverse=True)
+            sortedDictionary = dict(sorted(self.task_coins_dictionary.items()))
+            #print('sortedDictionary: ', sortedDictionary)
+            #print('sortedScores: ', sortedScores)
 
             # Put each score on the screen in descending order
             for score in sortedScores:
-                count_str = str(count) + '.'
+                i = 0
+                sortedTasks = list(sortedDictionary)
+                count_str = '(Run ' + str(count) + '. ' +sortedTasks[i] + ')'  # Get the task name from the dictionary
+                #print('count_str: ', count_str)
                 if score == gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
-                    scores_text = self.font.render(str(score) + ' coins collected', True, BLACK)
-                    count_text = self.font.render(count_str, True, BLACK)
+                    scores_text = self.font.render(str(score) + ' coins.', True, BLACK)
+                    task_text = self.font.render(count_str, True, BLACK)
                     currentScoreAlreadyDisplayed = True
                 else:
-                    scores_text = self.makePinkFont(str(score) + ' coins collected')
-                    count_text = self.makePinkFont(count_str)
+                    scores_text = self.makePinkFont(str(score) + ' coins. ')
+                    task_text = self.makePinkFont(count_str)
+
+                i = i + 1 # For iteration through the tasks
 
                 # Put score on screen
-                screen.blit(count_text,
-                            ((SCREEN_WIDTH / 2.6) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+
                 screen.blit(scores_text,
-                            ((SCREEN_WIDTH / 2.6), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-                newPosition += 30
+                            ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+                screen.blit(task_text,
+                            ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+                newPosition += 35
                 count += 1
 
 

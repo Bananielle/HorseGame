@@ -200,10 +200,10 @@ class BrainComputerInterface():
         print("Mean signal amplitude reached of latest beta data point: " + str(NFSignal_mean_latestValue))
 
         # Save NF values to CSV files
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
-        print(current_date)
         self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
         self.save_NFdatalog_to_csv()
+
+        self.save_continousMeasurementDataToCSV()
 
         # Save the incoming data (both oxy and betas) from the whole run to a csv file
         #filename = f"betavalues_{current_date}.csv"
@@ -215,18 +215,13 @@ class BrainComputerInterface():
         #filename = f"reactiontimes{current_date}.csv"
         #self.save_list_to_csv(self.reactionTimeList, filename)
 
-        print(self.testDataList)
-        filename = f"RunRecording_betas_{current_date}.csv"
-        data = list(zip(self.timepointList,self.testDataList,self.reactionTimeList))
-        print(data)
-        self.save_list_to_csv(data, filename)
-
        # filename = f"timepointlist{current_date}.csv"
        # self.save_list_to_csv(self.timepointList, filename)
 
         # Show boxplot of the NFsignal_mean and NFsignal_max values
         #self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
         #self.show_boxplot(self.NFsignal["NFsignal_max_TASK"], "Max amplitude")
+
 
     def show_boxplot(self, data, ylabel):
         fig, ax = plt.subplots()
@@ -395,4 +390,14 @@ class BrainComputerInterface():
 
         csvWriter = CSVwriter.CSVwriter()
         csvWriter.save_list_to_csv(data, filename)
+
+    def save_continousMeasurementDataToCSV(self):
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+        print(current_date)
+        print(self.testDataList)
+        filename = f"RunRecording_betas_{current_date}.csv"
+        data = list(zip(self.timepointList, self.testDataList, self.reactionTimeList))
+        print(data)
+        self.save_list_to_csv(data, filename)
+        print("Data saved to " + filename)
 
