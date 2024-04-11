@@ -17,8 +17,8 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 15,
+            'totalNum_TRIALS': 3, # Set the number of times Task should occur
+            'duration_BASELINE_s': 5, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
             'jitter_s': 2
@@ -54,7 +54,7 @@ class GameParameters():
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
-        self.FPS = 30 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        self.FPS = 20 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
         # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
 
         # Background markers for task and rest periods
@@ -65,6 +65,7 @@ class GameParameters():
         self.debuggingText = False # If true, then debugging text will appear during the task trial
 
         self.currentTime_s = 0  #
+        self.firstRestTrial = True
 
         # Paradigm parameters - constants
         self.trialCounter_task = 1 # For NF measuring

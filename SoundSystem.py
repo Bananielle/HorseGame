@@ -24,6 +24,7 @@ class SoundSystem():
         self.horse_snort = simpleaudio.WaveObject.from_wave_file("Resources/horse_snort.wav")
         self.horse_cry = simpleaudio.WaveObject.from_wave_file("Resources/horse_cry.wav")
         self.startsound = simpleaudio.WaveObject.from_wave_file("Resources/start.wav")
+        self.stopsound = simpleaudio.WaveObject.from_wave_file("Resources/stop.wav")
 
 
        # self.playingBubbleSound = self.move_up_sound.play()

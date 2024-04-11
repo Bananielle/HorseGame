@@ -655,6 +655,10 @@ if __name__ == '__main__':
                     mainGame_background.startPathBackground()
 
             if paradigmManager.isItTimeForRestEvent():
+                if gp.firstRestTrial:
+                    gp.firstRestTrial = False
+                else:
+                    soundSystem.stopsound.play()
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
                 progressBar.resetProgressBar()
