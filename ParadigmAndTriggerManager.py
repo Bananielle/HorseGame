@@ -122,12 +122,12 @@ class ParadigmAndTriggerManager():
 
     # TRIGGERS
     def startTaskTrigger(self,triggerNr):
-        #if self.gp.gameType == 'maingame': # If NF run then give each trial its own trigger
-        self.outlet.push_sample(x=[triggerNr+1])  #+1 because  1 = rest
-        print('Started task trigger (NF) nr:' + str([triggerNr+1]))
-        #else:
-           # self.outlet.push_sample(x=[2])
-           # print('Started task trigger (localizer) nr: 2.')
+        if self.gp.gameType == 'localizer': # If NF run then give each trial its own trigger
+            self.outlet.push_sample(x=[triggerNr+1])  #+1 because  1 = rest
+            print('Started task trigger (Single conditions) nr:' + str([triggerNr+1]))
+        else:
+            self.outlet.push_sample(x=[2])
+            print('Started task trigger (One condition) nr: 2.')
 
     def startRestTrigger(self):
         self.outlet.push_sample(x=[1])  # Rest trigger
