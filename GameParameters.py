@@ -17,14 +17,14 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 1, # Set the number of times Task should occur
-            'duration_BASELINE_s': 5, # Should be 25s
+            'totalNum_TRIALS': 6, # Set the number of times Task should occur
+            'duration_BASELINE_s': 25, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
             'jitter_s': 2
         }
 
-        self.taskUsed = 'Fingertapping'
+        self.taskUsed = 'Pole grabbing'
 
         self.useSimulatedData = False
         self.saveIncomingData= True
