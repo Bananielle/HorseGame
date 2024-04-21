@@ -12,7 +12,13 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self,SCREEN_WIDTH, SCREEN_HEIGHT,gameParams, startingPosition_y,rank):
         super(Coin, self).__init__()
         self.gameParams = gameParams
-        self.surf = pygame.image.load("Resources/coin_bronze.png").convert_alpha()
+        if gameParams.gameDifficulty == 1:
+            self.surf = pygame.image.load("Resources/coin_bronze.png").convert_alpha()
+        if gameParams.gameDifficulty == 2:
+            self.surf = pygame.image.load("Resources/coin_silver.png").convert_alpha()
+        if gameParams.gameDifficulty == 3:
+            self.surf = pygame.image.load("Resources/coin_gold.png").convert_alpha()
+
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.startingSizeOfCoin = self.surf.get_width()

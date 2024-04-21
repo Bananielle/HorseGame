@@ -130,6 +130,7 @@ if __name__ == '__main__':
 
         def addScoretoScoreBoard(self, score):
             if not gp.scoreSaved:
+
                 self.scoresList.append(score)
                 self.taskList.append(gp.taskUsed)
                 self.runList = self.runNr
@@ -146,6 +147,10 @@ if __name__ == '__main__':
 
         def makePinkFont(self, string):
             text = self.font.render(string, True, PINK)  # Pink colour
+            return text
+
+        def makeGoldFont(self, string):
+            text = self.font.render(string, True, GOLD)  # Pink colour
             return text
 
 
@@ -165,22 +170,40 @@ if __name__ == '__main__':
 
             # Put each score on the screen in descending order
             for score in sortedScores:
+
+                # Adjust the coin vallue based on the difficulty level:
+                bonus = 0
+                if gp.gameDifficulty == 2:
+                    bonus = int((score * 1.2) - score)
+                if gp.gameDifficulty == 3:
+                    bonus = int((score * 1.2 * 1.2) - score)
+
                 i = 0
                 sortedTasks = list(sortedDictionary)
                 count_str = '(Run ' + str(count) + '. ' +sortedTasks[i] + ')'  # Get the task name from the dictionary
                 #print('count_str: ', count_str)
+
+                final_score_text = str(score) + ' coins. '
+
                 if score == gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
-                    scores_text = self.font.render(str(score) + ' coins.', True, BLACK)
+                    scores_text = self.font.render(final_score_text, True, BLACK)
                     task_text = self.font.render(count_str, True, BLACK)
                     currentScoreAlreadyDisplayed = True
                 else:
-                    scores_text = self.makePinkFont(str(score) + ' coins. ')
+                    scores_text = self.makePinkFont(final_score_text)
                     task_text = self.makePinkFont(count_str)
 
                 i = i + 1 # For iteration through the tasks
 
                 # Put score on screen
-
+                if gp.gameDifficulty == 2 or gp.gameDifficulty ==3:
+                    if gp.gameDifficulty == 2:
+                        bonus_text = self.makeGoldFont('Silver bonus: ' + str(bonus) + ' coin(s)')
+                    if gp.gameDifficulty == 3:
+                        bonus_text = self.makeGoldFont('Gold bonus: ' + str(bonus) + ' coin(s)')
+                    screen.blit(bonus_text,
+                                ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+                    newPosition += 35
                 screen.blit(scores_text,
                             ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
                 screen.blit(task_text,
