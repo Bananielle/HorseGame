@@ -46,6 +46,7 @@ from ProgressBar import ProgressBar
 from Rider import Rider
 from SettingsScreen import Settings_header
 from CSVwriter import CSVwriter
+from PRTwriter import PRTwriter
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
@@ -620,6 +621,9 @@ if __name__ == '__main__':
             BCI.calculate_NF_max_threshold()
             gp.printedNFdata = True
 
+            # Also write and finish the PRT file only once.
+            PRT_writer.finish_PRT_file()  # Finish the PRT file
+
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_SPACE:
@@ -660,6 +664,8 @@ if __name__ == '__main__':
             if paradigmManager.isItTimeForTaskEvent():
                 soundSystem.startsound.play()
                 paradigmManager.initiateBasicTaskEvent()
+                current_time_point = BCI.getCurrentTimePoint_TSI()
+                PRT_writer.addTaskStartEvent(current_time_point)
                 progressBar.resetProgressBar()
                 deleteExistingCoins()
                 coinEvent()
@@ -673,6 +679,8 @@ if __name__ == '__main__':
                     gp.firstRestTrial = False
                 else:
                     soundSystem.stopsound.play()
+                    current_time_point = BCI.getCurrentTimePoint_TSI()
+                    PRT_writer.addTaskEndEvent(current_time_point)
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
                 progressBar.resetProgressBar()
@@ -925,6 +933,9 @@ if __name__ == '__main__':
 
     BCI = BrainComputerInterface(gametype,gp)
     BCI.scaleOxyData()
+
+    PRT_writer = PRTwriter(gp)
+    PRT_writer.create_PRT_template()
 
 
 

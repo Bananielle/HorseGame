@@ -7,6 +7,7 @@ class CSVwriter():
         self.dataOutputFolder = "Data/"
         self.dataInputFolder = "SimulatedData/"
 
+
     def save_dict_to_csv(self, file_name, field_names, data_dict):
         # Define the field names (header) for your CSV file
 

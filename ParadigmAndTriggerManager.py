@@ -109,6 +109,7 @@ class ParadigmAndTriggerManager():
         self.startTaskTrigger(self.gp.TASK_counter)
 
 
+
     def initiateBasicRestEvent(self):
         self. gp.task = False
         self. gp.rest = True

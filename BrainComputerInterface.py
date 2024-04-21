@@ -77,6 +77,15 @@ class BrainComputerInterface():
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 200) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
+    def getCurrentTimePoint_TSI(self):
+
+        if self.TSIconnectionFound:
+            current_time_point = self.tsi.get_current_time_point()
+        else:
+            current_time_point = self.gp.currentTime_s
+
+        return current_time_point
+
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self,trialNr):
         if self.saveIncomingData and self.TSIconnectionFound:

@@ -16,15 +16,19 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 16,
-            'totalNum_TRIALS': 6, # Set the number of times Task should occur
-            'duration_BASELINE_s': 25, # Should be 25s
+            'duration_REST_s': 6,
+            'totalNum_TRIALS': 2, # Set the number of times Task should occur
+            'duration_BASELINE_s': 5, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
             'jitter_s': 2
         }
-
-        self.taskUsed = 'Pole grabbing'
+        # Participant information
+        self.taskUsed = 'Fingertapping'
+        self.participantNr = 'P02'
+        self.sessionNr = 'S02'
+        self.runType = 'Localizer'
+        self.runNr = '01'
 
         self.useSimulatedData = False
         self.saveIncomingData= True
