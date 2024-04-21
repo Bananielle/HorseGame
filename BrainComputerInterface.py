@@ -32,9 +32,9 @@ class BrainComputerInterface():
         self.simulatedData_filepath = "Data/"
         self.previousRetrievedTimePoint = 0
         self.currentRetrievedTimePoint = 0
-        self.testDataList = []
-        self.timepointList = []
-        self.reactionTimeList = []
+        self.recordedBetas = []
+        self.timepointList = [] # Not used anymore
+        self.reactionTimeList = [] # Not used anymore
         self.incomingDataList_betas = []
         self.incomingDataList_oxy = []
         self.incomingDataList_condition = []
@@ -71,11 +71,11 @@ class BrainComputerInterface():
             self.TSIconnectionFound = False
             print("Turbo satori connection not found.")
 
-        if self.TSIconnectionFound:
-            self.timeBetweenSamples_ms = 200  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        #if self.TSIconnectionFound:
+          #  self.timeBetweenSamples_ms = self  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, 200) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
     def getCurrentTimePoint_TSI(self):
 
@@ -196,6 +196,11 @@ class BrainComputerInterface():
         NFsignal_max = np.mean((self.NFsignal["NFsignal_max_TASK"]))
         NFSignal_median = np.mean((self.NFsignal["NFsignal_median_TASK"]))
         NFSignal_mean_latestValue = np.mean((self.NFsignal["NFsignal_latestValue_TASK"])) # Mean of the all latest value of each trial
+        NFSignal_Q3_latestValue = np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75) # Third quartile of the latest value of each trial
+        NFSignal_Q3_120 = NFSignal_Q3_latestValue * 1.2
+        # C
+
+
         maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
@@ -206,31 +211,15 @@ class BrainComputerInterface():
 
         print("Max signal amplitude reached of max betas: " + str(NFsignal_max))
         print("Mean signal amplitude reached of mean betas: " + str(NFsignal_mean))
-        print("Mean signal amplitude reached of latest beta data point: " + str(NFSignal_mean_latestValue))
+        print("Mean signal amplitude reached of latest beta data points: " + str(NFSignal_mean_latestValue))
+        print("Third quartile of latest beta data points: "  + str(NFSignal_Q3_latestValue))
+        print("NF threshold based on Q3 * 120%: " + str(NFSignal_Q3_120))
 
         # Save NF values to CSV files
-        self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
+        self.NFsignal["NF_MaxThresholdUsed"].append(NFSignal_Q3_120)
         self.save_NFdatalog_to_csv()
 
         self.save_continousMeasurementDataToCSV()
-
-        # Save the incoming data (both oxy and betas) from the whole run to a csv file
-        #filename = f"betavalues_{current_date}.csv"
-        #self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_betas)), filename)
-
-        #filename = f"oxyvalues{current_date}.csv"
-        #self.save_list_to_csv(list(zip(self.incomingDataList_condition, self.incomingDataList_oxy)), filename)
-
-        #filename = f"reactiontimes{current_date}.csv"
-        #self.save_list_to_csv(self.reactionTimeList, filename)
-
-       # filename = f"timepointlist{current_date}.csv"
-       # self.save_list_to_csv(self.timepointList, filename)
-
-        # Show boxplot of the NFsignal_mean and NFsignal_max values
-        #self.show_boxplot(self.NFsignal["NFsignal_mean_TASK"], "Mean amplitude")
-        #self.show_boxplot(self.NFsignal["NFsignal_max_TASK"], "Max amplitude")
-
 
     def show_boxplot(self, data, ylabel):
         fig, ax = plt.subplots()
@@ -277,7 +266,7 @@ class BrainComputerInterface():
 
             scaled_data = self.getBetas(trialNr)
 
-            self.testDataList.append(scaled_data)
+            self.recordedBetas.append(scaled_data)
             self.timepointList.append(timepoint)
             self.reactionTimeList.append(rt)
 
@@ -403,9 +392,9 @@ class BrainComputerInterface():
     def save_continousMeasurementDataToCSV(self):
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
         print(current_date)
-        print(self.testDataList)
+        print(self.recordedBetas)
         filename = f"RunRecording_betas_{current_date}.csv"
-        data = list(zip(self.timepointList, self.testDataList, self.reactionTimeList))
+        data = list(zip(self.recordedBetas))
         print(data)
         self.save_list_to_csv(data, filename)
         print("Data saved to " + filename)
