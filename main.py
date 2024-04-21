@@ -580,7 +580,7 @@ if __name__ == '__main__':
 
                 if coin.rank == gp.totalNumCoins:
                     print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
-                    soundSystem.coin_sound.play() # Play extra sound
+                    soundSystem.coinCollected.play() # You can potentially play an extra sound here.
                     killAllCoins()
                     break
 

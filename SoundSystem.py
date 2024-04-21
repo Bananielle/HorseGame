@@ -12,7 +12,7 @@ class SoundSystem():
     def __init__(self):
 
         #  self.collision_sound = pygame.mixer.Sound("Collision.ogg")
-        self.coin_sound = simpleaudio.WaveObject.from_wave_file("Resources/collectedJellyfish.wav")
+        self.all_coins_collected_sound = simpleaudio.WaveObject.from_wave_file("Resources/collectedJellyfish.wav")
         self.coinCollected = simpleaudio.WaveObject.from_wave_file("Resources/coin.wav")
         self.countdownSound = simpleaudio.WaveObject.from_wave_file("Resources/countdown.wav")
         self.menuSelection = simpleaudio.WaveObject.from_wave_file("Resources/menu_selection.wav")
