@@ -326,6 +326,12 @@ class BrainComputerInterface():
 
             return betas
 
+    def getBetasForAllChannels(self,trialNr):
+        if self.TSIconnectionFound:
+            for channel in range(0,10):
+                betas = self.tsi.get_beta_of_channel([channel],beta=trialNr-1, chromophore=1)[0]
+                print("Beta channel " + str(channel) + " = " + str(betas))
+
 
 
     def scaleOxyData(self):

@@ -24,7 +24,7 @@ class GameParameters():
             'jitter_s': 2
         }
 
-        self.gameDifficulty =1 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
+        self.gameDifficulty = 3# 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         # Participant information
         self.taskUsed = 'Fingertapping'
