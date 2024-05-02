@@ -47,6 +47,14 @@ class BrainComputerInterface():
         self.timewindow_task = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
+        self.nrOfChannels = 10
+        self.timewindow_allChannels_data = {}
+        self.allChannels_latestBetaValue = []
+        for channel in range (0,self.nrOfChannels):
+            self.timewindow_allChannels_data[channel] = []
+
+
+
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
                          "NFsignal_latestValue_TASK": [], "NF_MaxThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
@@ -105,6 +113,8 @@ class BrainComputerInterface():
         scaled_data = 0
         if self.TSIconnectionFound:
             scaled_data = self.getBetas(trialNr)
+            #all_data = self.getBetasForAllChannels(trialNr)sf sfdfs
+            #print(all_data)
             #scaled_data = self.scaleOxyData()
             #scaled_data = self.getNewDataForNF()
         elif simulatedData is not 0: # But use simulated data instead if it's available
@@ -113,11 +123,13 @@ class BrainComputerInterface():
         if self.collectTimewindowData:
             if task:
                 self.timewindow_task.append(scaled_data)
+
+                # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
+                for channel in range(0,self.nrOfChannels):
+                    channel_betas = self.getBetasForAllChannels(channel,trialNr)
+                    self.timewindow_allChannels_data[channel].append(channel_betas)
             else:
                 self.timewindow_rest.append(scaled_data)
-
-       # if self.saveIncomingData:
-         #   self.saveIncomingDataToList(scaled_data)
 
         return scaled_data
 
@@ -149,13 +161,22 @@ class BrainComputerInterface():
 
         if task:
             NFsignal_raw = np.array(self.timewindow_task) # Array of all incoming oxy values.
+            NFsignal_allChannels_raw = self.timewindow_allChannels_data
+            print("All Channels: "+ str(self.timewindow_allChannels_data))
         else: # If measurement is from the rest period
             NFsignal_raw = np.array(self.timewindow_rest)
 
+        # Channel of Interest
         self.NFsignal_mean = np.mean(NFsignal_raw)
         self.NFsignal_max = np.max(NFsignal_raw)
         self.NFSignal_median = np.median(NFsignal_raw)
         self.NFSignal_latestValue = NFsignal_raw[-1] # The latest value of the array
+
+        # All Channels
+        for channel in range(0,self.nrOfChannels):
+            self.allChannels_latestBetaValue.append(NFsignal_allChannels_raw[channel][-1])
+
+        print("All Channels latest beta value: " + str(self.allChannels_latestBetaValue))
 
         print("NFsignal_raw: " + str(NFsignal_raw))
         print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: " + str(self.NFSignal_median) + ", NFSignal_latestValue: " + str(self.NFSignal_latestValue))
@@ -257,12 +278,12 @@ class BrainComputerInterface():
             sampling_rate = self.tsi.get_sampling_rate()[0]
 
             # Get oxy
-            selectedChannels = self.tsi.get_selected_channels()[0]
-            oxy = self.tsi.get_data_oxy(selectedChannels[0], timepoint-1)[0]
+           # selectedChannels = self.tsi.get_selected_channels()[0]
+           # oxy = self.tsi.get_data_oxy(selectedChannels[0], timepoint-1)[0]
 
             # Apply scale factor to oxy
-            scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
-            scaled_data = float(oxy) * float(scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
+          #  scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
+          #  scaled_data = float(oxy) * float(scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
 
             scaled_data = self.getBetas(trialNr)
 
@@ -299,11 +320,12 @@ class BrainComputerInterface():
         print("NF_maxLevel set to: " + str(self.NF_maxLevel_based_on_localizer))
 
     def getCurrentOxyInput(self):
+        input = 0
         if self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
             selectedChannels = self.tsi.get_selected_channels()[0]
-            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
-            input = oxy
+#            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
+           # input = oxy
             #print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
 
         else:
@@ -326,11 +348,14 @@ class BrainComputerInterface():
 
             return betas
 
-    def getBetasForAllChannels(self,trialNr):
+    def getBetasForAllChannels(self,channel,trialNr):
+
         if self.TSIconnectionFound:
-            for channel in range(0,10):
-                betas = self.tsi.get_beta_of_channel([channel],beta=trialNr-1, chromophore=1)[0]
-                print("Beta channel " + str(channel) + " = " + str(betas))
+                beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
+                print("Beta channel " + str(channel) + " = " + str(beta))
+
+
+                return beta
 
 
 
