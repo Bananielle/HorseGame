@@ -19,7 +19,7 @@ class BrainComputerInterface():
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-        self.NF_maxLevel_based_on_localizer = 0.48  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 1.06  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -68,7 +68,7 @@ class BrainComputerInterface():
         #               'NFSignal_median_REST', 'NF_MaxThreshold',"CoinsCollected"]
 
         self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK','NFsignal_median_TASK','NFsignal_latestValue_TASK',
-                             'NF_MaxThresholdUsed', "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
+                             'NF_MaxThresholdUsed',"NF_MaxCalculatedThreshold_Q3_120", "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
 
         # Look for a connection to turbo-satori
         try:
@@ -125,6 +125,7 @@ class BrainComputerInterface():
         if self.collectTimewindowData:
             if task:
                 self.timewindow_task.append(scaled_data)
+                print("Appending scaled data to timewindow_task..." + str(scaled_data))
 
                 # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
                 for channel in range(0,self.nrOfChannels):
@@ -167,6 +168,8 @@ class BrainComputerInterface():
             print("All Channels: "+ str(self.timewindow_allChannels_data))
         else: # If measurement is from the rest period
             NFsignal_raw = np.array(self.timewindow_rest)
+
+        print("Timewindow task = " + str(self.timewindow_task))
 
         # Channel of Interest
         self.NFsignal_mean = np.mean(NFsignal_raw)
@@ -239,7 +242,8 @@ class BrainComputerInterface():
         print("NF threshold based on Q3 * 120%: " + str(NFSignal_Q3_120))
 
         # Save NF values to CSV files
-        self.NFsignal["NF_MaxThresholdUsed"].append(NFSignal_Q3_120)
+        self.NFsignal["NF_MaxCalculatedThreshold_Q3_120"].append(NFSignal_Q3_120)
+        self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
         self.save_NFdatalog_to_csv()
 
         self.save_continousMeasurementDataToCSV()
@@ -279,7 +283,7 @@ class BrainComputerInterface():
             self.timepointList.append(timepoint)
             self.reactionTimeList.append(rt)
 
-            print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt), ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate))
+            print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt), ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate) + ", trial = " + str(trialNr))
 
             return timepoint
 
@@ -308,9 +312,9 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
 
             selectedChannels = self.tsi.get_selected_channels()[0]
-            print('Selected channel = ' + str(selectedChannels[0]))
+           # print('Selected channel = ' + str(selectedChannels[0]))
             betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
-            print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
+           # print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
 
             # For debugging
            # betas_one = self.tsi.get_beta_of_channel(selectedChannels[0], beta=0, chromophore=1)[0]  #  Only get the beta's for all trials as one condition

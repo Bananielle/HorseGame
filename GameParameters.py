@@ -33,7 +33,7 @@ class GameParameters():
         self.runType = 'Localizer'
         self.runNr = '01'
 
-        self.useSimulatedData = True
+        self.useSimulatedData = False
         self.usePreMadeProcotol = True
         self.saveIncomingData= True
 
@@ -258,24 +258,21 @@ class GameParameters():
         return self.start_volumes, self.end_volumes, self.NrOfConditions
 
     def getCurrentConditionFromProtocol(self,current_volume_timepoint):
-        restingCondition = False
         if current_volume_timepoint is not None:
            # print("Current volume timepoint: " + str(current_volume_timepoint))
             if current_volume_timepoint < self.start_volumes[0]:
                 self.current_condition = 0 # If the volume timepoint is before the first task, then it is the baseline condition
                 print("Baseline condition.")
             else:
+                if self.current_condition < self.totalNum_TRIALS:
                     if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
                         self.current_condition += 1
                         print("New condition! Is now: " + str(self.current_condition))
-                    if current_volume_timepoint >= self.end_volumes[self.current_condition] and current_volume_timepoint < self.start_volumes[self.current_condition+1]:
-                        restingCondition = True
-                        print("Resting condition.")
             #print("Current trial: " + str(self.current_condition))
 
-            return self.current_condition, restingCondition
+            return self.current_condition
         else:
-            return 0,0
+            return 0
 
 
     def generate_protocol(self):

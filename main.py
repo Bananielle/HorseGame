@@ -411,7 +411,7 @@ if __name__ == '__main__':
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (localizer) = " + str(volume_timepoint))
-                    currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                    currentCondition = gp.getCurrentConditionFromProtocol(volume_timepoint)
 
                 if gp.collectDataDuringRest:
                     collectRestTrialData()
@@ -474,16 +474,28 @@ if __name__ == '__main__':
 
     def collectTaskTrialData_fromPreMadeProtocol(currentCondition,current_volume_timepoint):
         if currentCondition > 0: # Only after baseline
-            print("Current volume_timepoint: " + str(current_volume_timepoint))
+            #print("Current volume_timepoint: " + str(current_volume_timepoint))
             start_window = gp.start_volumes[currentCondition-1] # minus one because current condition is one higher
             hemodynamic_delay_volumes = gp.hemodynamic_delay * BCI.tsi.get_sampling_rate()[0]
-            print("Hemodynamic delay in volumes: "+ str(hemodynamic_delay_volumes))
+           # print("Hemodynamic delay in volumes: "+ str(hemodynamic_delay_volumes))
             end_window= gp.end_volumes[currentCondition-1] + hemodynamic_delay_volumes
-            print("Collect data when between volumes " + str(gp.start_volumes[currentCondition]) + " and " + str(gp.end_volumes[currentCondition] + hemodynamic_delay_volumes))
+            print("Collect data when between volumes " + str(start_window) + " and " + str(end_window + round(hemodynamic_delay_volumes)))
             if current_volume_timepoint >= start_window and current_volume_timepoint < end_window:
                 BCI.collectTimewindowData = True
                 scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=currentCondition)
                 print("T=",gp.currentTime_s,": Collecting timewindow data for task (PREMADE PROTOCOL). Scaled data: " + str(scaled_data))
+
+            # Calculate NF data when measuring window is over
+            if current_volume_timepoint > end_window:
+                if BCI.timewindow_task: # if not empty
+                    BCI.calculateNFsignal(task=True)
+                    stopCollectingData()
+
+                    gp.trialCounter_task += 1
+                    if gp.trialCounter_task >= gp.totalNum_TRIALS:
+                        gp.trialCounter_task = gp.totalNum_TRIALS  # Then you've reached the end of the task trials (and since this counter is used for indexing it shouldn't exceed its max)
+                else:
+                    print("NF signal task already calculated.")
 
 
     def collectTaskTrialData():
@@ -555,7 +567,7 @@ if __name__ == '__main__':
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (main game) = " + str(volume_timepoint))
-                    currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                    currentCondition = gp.getCurrentConditionFromProtocol(volume_timepoint)
                     collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint)
                 if gp.collectDataDuringRest:
                     collectRestTrialData()
@@ -596,7 +608,7 @@ if __name__ == '__main__':
                 updateProgressBar_rest(progressBar)
 
 
-    def  updatePlayerCoinsAndText():
+    def updatePlayerCoinsAndText():
         # Get user input
         keyboard_input = pygame.key.get_pressed()  # Get the set of keyboard keys pressed from user
         gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
