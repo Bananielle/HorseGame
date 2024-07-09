@@ -16,12 +16,12 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 6,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
-            'duration_BASELINE_s': 5, # Should be 25s
+            'duration_REST_s': 16,
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'duration_BASELINE_s': 15, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
-            'jitter_s': 2
+            'jitter_s': 0
         }
 
         self.gameDifficulty = 3# 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
@@ -257,20 +257,24 @@ class GameParameters():
         return self.start_volumes, self.end_volumes, self.NrOfConditions
 
     def getCurrentConditionFromProtocol(self,current_volume_timepoint):
-        print("Current volume timepoint: " + str(current_volume_timepoint))
-        if current_volume_timepoint < self.start_volumes[0]:
-            self.current_condition = 0 # If the volume timepoint is before the first task, then it is the baseline condition
-            print("Baseline condition.")
-        else:
-                if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
-                    self.current_condition += 1
-                    print("New condition! Is now: " + str(self.current_condition))
-                if current_volume_timepoint >= self.end_volumes[self.current_condition] and current_volume_timepoint < self.start_volumes[self.current_condition+1]:
-                    restingCondition = True
-                    print("Resting condition.")
-        print("Current trial: " + str(self.current_condition))
+        restingCondition = False
+        if current_volume_timepoint is not None:
+           # print("Current volume timepoint: " + str(current_volume_timepoint))
+            if current_volume_timepoint < self.start_volumes[0]:
+                self.current_condition = 0 # If the volume timepoint is before the first task, then it is the baseline condition
+                print("Baseline condition.")
+            else:
+                    if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
+                        self.current_condition += 1
+                        print("New condition! Is now: " + str(self.current_condition))
+                    if current_volume_timepoint >= self.end_volumes[self.current_condition] and current_volume_timepoint < self.start_volumes[self.current_condition+1]:
+                        restingCondition = True
+                        print("Resting condition.")
+            print("Current trial: " + str(self.current_condition))
 
-        return self.current_condition, restingCondition
+            return self.current_condition, restingCondition
+        else:
+            return 0,0
 
 
     def generate_protocol(self):

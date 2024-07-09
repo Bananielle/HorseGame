@@ -97,7 +97,7 @@ class BrainComputerInterface():
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self,trialNr):
         if self.saveIncomingData and self.TSIconnectionFound:
-            data, volume_timepoint = self.getNewData(trialNr)
+            volume_timepoint = self.getNewData(trialNr)
             #betas = self.getBetas(trialNr)
             #oxy = self.scaleOxyData()
             #condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
@@ -106,7 +106,9 @@ class BrainComputerInterface():
             #self.saveIncomingDataToList_oxy(oxy)
             #self.saveIncomingDataToList_condition(condition)
             #print("Current condition: " + str(condition))
-            return data, volume_timepoint
+            return volume_timepoint
+        else:
+            return None
 
 
     def startMeasuring(self, task, simulatedData,trialNr):
@@ -251,7 +253,7 @@ class BrainComputerInterface():
 
     def didNewDataArrive(self):
         self.previousRetrievedTimePoint = self.currentRetrievedTimePoint
-        self.currentRetrievedTimePoint = self.getCurrentTimePoint()
+        self.currentRetrievedTimePoint = self.getCurrentTimePoint()[0]
 
         if self.currentRetrievedTimePoint != self.previousRetrievedTimePoint:
             return True
@@ -279,26 +281,8 @@ class BrainComputerInterface():
 
             print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt), ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate))
 
-            return scaled_data,timepoint
+            return timepoint
 
-    def getNewDataForNF(self):
-        timepoint, rt = self.getCurrentTimePoint()
-        sampling_rate = self.tsi.get_sampling_rate()[0]
-
-        # Get oxy
-        selectedChannels = self.tsi.get_selected_channels()[0]
-        oxy = self.tsi.get_data_oxy(selectedChannels[0], timepoint - 1)[0]
-
-        # Apply scale factor to oxy
-        scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
-        scaled_data = float(oxy) * float(
-            scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
-
-
-        print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt),
-              ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate))
-
-        return scaled_data
 
 
     def set_NF_max_threshold(self,NFsignal_max):
