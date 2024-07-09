@@ -406,9 +406,12 @@ if __name__ == '__main__':
                 if BCI.saveIncomingData:
                     volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-                print("Volume timepoint (localizer) = "+ str(volume_timepoint))
-                currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
-                collectTaskTrialData(currentCondition)
+
+                if not gp.usePreMadeProcotol:
+                    collectTaskTrialData()
+                else:
+                    print("Volume timepoint (localizer) = " + str(volume_timepoint))
+                    currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
 
                 if gp.collectDataDuringRest:
                     collectRestTrialData()
@@ -469,7 +472,15 @@ if __name__ == '__main__':
 
     # Protocol generated. Task start times are:{7, 16} and rest start times are: { 2, 11, 20}
 
-    def collectTaskTrialData(currentCondition):
+    def collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint):
+        print("Current condition: " + str(currentCondition))
+        if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
+            BCI.collectTimewindowData = True
+            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
+            print("T=",gp.currentTime_s,": Collecting timewindow data for task (PREMADE PROTOCOL). Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
+
+
+    def collectTaskTrialData():
         # Send time window to BCI
         if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
@@ -535,7 +546,12 @@ if __name__ == '__main__':
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 print("volume time point (main game): " + str(volume_timepoint))
                 currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
-                collectTaskTrialData(currentCondition)
+                if not gp.usePreMadeProcotol:
+                    collectTaskTrialData()
+                else:
+                    print("Volume timepoint (localizer) = " + str(volume_timepoint))
+                    currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                    collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint)
                 if gp.collectDataDuringRest:
                     collectRestTrialData()
 

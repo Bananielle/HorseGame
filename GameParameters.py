@@ -34,6 +34,7 @@ class GameParameters():
         self.runNr = '01'
 
         self.useSimulatedData = True
+        self.usePreMadeProcotol = True
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False
