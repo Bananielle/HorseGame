@@ -533,7 +533,8 @@ if __name__ == '__main__':
                     BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-                collectTaskTrialData()
+                currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                collectTaskTrialData(currentCondition)
                 if gp.collectDataDuringRest:
                     collectRestTrialData()
 
