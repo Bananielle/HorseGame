@@ -271,7 +271,7 @@ class GameParameters():
                     if current_volume_timepoint >= self.end_volumes[self.current_condition] and current_volume_timepoint < self.start_volumes[self.current_condition+1]:
                         restingCondition = True
                         print("Resting condition.")
-            print("Current trial: " + str(self.current_condition))
+            #print("Current trial: " + str(self.current_condition))
 
             return self.current_condition, restingCondition
         else:

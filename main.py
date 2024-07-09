@@ -472,12 +472,18 @@ if __name__ == '__main__':
 
     # Protocol generated. Task start times are:{7, 16} and rest start times are: { 2, 11, 20}
 
-    def collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint):
-        print("Current condition: " + str(currentCondition))
-        if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
-            BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
-            print("T=",gp.currentTime_s,": Collecting timewindow data for task (PREMADE PROTOCOL). Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
+    def collectTaskTrialData_fromPreMadeProtocol(currentCondition,current_volume_timepoint):
+        if currentCondition > 0: # Only after baseline
+            print("Current volume_timepoint: " + str(current_volume_timepoint))
+            start_window = gp.start_volumes[currentCondition-1] # minus one because current condition is one higher
+            hemodynamic_delay_volumes = gp.hemodynamic_delay * BCI.tsi.get_sampling_rate()[0]
+            print("Hemodynamic delay in volumes: "+ str(hemodynamic_delay_volumes))
+            end_window= gp.end_volumes[currentCondition-1] + hemodynamic_delay_volumes
+            print("Collect data when between volumes " + str(gp.start_volumes[currentCondition]) + " and " + str(gp.end_volumes[currentCondition] + hemodynamic_delay_volumes))
+            if current_volume_timepoint >= start_window and current_volume_timepoint < end_window:
+                BCI.collectTimewindowData = True
+                scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=currentCondition)
+                print("T=",gp.currentTime_s,": Collecting timewindow data for task (PREMADE PROTOCOL). Scaled data: " + str(scaled_data))
 
 
     def collectTaskTrialData():
@@ -544,12 +550,11 @@ if __name__ == '__main__':
                 if BCI.saveIncomingData:
                     volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-                print("volume time point (main game): " + str(volume_timepoint))
-                currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
+
                 if not gp.usePreMadeProcotol:
                     collectTaskTrialData()
                 else:
-                    print("Volume timepoint (localizer) = " + str(volume_timepoint))
+                    print("Volume timepoint (main game) = " + str(volume_timepoint))
                     currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
                     collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint)
                 if gp.collectDataDuringRest:
