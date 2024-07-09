@@ -33,7 +33,7 @@ class GameParameters():
         self.runType = 'Localizer'
         self.runNr = '01'
 
-        self.useSimulatedData = False
+        self.useSimulatedData = True
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False
@@ -154,6 +154,15 @@ class GameParameters():
         self.signalValue_simulated =0
 
 
+        # Reading premade protocol variables
+        self.reachedTheTrials = False
+        self.NrOfTrials = 0
+        self.NrOfConditions = 0
+        self.start_volumes = []
+        self.end_volumes = []
+        self.current_condition = 0
+
+
     def startCountingCoins(self):
         self.coinsBeingCounted = True
 
@@ -202,6 +211,67 @@ class GameParameters():
         print('Protocol for datacollection timings generated. Datawindow task start times are:' + str(
         datawindow_task_start_times) +  ", datawindow task end times are: " + str(datawindow_task_end_times) + ", datawindow rest start times are: " + str(
         datawindow_rest_start_times) + " and datawindow rest end times are: " + str(datawindow_rest_end_times))
+
+    def read_premade_protocol(self):
+        file_path = 'Protocol for replay/NFrun6trials.prt'
+        print("READING PREMADE PROTOCOL FILE. ===========")
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            # print(lines)
+
+        for line in lines:
+            stripped_line = line.strip()
+            # print(line)
+
+            if stripped_line.startswith("NrOfConditions"):
+                self.NrOfConditions = int(stripped_line.split(":")[1].strip())
+                print("Number of Conditions: ", self.NrOfConditions)
+
+            elif stripped_line.startswith("Color:"):
+                continue
+                # We ignore the Color lines for this task
+
+            elif stripped_line.isdigit():
+                # print("Nr of trials: " + stripped_line)
+                # If the line is a single number, it's the number of trials for the current condition
+                self.NrOfTrials = int(stripped_line)
+                self.reachedTheTrials = True
+
+
+            elif " " in stripped_line and self.reachedTheTrials:
+                # print("Trial: " + stripped_line)
+                start_and_end_volume = stripped_line.split(" ")  # split at the space
+
+                if start_and_end_volume[0].isdigit() and int(start_and_end_volume[
+                                                                 0]) > 10:  # Check if a digit and larger than 10 (because we are working in volumes, so number will be in the hundreds)
+                    self.start_volumes.append(int(start_and_end_volume[0]))
+                if start_and_end_volume[1].isdigit():
+                    if int(start_and_end_volume[1]) > 10:
+                        self.end_volumes.append(int(start_and_end_volume[1]))
+                elif start_and_end_volume[2].isdigit():
+                    self.end_volumes.append(int(start_and_end_volume[2]))
+
+        print("Start volumes: ", str(self.start_volumes))
+        print("End volumes: ", str(self.end_volumes))
+
+        return self.start_volumes, self.end_volumes, self.NrOfConditions
+
+    def getCurrentConditionFromProtocol(self,current_volume_timepoint):
+        print("Current volume timepoint: " + str(current_volume_timepoint))
+        if current_volume_timepoint < self.start_volumes[0]:
+            self.current_condition = 0 # If the volume timepoint is before the first task, then it is the baseline condition
+            print("Baseline condition.")
+        else:
+                if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
+                    self.current_condition += 1
+                    print("New condition! Is now: " + str(self.current_condition))
+                if current_volume_timepoint >= self.end_volumes[self.current_condition] and current_volume_timepoint < self.start_volumes[self.current_condition+1]:
+                    restingCondition = True
+                    print("Resting condition.")
+        print("Current trial: " + str(self.current_condition))
+
+        return self.current_condition, restingCondition
+
 
     def generate_protocol(self):
         task_duration = self.protocol_file['duration_TASK_s']

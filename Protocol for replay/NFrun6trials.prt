@@ -1,0 +1,61 @@
+
+FileVersion:        2
+
+ResolutionOfTime:   Volumes
+
+Experiment:         20240422_135139
+
+BackgroundColor:    0 0 0
+TextColor:          255 255 255
+TimeCourseColor:    255 255 30
+TimeCourseThick:    2
+ReferenceFuncColor: 30 200 30
+ReferenceFuncThick: 2
+
+NrOfConditions:  10
+
+Cond.: 1
+1
+ 384  445
+Color: 200 0 0
+
+Cond.: 2
+1
+ 608  669
+Color: 100 200 80
+
+Cond.: 3
+1
+ 833  893
+Color: 10 40 200
+
+Cond.: 4
+1
+1056 1116
+Color: 200 200 10
+
+Cond.: 5
+1
+1280 1340
+Color: 200 10 200
+
+Cond.: 6
+1
+1503 1564
+Color: 10 200 200
+
+Cond.: 7
+0
+Color: 200 100 10
+
+Cond.: 8
+0
+Color: 200 200 200
+
+Cond.: 9
+0
+Color: 100 200 100
+
+Cond.: 10
+0
+Color: 100 100 200

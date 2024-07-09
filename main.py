@@ -216,7 +216,7 @@ if __name__ == '__main__':
     # CSV writer
         def save_scoresPerRun_to_csv(self):
 
-            ScoresDictionary = {"Coins collected": self.scoresList}
+            ScoresDictionary = {"Coins collected": self.scoresList, "Task": gp.taskUsed}
             fieldnames = ["Coins collected"]
 
             current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
@@ -239,6 +239,7 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
         gameParameters.generate_protocol()
+        gameParameters.read_premade_protocol()
         gameParameters.gameType = gametype
         gameParameters.generate_dataCollection_protocol()
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
@@ -396,14 +397,18 @@ if __name__ == '__main__':
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
                 gamestate = showHowMuchTimeHasPassed(gamestate)
+                currentTimePoint = BCI.getCurrentTimePoint_TSI()
+                print("Current (volume) time point: " + str(currentTimePoint))
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
+                    volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
-                collectTaskTrialData()
+                currentCondition, isRest = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                collectTaskTrialData(currentCondition)
+
                 if gp.collectDataDuringRest:
                     collectRestTrialData()
 
@@ -463,7 +468,7 @@ if __name__ == '__main__':
 
     # Protocol generated. Task start times are:{7, 16} and rest start times are: { 2, 11, 20}
 
-    def collectTaskTrialData():
+    def collectTaskTrialData(currentCondition):
         # Send time window to BCI
         if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
@@ -526,6 +531,7 @@ if __name__ == '__main__':
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
                     BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
+
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
                 collectTaskTrialData()
                 if gp.collectDataDuringRest:

@@ -42,7 +42,7 @@ class BrainComputerInterface():
         self.previousInput = 0
         self.fakeInput = 0
         self.TSIconnectionFound = True
-        self.timeBetweenSamples_ms = 1000
+        self.timeBetweenSamples_ms = 1000 # So 1 second!
         self.collectTimewindowData= False
         self.timewindow_task = []
         self.timewindow_rest = []
@@ -97,9 +97,7 @@ class BrainComputerInterface():
     # Do a continous measurement to get oxy data of the whole run
     def continuousMeasuring(self,trialNr):
         if self.saveIncomingData and self.TSIconnectionFound:
-            currentTimePoint = self.tsi.get_current_time_point()[0]
-
-            self.getNewData(trialNr)
+            data, volume_timepoint = self.getNewData(trialNr)
             #betas = self.getBetas(trialNr)
             #oxy = self.scaleOxyData()
             #condition = self.tsi.get_protocol_condition(currentTimePoint - 1)[0] # Because it requires a buffer of 4 bytes?
@@ -108,6 +106,8 @@ class BrainComputerInterface():
             #self.saveIncomingDataToList_oxy(oxy)
             #self.saveIncomingDataToList_condition(condition)
             #print("Current condition: " + str(condition))
+            return data, volume_timepoint
+
 
     def startMeasuring(self, task, simulatedData,trialNr):
         scaled_data = 0
@@ -242,20 +242,6 @@ class BrainComputerInterface():
 
         self.save_continousMeasurementDataToCSV()
 
-    def show_boxplot(self, data, ylabel):
-        fig, ax = plt.subplots()
-        ax.boxplot(data, showfliers=True)
-
-        # Overlay individual data points using swarmplot
-        plt.scatter([1] * len(data), data, color='blue', alpha=0.7)
-
-        # Add labels and title
-        ax.set_xlabel('Localizer')
-        ax.set_ylabel(ylabel)
-        title = [ylabel + " across localizer trials."]
-        ax.set_title(title)
-
-        plt.show()
 
     def getCurrentTimePoint(self):
         currentTimePoint, rt = self.tsi.get_current_time_point()
@@ -293,7 +279,7 @@ class BrainComputerInterface():
 
             print("New data arrived! Timepoint: " + str(timepoint) + ", rt: " + str(rt), ", oxy = " + str(scaled_data) + ", sampling rate = " + str(sampling_rate))
 
-            return scaled_data
+            return scaled_data,timepoint
 
     def getNewDataForNF(self):
         timepoint, rt = self.getCurrentTimePoint()
@@ -353,7 +339,6 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
                 beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
                 print("Beta channel " + str(channel) + " = " + str(beta))
-
 
                 return beta
 
