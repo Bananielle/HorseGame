@@ -18,7 +18,7 @@ class GameParameters():
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
             'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 15, # Should be 25s
+            'duration_BASELINE_s': 25, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
             'jitter_s': 0
@@ -48,7 +48,7 @@ class GameParameters():
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
-        self.timeUntilJump_s = 4 # todo: note that this should be dependent on when the data window task collection ends
+        self.timeUntilJump_s = self.hemodynamic_delay + 1 # todo: note that this should be dependent on when the data window task collection ends
         self.duration_TASK_s = self.protocol_file['duration_TASK_s']
         self.duration_REST_s = self.protocol_file['duration_REST_s']
         self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
@@ -63,6 +63,7 @@ class GameParameters():
         self.datawindow_rest_duration = self.duration_REST_s
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
+        self.samplingRate = 0 # dependent on what TSI inputs
         self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
         self.FPS = 20 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
         # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
@@ -72,7 +73,7 @@ class GameParameters():
         self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
         self.usePath = False # If true, then a path will appear during the task trial
         self.useProgressBar = True # If true, then a loading bar will appear during the task trial
-        self.debuggingText = False # If true, then debugging text will appear during the task trial
+        self.debuggingText = True # If true, then debugging text will appear during the task trial
 
         self.currentTime_s = 0  #
         self.firstRestTrial = True
@@ -163,7 +164,13 @@ class GameParameters():
         self.end_volumes = []
         self.current_condition = 0
         self.timeForTaskEvent = False
+        self.timeForRestEvent = False
+        self.timeForJumpEvent = False
+        self.horseHasJumpedThisTrial = False
 
+
+    def setSamplingRate(self, samplingRate):
+        self.samplingRate = samplingRate
 
     def startCountingCoins(self):
         self.coinsBeingCounted = True
@@ -266,10 +273,20 @@ class GameParameters():
                 print("Baseline condition.")
             else:
                 if self.current_condition < self.totalNum_TRIALS:
+                    # Check for start of new task
                     if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
                         self.current_condition += 1
-                        print("New condition! Is now: " + str(self.current_condition))
+                        print("PREMADE PROTOCOL: New condition! Is now: " + str(self.current_condition))
                         self.timeForTaskEvent = True
+                        self.horseHasJumpedThisTrial = False # Rest horse jump counter
+                    # Check for end of task (and start of rest)
+                    if current_volume_timepoint >= self.end_volumes[self.current_condition-1]:
+                        print("PREMADE PROTOCOL: End of task condition " + str(self.current_condition) + ". Now rest period.")
+                        self.timeForRestEvent = True
+                       # if current_volume_timepoint >= self.end_volumes[self.current_condition-1] + (self.timeUntilJump_s * self.samplingRate) and not self.player.HorseIsJumping:
+                           #self.timeForJumpEvent = True
+
+                           #print("PREMADE PROTOCOL: Time for jump event.")
             #print("Current trial: " + str(self.current_condition))
 
             return self.current_condition

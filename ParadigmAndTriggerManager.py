@@ -67,13 +67,14 @@ class ParadigmAndTriggerManager():
 
     def resetTaskStartTime(self):
         self.gp.startTime_TASK = self.gp.currentTime_s  + self.gp.duration_REST_s# Reset the start time for event TASK
-
+        self.gp.timeForTaskEvent = False
     def resetRestStartTime(self):
         self.gp.startTime_REST = self.gp.currentTime_s + self.gp.duration_TASK_s  # Reset the start time for event TASK
-        self.gp.timeForTaskEvent = False
+        self.gp.timeForRestEvent = False
 
     def resetJumpStartTime(self):
         self.gp.startTime_JUMP = self.gp.currentTime_s + self.gp.duration_TASK_s
+        self.gp.dontCheckForHorseJump = True
 
     def resetTaskandRestTime(self):
         self.gp.startTime_TASK = self.gp.currentTime_s  # Reset the start time for event TASK
@@ -99,9 +100,13 @@ class ParadigmAndTriggerManager():
     def isItTimeForRestEvent(self):
         if self.gp.rest:
             return False
-
-        if self.gp.currentTime_s >= self.gp.startTime_REST:
-            return True
+        if self.gp.usePreMadeProtocol:
+            if self.gp.timeForRestEvent:
+                print("Time for rest event (BASED ON PROTOCOL)!")
+                return True
+        else:
+            if self.gp.currentTime_s >= self.gp.startTime_REST:
+                return True
 
 
     def initiateBasicTaskEvent(self):

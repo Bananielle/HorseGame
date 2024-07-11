@@ -56,7 +56,7 @@ class BrainComputerInterface():
 
 
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
-                         "NFsignal_latestValue_TASK": [], "NF_MaxThresholdUsed": [],
+                         "NFsignal_latestValue_TASK": [], "NF_MaxCalculatedThreshold_Q3_120": [], "NF_MaxThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
 
         self.currentTask_signal = 1
@@ -84,6 +84,13 @@ class BrainComputerInterface():
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+
+
+    def getSamplingRate(self):
+        if self.TSIconnectionFound:
+            return self.tsi.get_sampling_rate()[0]
+        else:
+            return 0
 
     def getCurrentTimePoint_TSI(self):
 
@@ -326,7 +333,7 @@ class BrainComputerInterface():
 
         if self.TSIconnectionFound:
                 beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
-                print("Beta channel " + str(channel) + " = " + str(beta))
+               # print("Beta channel " + str(channel) + " = " + str(beta))
 
                 return beta
 

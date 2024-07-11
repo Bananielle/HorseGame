@@ -169,6 +169,7 @@ class MainPlayer(pygame.sprite.Sprite):
     def performJumpSequence(self, NF_level_reached):
         maxJumpHeightAchieved = self.calculate_jump_position(NF_level_reached)
         if self.HorseIsJumping:
+            self.gameParams.horseHasJumpedThisTrial = True
             if self.HorseIsJumpingUp:
                 #if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
 
@@ -190,6 +191,7 @@ class MainPlayer(pygame.sprite.Sprite):
                     self.gameParams.freezeCoins = False # Make the coins move up and down again
                     self.gameParams.horseJumpEvent = False
                     self.gameParams.startCountingCoins()
+
                     print("Horse is not jumping anymore.")
                     print("===========================================================================================")
 

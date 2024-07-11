@@ -304,6 +304,12 @@ if __name__ == '__main__':
         font = pygame.font.SysFont('ariel', 23, bold=False, )
         testEnvironment_txt = font.render(string, True, (255, 255, 255))
 
+        # Check for turbo-satori connection
+        if not BCI.TSIconnectionFound:
+            font = pygame.font.Font('freesansbold.ttf', 18)
+            text = font.render('Turbo-Satori connection not found!', True, WHITE)
+            screen.blit(text, (SCREEN_WIDTH/2.5,10))
+
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
         screen.blit(mountPic.surf, mountPic.location)
@@ -758,16 +764,28 @@ if __name__ == '__main__':
 
     def isItTimeForJumpEvent():
         timeforjump = False
+        #print("gp.rest = "+ str(gp.rest) + ", horseJumpCounter = " + str(gp.horseJumpCounter) + ", gp.TASK_counter = " + str(gp.TASK_counter) + ', gp.horseHasJumpedThisTrial = ' + str(gp.horseHasJumpedThisTrial))
+        #print("gp.timeUntilJump_s: " + str(gp.timeUntilJump_s) + ", gp.samplingRATE: " + str(BCI.getSamplingRate()))
         if gp.rest:
             #print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
             if gp.horseJumpCounter == gp.TASK_counter:
-                if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
-                    gp.horseJumpCounter += 1
-                    print("Time for jump event. Horse jump counter raised to = " + str(gp.horseJumpCounter))
-                    print("NF level = " + str(gp.achievedNFlevel))
-                    timeforjump = True
+                if gp.usePreMadeProtocol:
+                    current_volume_timepoint = BCI.getCurrentTimePoint_TSI()[0]
+                    if current_volume_timepoint >= gp.end_volumes[gp.current_condition - 1] + (gp.timeUntilJump_s * BCI.getSamplingRate()) and not gp.horseHasJumpedThisTrial:
+                        timeforjump = signalTimeForJump()
+
+                else: # Use in-game protocol parameters
+                    if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
+                        timeforjump = signalTimeForJump()
         return timeforjump
 
+    def signalTimeForJump():
+        gp.horseJumpCounter += 1
+        print("Time for jump event. Horse jump counter raised to = " + str(gp.horseJumpCounter))
+        print("NF level = " + str(gp.achievedNFlevel))
+        timeforjump = True
+
+        return timeforjump
 
     def updateProgressBar_task(loadingBar):
         loadingBar.fillProgressBar(task=True)
@@ -920,6 +938,13 @@ if __name__ == '__main__':
                 screen.blit(label, (0, y))
                 pygame.draw.line(screen, grid_color, (0, y), (SCREEN_WIDTH, y))
 
+        if gp.usePreMadeProtocol:
+            font = pygame.font.Font('freesansbold.ttf', 18)
+            text = font.render('Using simulated data.', True, BLACK)
+            screen.blit(text, (SCREEN_WIDTH/2.5,10))
+
+
+
 
     def didPlayerPressQuit(gamestate, event):
 
@@ -990,6 +1015,7 @@ if __name__ == '__main__':
 
     BCI = BrainComputerInterface(gametype,gp)
     BCI.scaleOxyData()
+    gp.setSamplingRate(BCI.getSamplingRate)
 
     PRT_writer = PRTwriter(gp)
     PRT_writer.create_PRT_template()
