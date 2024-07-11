@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur
+            'totalNum_TRIALS': 1, # Set the number of times Task should occur
             'duration_BASELINE_s': 5, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},

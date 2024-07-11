@@ -594,11 +594,13 @@ if __name__ == '__main__':
 
         # Display the scoreboard
         scoreboard_text = scoreboard.makePinkFont('Scoreboard')
-        sscreen.blit(scoreboard_text,
+        screen.blit(scoreboard_text,
                     ((SCREEN_WIDTH / 2) - (SCREEN_WIDTH * 0.11), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.40)))
 
-        scoreboard.displayScoreboard()
+        sortedScores, sortedTasks = scoreboard.sortScores()
+        displayScoreboard()
 
+        # Check for user input
         for event in pygame.event.get():
             if event.type == KEYDOWN:
 
@@ -609,6 +611,18 @@ if __name__ == '__main__':
             gamestate = didPlayerPressQuit(gamestate, event)
 
         return gamestate
+
+    def displayScoreboard():
+        newPosition = 30
+        scoresText_list, taskText_list, bonusText_list = scoreboard.prepareScoreBoardText()
+
+        for i in range(len(scoresText_list)):
+
+            screen.blit(bonusText_list[i],((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+            newPosition += 35
+            screen.blit(scoresText_list[i], ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+            screen.blit(taskText_list[i], ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+            newPosition += 35
 
 
     def runParadigm():
