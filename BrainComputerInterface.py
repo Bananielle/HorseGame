@@ -353,28 +353,7 @@ class BrainComputerInterface():
 
         return scaled_data
 
-    def getKeyboardPressFromBrainInput(self):
-        scaledOxyData = self.scaleOxyData()
 
-        self.previousInput = self.currentInput
-        self.currentInput = scaledOxyData
-
-       # print("Current input: " + str(self.currentInput) + ", previous input: " + str(self.previousInput))
-
-        keyboardPress = self.translateToKeyboardPress(self.currentInput, self.previousInput)
-
-        return keyboardPress
-
-    def translateToKeyboardPress(self, currentInput, previousInput):
-        keyboardPress = 0
-        if currentInput > previousInput:
-            keyboardPress = K_UP
-        if currentInput < previousInput:
-            keyboardPress = K_DOWN
-        if currentInput == previousInput:
-            keyboardPress = False
-
-        return keyboardPress
 
     # with current data its 7.8125 samples per second. So a sample every 128ms.
     def establishTimeInBetweenSamples(self):

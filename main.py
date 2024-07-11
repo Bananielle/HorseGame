@@ -47,6 +47,7 @@ from Rider import Rider
 from SettingsScreen import Settings_header
 from CSVwriter import CSVwriter
 from PRTwriter import PRTwriter
+from Scoreboard import Scoreboard
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
@@ -117,113 +118,6 @@ if __name__ == '__main__':
             print('Set mount to ' + mount)
             return mount
 
-
-    class Scoreboard():
-        def __init__(self):
-            self.taskList = []
-            self.scoresList = []
-            self.runList = []
-            self.task_coins_dictionary = {}
-            self.runNr = 1
-            self.font = pygame.font.SysFont('herculanum', 35, bold=True, )
-            self.coinsPerTrialPerRuns = []
-
-        def addScoretoScoreBoard(self, score):
-            if not gp.scoreSaved:
-
-                self.scoresList.append(score)
-                self.taskList.append(gp.taskUsed)
-                self.runList = self.runNr
-                self.runNr =+ 1
-                gp.scoreSaved = True  # This will reset when the player goes back to the start screen
-                print('Score ', score, ' saved to score list. Is now: ', str(self.scoresList))
-                self.save_scoresPerRun_to_csv()
-                print('Coins per trial: ' + str(gp.nrCoinsPerTrial))
-                self.coinsPerTrialPerRuns.append(gp.nrCoinsPerTrial)
-                print('Coins per trial per run: ' + str(self.coinsPerTrialPerRuns))
-
-                self.task_coins_dictionary[gp.taskUsed] = score #Dictionary of task used and it's associated run score
-
-
-        def makePinkFont(self, string):
-            text = self.font.render(string, True, PINK)  # Pink colour
-            return text
-
-        def makeGoldFont(self, string):
-            text = self.font.render(string, True, GOLD)  # Pink colour
-            return text
-
-
-        def displayScoreboard(self):
-
-            scoreboard = self.makePinkFont('Scoreboard')
-            screen.blit(scoreboard,
-                        ((SCREEN_WIDTH / 2) - (SCREEN_WIDTH * 0.11), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.40)))
-
-            currentScoreAlreadyDisplayed = False
-            newPosition = 30
-            count = 1
-            sortedScores = sorted(self.scoresList, reverse=True)
-            sortedDictionary = dict(sorted(self.task_coins_dictionary.items()))
-            #print('sortedDictionary: ', sortedDictionary)
-            #print('sortedScores: ', sortedScores)
-
-            # Put each score on the screen in descending order
-            for score in sortedScores:
-
-                # Adjust the coin vallue based on the difficulty level:
-                bonus = 0
-                if gp.gameDifficulty == 2:
-                    bonus = int((score * 1.2) - score)
-                if gp.gameDifficulty == 3:
-                    bonus = int((score * 1.2 * 1.2) - score)
-
-                i = 0
-                sortedTasks = list(sortedDictionary)
-                count_str = '(Run ' + str(count) + '. ' +sortedTasks[i] + ')'  # Get the task name from the dictionary
-                #print('count_str: ', count_str)
-
-                final_score_text = str(score) + ' coins. '
-
-                if score == gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
-                    scores_text = self.font.render(final_score_text, True, BLACK)
-                    task_text = self.font.render(count_str, True, BLACK)
-                    currentScoreAlreadyDisplayed = True
-                else:
-                    scores_text = self.makePinkFont(final_score_text)
-                    task_text = self.makePinkFont(count_str)
-
-                i = i + 1 # For iteration through the tasks
-
-                # Put score on screen
-                if gp.gameDifficulty == 2 or gp.gameDifficulty ==3:
-                    if gp.gameDifficulty == 2:
-                        bonus_text = self.makeGoldFont('Silver bonus: ' + str(bonus) + ' coin(s)')
-                    if gp.gameDifficulty == 3:
-                        bonus_text = self.makeGoldFont('Gold bonus: ' + str(bonus) + ' coin(s)')
-                    screen.blit(bonus_text,
-                                ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-                    newPosition += 35
-                screen.blit(scores_text,
-                            ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-                screen.blit(task_text,
-                            ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-                newPosition += 35
-                count += 1
-
-
-                # print('score ', score, ' printed')
-    # CSV writer
-        def save_scoresPerRun_to_csv(self):
-
-            ScoresDictionary = {"Coins collected": self.scoresList, "Task": gp.taskUsed}
-            fieldnames = ["Coins collected"]
-
-            current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
-            filename = f"Scoreboard_{current_date}.csv"
-
-            csvWriter = CSVwriter()
-            csvWriter.save_dict_to_csv(filename, fieldnames, ScoresDictionary)
 
 
     # GAME STATE FUNCTIONS
@@ -403,29 +297,19 @@ if __name__ == '__main__':
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
                 gamestate = showHowMuchTimeHasPassed(gamestate)
-                currentTimePoint = BCI.getCurrentTimePoint_TSI()
-                #print("Current (volume) time point: " + str(currentTimePoint))
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
                     volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
-                BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
 
                 if not gp.usePreMadeProtocol:
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (localizer) = " + str(volume_timepoint))
-                    currentCondition = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                    gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
 
-
-            # # Get user input
-            # keyboard_input = pygame.key.get_pressed(l)  # Get the set of keyboard keys pressed from user
-            # gp.player.update(keyboard_input, BCI_input, gp.useBCIinput)
-            # collectTaskTrialData()
-            # collectRestTrialData()
-            # gp.rider.update()
 
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
@@ -549,7 +433,6 @@ if __name__ == '__main__':
     def runMainGame():
         soundSystem.playMaintheme_slow()
         gamestate = GameState.MAINGAME
-        BCI_input = 0
 
         mainGame_background.updateAllBackGrounds()
         displayBackgroundsOnScreen()
@@ -564,13 +447,12 @@ if __name__ == '__main__':
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
                     volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
-                BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
 
                 if not gp.usePreMadeProtocol:
                     collectTaskTrialData()
                 else:
                     #print("Volume timepoint (main game) = " + str(volume_timepoint))
-                    currentCondition = gp.getCurrentConditionFromProtocol(volume_timepoint)
+                    currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
                     collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint)
 
 
@@ -709,6 +591,12 @@ if __name__ == '__main__':
         displayBackgroundsOnScreen()
         replay = PressSpaceToReplay(SCREEN_WIDTH, SCREEN_HEIGHT)
         screen.blit(replay.surf, replay.surf_center)
+
+        # Display the scoreboard
+        scoreboard_text = scoreboard.makePinkFont('Scoreboard')
+        sscreen.blit(scoreboard_text,
+                    ((SCREEN_WIDTH / 2) - (SCREEN_WIDTH * 0.11), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.40)))
+
         scoreboard.displayScoreboard()
 
         for event in pygame.event.get():
@@ -761,7 +649,7 @@ if __name__ == '__main__':
 
                 if gp.usePath:
                     mainGame_background.endPathBackground()
-
+ 
     def isItTimeForJumpEvent():
         timeforjump = False
         #print("gp.rest = "+ str(gp.rest) + ", horseJumpCounter = " + str(gp.horseJumpCounter) + ", gp.TASK_counter = " + str(gp.TASK_counter) + ', gp.horseHasJumpedThisTrial = ' + str(gp.horseHasJumpedThisTrial))
@@ -811,13 +699,13 @@ if __name__ == '__main__':
 
         # add all the coins
         for coinNr in range(gp.totalNumCoins):
-            addNewCoin(1, gp.coinStartingPosition_y - stepSize, coinNr+1) # +1 because indexing starts at 0
+            addNewCoin(gp.coinStartingPosition_y - stepSize, coinNr+1) # +1 because indexing starts at 0
             print("Coin nr " + str(coinNr) + " added at y position " + str(gp.coinStartingPosition_y - stepSize))
 
             stepSize += 50
 
 
-    def addNewCoin(coinType, y_position,rank):
+    def addNewCoin(y_position,rank):
         new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, y_position, rank)
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
@@ -1003,15 +891,15 @@ if __name__ == '__main__':
     print("Starting mount set to ", mounttype)
 
 
-    # Make a scoreboard (will remain throughout the game)
-    scoreboard = Scoreboard()
-
     # Set up a new game (will be refreshed after every replay)
     gametype = 'maingame'
     gamestate, gp, mainGame_background,paradigmManager,BCI = startANewGame(mounttype,gametype,timeofday)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
+
+    # Make a scoreboard (will remain throughout the game)
+    scoreboard = Scoreboard(gp)
 
     BCI = BrainComputerInterface(gametype,gp)
     BCI.scaleOxyData()
