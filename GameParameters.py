@@ -34,7 +34,7 @@ class GameParameters():
         self.runNr = '01'
 
         self.useSimulatedData = False
-        self.usePreMadeProcotol = True
+        self.usePreMadeProtocol = True
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False
@@ -162,6 +162,7 @@ class GameParameters():
         self.start_volumes = []
         self.end_volumes = []
         self.current_condition = 0
+        self.timeForTaskEvent = False
 
 
     def startCountingCoins(self):
@@ -268,6 +269,7 @@ class GameParameters():
                     if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
                         self.current_condition += 1
                         print("New condition! Is now: " + str(self.current_condition))
+                        self.timeForTaskEvent = True
             #print("Current trial: " + str(self.current_condition))
 
             return self.current_condition

@@ -398,7 +398,7 @@ if __name__ == '__main__':
             if event.type == gp.SECOND_HAS_PASSED:
                 gamestate = showHowMuchTimeHasPassed(gamestate)
                 currentTimePoint = BCI.getCurrentTimePoint_TSI()
-                print("Current (volume) time point: " + str(currentTimePoint))
+                #print("Current (volume) time point: " + str(currentTimePoint))
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -407,14 +407,11 @@ if __name__ == '__main__':
                     volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
 
-                if not gp.usePreMadeProcotol:
+                if not gp.usePreMadeProtocol:
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (localizer) = " + str(volume_timepoint))
                     currentCondition = gp.getCurrentConditionFromProtocol(volume_timepoint)
-
-                if gp.collectDataDuringRest:
-                    collectRestTrialData()
 
 
             # # Get user input
@@ -563,14 +560,13 @@ if __name__ == '__main__':
                     volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
                 BCI_input = BCI.getKeyboardPressFromBrainInput()  # Check for BCI-based keyboard presses
 
-                if not gp.usePreMadeProcotol:
+                if not gp.usePreMadeProtocol:
                     collectTaskTrialData()
                 else:
-                    print("Volume timepoint (main game) = " + str(volume_timepoint))
+                    #print("Volume timepoint (main game) = " + str(volume_timepoint))
                     currentCondition = gp.getCurrentConditionFromProtocol(volume_timepoint)
                     collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint)
-                if gp.collectDataDuringRest:
-                    collectRestTrialData()
+
 
             runParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
@@ -734,9 +730,6 @@ if __name__ == '__main__':
                 deleteExistingCoins()
                 coinEvent()
                 paradigmManager.resetRestStartTime()
-
-                if gp.usePath:
-                    mainGame_background.startPathBackground()
 
             if paradigmManager.isItTimeForRestEvent():
                 if gp.firstRestTrial:
