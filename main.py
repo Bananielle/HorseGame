@@ -449,8 +449,15 @@ if __name__ == '__main__':
         if gp.debuggingText:
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
+            gp.update_retrieved_sigal_value_text()
+            gp.update_NF_target_value_text(BCI.NF_maxLevel_based_on_localizer)
+            gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
             screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.achieved_jump_height_text, (20, 80))
+            screen.blit(gp.NF_target_value_text, (20,100))
+            screen.blit(gp.signal_value_retrieved_text, (20, 120))
+            screen.blit(gp.current_beta_value_text, (20,140))
+
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
@@ -578,7 +585,7 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.achievedNFlevel = BCI.get_achieved_NF_level()
+                gp.achievedNFlevel, gp.signal_value_retrieved = BCI.get_achieved_NF_level()
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=gp.achievedNFlevel)
 
             gamestate = didPlayerPressQuit(gamestate, event)

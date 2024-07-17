@@ -207,12 +207,18 @@ class BrainComputerInterface():
 
     def get_achieved_NF_level(self):
 
+        signal_value_used = 0
+
         if self.useMean:
             achieved_NF_signal = self.NFsignal_mean / self.NF_maxLevel_based_on_localizer
+            signal_value_retrieved =  self.NFsignal_mean
         if self.useMax:
             achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
+            signal_value_retrieved =  self.NFsignal_max
+
         if self.useLatestDataPoint: # takes the latest data point for each trial
             achieved_NF_signal = self.NFSignal_latestValue / self.NF_maxLevel_based_on_localizer
+            signal_value_used = self.NFSignal_latestValue
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
         # Add a ceiling and floor to the achieved NF signal
@@ -221,7 +227,7 @@ class BrainComputerInterface():
         if achieved_NF_signal < 0:
             achieved_NF_signal = 0
 
-        return achieved_NF_signal
+        return achieved_NF_signal,signal_value_used
 
     def calculate_NF_max_threshold(self):
         # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary

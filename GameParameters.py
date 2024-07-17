@@ -123,6 +123,10 @@ class GameParameters():
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top), True, [0,0,0])
+        self.signal_value_retrieved_text = self.debuggingFont.render("Retrieved signal value = 0" + str(self.player.rect.top), True, [0,0,0])
+        self.NF_target_value_text = self.debuggingFont.render("NF target value = 0" + str(self.player.rect.top), True, [0,0,0])
+        self.current_beta_value_text =self.debuggingFont.render("Beta = 0" + str(self.player.rect.top), True, [0,0,0])
+
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
         self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS
@@ -139,6 +143,7 @@ class GameParameters():
         self.printedNFdata = False
 
         self.achievedNFlevel = 1
+        self.signal_value_retrieved = 0
         self.maxJumpHeightAchieved = 0
 
         # Counter ( for countin down the seconds until game over)
@@ -182,6 +187,17 @@ class GameParameters():
 
     def update_jump_position_text(self):
         self.achieved_jump_height_text = self.debuggingFont.render("Achieved NF level = " + str('{:.2f}'.format(self.achievedNFlevel)),
+                                                                   True, [0, 0, 0])
+
+    def update_retrieved_sigal_value_text(self):
+        self.signal_value_retrieved_text = self.debuggingFont.render("Retrieved signal value = " + str('{:.2f}'.format(self.signal_value_retrieved)),
+                                                                   True, [0, 0, 0])
+
+    def update_NF_target_value_text(self,NF_maxLevel_based_on_localizer):
+        self.NF_target_value_text = self.debuggingFont.render("NF target value = " + str('{:.2f}'.format(NF_maxLevel_based_on_localizer)),
+                                                                   True, [0, 0, 0])
+    def update_current_beta_value_text(self, current_beta):
+        self.current_beta_value_text = self.debuggingFont.render("Beta = " + str('{:.2f}'.format(current_beta)),
                                                                    True, [0, 0, 0])
 
     def update_Taskcounter(self):
