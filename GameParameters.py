@@ -17,8 +17,8 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
-            'duration_BASELINE_s': 25, # Should be 25s
+            'totalNum_TRIALS': 1, # Set the number of times Task should occur
+            'duration_BASELINE_s': 5, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
             'jitter_s': 0
@@ -34,7 +34,7 @@ class GameParameters():
         self.runNr = '01'
 
         self.useSimulatedData = False
-        self.usePreMadeProtocol = True
+        self.usePreMadeProtocol = False
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False
@@ -279,9 +279,10 @@ class GameParameters():
         print("Start volumes: ", str(self.start_volumes))
         print("End volumes: ", str(self.end_volumes))
 
+
         return self.start_volumes, self.end_volumes, self.NrOfConditions
 
-    def getCurrentConditionFromProtocol(self,current_volume_timepoint):
+    def checkIfTaskOrRestCondition_PreMadeProtocol(self, current_volume_timepoint):
         if current_volume_timepoint is not None:
            # print("Current volume timepoint: " + str(current_volume_timepoint))
             if current_volume_timepoint < self.start_volumes[0]:
