@@ -179,10 +179,10 @@ class BrainComputerInterface():
         print("Timewindow task = " + str(self.timewindow_task))
 
         # Channel of Interest
-        self.NFsignal_mean = np.mean(NFsignal_raw)
-        self.NFsignal_max = np.max(NFsignal_raw)
-        self.NFSignal_median = np.median(NFsignal_raw)
-        self.NFSignal_latestValue = NFsignal_raw[-1] # The latest value of the array
+        self.NFsignal_mean = round(np.mean(NFsignal_raw),2)
+        self.NFsignal_max = round(np.max(NFsignal_raw),2)
+        self.NFSignal_median = round(np.median(NFsignal_raw),2)
+        self.NFSignal_latestValue = round(NFsignal_raw[-1],2) # The latest value of the array
 
         # All Channels
         for channel in range(0,self.nrOfChannels):
@@ -227,16 +227,16 @@ class BrainComputerInterface():
         if achieved_NF_signal < 0:
             achieved_NF_signal = 0
 
-        return achieved_NF_signal,signal_value_used
+        return round(achieved_NF_signal,2),round(signal_value_used,2)
 
     def calculate_NF_max_threshold(self):
         # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
-        NFsignal_mean = np.mean((self.NFsignal["NFsignal_mean_TASK"]))
-        NFsignal_max = np.mean((self.NFsignal["NFsignal_max_TASK"]))
-        NFSignal_median = np.mean((self.NFsignal["NFsignal_median_TASK"]))
-        NFSignal_mean_latestValue = np.mean((self.NFsignal["NFsignal_latestValue_TASK"])) # Mean of the all latest value of each trial
-        NFSignal_Q3_latestValue = np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75) # Third quartile of the latest value of each trial
-        NFSignal_Q3_120 = NFSignal_Q3_latestValue * 1.2
+        NFsignal_mean = round(np.mean((self.NFsignal["NFsignal_mean_TASK"])),2)
+        NFsignal_max = round(np.mean((self.NFsignal["NFsignal_max_TASK"])),2)
+        NFSignal_median = round(np.mean((self.NFsignal["NFsignal_median_TASK"])),2)
+        NFSignal_mean_latestValue = round(np.mean((self.NFsignal["NFsignal_latestValue_TASK"])),2) # Mean of the all latest value of each trial
+        NFSignal_Q3_latestValue = round(np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75),2) # Third quartile of the latest value of each trial
+        NFSignal_Q3_120 = round((NFSignal_Q3_latestValue * 1.2),2)
         # C
 
 

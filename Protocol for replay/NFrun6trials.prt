@@ -3,7 +3,7 @@ FileVersion:        2
 
 ResolutionOfTime:   Volumes
 
-Experiment:         20240308_162446
+Experiment:         20240308_163110
 
 BackgroundColor:    0 0 0
 TextColor:          255 255 255
@@ -16,50 +16,50 @@ NrOfConditions:  10
 
 Cond.: 1
 1
- 288  347
+ 287  347
 Color: 200 0 0
 
 Cond.: 2
 1
- 513  571
+ 512  571
 Color: 100 200 80
 
 Cond.: 3
 1
- 735  795
+ 735  794
 Color: 10 40 200
 
 Cond.: 4
 1
- 960 1018
+ 959 1018
 Color: 200 200 10
 
 Cond.: 5
 1
-1184 1242
+1183 1242
 Color: 200 10 200
 
 Cond.: 6
 1
-1407 1466
+1407 1465
 Color: 10 200 200
 
 Cond.: 7
 1
-1632 1688
+1631 1690
 Color: 200 100 10
 
 Cond.: 8
 1
-1855 1914
+1854 1914
 Color: 200 200 200
 
 Cond.: 9
 1
-2079 2137
+2078 2136
 Color: 100 200 100
 
 Cond.: 10
 1
-2303 2361
+2301 2361
 Color: 100 100 200
