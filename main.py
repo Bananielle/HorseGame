@@ -336,11 +336,13 @@ if __name__ == '__main__':
             gp.update_retrieved_sigal_value_text()
             gp.update_NF_target_value_text(BCI.NF_maxLevel_based_on_localizer)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
-            screen.blit(gp.horse_upper_position_text, (20, 60))
+            gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
+            #screen.blit(gp.horse_upper_position_text, (20, 60))
+            screen.blit(gp.NF_target_value_text, (20,60))
             screen.blit(gp.achieved_jump_height_text, (20, 80))
-            screen.blit(gp.NF_target_value_text, (20,100))
-            screen.blit(gp.signal_value_retrieved_text, (20, 120))
-            screen.blit(gp.current_beta_value_text, (20,140))
+            screen.blit(gp.signal_value_retrieved_text, (20, 100))
+            screen.blit(gp.current_beta_value_text, (20,120))
+            screen.blit(gp.current_tvalue_text,(20,140))
 
 
     def updateTimeDataWindow_task():
