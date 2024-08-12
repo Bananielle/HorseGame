@@ -308,7 +308,8 @@ if __name__ == '__main__':
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (localizer) = " + str(volume_timepoint))
-                    gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
+                    currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
+                    collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
 
 
         updatePlayerCoinsAndText()

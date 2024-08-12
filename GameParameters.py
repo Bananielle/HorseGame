@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'totalNum_TRIALS': 6, # Set the number of times Task should occur
             'duration_BASELINE_s': 25, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
@@ -302,6 +302,7 @@ class GameParameters():
                         print("PREMADE PROTOCOL: New condition! Is now: " + str(self.current_condition))
                         self.timeForTaskEvent = True
                         self.horseHasJumpedThisTrial = False # Rest horse jump counter
+                if self.current_condition <= self.totalNum_TRIALS:
                     # Check for end of task (and start of rest)
                     if current_volume_timepoint >= self.end_volumes[self.current_condition-1]:
                         print("PREMADE PROTOCOL: End of task condition " + str(self.current_condition) + ". Now rest period.")

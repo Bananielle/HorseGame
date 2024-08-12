@@ -19,7 +19,7 @@ class BrainComputerInterface():
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-        self.NF_maxLevel_based_on_localizer = 1.06  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 2.8 #  # This is the max level for the NF signal that people can reach
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -222,7 +222,7 @@ class BrainComputerInterface():
             self.NFsignal["NFsignal_median_TASK"].append(self.NFSignal_median)
             self.NFsignal["NFsignal_latestValue_TASK"].append(self.NFSignal_latestValue)
             self.NFsignal["NFsignal_latestValue_TASK_t_value"].append(self.NFSignal_latestValue_t_value)
-            self.NFsignal["NFsignal_latestValue_TASK_beta"].append(self.NFSignal_latestValue_t_value)
+            self.NFsignal["NFsignal_latestValue_TASK_beta"].append(self.NFSignal_latestValue_beta)
 
         print("NFsignals stored: " + str(self.NFsignal))
 
@@ -350,6 +350,8 @@ class BrainComputerInterface():
             selectedChannels = self.tsi.get_selected_channels()[0]
            # print('Selected channel = ' + str(selectedChannels[0]))
             betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
+
+
            # print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
 
             # For debugging
