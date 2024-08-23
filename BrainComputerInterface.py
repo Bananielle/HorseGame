@@ -19,7 +19,8 @@ class BrainComputerInterface():
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-        self.NF_maxLevel_based_on_localizer = 2.8 #  # This is the max level for the NF signal that people can reach
+        self.NF_maxLevel_based_on_localizer = 6.3 #  # This is the max level for the NF signal that people can reach
+
 
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
@@ -131,7 +132,7 @@ class BrainComputerInterface():
             #scaled_data = self.scaleOxyData()
             #scaled_data = self.getNewDataForNF()
 
-            scaled_data = betas
+            scaled_data = t_values
 
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData

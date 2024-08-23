@@ -3,7 +3,7 @@ FileVersion:        2
 
 ResolutionOfTime:   Volumes
 
-Experiment:         2024-04-22_015
+Experiment:         20240322_162440
 
 BackgroundColor:    0 0 0
 TextColor:          255 255 255
@@ -12,34 +12,54 @@ TimeCourseThick:    2
 ReferenceFuncColor: 30 200 30
 ReferenceFuncThick: 2
 
-NrOfConditions:  6
+NrOfConditions:  10
 
-Cond. 1
+Cond.: 1
 1
- 390  451
+ 285  344
 Color: 200 0 0
 
-Cond. 2
+Cond.: 2
 1
- 614  675
+ 509  568
 Color: 100 200 80
 
-Cond. 3
+Cond.: 3
 1
- 837  899
+ 733  792
 Color: 10 40 200
 
-Cond. 4
+Cond.: 4
 1
-1062 1122
+ 957 1015
 Color: 200 200 10
 
-Cond. 5
+Cond.: 5
 1
-1285 1346
+1180 1240
 Color: 200 10 200
 
-Cond. 6
+Cond.: 6
 1
-1509 1570
+1404 1463
 Color: 10 200 200
+
+Cond.: 7
+1
+1629 1687
+Color: 200 100 10
+
+Cond.: 8
+1
+1852 1911
+Color: 200 200 200
+
+Cond.: 9
+1
+2076 2135
+Color: 100 200 100
+
+Cond.: 10
+1
+2299 2358
+Color: 100 100 200
