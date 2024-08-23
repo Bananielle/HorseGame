@@ -34,7 +34,7 @@ class GameParameters():
         self.runNr = '01'
 
         self.useSimulatedData = False
-        self.usePreMadeProtocol = True
+        self.usePreMadeProtocol = False
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False
