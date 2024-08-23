@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur #TODO shouldn't be dependent on this for the game to finish!
             'duration_BASELINE_s': 30, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
@@ -34,7 +34,7 @@ class GameParameters():
         self.runNr = '01'
 
         self.useSimulatedData = False
-        self.usePreMadeProtocol = False
+        self.usePreMadeProtocol = True
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False

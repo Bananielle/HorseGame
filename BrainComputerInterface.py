@@ -51,12 +51,19 @@ class BrainComputerInterface():
         self.timewindow_task_betas = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.nrOfChannels = 10
-        self.timewindow_allChannels_data = {}
-        self.allChannels_latestBetaValue = []
+        self.nrOfChannels = 28
+        self.channelFieldNames = ['Trials', 'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
+                                  'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
+                                  'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15']
+
+        self.timewindow_allChannels_data_raw = {}
         for channel in range (0,self.nrOfChannels):
-            self.timewindow_allChannels_data[channel] = []
+            self.timewindow_allChannels_data_raw[channel] = []
         self.selectedChannels = 0
+        # Create channel list with the correct channel name
+        self.allChannels_latestBetaValue = {key: [] for key in self.channelFieldNames}
+        for key in self.channelFieldNames:
+            self.allChannels_latestBetaValue[key] = []
 
 
 
@@ -152,7 +159,7 @@ class BrainComputerInterface():
                 # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
                 for channel in range(0,self.nrOfChannels):
                     channel_betas = self.getBetasForAllChannels(channel,trialNr)
-                    self.timewindow_allChannels_data[channel].append(channel_betas)
+                    self.timewindow_allChannels_data_raw[channel].append(channel_betas)
             else:
                 self.timewindow_rest.append(scaled_data)
 
@@ -188,8 +195,8 @@ class BrainComputerInterface():
             NFsignal_raw = np.array(self.timewindow_task) # Array of all incoming oxy values.
             NFsignal_raw_tvalues = np.array(self.timewindow_task_tvalues)
             NFsignal_raw_betas = np.array(self.timewindow_task_betas)
-            NFsignal_allChannels_raw = self.timewindow_allChannels_data
-            print("All Channels: "+ str(self.timewindow_allChannels_data))
+            NFsignal_allChannels_raw = self.timewindow_allChannels_data_raw
+            print("All Channels: " + str(self.timewindow_allChannels_data_raw))
         else: # If measurement is from the rest period
             NFsignal_raw = np.array(self.timewindow_rest)
 
@@ -209,7 +216,8 @@ class BrainComputerInterface():
 
         # All Channels
         for channel in range(0,self.nrOfChannels):
-            self.allChannels_latestBetaValue.append(NFsignal_allChannels_raw[channel][-1])
+            key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
+            self.allChannels_latestBetaValue[key].append(round(NFsignal_allChannels_raw[channel][-1],2))
 
         print("All Channels latest beta value: " + str(self.allChannels_latestBetaValue))
 
@@ -271,6 +279,8 @@ class BrainComputerInterface():
         maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
+        self.allChannels_latestBetaValue["Trials"] = trialIndex
+
 
         # Print the mean of the NFsignal_mean values
         print("End of run. NFsignal_mean_TASK: " + str(NFsignal_mean) + ", NFsignal_max_TASK: " + str(
@@ -282,10 +292,33 @@ class BrainComputerInterface():
         print("Third quartile of latest beta data points: "  + str(NFSignal_Q3_latestValue))
         print("NF threshold based on Q3 * 120%: " + str(NFSignal_Q3_120))
 
+        # All channels (add average value across all trials per channel)
+        self.allChannels_latestBetaValue["Trials"].append("Mean")
+        mean_values = [] # for finding the max value later
+        counter = 0
+        for values in self.allChannels_latestBetaValue.values():
+            if counter is not 0: # first column is a header so we want to skip it
+                mean = np.mean(values)
+                values.append(round(mean,2))
+                mean_values.append(mean)
+            counter += 1
+
+        # Find the channel with the highest mean # todo doesn't work properly...
+        # means_array = np.array(list(mean_values)) # Convert mean list to an array (to find the max value)
+        # keys_list = list(self.allChannels_latestBetaValue.keys())  # Convert keys to a list
+        # max_index = np.argmax(means_array)
+        # highest_mean_value = means_array[max_index]
+        # best_channel = keys_list[max_index]
+        # print(f"The channel with the highest mean value is '{best_channel}' with a mean of {highest_mean_value}.")
+        #
+        # self.allChannels_latestBetaValue["Trials"].append("Best channel:  " + best_channel)
+
+
         # Save NF values to CSV files
         self.NFsignal["NF_MaxCalculatedThreshold_Q3_120"].append(NFSignal_Q3_120)
         self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
         self.save_NFdatalog_to_csv()
+        self.save_allChannelData_to_csv()
 
         self.save_continousMeasurementDataToCSV()
 
@@ -427,6 +460,21 @@ class BrainComputerInterface():
         else:
             filename = f"NF_datalog_NFrun_{current_date}.csv"
         csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
+
+    def save_allChannelData_to_csv(self):
+        field_names = []
+        csvWriter = CSVwriter.CSVwriter()
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+        if self.typeOfRun == "localizer":
+            filename = f"NF_allChannelData_localizer_{current_date}.csv"
+        else:
+            filename = f"NF_allChannelData_NFrun_{current_date}.csv"
+
+
+        print(f'Keys in data_dict: {list(self.allChannels_latestBetaValue.keys())}')
+
+        csvWriter.save_dict_to_csv(filename, self.allChannels_latestBetaValue.keys(), self.allChannels_latestBetaValue)
+
 
     def save_list_to_csv(self, data,filename):
 
