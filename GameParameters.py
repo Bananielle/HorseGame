@@ -17,24 +17,24 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur #TODO shouldn't be dependent on this for the game to finish!
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
             'duration_BASELINE_s': 30, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
-            'jitter_s': 0
+            'jitter_s': 2
         }
 
         self.gameDifficulty = 3# 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         # Participant information
         self.taskUsed = 'Fingertapping'
-        self.participantNr = 'P02'
-        self.sessionNr = 'S02'
+        self.participantNr = 'P05'
+        self.sessionNr = 'S01'
         self.runType = 'Localizer'
         self.runNr = '01'
 
         self.useSimulatedData = False
-        self.usePreMadeProtocol = True
+        self.usePreMadeProtocol = False
         self.saveIncomingData= True
 
         self.collectDataDuringRest = False
