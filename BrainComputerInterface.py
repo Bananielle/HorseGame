@@ -100,9 +100,9 @@ class BrainComputerInterface():
                 self.timewindow_allChannels_data_raw[channel] = []
 
             # Create channel list with the correct channel name
-            self.allChannels_latestBetaValue = {key: [] for key in self.channelFieldNames}
+            self.allChannels_latestValue = {key: [] for key in self.channelFieldNames}
             for key in self.channelFieldNames:
-                self.allChannels_latestBetaValue[key] = []
+                self.allChannels_latestValue[key] = []
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
@@ -146,12 +146,12 @@ class BrainComputerInterface():
 
             betas = self.getBetas(trialNr)
             t_values = self.getTvalues(trialNr)
-            #all_data = self.getBetasForAllChannels(trialNr)sf sfdfs
-            #print(all_data)
-            #scaled_data = self.scaleOxyData()
-            #scaled_data = self.getNewDataForNF()
 
-            scaled_data = betas
+            # Use either beta's or t-values based on chosen datatype in GameParameters
+            if self.gp.dataType == 0:
+                scaled_data = betas
+            if self.gp.dataType == 1:
+                scaled_data = t_values
 
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
@@ -165,8 +165,8 @@ class BrainComputerInterface():
 
                 # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
                 for channel in range(0,self.nrOfChannels):
-                    channel_betas = self.getBetasForAllChannels(channel,trialNr)
-                    self.timewindow_allChannels_data_raw[channel].append(channel_betas)
+                    channel_rawdata = self.getDataForAllChannels(channel, trialNr)
+                    self.timewindow_allChannels_data_raw[channel].append(channel_rawdata)
             else:
                 self.timewindow_rest.append(scaled_data)
 
@@ -224,9 +224,9 @@ class BrainComputerInterface():
         # All Channels
         for channel in range(0,self.nrOfChannels):
             key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
-            self.allChannels_latestBetaValue[key].append(round(NFsignal_allChannels_raw[channel][-1],2))
+            self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
 
-        print("All Channels latest beta value: " + str(self.allChannels_latestBetaValue))
+        print("All Channels latest beta value: " + str(self.allChannels_latestValue))
 
         print("NFsignal_raw: " + str(NFsignal_raw))
         print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: "
@@ -286,7 +286,7 @@ class BrainComputerInterface():
         maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
-        self.allChannels_latestBetaValue["Trials"] = trialIndex
+        self.allChannels_latestValue["Trials"] = trialIndex
 
 
         # Print the mean of the NFsignal_mean values
@@ -300,10 +300,10 @@ class BrainComputerInterface():
         print("NF threshold based on Q3 * 120%: " + str(NFSignal_Q3_120))
 
         # All channels (add average value across all trials per channel)
-        self.allChannels_latestBetaValue["Trials"].append("Mean")
+        self.allChannels_latestValue["Trials"].append("Mean")
         mean_values = [] # for finding the max value later
         counter = 0
-        for values in self.allChannels_latestBetaValue.values():
+        for values in self.allChannels_latestValue.values():
             if counter is not 0: # first column is a header so we want to skip it
                 mean = np.mean(values)
                 values.append(round(mean,2))
@@ -358,8 +358,6 @@ class BrainComputerInterface():
           #  scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
           #  scaled_data = float(oxy) * float(scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
 
-            selectedChannels = self.tsi.get_selected_channels()[0]
-
             betas = self.getBetas(trialNr)
             t_values = self.getTvalues(trialNr)
 
@@ -411,25 +409,31 @@ class BrainComputerInterface():
     def getTvalues(self,trialNr):
         if self.TSIconnectionFound:
 
-            selectedChannels = self.selectedChannels
-
-            #print("Selected channel: "+  str(selectedChannels))
             contrast = [0,0,0,0,0,0,0,0,0,0]
             if trialNr > 0:
                 contrast[trialNr-1] = 1 # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
-            t_values = self.tsi.get_tvalue_of_channel(selectedChannels[0],chromophore=1,contrast=contrast) # 1 is oxy, 0 is deoxy
+            t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[0],chromophore=1,contrast=contrast) # 1 is oxy, 0 is deoxy
 
             #print("T-value: " + str(t_values))
 
             return t_values[0]
 
-    def getBetasForAllChannels(self,channel,trialNr):
+    def getDataForAllChannels(self, channel, trialNr):
 
         if self.TSIconnectionFound:
+            data = 0
+            if self.gp.dataType == 0:
                 beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
-               # print("Beta channel " + str(channel) + " = " + str(beta))
+                # print("Beta channel " + str(channel) + " = " + str(beta))
+                data = beta
+            if self.gp.dataType == 1:
+                contrast = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                if trialNr > 0:
+                    contrast[trialNr - 1] = 1  # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
+                t_values = self.tsi.get_tvalue_of_channel(channel, chromophore=1,contrast=contrast)  # 1 is oxy, 0 is deoxy
+                data = t_values[0]
 
-                return beta
+            return data
 
 
 
@@ -478,9 +482,9 @@ class BrainComputerInterface():
             filename = f"NF_allChannelData_NFrun_{current_date}.csv"
 
 
-        print(f'Keys in data_dict: {list(self.allChannels_latestBetaValue.keys())}')
+        print(f'Keys in data_dict: {list(self.allChannels_latestValue.keys())}')
 
-        csvWriter.save_dict_to_csv(filename, self.allChannels_latestBetaValue.keys(), self.allChannels_latestBetaValue)
+        csvWriter.save_dict_to_csv(filename, self.allChannels_latestValue.keys(), self.allChannels_latestValue)
 
 
     def save_list_to_csv(self, data,filename):

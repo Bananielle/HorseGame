@@ -31,6 +31,8 @@ class GameParameters():
         self.runType = 'Localizer'
         self.runNr = '01'
 
+        self.dataType = 1 # 0 = beta's, 1 = t-values
+
         self.gameDifficulty = 3# 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         self.useSimulatedData = False
