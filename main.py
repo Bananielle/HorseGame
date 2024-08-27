@@ -348,8 +348,8 @@ if __name__ == '__main__':
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
-            start_time_next_task = gp.protocol_file['task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
-            gp.datawindow_task_start_time = start_time_next_task + gp.hemodynamic_delay
+            start_time_next_task = gp.protocol_file['datawindow_task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
+            gp.datawindow_task_start_time = start_time_next_task
             gp.datawindow_task_end_time = gp.datawindow_task_start_time + gp.datawindow_task_duration
 
             print("T=",gp.currentTime_s,": Next data time window TASK: " + str(gp.datawindow_task_start_time), "Datawindow end time TASK: " + str(gp.datawindow_task_end_time))
@@ -400,7 +400,7 @@ if __name__ == '__main__':
         if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
             scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
-            print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.datawindow_task_start_time) + ", Scaled data: " + str(scaled_data))
+            print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.protocol_file['datawindow_task_start_times'][gp.TASK_counter]) + ", Scaled data: " + str(scaled_data))
 
         if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]: # Don't measure rest data while the task trial has already started
             if gp.trialCounter_task > len(BCI.NFsignal["NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS: # Check if NF signal has already been measured:
@@ -642,7 +642,7 @@ if __name__ == '__main__':
             if paradigmManager.isItTimeForTaskEvent():
                 soundSystem.startsound.play()
                 paradigmManager.initiateBasicTaskEvent()
-                current_time_point = BCI.getCurrentTimePoint_TSI()[0]
+                current_time_point = BCI.getCurrentTimePoint_TSI()
                 PRT_writer.addTaskStartEvent(current_time_point)
                 progressBar.resetProgressBar()
                 deleteExistingCoins()
@@ -654,8 +654,9 @@ if __name__ == '__main__':
                     gp.firstRestTrial = False
                 else:
                     soundSystem.stopsound.play()
-                    current_time_point = BCI.getCurrentTimePoint_TSI()[0]
+                    current_time_point = BCI.getCurrentTimePoint_TSI()
                     PRT_writer.addTaskEndEvent(current_time_point)
+                    paradigmManager.resetDurationRest()
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
                 progressBar.resetProgressBar()
@@ -669,7 +670,6 @@ if __name__ == '__main__':
                 gp.player.HorseIsJumping = True
                 gp.freezeCoins = True # Make the coins stop moving, so that the achieved NF level and horse jump height always amounts to the exact same amount of coins collected.
                 gp.player.HorseIsJumpingUp = True
-                paradigmManager.resetJumpStartTime()
 
                 if gp.usePath:
                     mainGame_background.endPathBackground()
@@ -689,6 +689,8 @@ if __name__ == '__main__':
                 else: # Use in-game protocol parameters
                     if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
                         timeforjump = signalTimeForJump()
+                        print("!!!!!!!======3454=35========== Jump start time reached: " + str(gp.protocol_file['jump_start_times'][gp.TASK_counter]))
+                        print("Jump start times: " + str(gp.protocol_file['jump_start_times']))
         return timeforjump
 
     def signalTimeForJump():

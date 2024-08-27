@@ -32,7 +32,7 @@ class MainGame_background(pygame.sprite.Sprite):
                 self.bgX2 = self.surf.get_width() # second image (you're basically glueing both of them together to make a smooth transition
                 self.width = self.surf.get_width()
                 self.height = self.surf.get_height()
-                print("Image " +imagePath + ": width: ", self.width, " height: ", self.surf.get_height())
+                #print("Image " +imagePath + ": width: ", self.width, " height: ", self.surf.get_height())
 
 
             def moveBackground(self,speed,a,overlapBuffer):

@@ -17,11 +17,16 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 2, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
-            'duration_BASELINE_s': 25, # Should be 25s
+            'totalNum_TRIALS': 5, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
+            'duration_BASELINE_s': 5, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
-            'jitter_s': 2
+            'jump_start_times': {},
+            'datawindow_task_start_times': {},
+            'datawindow_task_end_times': {},
+            'datawindow_rest_start_times': {},
+            'datawindow_rest_end_times': {},
+            'jitter_s': 4
         }
 
         # Participant information (will be used to correctly name the protocol file for each run)
@@ -31,9 +36,9 @@ class GameParameters():
         self.runType = 'Localizer'
         self.runNr = '01'
 
-        self.dataType = 1 # 0 = beta's, 1 = t-values
+        self.dataType = 0 # 0 = beta's, 1 = t-values
 
-        self.gameDifficulty = 3# 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
+        self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         self.useSimulatedData = False
         self.usePreMadeProtocol = False
@@ -219,32 +224,6 @@ class GameParameters():
     def reset(self):
         self.all_sprites.empty()
 
-    def generate_dataCollection_protocol(self):
-        datawindow_task_start_times = {}
-        datawindow_task_end_times = {}
-        datawindow_rest_start_times = {}
-        datawindow_rest_end_times = {}
-
-        task_duration = self.protocol_file['duration_TASK_s']
-        rest_duration = self.protocol_file['duration_REST_s']
-        total_num_trials = self.protocol_file['totalNum_TRIALS']
-
-        for trial_number in range(1, total_num_trials+1):
-            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay
-            datawindow_task_end_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + task_duration + self.hemodynamic_delay
-
-            #datawindow_rest_end_times[trial_number] = (self.protocol_file['task_start_times'][trial_number]) - 1
-          #  datawindow_rest_start_times[trial_number] = datawindow_rest_end_times[trial_number] - self.duration_datawindow_rest
-
-            self.protocol_file['datawindow_task_start_times'] = datawindow_task_start_times
-            self.protocol_file['datawindow_task_end_times'] = datawindow_task_end_times
-          #  self.protocol_file['datawindow_rest_start_times'] = datawindow_rest_start_times
-          #  self.protocol_file['datawindow_rest_end_times'] = datawindow_rest_end_times
-
-        print('Protocol for datacollection timings generated. Datawindow task start times are:' + str(
-        datawindow_task_start_times) +  ", datawindow task end times are: " + str(datawindow_task_end_times) + ", datawindow rest start times are: " + str(
-        datawindow_rest_start_times) + " and datawindow rest end times are: " + str(datawindow_rest_end_times))
-
     def read_premade_protocol(self):
         file_path = 'Protocol for replay/NFrun6trials.prt'
         print("READING PREMADE PROTOCOL FILE. ===========")
@@ -342,6 +321,9 @@ class GameParameters():
             if trial_number == 1: # The first trial rest period is right after the baseline.
                 rest_start_time = previous_rest_start_time
                 jittered_rest_duration = rest_duration_without_jitter # No jitter for the first rest period
+                self.jittered_rest_list.append(jittered_rest_duration)
+                print('Jittered rest duration right after baseline = ', str(jittered_rest_duration))
+                jittered_rest_duration = random.randint(min_rest_duration, max_rest_duration)  # Generate a new jittered rest duration for the next iteration
             else:
                 self.jittered_rest_list.append(jittered_rest_duration)
                 print('Jittered rest duration = ', str(jittered_rest_duration))
@@ -374,4 +356,30 @@ class GameParameters():
         self.protocol_file['rest_start_times'] = rest_start_times
         self.protocol_file['jump_start_times'] = jump_start_times
 
-        print('Protocol generated. Task start times are:' + str(task_start_times) + " and rest start times are: " + str(rest_start_times) + " and jump start times are: " + str(jump_start_times))
+        print('Protocol generated. Task start times are:' + str(self.protocol_file['task_start_times']) + " and rest start times are: " + str(rest_start_times) + " and jump start times are: " + str(jump_start_times))
+
+    def generate_dataCollection_protocol(self):
+        datawindow_task_start_times = {}
+        datawindow_task_end_times = {}
+        datawindow_rest_start_times = {}
+        datawindow_rest_end_times = {}
+
+        task_duration = self.protocol_file['duration_TASK_s']
+        rest_duration = self.protocol_file['duration_REST_s']
+        total_num_trials = self.protocol_file['totalNum_TRIALS']
+
+        for trial_number in range(1, total_num_trials+1):
+            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay
+            datawindow_task_end_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + task_duration + self.hemodynamic_delay
+
+            #datawindow_rest_end_times[trial_number] = (self.protocol_file['task_start_times'][trial_number]) - 1
+          #  datawindow_rest_start_times[trial_number] = datawindow_rest_end_times[trial_number] - self.duration_datawindow_rest
+
+            self.protocol_file['datawindow_task_start_times'] = datawindow_task_start_times
+            self.protocol_file['datawindow_task_end_times'] = datawindow_task_end_times
+          #  self.protocol_file['datawindow_rest_start_times'] = datawindow_rest_start_times
+          #  self.protocol_file['datawindow_rest_end_times'] = datawindow_rest_end_times
+
+        print('Protocol for datacollection timings generated. Datawindow task start times are:' + str(
+        datawindow_task_start_times) +  ", datawindow task end times are: " + str(datawindow_task_end_times) + ", datawindow rest start times are: " + str(
+        datawindow_rest_start_times) + " and datawindow rest end times are: " + str(datawindow_rest_end_times))

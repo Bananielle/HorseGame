@@ -53,12 +53,17 @@ class BrainComputerInterface():
         self.startTimeMeasurement = 0
 
         # Set up dictionairies for all-channel data to be collected
+        self.timewindow_allChannels_data_raw = {}
+
         self.nrOfChannels = 0
         self.selectedChannels = 0
         self.channelFieldNames = ['Trials', 'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
                                   'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
                                   'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15'] # done for 28 channels only
-
+        # Create channel list with the correct channel name
+        self.allChannels_latestValue = {key: [] for key in self.channelFieldNames}
+        for key in self.channelFieldNames:
+            self.allChannels_latestValue[key] = []
 
 
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
@@ -94,15 +99,9 @@ class BrainComputerInterface():
             print("Number of channels: " + str(self.nrOfChannels))
             self.selectedChannels = self.tsi.get_selected_channels()[0]
 
-            # Set up dictionairies for all-channel data to be collected
-            self.timewindow_allChannels_data_raw = {}
+            # Set up dictionairy for all-channel data to be collected
             for channel in range(0, self.nrOfChannels):
                 self.timewindow_allChannels_data_raw[channel] = []
-
-            # Create channel list with the correct channel name
-            self.allChannels_latestValue = {key: [] for key in self.channelFieldNames}
-            for key in self.channelFieldNames:
-                self.allChannels_latestValue[key] = []
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
@@ -117,7 +116,7 @@ class BrainComputerInterface():
     def getCurrentTimePoint_TSI(self):
 
         if self.TSIconnectionFound:
-            current_time_point = self.tsi.get_current_time_point()
+            current_time_point = self.tsi.get_current_time_point()[0]
         else:
             current_time_point = self.gp.currentTime_s
 
@@ -142,6 +141,8 @@ class BrainComputerInterface():
 
     def startMeasuring(self, task, simulatedData,trialNr):
         scaled_data = 0
+        betas = 0
+        t_values= 0
         if self.TSIconnectionFound:
 
             betas = self.getBetas(trialNr)
@@ -405,6 +406,7 @@ class BrainComputerInterface():
            # print("Betas (one condition): " + str(betas_one), " for trial: " + str(trialNr))
 
             return betas
+        else: return 0
 
     def getTvalues(self,trialNr):
         if self.TSIconnectionFound:
@@ -417,6 +419,7 @@ class BrainComputerInterface():
             #print("T-value: " + str(t_values))
 
             return t_values[0]
+        else: return 0
 
     def getDataForAllChannels(self, channel, trialNr):
 
