@@ -64,6 +64,12 @@ class ParadigmAndTriggerManager():
         print(data)
         self.simulatedData_array = data
 
+    def resetDurationRest(self): # is dependent on the jiter so each rest duration will be different
+        temp = self.gp.jittered_rest_list[self.gp.trial_counter-1] # Trial count starts at 1, but this index starts at 0.
+
+        print("Rest duration = " + str(temp))
+        print("Jittered rest list = " + str(self.gp.jittered_rest_list))
+        self.gp.duration_REST_s = temp
 
     def resetTaskStartTime(self):
         self.gp.startTime_TASK = self.gp.currentTime_s  + self.gp.duration_REST_s# Reset the start time for event TASK
@@ -72,14 +78,9 @@ class ParadigmAndTriggerManager():
         self.gp.startTime_REST = self.gp.currentTime_s + self.gp.duration_TASK_s  # Reset the start time for event TASK
         self.gp.timeForRestEvent = False
 
-    def resetJumpStartTime(self):
-        self.gp.startTime_JUMP = self.gp.currentTime_s + self.gp.duration_TASK_s
-        self.gp.dontCheckForHorseJump = True
-
     def resetTaskandRestTime(self):
         self.gp.startTime_TASK = self.gp.currentTime_s  # Reset the start time for event TASK
         self.gp.startTime_REST = self.gp.currentTime_s  # Set the start time for event REST
-
 
     def isItTimeForTaskEvent(self):
         if self.gp.task:
@@ -93,7 +94,8 @@ class ParadigmAndTriggerManager():
                 print("Time for task event (BASED ON PROTOCOL)!")
                 return True
         else:
-            if self.gp.currentTime_s >= self.gp.startTime_TASK:
+            if self.gp.currentTime_s >= self.gp.protocol_file['task_start_times'][self.gp.TASK_counter+1]:
+                print("Task start times: " + str(self.gp.protocol_file['task_start_times']))
                 return True
 
 
@@ -112,7 +114,6 @@ class ParadigmAndTriggerManager():
     def initiateBasicTaskEvent(self):
         self.gp.task = True
         self.gp.rest = False
-
 
         self.gp.TASK_counter += 1  # Increment the counter for event TASK
         self. gp.update_Taskcounter()
