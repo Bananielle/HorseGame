@@ -6,7 +6,7 @@ class PRTwriter():
         self.current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
         self.prt_file = None
         self.dataOutputFolder = "Data/PRTs/"
-        self.file_name = self.gp.participantNr + '_' + self.gp.sessionNr + '_' + self.gp.runNr + '_' + self.gp.runType + '_' + self.gp.taskUsed + '_' + self.current_date
+        self.file_name = self.gp.participantNr + '_' + self.gp.sessionNr + '_' + self.gp.runNr + '_' + self.gp.runType + '_' + self.gp.taskUsed + '_' + self.current_date + '.prt'
         self.file_path = ('')
 
 
@@ -20,7 +20,7 @@ class PRTwriter():
         self.prt_file = open(self.file_path, 'w') # Open the file in write mode
         self.prt_file.write('FileVersion: 2\n')
         self.prt_file.write('\n')
-        self.prt_file.write('ResolutionOfTime: Seconds\n')
+        self.prt_file.write('ResolutionOfTime: Volumes\n')
         self.prt_file.write('\n')
         self.prt_file.write('Experiment: BCI_4_kids\n')
         self.prt_file.write('\n')
@@ -49,6 +49,7 @@ class PRTwriter():
         print(self.prt_file.read())
 
     def addTaskStartEvent(self, current_time_point):
+
         self.prt_file = open(self.file_path, 'a')
         self.prt_file.write('   ' + str(current_time_point))
 

@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 16,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
+            'totalNum_TRIALS': 2, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
             'duration_BASELINE_s': 25, # Should be 25s
             'task_start_times': {},
             'rest_start_times': {},
@@ -256,7 +256,8 @@ class GameParameters():
 
             if stripped_line.startswith("NrOfConditions"):
                 self.NrOfConditions = int(stripped_line.split(":")[1].strip())
-                self.totalNum_TRIALS = self.NrOfConditions # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
+                if self.usePreMadeProtocol: # only do this when actually in simulation mode
+                    self.totalNum_TRIALS = self.NrOfConditions # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
                 print("Number of Conditions: ", self.NrOfConditions)
 
             elif stripped_line.startswith("Color:"):

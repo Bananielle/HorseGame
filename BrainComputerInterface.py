@@ -51,19 +51,13 @@ class BrainComputerInterface():
         self.timewindow_task_betas = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
-        self.nrOfChannels = 28
+
+        # Set up dictionairies for all-channel data to be collected
+        self.nrOfChannels = 0
+        self.selectedChannels = 0
         self.channelFieldNames = ['Trials', 'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
                                   'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
-                                  'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15']
-
-        self.timewindow_allChannels_data_raw = {}
-        for channel in range (0,self.nrOfChannels):
-            self.timewindow_allChannels_data_raw[channel] = []
-        self.selectedChannels = 0
-        # Create channel list with the correct channel name
-        self.allChannels_latestBetaValue = {key: [] for key in self.channelFieldNames}
-        for key in self.channelFieldNames:
-            self.allChannels_latestBetaValue[key] = []
+                                  'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15'] # done for 28 channels only
 
 
 
@@ -95,7 +89,20 @@ class BrainComputerInterface():
           #  self.timeBetweenSamples_ms = self  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         if self.TSIconnectionFound:
+            # Get information from turbo-satori
+            self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
+            print("Number of channels: " + str(self.nrOfChannels))
             self.selectedChannels = self.tsi.get_selected_channels()[0]
+
+            # Set up dictionairies for all-channel data to be collected
+            self.timewindow_allChannels_data_raw = {}
+            for channel in range(0, self.nrOfChannels):
+                self.timewindow_allChannels_data_raw[channel] = []
+
+            # Create channel list with the correct channel name
+            self.allChannels_latestBetaValue = {key: [] for key in self.channelFieldNames}
+            for key in self.channelFieldNames:
+                self.allChannels_latestBetaValue[key] = []
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND

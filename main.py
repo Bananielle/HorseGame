@@ -642,7 +642,7 @@ if __name__ == '__main__':
             if paradigmManager.isItTimeForTaskEvent():
                 soundSystem.startsound.play()
                 paradigmManager.initiateBasicTaskEvent()
-                current_time_point = BCI.getCurrentTimePoint_TSI()
+                current_time_point = BCI.getCurrentTimePoint_TSI()[0]
                 PRT_writer.addTaskStartEvent(current_time_point)
                 progressBar.resetProgressBar()
                 deleteExistingCoins()
@@ -654,7 +654,7 @@ if __name__ == '__main__':
                     gp.firstRestTrial = False
                 else:
                     soundSystem.stopsound.play()
-                    current_time_point = BCI.getCurrentTimePoint_TSI()
+                    current_time_point = BCI.getCurrentTimePoint_TSI()[0]
                     PRT_writer.addTaskEndEvent(current_time_point)
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
