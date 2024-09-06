@@ -46,7 +46,7 @@ class GameParameters():
 
         self.collectDataDuringRest = False
 
-        self.draw_grid = False # For debugging purposes
+        self.draw_grid = True # For debugging purposes
         self.useFancyBackground = True
 
         self.totalNumCoins = 10

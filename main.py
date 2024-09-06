@@ -529,22 +529,31 @@ if __name__ == '__main__':
 
     def  checkForCoinCollision():
         for coin in gp.coin:
-            if coin.rect.colliderect(gp.player.rect):
-                coin.kill()
-                soundSystem.coinCollected.play()
-                gp.nrCoinsCollectedThroughoutRun += 1
-                gp.coinsCollectedInCurrentTrial += 1
-                gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
+            if coin.rect.colliderect(gp.player.rect): # If the player collides with the coin, it is collected.
 
-                if coin.rank == gp.totalNumCoins:
-                    print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
-                    soundSystem.coinCollected.play() # You can potentially play an extra sound here.
-                    killAllCoins()
-                    break
+                # Check what the achieved NF signal was:
+                coins_that_should_be_collected = round(gp.achievedNFlevel*10)
+                print("Coins that should be collected: " + str(coins_that_should_be_collected))
+                #coins_that_should_be_collected = round(coins_that_should_be_collected) # round to one digit
+                if coins_that_should_be_collected  < 3:
+                    coins_that_should_be_collected = 3 # Make sure that at least 3 coins are collected
+                for coin in gp.coin:
+                    if gp.coinsCollectedInCurrentTrial < coins_that_should_be_collected:    # If the player has not yet collected all the coins that should be collected
+                        coin.kill()
+                        soundSystem.coinCollected.play()
+                        gp.nrCoinsCollectedThroughoutRun += 1
+                        gp.coinsCollectedInCurrentTrial += 1
+                        gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
 
+                        if coin.rank == gp.totalNumCoins:
+                            print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
+                            soundSystem.all_coins_collected_sound.play() # You can potentially play an extra sound here.
+                            killAllCoins()
+                            break
                 # Show the player how many coins have been collected
                 text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
                 gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
+            break # stop the for loop once all coins have been collected
 
 
     def killAllCoins():
@@ -843,6 +852,7 @@ if __name__ == '__main__':
 
         if gp.draw_grid:
             # Draw the grid
+            font = pygame.font.Font('freesansbold.ttf', 18)
             for x in range(0, SCREEN_WIDTH, grid_size):
                 pygame.draw.line(screen, grid_color, (x, 0), (x, SCREEN_HEIGHT))
                 label = font.render(str(x), True, grid_color)
