@@ -8,7 +8,7 @@ class ParadigmAndTriggerManager():
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.gp = gameParamaters
-        self.dataInputFolder = "SimulatedData/"
+        self.dataInputFolder = "SimulatedData/" # This folder is used for simulated data TODO old!
 
         # For simulated protocl and data input
         self.protocol_array = [] # Array that contains the protocol (0=rest, 1=task) for each second
@@ -19,7 +19,7 @@ class ParadigmAndTriggerManager():
                       source_id='Example')  # sets variables for object info
         self.outlet = StreamOutlet(self.info)  # initialize stream.
 
-        if gameParamaters.useSimulatedData:
+        if gameParamaters.useSimulatedData: #TODO old! remove!
             self.retrieveProtocol("LocalizerAline_Protocol.csv")
             #self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
             self.retrieveSimulatedData("NF_run_Dani_2023-11-15.csv")
@@ -115,6 +115,7 @@ class ParadigmAndTriggerManager():
         self.gp.task = True
         self.gp.rest = False
 
+
         self.gp.TASK_counter += 1  # Increment the counter for event TASK
         self. gp.update_Taskcounter()
         print("T=",self.gp.currentTime_s,": Event TASK " + self.gp.TASK_counter.__str__() + " of " + self.gp.totalNum_TRIALS.__str__())
@@ -123,8 +124,9 @@ class ParadigmAndTriggerManager():
 
 
     def initiateBasicRestEvent(self):
-        self. gp.task = False
-        self. gp.rest = True
+        self.gp.task = False
+        self.gp.rest = True
+        self.gp.coinCollectedCounter = 0 # Reset coin collected counter
         self.startRestTrigger()
 
         self.resetRestStartTime()

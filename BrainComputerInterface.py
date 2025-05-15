@@ -14,12 +14,13 @@ from pygame.locals import (
 class BrainComputerInterface():
     def __init__(self,typeOfRun,gameParameters):
 
+        # CHANGE NF THRESHOLD HERE. Use a value based on a localizer for good NF!
+        self.NF_maxLevel_based_on_localizer = 0.8  # # This is the max level for the NF signal that people can reach
 
+        # Options for what to use for NF caluclation.
         self.useMean = False # Use the mean amplitude for NF calculation
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
-
-        self.NF_maxLevel_based_on_localizer = 1.2 #  # This is the max level for the NF signal that people can reach
 
 
         self.NFsignal_mean = 1

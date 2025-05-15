@@ -16,9 +16,9 @@ class GameParameters():
         self.folder = 'Horse'
         self.protocol_file = {
             'duration_TASK_s': 6,
-            'duration_REST_s': 16,
-            'totalNum_TRIALS': 5, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
-            'duration_BASELINE_s': 5, # Should be 25s
+            'duration_REST_s': 6,
+            'totalNum_TRIALS': 10, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
+            'duration_BASELINE_s': 2, # Should be 25s for our experiment
             'task_start_times': {},
             'rest_start_times': {},
             'jump_start_times': {},
@@ -26,7 +26,7 @@ class GameParameters():
             'datawindow_task_end_times': {},
             'datawindow_rest_start_times': {},
             'datawindow_rest_end_times': {},
-            'jitter_s': 4
+            'jitter_s': 2
         }
 
         # Participant information (will be used to correctly name the protocol file for each run)
@@ -36,22 +36,32 @@ class GameParameters():
         self.runType = 'Localizer'
         self.runNr = '01'
 
-        self.dataType = 0 # 0 = beta's, 1 = t-values
+        self.dataType = 1 # 0 = beta's, 1 = t-values (used for neurofeedback input)
 
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
-        self.useSimulatedData = False
-        self.usePreMadeProtocol = False
+        # To simulate or not simulate
+        self.usePreMadeProtocol = False # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
         self.saveIncomingData= True
-
-        self.collectDataDuringRest = False
-
-        self.draw_grid = True # For debugging purposes
-        self.useFancyBackground = True
 
         self.totalNumCoins = 10
 
-        self.gameType = ' ' # 'maingame' (NF) or 'localizer'
+        # Time
+        self.velocity = 1 # Determines general speed of all sprites (to ensure frame-rate independence)
+        self.deltaTime = 1
+        self.FPS = 20  # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
+
+        # Background markers for task and rest periods
+        self.useExclamationMark = False  # Shows a bright exclamation mark when a task starts
+        self.useGreyOverlay = False  # Overlays the screen with a grey overlay when a task starts
+        self.usePath = False  # If true, then a path will appear during the task trial
+        self.useProgressBar = True  # If true, then a loading bar will appear during the task trial
+        self.debuggingText = False  # If true, then debugging text will appear during the task trial
+        self.draw_grid = False  # For debugging purposes
+
+        self.gameType = ' ' # 'maingame' (NF) or 'localizer' (will be selected during start menu)
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
@@ -71,19 +81,14 @@ class GameParameters():
         self.datawindow_rest_end_time = self.datawindow_rest_start_time + self.datawindow_rest_duration
 
         self.samplingRate = 0 # dependent on what TSI inputs
-        self.useBCIinput = True # If true, then player will be controlled by BCI input next to keyboard presses
-        self.FPS = 20 # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
-        # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
-
-        # Background markers for task and rest periods
-        self.useExclamationMark = False # Shows a bright exclamation mark when a task starts
-        self.useGreyOverlay = False # Overlays the screen with a grey overlay when a task starts
-        self.usePath = False # If true, then a path will appear during the task trial
-        self.useProgressBar = True # If true, then a loading bar will appear during the task trial
-        self.debuggingText = True # If true, then debugging text will appear during the task trial
 
         self.currentTime_s = 0  #
         self.firstRestTrial = True
+
+        self.useBCIinput = True  # If true, then player will be controlled by BCI input next to keyboard presses
+        self.collectDataDuringRest = False  # (No longer used in our current experimental setup)
+
+        self.useSimulatedData = False  # Todo Should remove this feature, as we can now make use of the premadeprotocol and TSI-simulation mode
 
         # Paradigm parameters - constants
         self.trialCounter_task = 1 # For NF measuring
@@ -106,11 +111,6 @@ class GameParameters():
         self.HORSEANIMATION = pygame.USEREVENT + 3
         pygame.time.set_timer(self.HORSEANIMATION, 70)  # Define how quickly new jellyfish are added (e.g., every 4000ms)
 
-
-
-        # Time
-        self.velocity = 1 # Determines general speed of all sprites (to ensure frame-rate independence)
-        self.deltaTime = 1
 
         # Create the sprites
         self.player = player
@@ -139,6 +139,7 @@ class GameParameters():
 
         self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS
         self.coinsCollectedInCurrentTrial = 0
+        self.coinCollectedCounter = 0
         self.nrCoinsCollectedThroughoutRun = 0
         self.coinAlreadyBeingAdded = False
         self.nrCoinsCollectedText = self.mainFont.render(self.counterText, True, GOLD)
@@ -151,6 +152,8 @@ class GameParameters():
         self.printedNFdata = False
 
         self.achievedNFlevel = 1
+        self.coins_that_should_be_collected = 3
+        self.check_for_coin_collision = False
         self.signal_value_retrieved = 0
         self.maxJumpHeightAchieved = 0
 
@@ -181,6 +184,13 @@ class GameParameters():
         self.timeForJumpEvent = False
         self.horseHasJumpedThisTrial = False
 
+    def set_achieved_NF_level(self, achieved_NF_level):
+        self.achievedNFlevel = achieved_NF_level
+
+        # also immediately set the nr of coins that should be collected
+        self.coins_that_should_be_collected = round(achieved_NF_level*10)
+        if self.coins_that_should_be_collected <3:
+            self.coins_that_should_be_collected = 3 # keep the minimum of coins collected to 3
 
     def setSamplingRate(self, samplingRate):
         self.samplingRate = samplingRate
@@ -225,9 +235,8 @@ class GameParameters():
         self.all_sprites.empty()
 
     def read_premade_protocol(self):
-        file_path = 'Protocol for replay/NFrun6trials.prt'
         print("READING PREMADE PROTOCOL FILE. ===========")
-        with open(file_path, 'r') as file:
+        with open(self.protocol_file_path, 'r') as file:
             lines = file.readlines()
             # print(lines)
 

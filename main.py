@@ -3,14 +3,22 @@
 Author: Danielle Evenblij
 Email: d.evenblij@maastrichtuniversity.nl
 Created: June 2022
-Last updated: October 2022
+Last updated: May 2025
 
 ------------------------------------------------------------------------------------------------------------------------
 Notes for potential problem solving:
 - Use Python 3.7.5 as your interpreter (needed for expyriment)
 - When successfully pip installing expyriment (in a Python 3.7.5. environment), pygame is also immediately installed.
-- You may need to pip install simpleaudio manually.
-- If you get problems with the pygame mixer library, then toggle off USE_BACKGROUND_MUSIC in SoundSystem.py.
+- You may need to pip install simpleaudio (used in Soundsystem.py) manually.
+- If you get problems with the pygame mixer library, then toggle off USE_BACKGROUND_MUSIC in SoundSystem.py (is OFF by default).
+------------------------------------------------------------------------------------------------------------------------
+
+Notes for the start menu keys when you start the game:
+- "Space bar" starts a neurofeedback run.
+-"L" starts a localizer run.
+- With arrowkeys left and right you can switch between animals.
+- With arrowkeys up and down you can switch between a day and night background.
+
 ------------------------------------------------------------------------------------------------------------------------
 
 Most important parameters you can adjust:
@@ -18,10 +26,22 @@ Most important parameters you can adjust:
 In main:
 - You can toggle fullscreen on/off in main.
 
-In GameParameters:
-- You can adjust how long the game lasts (in seconds) with gameTimeCounter_s.
-- You can adjust how often new sharks and jellyfish appear.
-- You can adjust the speed of all sprites with 'velocity'.
+In BrainComputerInterface you can adjust:
+- The neurofeedback threshold. (NF_maxLevel_based_on_localizer)
+- What aspect of the incoming data you want to use that is measured in the timewindow (mean value, max value or latest data point) that i
+
+In GameParameters, you can adjust:
+- The duration of the baseline, resting period and task period (in seconds)
+- The amount of trials.
+- Participant information (will be used for filenaming)
+- Whether you want to use t-values or beta values as input for neurofeedback (dataType)
+- Game difficulty: changes coin colour and NF threshold
+- Whether you want to run the game using simulated data from TSI or not (usePreMadeProtoco = True. Needs TSI to be running in simulation mode and needs a matching protocol file in the "Protocol for replay" folder!)
+- The frame rate. (currently at 20 FPS)
+- The speed of all sprites with 'velocity'.
+
+In ParadigmAndTriggerManager you can adjust:
+- The name for the triggerestream used with LSL and Aurora (must be the same as specified in Aurora!)
 
 In SoundSystem
 - USE_BACKGROUND_MUSIC toggles the background music on/off (note, the background music makes use of the pygame mixer).
@@ -291,7 +311,7 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.achievedNFlevel = 0.2  # For displaying debugging text
+                gp.set_achieved_NF_level(0.2)  # For displaying debugging text
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(gp.achievedNFlevel)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
             # Show the player how much time has passed
@@ -470,7 +490,8 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.achievedNFlevel, gp.signal_value_retrieved = BCI.get_achieved_NF_level()
+                achievedNFlevel, gp.signal_value_retrieved = BCI.get_achieved_NF_level()
+                gp.set_achieved_NF_level(achievedNFlevel)
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=gp.achievedNFlevel)
 
             gamestate = didPlayerPressQuit(gamestate, event)
@@ -527,34 +548,49 @@ if __name__ == '__main__':
         draw_debugging_text()
 
 
-    def  checkForCoinCollision():
+    def checkForCoinCollision():
+        #if gp.player.HorseIsJumpingDown:
+              #collect_all_coins()
         for coin in gp.coin:
-            if coin.rect.colliderect(gp.player.rect): # If the player collides with the coin, it is collected.
+            if coin.rect.colliderect(gp.player.rect):  # If the player collides with the coin, it is collected.
+                if coin.rank <= gp.coins_that_should_be_collected: # only kill the coins that should be collected (based on achieved NF level)
+                    coin.kill()
+                    soundSystem.coinCollected.play()
 
-                # Check what the achieved NF signal was:
-                coins_that_should_be_collected = round(gp.achievedNFlevel*10)
-                print("Coins that should be collected: " + str(coins_that_should_be_collected))
-                #coins_that_should_be_collected = round(coins_that_should_be_collected) # round to one digit
-                if coins_that_should_be_collected  < 3:
-                    coins_that_should_be_collected = 3 # Make sure that at least 3 coins are collected
-                for coin in gp.coin:
-                    if gp.coinsCollectedInCurrentTrial < coins_that_should_be_collected:    # If the player has not yet collected all the coins that should be collected
-                        coin.kill()
-                        soundSystem.coinCollected.play()
-                        gp.nrCoinsCollectedThroughoutRun += 1
-                        gp.coinsCollectedInCurrentTrial += 1
-                        gp.nrCoinsPerTrial[gp.TASK_counter-1] += 1 #-1 because indexing is at 0
+                    gp.nrCoinsCollectedThroughoutRun += 1
+                    gp.coinsCollectedInCurrentTrial += 1
+                    gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
 
-                        if coin.rank == gp.totalNumCoins:
-                            print("T=",gp.currentTime_s,": Highest coin collected! Killing all coins.")
-                            soundSystem.all_coins_collected_sound.play() # You can potentially play an extra sound here.
-                            killAllCoins()
-                            break
-                # Show the player how many coins have been collected
-                text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
-                gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
-            break # stop the for loop once all coins have been collected
+                    if gp.coins_that_should_be_collected == gp.totalNumCoins:
+                        print("T=", gp.currentTime_s, ": Highest coin collected! Killing all coins.")
+                        soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
+                        killAllCoins()
+                        break
+                    # Show the player how many coins have been collected
+            text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+            gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
+    def collect_all_coins():
+        for coin in gp.coin:
+            if gp.coinsCollectedInCurrentTrial < gp.coins_that_should_be_collected:
+                #coin.kill()
+                gp.nrCoinsCollectedThroughoutRun += 1
+                gp.coinsCollectedInCurrentTrial += 1
+                gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
+            else:
+                if gp.coins_that_should_be_collected == gp.totalNumCoins:
+                    print("T=", gp.currentTime_s, ": Highest coin collected! Killing all coins.")
+                    soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
+                    killAllCoins()
+                    break
+                else:
+
+                    #soundSystem.coinCollected.play()
+                    #soundSystem.coinCollected.play()  # Play it 2 times to give the illusion of multiple coins
+                    break
+        # Show the player how many coins have been collected
+        text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+        gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
     def killAllCoins():
         for coin in gp.coin:
@@ -785,65 +821,37 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))  # black
 
-        if gp.useFancyBackground:
-            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height() # Use background layer 2 for height reference
 
-            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX, y+100]) # To fit the moon better on to the screen (it lowers it a little bit)
-            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y+100])
-            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y-40])
-            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y-40])
-            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y-40])
-            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y-40])
-            screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX, y])
-            screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX2, y])
-            screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX, y])
-            screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX2, y])
-            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
-            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
+        y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height() # Use background layer 2 for height reference
 
-            if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
-                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y]) # To put the cacti a bit higher
-                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
-                screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
-                screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
-                screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX, y])
-                screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX2, y])
+        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX, y+100]) # To fit the moon better on to the screen (it lowers it a little bit)
+        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y+100])
+        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y-40])
+        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y-40])
+        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y-40])
+        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y-40])
+        screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX, y])
+        screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX2, y])
+        screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX, y])
+        screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX2, y])
+        screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
+        screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
-            if mainGame_background.folder == "Resources/Horse/Day/" or mainGame_background.folder == "Resources/Bear/Night/":
-                screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX, y])
-                screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX2, y])
+        if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
+            screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y]) # To put the cacti a bit higher
+            screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
+            screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
+            screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
+            screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX, y])
+            screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX2, y])
 
-            if mainGame_background.folder == "Resources/Horse/Night/":
-                screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX, y])
-                screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX2, y])
-        else:
-            # Default background drawing parameters
-            y=40
-            screen.blit(mainGame_background.background_far.surf, [mainGame_background.background_far.bgX, 0])
-            screen.blit(mainGame_background.background_far.surf, [mainGame_background.background_far.bgX2, 0])
-            screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX, 20])
-            screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX2, 20])
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-            screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
+        if mainGame_background.folder == "Resources/Horse/Day/" or mainGame_background.folder == "Resources/Bear/Night/":
+            screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX, y])
+            screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX2, y])
 
-
-            # Adjust some of the background drawing parameters based on the mount background
-            if gp.player.mount_folder == "Resources/Bear/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
-                y = 0
-                screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX, 0])
-                screen.blit(mainGame_background.background_middle.surf, [mainGame_background.background_middle.bgX2, 0])
-                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
-            if gp.player.mount_folder == "Resources/Camel/":  # Need to change position of background because the trees need to reach all the way to the top of the screen
-                y = 20
-                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
-            if gp.player.mount_folder == "Resources/Turtle/":
-                y = 20
-                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX, y])
-                screen.blit(mainGame_background.background_foreground.surf, [mainGame_background.background_foreground.bgX2, y])
-
-
+        if mainGame_background.folder == "Resources/Horse/Night/":
+            screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX, y])
+            screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX2, y])
 
         if not gp.task and gp.useGreyOverlay:
             screen.blit(mainGame_background.overlay_greysurface,

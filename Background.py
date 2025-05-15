@@ -105,32 +105,28 @@ class MainGame_background(pygame.sprite.Sprite):
 
     def updateAllBackGrounds(self):
 
-        if self.gameParams.useFancyBackground:
-            self.background1.moveBackground(speed=0.1 * self.backgroundSpeed,a=6,overlapBuffer=6)
-            self.background2.moveBackground(speed=0.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background3.moveBackground(speed=0.6 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
-            if self.MountType is 'turtle': # Let this layer move faster, because it is the foreground layer.
-                self.background4.moveBackground(speed=2 * self.backgroundSpeed, a=6, overlapBuffer=6)
-                self.background5.moveBackground(speed=3 * self.backgroundSpeed, a=6, overlapBuffer=6)
-                self.background6.moveBackground(speed=4 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            else:
-                self.background4.moveBackground(speed=0.7 * self.backgroundSpeed, a=6, overlapBuffer=6)
-                self.background5.moveBackground(speed=1.2 * self.backgroundSpeed, a=6, overlapBuffer=6)
-                self.background6.moveBackground(speed=1.4 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        self.background1.moveBackground(speed=0.1 * self.backgroundSpeed,a=6,overlapBuffer=6)
+        self.background2.moveBackground(speed=0.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        self.background3.moveBackground(speed=0.6 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
-            if self.MountType is not 'turtle':
-                self.background7.moveBackground(speed=1.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
-                self.background8.moveBackground(speed=1.6 * self.backgroundSpeed, a=6, overlapBuffer=6)
-                self.background9.moveBackground(speed=3 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Bear/Night/":
-                self.background10.moveBackground(speed=4 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            if self.folder == "Resources/Horse/Night/":
-                self.background11.moveBackground(speed=4 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        if self.MountType is 'turtle': # Let this layer move faster, because it is the foreground layer.
+            self.background4.moveBackground(speed=2 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background5.moveBackground(speed=3 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background6.moveBackground(speed=4 * self.backgroundSpeed, a=6, overlapBuffer=6)
         else:
-            self.background_far.moveBackground(speed=3 * self.backgroundSpeed,a=6,overlapBuffer=6)# Use 5 because otherwise there is a gap between the two images
-            self.background_middle.moveBackground(speed=3.5 * self.backgroundSpeed, a=6,overlapBuffer=0)
-            self.background_foreground.moveBackground(speed=4 * self.backgroundSpeed, a=1,overlapBuffer=100) # Use 100 because otherwise there is a gap between the two images
+            self.background4.moveBackground(speed=0.7 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background5.moveBackground(speed=1.2 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background6.moveBackground(speed=1.4 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
-        #print('bgX = ', int(self.bgX_foreground), ' bgX2 = ', int(self.bgX2_foreground))
+        if self.MountType is not 'turtle':
+            self.background7.moveBackground(speed=1.5 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background8.moveBackground(speed=1.6 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background9.moveBackground(speed=3 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Bear/Night/":
+            self.background10.moveBackground(speed=4 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        if self.folder == "Resources/Horse/Night/":
+            self.background11.moveBackground(speed=4 * self.backgroundSpeed, a=6, overlapBuffer=6)
+
+    #print('bgX = ', int(self.bgX_foreground), ' bgX2 = ', int(self.bgX2_foreground))
 
