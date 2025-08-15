@@ -11,6 +11,7 @@ class GameParameters():
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
 
+
         # ADJUSTABLE PARAMETERS
         # paradigm
         self.folder = 'Horse'

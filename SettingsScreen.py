@@ -28,14 +28,18 @@ class Settings_header(pygame.sprite.Sprite):
             ((self.SCREEN_HEIGHT * 0.15) - self.surf.get_height())
         )
 
+
 class MenuItem:  # For creating different parameters
     def __init__(self, text):
         self.text = text
-        self.location = (400,250)
-        self.y = 0
-        self.x = 0
+        self.location = 0
         self.font = pygame.font.SysFont('ariel', 26, bold=True, )
         self.surface = self.font.render(self.text, True, WHITE)
+        self.value = False
+
+    def toggle(self):
+        self.value = not self.value
+        print(self.value)
 
 
 class settingMain():
@@ -45,18 +49,23 @@ class settingMain():
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.font = pygame.font.SysFont('ariel', 35, bold=True, )
         self.settingsFont = pygame.font.SysFont('ariel', 26, bold=True, )
-        self.text_item = "↑/↓: Select   ←/→: Change   ENTER: Edit/Confirm   SPACE: Back"
-        self.instructions = self.settingsFont.render(self.text_item, True, WHITE)
-        self.location = (SCREEN_WIDTH / 3, SCREEN_HEIGHT / 4)
+        self.text_item = "up/down: Select   left/right: Change   ENTER: Edit/Confirm   SPACE: Back"
+        self.instructions = self.settingsFont.render(self.text_item, True, PINK)
+        self.location = (SCREEN_WIDTH / 3.7, SCREEN_HEIGHT / 4)
         self.gameParams = gameParams
+        self.selected_index = 0  # For which item is selected.
         self.items = []
+
+        # Add new menu items here.
         self.add_item(MenuItem("Number of trials: "))
-        self.starting_position_item_x = (self.SCREEN_WIDTH / 3)
-        self.starting_position_item_y = (self.SCREEN_HEIGHT/4)
+        self.add_item(MenuItem("Fullscreen"))
+        self.add_item(MenuItem("Task duration (s)"))
 
     def add_item(self, item: MenuItem):
         self.location = self.location
-
+        base_x = self.SCREEN_WIDTH / 3.5
+        base_y = self.SCREEN_HEIGHT / 3
+        offset_y = len(self.items) * 50  # 50 pixels between items
+        item.location = (base_x, base_y + offset_y)
         self.items.append(item)
         return item
-

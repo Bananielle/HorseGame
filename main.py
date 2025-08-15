@@ -275,32 +275,69 @@ if __name__ == '__main__':
 
     def runSettings():
         gamestate = GameState.SETTINGS
-        screen.fill([0, 0, 0])  # Set black background
-        # Create the settings screen class
+
+        # Create the settings screen class and header
         settingMain = SettingsScreen.settingMain(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
-
-        # Create and show Image of SETTINGS
         setting_header = Settings_header(SCREEN_WIDTH, SCREEN_HEIGHT)
-        screen.blit(setting_header.surf, setting_header.surf_center)
-
-        # Display setting items
-        screen.blit(settingMain.instructions, settingMain.location) # Instructions
 
         for item_to_be_displayed in settingMain.items:
             screen.blit(item_to_be_displayed.surface, item_to_be_displayed.location)
 
-        # Create TextInput-object
-        # textinput = pygame_textinput.TextInputVisualizer()
-        # screen.blit(textinput.surface, (10, 10))
+        running = True
+        while running:
+            for event in pygame.event.get():
 
-        for event in pygame.event.get():
-            if event.type == KEYDOWN:
-                # If space to start
-                if event.key == K_SPACE:
-                    # startscreen.kill()
-                    gamestate = GameState.setGameState(GameState.STARTSCREEN)
+                if event.type == KEYDOWN:
 
-            gamestate = didPlayerPressQuit(gamestate, event)
+                    if event.type == pygame.QUIT:
+                        return didPlayerPressQuit(gamestate, event)
+                        break
+
+                    # leave settings on SPACE
+                    if event.key == K_ESCAPE:
+                        # startscreen.kill()
+                        gamestate = GameState.setGameState(GameState.STARTSCREEN)
+                        running = False
+                        break
+                    # Navigating items
+                    if event.key in (pygame.K_UP, pygame.K_w):
+                        # Move selection UP by 1
+                        settingMain.selected_index = (settingMain.selected_index - 1) % len(settingMain.items) # Use modulo to get a circular menu
+                        print("Selected item ", settingMain.items[settingMain.selected_index].text)
+                    elif event.key in (pygame.K_DOWN, pygame.K_s):
+                        # Move selection DOWN by 1
+                        settingMain.selected_index = (settingMain.selected_index + 1) % len(settingMain.items)
+                        print("Selected item ", settingMain.items[settingMain.selected_index].text)
+                    elif event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+                        # Get the currently selected item from the list
+                        item = settingMain.items[settingMain.selected_index]
+                        # If that item is a ToggleItem (ON/OFF type)...
+                            # ...then switch it to the opposite value
+                        item.toggle()
+
+            # --- draw ---
+            screen.fill(BLACK)
+            screen.blit(setting_header.surf, setting_header.surf_center)
+            screen.blit(settingMain.instructions, settingMain.location)
+
+            # draw each item (label)
+            base_x = SCREEN_WIDTH / 3.5
+            base_y = SCREEN_HEIGHT / 3
+            spacing = max(settingMain.settingsFont.get_linesize(), 40)
+
+            for i, item in enumerate(settingMain.items):
+                y = base_y + i * spacing
+
+                # selected highlight
+                if i == settingMain.selected_index:
+                    pygame.draw.rect(
+                        screen, (PINK),
+                        pygame.Rect(item.location[0]-6, item.location[1]-10, SCREEN_WIDTH * 0.45, 36), border_radius=8)
+                # Show item
+                screen.blit(item.surface, (item.location))
+
+            pygame.display.flip()
+            clock.tick(gp.FPS)
 
         return gamestate
 
