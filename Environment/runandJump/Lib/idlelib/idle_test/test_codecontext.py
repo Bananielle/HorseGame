@@ -150,13 +150,13 @@ class CodeContextTest(unittest.TestCase):
         eq(cc.context['fg'], self.highlight_cfg['foreground'])
         eq(cc.context['bg'], self.highlight_cfg['background'])
         eq(cc.context.get('1.0', 'end-1c'), '')
-        eq(cc.editwin.label, 'Hide Code Context')
+        eq(cc.editwin.text, 'Hide Code Context')
         eq(self.root.tk.call('after', 'info', self.cc.t1)[1], 'timer')
 
         # Toggle off.
         toggle()
         self.assertIsNone(cc.context)
-        eq(cc.editwin.label, 'Show Code Context')
+        eq(cc.editwin.text, 'Show Code Context')
         self.assertIsNone(self.cc.t1)
 
         # Scroll down and toggle back on.

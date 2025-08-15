@@ -11,7 +11,7 @@ from pygame.locals import (
 GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 RED = (255, 0, 0)
-
+WHITE = (255, 255, 255)
 
 
 class Settings_header(pygame.sprite.Sprite):
@@ -25,23 +25,38 @@ class Settings_header(pygame.sprite.Sprite):
 
         self.surf_center = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
-            ((self.SCREEN_HEIGHT * 0.3) - self.surf.get_height())
+            ((self.SCREEN_HEIGHT * 0.15) - self.surf.get_height())
         )
 
+class MenuItem:  # For creating different parameters
+    def __init__(self, text):
+        self.text = text
+        self.location = (400,250)
+        self.y = 0
+        self.x = 0
+        self.font = pygame.font.SysFont('ariel', 26, bold=True, )
+        self.surface = self.font.render(self.text, True, WHITE)
 
 
-class GametimeText():
-    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT,gameParams):
-        super(GametimeText, self).__init__()
+class settingMain():
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT, gameParams):
+        super(settingMain, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.font = pygame.font.SysFont('ariel', 35, bold=True, )
         self.settingsFont = pygame.font.SysFont('ariel', 26, bold=True, )
-        self.text_gameTime = "Game time (s): "
-        self.gameTimeSetting = self.settingsFont.render(self.text_gameTime, True, PINK)
-        self.location = (SCREEN_WIDTH/3, SCREEN_HEIGHT/2)
+        self.text_item = "↑/↓: Select   ←/→: Change   ENTER: Edit/Confirm   SPACE: Back"
+        self.instructions = self.settingsFont.render(self.text_item, True, WHITE)
+        self.location = (SCREEN_WIDTH / 3, SCREEN_HEIGHT / 4)
         self.gameParams = gameParams
+        self.items = []
+        self.add_item(MenuItem("Number of trials: "))
+        self.starting_position_item_x = (self.SCREEN_WIDTH / 3)
+        self.starting_position_item_y = (self.SCREEN_HEIGHT/4)
 
-        self.text_seconds = str(gameParams.currentTime_s)
-        self.gameTimeSetting_seconds = self.settingsFont.render(self.text_seconds, True, PINK)
-        self.location_seconds = ((SCREEN_WIDTH/2), SCREEN_HEIGHT/2)
+    def add_item(self, item: MenuItem):
+        self.location = self.location
+
+        self.items.append(item)
+        return item
+

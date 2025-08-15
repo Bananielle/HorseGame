@@ -258,6 +258,7 @@ if __name__ == '__main__':
                     timeofday = setTimeOfDay('Night')
                     soundSystem.menuSelection.play()
 
+
                 if event.key == K_l:
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.STARTNEWGAME)
@@ -275,13 +276,18 @@ if __name__ == '__main__':
     def runSettings():
         gamestate = GameState.SETTINGS
         screen.fill([0, 0, 0])  # Set black background
+        # Create the settings screen class
+        settingMain = SettingsScreen.settingMain(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
 
-        gameSetting = SettingsScreen.GametimeText(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
+        # Create and show Image of SETTINGS
+        setting_header = Settings_header(SCREEN_WIDTH, SCREEN_HEIGHT)
+        screen.blit(setting_header.surf, setting_header.surf_center)
 
-        settings_header = Settings_header(SCREEN_WIDTH, SCREEN_HEIGHT)
-        screen.blit(settings_header.surf, settings_header.surf_center)
-        screen.blit(gameSetting.gameTimeSetting, gameSetting.location)
-        screen.blit(gameSetting.gameTimeSetting_seconds, gameSetting.location_seconds)
+        # Display setting items
+        screen.blit(settingMain.instructions, settingMain.location) # Instructions
+
+        for item_to_be_displayed in settingMain.items:
+            screen.blit(item_to_be_displayed.surface, item_to_be_displayed.location)
 
         # Create TextInput-object
         # textinput = pygame_textinput.TextInputVisualizer()

@@ -221,7 +221,7 @@ class TreeNode:
             cylast = cy
             self.canvas.create_line(x+9, cy+7, cx, cy+7, fill="gray50")
             cy = child.draw(cx, cy)
-            if child.item._IsExpandable():
+            if child.instructions._IsExpandable():
                 if child.state == 'expanded':
                     iconname = "minusnode"
                     callback = child.collapse

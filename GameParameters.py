@@ -17,7 +17,7 @@ class GameParameters():
         self.protocol_file = {
             'duration_TASK_s': 6,
             'duration_REST_s': 6,
-            'totalNum_TRIALS': 10, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
+            'totalNum_TRIALS': 3, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
             'duration_BASELINE_s': 2, # Should be 25s for our experiment
             'task_start_times': {},
             'rest_start_times': {},

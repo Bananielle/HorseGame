@@ -656,7 +656,7 @@ class FragmentBuilder(ExpatBuilder):
         s = ""
         if doctype:
             for i in range(doctype.notations.length):
-                notation = doctype.notations.item(i)
+                notation = doctype.notations.instructions(i)
                 if s:
                     s = s + "\n  "
                 s = "%s<!NOTATION %s" % (s, notation.nodeName)
@@ -666,7 +666,7 @@ class FragmentBuilder(ExpatBuilder):
                 else:
                     s = '%s SYSTEM "%s">' % (s, notation.systemId)
             for i in range(doctype.entities.length):
-                entity = doctype.entities.item(i)
+                entity = doctype.entities.instructions(i)
                 if s:
                     s = s + "\n  "
                 s = "%s<!ENTITY %s" % (s, entity.nodeName)
