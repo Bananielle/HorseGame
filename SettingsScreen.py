@@ -37,14 +37,40 @@ class MenuItem:  # For creating different parameters
         self.surface = self.font.render(self.text, True, WHITE)
         self.value = value
 
+    def value_text(self):
+        """You can override this in subclasses; return a string or None if no value."""
+        return None
+
 class ToggleItem(MenuItem):
     def __init__(self, text, value=False):
-        super().__init__(text, value)
+        super().__init__(text, bool(value))
         self.value = bool(value)
 
     def toggle(self):
         self.value = not self.value
         print(self.value)
+
+    def value_text(self):
+        return "ON" if self.value else "OFF"
+
+class NumericalItem(MenuItem):
+    def __init__(self, text, value=0, minimum = None, maximum=None, step=1):
+        super().__init__(text, int(value))
+        self.value = int(value)
+        self.min = minimum
+        self.max = maximum
+        self.step = step
+
+    def increase(self):
+        self.value += self.step
+        print(self.value)
+
+    def decrease(self):
+        self.value -= self.step
+        print(self.value)
+
+    def value_text(self): # Return the numerical value as a string.
+        return str(self.value)
 
 
 class settingMain():
@@ -62,9 +88,9 @@ class settingMain():
         self.items = []
 
         # Add new menu items here.
-        self.add_item(MenuItem("Number of trials: ",5))
+        self.add_item(NumericalItem("Number of trials: ",5,1,100))
         self.add_item(ToggleItem("Fullscreen","OFF"))
-        self.add_item(MenuItem("Task duration (s)",5))
+        self.add_item(NumericalItem("Task duration (s)",5,1,3600))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

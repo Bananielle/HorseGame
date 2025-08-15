@@ -308,13 +308,15 @@ if __name__ == '__main__':
                         # Move selection DOWN by 1
                         settingMain.selected_index = (settingMain.selected_index + 1) % len(settingMain.items)
                         print("Selected item ", settingMain.items[settingMain.selected_index].text)
-                    elif event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+                    elif event.key in (pygame.K_LEFT,pygame.K_RIGHT):
                         # Get the currently selected item from the list
                         item = settingMain.items[settingMain.selected_index]
                         # If that item is a ToggleItem (ON/OFF type)...
-                            # ...then switch it to the opposite value
                         if isinstance(item, SettingsScreen.ToggleItem):
-                            item.toggle()
+                            item.toggle() # ...then switch it to the opposite value
+                        if isinstance(item, SettingsScreen.NumericalItem):
+                            item.decrease() if event.key == pygame.K_LEFT else item.increase()
+
 
             # --- draw ---
             screen.fill(BLACK)
@@ -334,8 +336,18 @@ if __name__ == '__main__':
                     pygame.draw.rect(
                         screen, (PINK),
                         pygame.Rect(item.location[0]-6, item.location[1]-10, SCREEN_WIDTH * 0.45, 36), border_radius=8)
-                # Show item
+
+                # Show item (left)
                 screen.blit(item.surface, (item.location))
+
+                # right-aligned value (if any)
+                val = item.value_text()
+                if val is not None:
+                    value_surface = item.font.render(val, True, WHITE)
+                    value_rect = value_surface.get_rect()
+                    value_rect.top = item.location[1]  # align vertically with label
+                    value_rect.right = item.location[0] - 10 + SCREEN_WIDTH *0.45  # inside the box, 10px padding
+                    screen.blit(value_surface, value_rect)
 
             pygame.display.flip()
             clock.tick(gp.FPS)
