@@ -277,7 +277,7 @@ if __name__ == '__main__':
         gamestate = GameState.SETTINGS
 
         # Create the settings screen class and header
-        settingMain = SettingsScreen.settingMain(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
+        settingMain = SettingsScreen.settingsMain(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
         setting_header = Settings_header(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         for item_to_be_displayed in settingMain.items:

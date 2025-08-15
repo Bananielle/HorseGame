@@ -30,32 +30,34 @@ class Settings_header(pygame.sprite.Sprite):
 
 
 class MenuItem:  # For creating different parameters
-    def __init__(self, text, value):
+    def __init__(self, text, value, gameParams=None):
         self.text = text
         self.location = 0
         self.font = pygame.font.SysFont('ariel', 26, bold=True, )
         self.surface = self.font.render(self.text, True, WHITE)
         self.value = value
+        self.gameParams = gameParams
 
     def value_text(self):
         """You can override this in subclasses; return a string or None if no value."""
         return None
 
 class ToggleItem(MenuItem):
-    def __init__(self, text, value=False):
+    def __init__(self, text, value, gameParams=None):
         super().__init__(text, bool(value))
         self.value = bool(value)
 
     def toggle(self):
         self.value = not self.value
         print(self.value)
+        # todo: need to direct boolean change to gameparameters here
 
     def value_text(self):
         return "ON" if self.value else "OFF"
 
 class NumericalItem(MenuItem):
-    def __init__(self, text, value=0, minimum = None, maximum=None, step=1):
-        super().__init__(text, int(value))
+    def __init__(self, text, value=0, minimum = None, maximum=None, step=1, gameParams=None):
+        super().__init__(text, int(value),gameParams=gameParams)
         self.value = int(value)
         self.min = minimum
         self.max = maximum
@@ -64,18 +66,20 @@ class NumericalItem(MenuItem):
     def increase(self):
         self.value += self.step
         print(self.value)
+        # todo: need to direct numerical change to gameparameters here
 
     def decrease(self):
         self.value -= self.step
         print(self.value)
+        #todo: need to direct numerical change to gameparameters here
 
     def value_text(self): # Return the numerical value as a string.
         return str(self.value)
 
 
-class settingMain():
+class settingsMain():
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT, gameParams):
-        super(settingMain, self).__init__()
+        super(settingsMain, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.font = pygame.font.SysFont('ariel', 35, bold=True, )
@@ -88,9 +92,9 @@ class settingMain():
         self.items = []
 
         # Add new menu items here.
-        self.add_item(NumericalItem("Number of trials: ",5,1,100))
-        self.add_item(ToggleItem("Fullscreen","OFF"))
-        self.add_item(NumericalItem("Task duration (s)",5,1,3600))
+        self.add_item(NumericalItem("Number of trials: ",5, 1,100,1, gameParams))
+        self.add_item(ToggleItem("Fullscreen","OFF",gameParams))
+        self.add_item(NumericalItem("Task duration (s)",5,1,3600,1,gameParams))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

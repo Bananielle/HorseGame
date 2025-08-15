@@ -1766,7 +1766,7 @@ class DebugRunner(DocTestRunner):
          >>> failure.test is test
          True
 
-         >>> failure.settingMain.want
+         >>> failure.settingsMain.want
          '42\n'
 
          >>> exc_info = failure.exc_info
@@ -1798,7 +1798,7 @@ class DebugRunner(DocTestRunner):
 
        As well as to the example:
 
-         >>> failure.settingMain.want
+         >>> failure.settingsMain.want
          '2\n'
 
        and the actual output:
@@ -2241,7 +2241,7 @@ class DocTestCase(unittest.TestCase):
              >>> failure.test is test
              True
 
-             >>> failure.settingMain.want
+             >>> failure.settingsMain.want
              '42\n'
 
              >>> exc_info = failure.exc_info
@@ -2271,7 +2271,7 @@ class DocTestCase(unittest.TestCase):
 
            As well as to the example:
 
-             >>> failure.settingMain.want
+             >>> failure.settingsMain.want
              '2\n'
 
            and the actual output:
