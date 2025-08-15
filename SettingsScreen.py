@@ -30,12 +30,17 @@ class Settings_header(pygame.sprite.Sprite):
 
 
 class MenuItem:  # For creating different parameters
-    def __init__(self, text):
+    def __init__(self, text, value):
         self.text = text
         self.location = 0
         self.font = pygame.font.SysFont('ariel', 26, bold=True, )
         self.surface = self.font.render(self.text, True, WHITE)
-        self.value = False
+        self.value = value
+
+class ToggleItem(MenuItem):
+    def __init__(self, text, value=False):
+        super().__init__(text, value)
+        self.value = bool(value)
 
     def toggle(self):
         self.value = not self.value
@@ -57,9 +62,9 @@ class settingMain():
         self.items = []
 
         # Add new menu items here.
-        self.add_item(MenuItem("Number of trials: "))
-        self.add_item(MenuItem("Fullscreen"))
-        self.add_item(MenuItem("Task duration (s)"))
+        self.add_item(MenuItem("Number of trials: ",5))
+        self.add_item(ToggleItem("Fullscreen","OFF"))
+        self.add_item(MenuItem("Task duration (s)",5))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

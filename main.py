@@ -71,7 +71,7 @@ from Scoreboard import Scoreboard
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
-from Pictures import PressSpace, Title, Settings, ReadyToJump, AnimalPicture, TimeOfDayPicture
+from Pictures import PressSpace, Title, Credits, ReadyToJump, AnimalPicture, TimeOfDayPicture
 from MainPlayer import MainPlayer
 
 # Press the green button in the gutter to run the script.
@@ -212,7 +212,7 @@ if __name__ == '__main__':
         mountPic = AnimalPicture(SCREEN_WIDTH, SCREEN_HEIGHT, currentMountType)
         timeofdayPic = TimeOfDayPicture(SCREEN_WIDTH, SCREEN_HEIGHT, timeofday)
         fishadventure_text = Title(SCREEN_WIDTH, SCREEN_HEIGHT)
-        credits = Settings(SCREEN_WIDTH, SCREEN_HEIGHT)
+        credits = Credits(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         string = "(Press L for localizer)"
         font = pygame.font.SysFont('ariel', 23, bold=False, )
@@ -222,7 +222,7 @@ if __name__ == '__main__':
         if not BCI.TSIconnectionFound:
             font = pygame.font.Font('freesansbold.ttf', 18)
             text = font.render('Turbo-Satori connection not found!', True, WHITE)
-            screen.blit(text, (SCREEN_WIDTH/2.5,10))
+            screen.blit(text, (SCREEN_WIDTH*0.37,10))
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
@@ -313,7 +313,8 @@ if __name__ == '__main__':
                         item = settingMain.items[settingMain.selected_index]
                         # If that item is a ToggleItem (ON/OFF type)...
                             # ...then switch it to the opposite value
-                        item.toggle()
+                        if isinstance(item, SettingsScreen.ToggleItem):
+                            item.toggle()
 
             # --- draw ---
             screen.fill(BLACK)

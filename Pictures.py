@@ -71,9 +71,9 @@ class Title(pygame.sprite.Sprite):
         )
 
 
-class Settings(pygame.sprite.Sprite):
+class Credits(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
-        super(Settings, self).__init__()
+        super(Credits, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.surf = pygame.image.load("Resources/credits.png").convert_alpha()
