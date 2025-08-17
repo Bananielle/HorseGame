@@ -52,6 +52,7 @@ import csv
 
 import pygame, random, os, sys
 from pylsl import StreamInfo, StreamOutlet
+import json
 
 #from pylsl import StreamInfo, StreamOutlet  # import required classes
 
@@ -151,7 +152,18 @@ if __name__ == '__main__':
         player = MainPlayer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem, mounttype)
         rider = Rider(player, SCREEN_WIDTH, SCREEN_HEIGHT, 0, soundSystem)
 
-        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT)
+        # Read gamesettings.json to get parameters
+        with open("GameSettings.json") as f:
+            settings = json.load(f)
+            number_of_trials = settings["num_trials"]
+            task_duration_s = settings["task_duration_s"]
+            rest_duration_s = settings["rest_duration_s"]
+            baseline_duration_s = settings["baseline_duration_s"]
+            debugging = settings["debugging"]
+
+        print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
+
+        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, debugging)
         gameParameters.generate_protocol()
         gameParameters.read_premade_protocol()
         gameParameters.gameType = gametype

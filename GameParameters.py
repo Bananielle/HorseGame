@@ -6,7 +6,7 @@ GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
 class GameParameters():
-    def __init__(self,player,rider,SCREEN_WIDTH,SCREEN_HEIGHT,):
+    def __init__(self,player,rider,SCREEN_WIDTH,SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, debugging):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -15,11 +15,13 @@ class GameParameters():
         # ADJUSTABLE PARAMETERS
         # paradigm
         self.folder = 'Horse'
+
+        self.duration_TASK_s = task_duration_s
+        self.duration_REST_s = rest_duration_s
+        self.totalNum_TRIALS = number_of_trials  # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
+        self.duration_BASELINE_s = baseline_duration_s # Should be 25s for our experiment
+
         self.protocol_file = {
-            'duration_TASK_s': 6,
-            'duration_REST_s': 6,
-            'totalNum_TRIALS': 3, # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
-            'duration_BASELINE_s': 2, # Should be 25s for our experiment
             'task_start_times': {},
             'rest_start_times': {},
             'jump_start_times': {},
@@ -59,7 +61,7 @@ class GameParameters():
         self.useGreyOverlay = False  # Overlays the screen with a grey overlay when a task starts
         self.usePath = False  # If true, then a path will appear during the task trial
         self.useProgressBar = True  # If true, then a loading bar will appear during the task trial
-        self.debuggingText = False  # If true, then debugging text will appear during the task trial
+        self.debuggingText = debugging  # If true, then debugging text will appear during the task trial
         self.draw_grid = False  # For debugging purposes
 
         self.gameType = ' ' # 'maingame' (NF) or 'localizer' (will be selected during start menu)
@@ -67,11 +69,10 @@ class GameParameters():
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
         self.hemodynamic_delay = 3
         self.timeUntilJump_s = self.hemodynamic_delay + 1 # todo: note that this should be dependent on when the data window task collection ends
-        self.duration_TASK_s = self.protocol_file['duration_TASK_s']
-        self.duration_REST_s = self.protocol_file['duration_REST_s']
-        self.totalNum_TRIALS = self.protocol_file['totalNum_TRIALS']
-        self.duration_BASELINE_s = self.protocol_file['duration_BASELINE_s']
-        self.durationGame_s = (self.protocol_file['duration_TASK_s'] + self.protocol_file['duration_REST_s'] ) * (self.protocol_file['totalNum_TRIALS']+1) + self.protocol_file['duration_BASELINE_s'] #How long you want to one game run to last (in seconds)
+
+
+
+        self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s) * (self.totalNum_TRIALS+1) + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
         # Other
         self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s+ self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
@@ -184,6 +185,7 @@ class GameParameters():
         self.timeForRestEvent = False
         self.timeForJumpEvent = False
         self.horseHasJumpedThisTrial = False
+
 
     def set_achieved_NF_level(self, achieved_NF_level):
         self.achievedNFlevel = achieved_NF_level
@@ -312,19 +314,19 @@ class GameParameters():
 
 
     def generate_protocol(self):
-        task_duration = self.protocol_file['duration_TASK_s']
-        rest_duration_without_jitter = self.protocol_file['duration_REST_s']
-        baseline_duration = self.protocol_file['duration_BASELINE_s']
-        total_num_trials = self.protocol_file['totalNum_TRIALS']
+        task_duration = self.duration_TASK_s
+        rest_duration_without_jitter = self.duration_REST_s
+        baseline_duration = self.duration_BASELINE_s
+        total_num_trials = self.totalNum_TRIALS
 
-        min_rest_duration = rest_duration_without_jitter - self.protocol_file['jitter_s']
+        min_rest_duration = rest_duration_without_jitter - self.protocol_file['jitter_s'] #Todo also change this!
         max_rest_duration = rest_duration_without_jitter + self.protocol_file['jitter_s']
 
         task_start_times = {}
         rest_start_times = {}
         jump_start_times = {}
         previous_rest_start_time = baseline_duration + 0
-        jittered_rest_duration= 0
+        jittered_rest_duration = 0
 
         for trial_number in range(1, total_num_trials + 1):
 
@@ -374,9 +376,9 @@ class GameParameters():
         datawindow_rest_start_times = {}
         datawindow_rest_end_times = {}
 
-        task_duration = self.protocol_file['duration_TASK_s']
-        rest_duration = self.protocol_file['duration_REST_s']
-        total_num_trials = self.protocol_file['totalNum_TRIALS']
+        task_duration = self.duration_TASK_s
+        rest_duration = self.duration_REST_s
+        total_num_trials = self.totalNum_TRIALS
 
         for trial_number in range(1, total_num_trials+1):
             datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay

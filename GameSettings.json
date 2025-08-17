@@ -1,0 +1,8 @@
+{
+  "fullscreen": false,
+  "num_trials": 4,
+  "task_duration_s": 1,
+  "rest_duration_s": 1,
+  "baseline_duration_s": 1,
+  "debugging": true
+}
