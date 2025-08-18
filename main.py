@@ -162,10 +162,11 @@ if __name__ == '__main__':
             jitter_s = settings["jitter_s"]
             debugging = settings["debugging"]
             data_input_type = settings["data_input_type"]
+            neurofeedback_threshold = settings["neurofeedback_threshold"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
-        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, debugging)
+        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, neurofeedback_threshold, debugging)
         gameParameters.generate_protocol()
         gameParameters.read_premade_protocol()
         gameParameters.gameType = gametype
@@ -426,7 +427,7 @@ if __name__ == '__main__':
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
             gp.update_retrieved_signal_value_text()
-            gp.update_NF_target_value_text(BCI.NF_maxLevel_based_on_localizer)
+            gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
             gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
             #screen.blit(gp.horse_upper_position_text, (20, 60))

@@ -6,7 +6,7 @@ GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
 class GameParameters():
-    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, debugging):
+    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold, debugging):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -15,6 +15,8 @@ class GameParameters():
         # ADJUSTABLE PARAMETERS
         # paradigm
         self.folder = 'Horse'
+
+        self.neurofeedback_threshold = nf_threshold
 
         self.duration_TASK_s = task_duration_s
         self.duration_REST_s = rest_duration_s
@@ -134,7 +136,7 @@ class GameParameters():
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top), True, [0,0,0])
         self.signal_value_retrieved_text = self.debuggingFont.render("Beta value of current trial = 0" + str(self.player.rect.top), True, [0,0,0])
-        self.NF_target_value_text = self.debuggingFont.render("NF target value = 0" + str(self.player.rect.top), True, [0,0,0])
+        self.NF_target_value_text = self.debuggingFont.render("Neurofeedback threshold = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
 

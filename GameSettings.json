@@ -5,6 +5,7 @@
   "rest_duration_s": 6,
   "baseline_duration_s": 2,
   "jitter_s": 5,
+  "neurofeedback_threshold": 0.8999999999999999,
   "data_input_type": 1,
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
   "debugging": true

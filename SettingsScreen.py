@@ -94,6 +94,8 @@ class NumericalItem(MenuItem):
             self.change_settings_file("jitter_s", self.value)
         if self.text == "Data input type (0 = beta's, 1 = t-values):":
             self.change_settings_file("data_input_type", self.value)
+        if self.text == "Neurofeedback threshold:":
+            self.change_settings_file("neurofeedback_threshold", self.value)
 
     def decrease(self):
         self.value -= self.step
@@ -111,9 +113,15 @@ class NumericalItem(MenuItem):
             self.change_settings_file("jitter_s", self.value)
         if self.text == "Data input type (0 = beta's, 1 = t-values):":
             self.change_settings_file("data_input_type", self.value)
+            self.change_settings_file("jitter_s", self.value)
+        if self.text == "Neurofeedback threshold:":
+            self.change_settings_file("neurofeedback_threshold", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
-        return str(self.value)
+        # if step is fractional, show one decimal; otherwise integer
+        if isinstance(self.step, float) and not self.step.is_integer():
+            return f"{self.value:.1f}"
+        return str(int(self.value)) # Otherwise just return as an integer
 
 
 class settingsMain():
@@ -139,7 +147,9 @@ class settingsMain():
             baseline_duration_s = settings["baseline_duration_s"]
             jitter_s = settings ["jitter_s"]
             data_input_type = settings["data_input_type"]
+            neurofeedback_threshold = settings["neurofeedback_threshold"]
             debugging = settings["debugging"]
+
 
 
         # Add new menu items here.
@@ -149,6 +159,7 @@ class settingsMain():
         self.add_item(NumericalItem("Baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem("Jitter duration (seconds):", jitter_s, 0, 360, 1))
         self.add_item(NumericalItem("Data input type (0 = beta's, 1 = t-values):", data_input_type, 0, 1, 1))
+        self.add_item(NumericalItem("Neurofeedback threshold:", neurofeedback_threshold, 0, 10, 0.1))
         self.add_item(ToggleItem("Debugging:", debugging))
 
     def add_item(self, item: MenuItem):

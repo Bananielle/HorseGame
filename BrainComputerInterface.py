@@ -15,7 +15,7 @@ class BrainComputerInterface():
     def __init__(self,typeOfRun,gameParameters):
 
         # CHANGE NF THRESHOLD HERE. Use a value based on a localizer for good NF!
-        self.NF_maxLevel_based_on_localizer = 0.8  # # This is the max level for the NF signal that people can reach
+        self.NF_neurofeedack_threshold = gameParameters.neurofeedback_threshold  # # This is the max level for the NF signal that people can reach (neurofeedack threshold)
 
         # Options for what to use for NF caluclation.
         self.useMean = False # Use the mean amplitude for NF calculation
@@ -24,7 +24,7 @@ class BrainComputerInterface():
 
 
         self.NFsignal_mean = 1
-        self.NFsignal_max = self.NF_maxLevel_based_on_localizer/2 # Starter values
+        self.NFsignal_max = self.NF_neurofeedack_threshold / 2 # Starter values
         self.NFSignal_median =1
         self.NFSignal_latestValue = 1
         self.NFSignal_latestValue_t_value = 1
@@ -255,14 +255,14 @@ class BrainComputerInterface():
         signal_value_used = 0
 
         if self.useMean:
-            achieved_NF_signal = self.NFsignal_mean / self.NF_maxLevel_based_on_localizer
+            achieved_NF_signal = self.NFsignal_mean / self.NF_neurofeedack_threshold
             signal_value_retrieved =  self.NFsignal_mean
         if self.useMax:
-            achieved_NF_signal = self.NFsignal_max / self.NF_maxLevel_based_on_localizer
+            achieved_NF_signal = self.NFsignal_max / self.NF_neurofeedack_threshold
             signal_value_retrieved =  self.NFsignal_max
 
         if self.useLatestDataPoint: # takes the latest data point for each trial
-            achieved_NF_signal = self.NFSignal_latestValue / self.NF_maxLevel_based_on_localizer
+            achieved_NF_signal = self.NFSignal_latestValue / self.NF_neurofeedack_threshold
             signal_value_used = self.NFSignal_latestValue
         #print("achieved_NF_signal: " + str(achieved_NF_signal))
 
@@ -325,7 +325,7 @@ class BrainComputerInterface():
 
         # Save NF values to CSV files
         self.NFsignal["NF_MaxCalculatedThreshold_Q3_120"].append(NFSignal_Q3_120)
-        self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_maxLevel_based_on_localizer)
+        self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
         self.save_allChannelData_to_csv()
 
@@ -374,8 +374,8 @@ class BrainComputerInterface():
 
 
     def set_NF_max_threshold(self,NFsignal_max):
-        self.NF_maxLevel_based_on_localizer = NFsignal_max
-        print("NF_maxLevel set to: " + str(self.NF_maxLevel_based_on_localizer))
+        self.NF_neurofeedack_threshold = NFsignal_max
+        print("NF_maxLevel set to: " + str(self.NF_neurofeedack_threshold))
 
     def getCurrentOxyInput(self):
         input = 0
