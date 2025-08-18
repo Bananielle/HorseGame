@@ -79,8 +79,9 @@ class NumericalItem(MenuItem):
         self.step = step
 
     def increase(self):
-        self.value += self.step
-        print(self.value)
+        if self.value < self.max:
+            self.value += self.step
+            print(self.value)
 
         if self.text == "Number of trials:":
             self.change_settings_file("num_trials", self.value)
@@ -98,8 +99,9 @@ class NumericalItem(MenuItem):
             self.change_settings_file("neurofeedback_threshold", self.value)
 
     def decrease(self):
-        self.value -= self.step
-        print(self.value)
+        if self.value > self.min:
+            self.value -= self.step
+            print(self.value)
 
         if self.text == "Number of trials: ":
             self.change_settings_file("num_trials", self.value)
