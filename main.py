@@ -161,10 +161,11 @@ if __name__ == '__main__':
             baseline_duration_s = settings["baseline_duration_s"]
             jitter_s = settings["jitter_s"]
             debugging = settings["debugging"]
+            data_input_type = settings["data_input_type"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
-        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, debugging)
+        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, debugging)
         gameParameters.generate_protocol()
         gameParameters.read_premade_protocol()
         gameParameters.gameType = gametype
@@ -421,18 +422,20 @@ if __name__ == '__main__':
 
     def draw_debugging_text():
         if gp.debuggingText:
+            gp.display_exp_parameters()
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
-            gp.update_retrieved_sigal_value_text()
+            gp.update_retrieved_signal_value_text()
             gp.update_NF_target_value_text(BCI.NF_maxLevel_based_on_localizer)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
             gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
             #screen.blit(gp.horse_upper_position_text, (20, 60))
-            screen.blit(gp.NF_target_value_text, (20,60))
-            screen.blit(gp.achieved_jump_height_text, (20, 80))
-            screen.blit(gp.signal_value_retrieved_text, (20, 100))
-            screen.blit(gp.current_beta_value_text, (20,120))
-            screen.blit(gp.current_tvalue_text,(20,140))
+            screen.blit(gp.exp_parameters_text, (20, 60))
+            screen.blit(gp.NF_target_value_text, (20,80))
+            screen.blit(gp.achieved_jump_height_text, (20, 100))
+            screen.blit(gp.signal_value_retrieved_text, (20, 120))
+            screen.blit(gp.current_beta_value_text, (20,140))
+            screen.blit(gp.current_tvalue_text,(20,160))
 
 
     def updateTimeDataWindow_task():
@@ -749,9 +752,8 @@ if __name__ == '__main__':
             newPosition += 35
 
 
-    def get_current_jitter_duration():
+    def get_current_jitter_duration(): # todo: This could be coded less rickety...
         if gp.REST_counter >= len(gp.jittered_rest_list):
-            print("SDFKJSDKJFHSKDFJ")
             return gp.duration_REST_s
         else:
             current_jittered_rest_duration = gp.jittered_rest_list[gp.REST_counter] # -1 because the jitter list starts at index 0
@@ -1027,6 +1029,7 @@ if __name__ == '__main__':
     # Make a scoreboard (will remain throughout the game)
     scoreboard = Scoreboard(gp)
 
+    # Setup BCI interface
     BCI = BrainComputerInterface(gametype,gp)
     BCI.scaleOxyData()
     gp.setSamplingRate(BCI.getSamplingRate)

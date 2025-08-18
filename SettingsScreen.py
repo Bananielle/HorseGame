@@ -92,6 +92,8 @@ class NumericalItem(MenuItem):
             self.change_settings_file("baseline_duration_s", self.value)
         if self.text == "Jitter duration (seconds):":
             self.change_settings_file("jitter_s", self.value)
+        if self.text == "Data input type (0 = beta's, 1 = t-values):":
+            self.change_settings_file("data_input_type", self.value)
 
     def decrease(self):
         self.value -= self.step
@@ -107,6 +109,8 @@ class NumericalItem(MenuItem):
             self.change_settings_file("baseline_duration_s", self.value)
         if self.text == "Jitter duration (seconds):":
             self.change_settings_file("jitter_s", self.value)
+        if self.text == "Data input type (0 = beta's, 1 = t-values):":
+            self.change_settings_file("data_input_type", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
         return str(self.value)
@@ -134,6 +138,7 @@ class settingsMain():
             rest_duration_s = settings["rest_duration_s"]
             baseline_duration_s = settings["baseline_duration_s"]
             jitter_s = settings ["jitter_s"]
+            data_input_type = settings["data_input_type"]
             debugging = settings["debugging"]
 
 
@@ -143,6 +148,7 @@ class settingsMain():
         self.add_item(NumericalItem("Rest duration (seconds):", rest_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem("Baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem("Jitter duration (seconds):", jitter_s, 0, 360, 1))
+        self.add_item(NumericalItem("Data input type (0 = beta's, 1 = t-values):", data_input_type, 0, 1, 1))
         self.add_item(ToggleItem("Debugging:", debugging))
 
     def add_item(self, item: MenuItem):

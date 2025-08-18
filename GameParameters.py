@@ -6,7 +6,7 @@ GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
 class GameParameters():
-    def __init__(self,player,rider,SCREEN_WIDTH,SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s,debugging):
+    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, debugging):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -40,7 +40,7 @@ class GameParameters():
         self.runType = 'Localizer'
         self.runNr = '01'
 
-        self.dataType = 1 # 0 = beta's, 1 = t-values (used for neurofeedback input)
+        self.dataType = data_input_type # 0 = beta's, 1 = t-values (used for neurofeedback input)
 
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
@@ -202,6 +202,9 @@ class GameParameters():
     def startCountingCoins(self):
         self.coinsBeingCounted = True
 
+    def display_exp_parameters(self):
+        self.exp_parameters_text = self.debuggingFont.render("Task: " + str(self.duration_TASK_s) + "s, rest: "+ str(self.duration_REST_s) + "s, jitter: "+ str(self.jitter_s) + "s",
+                                                                   True, [0, 0, 0])
 
     def update_y_position_horse_text(self):
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top),
@@ -211,8 +214,8 @@ class GameParameters():
         self.achieved_jump_height_text = self.debuggingFont.render("Achieved NF level = " + str('{:.2f}'.format(self.achievedNFlevel)),
                                                                    True, [0, 0, 0])
 
-    def update_retrieved_sigal_value_text(self):
-        self.signal_value_retrieved_text = self.debuggingFont.render("Beta value of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
+    def update_retrieved_signal_value_text(self):
+        self.signal_value_retrieved_text = self.debuggingFont.render(("Beta " if self.dataType == 0 else "T-") +  "value of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
                                                                    True, [0, 0, 0])
 
     def update_NF_target_value_text(self,NF_maxLevel_based_on_localizer):
