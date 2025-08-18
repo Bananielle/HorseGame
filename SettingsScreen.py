@@ -90,6 +90,8 @@ class NumericalItem(MenuItem):
             self.change_settings_file("rest_duration_s", self.value)
         if self.text == "Baseline duration (seconds):":
             self.change_settings_file("baseline_duration_s", self.value)
+        if self.text == "Jitter duration (seconds):":
+            self.change_settings_file("jitter_s", self.value)
 
     def decrease(self):
         self.value -= self.step
@@ -103,6 +105,8 @@ class NumericalItem(MenuItem):
             self.change_settings_file("rest_duration_s", self.value)
         if self.text == "Baseline duration (seconds):":
             self.change_settings_file("baseline_duration_s", self.value)
+        if self.text == "Jitter duration (seconds):":
+            self.change_settings_file("jitter_s", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
         return str(self.value)
@@ -122,13 +126,24 @@ class settingsMain():
         self.selected_index = 0  # For which item is selected.
         self.items = []
 
+        # Read gamesettings.json to get parameters
+        with open("GameSettings.json") as f:
+            settings = json.load(f)
+            number_of_trials = settings["num_trials"]
+            task_duration_s = settings["task_duration_s"]
+            rest_duration_s = settings["rest_duration_s"]
+            baseline_duration_s = settings["baseline_duration_s"]
+            jitter_s = settings ["jitter_s"]
+            debugging = settings["debugging"]
+
+
         # Add new menu items here.
-        self.add_item(NumericalItem("Number of trials: ", 5, 1, 100, 1))
-        self.add_item(ToggleItem("Fullscreen:", "OFF",))
-        self.add_item(NumericalItem("Task duration (seconds):", 5, 1, 3600, 1))
-        self.add_item(NumericalItem("Rest duration (seconds):", 5, 1, 3600, 1))
-        self.add_item(NumericalItem("Baseline duration (seconds):", 5, 1, 3600, 1))
-        self.add_item(ToggleItem("Debugging:", False))
+        self.add_item(NumericalItem("Number of trials: ", number_of_trials, 1, 100, 1))
+        self.add_item(NumericalItem("Task duration (seconds):", task_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem("Rest duration (seconds):", rest_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem("Baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem("Jitter duration (seconds):", jitter_s, 0, 360, 1))
+        self.add_item(ToggleItem("Debugging:", debugging))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

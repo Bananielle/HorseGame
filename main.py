@@ -159,11 +159,12 @@ if __name__ == '__main__':
             task_duration_s = settings["task_duration_s"]
             rest_duration_s = settings["rest_duration_s"]
             baseline_duration_s = settings["baseline_duration_s"]
+            jitter_s = settings["jitter_s"]
             debugging = settings["debugging"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
-        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, debugging)
+        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, debugging)
         gameParameters.generate_protocol()
         gameParameters.read_premade_protocol()
         gameParameters.gameType = gametype
@@ -748,6 +749,16 @@ if __name__ == '__main__':
             newPosition += 35
 
 
+    def get_current_jitter_duration():
+        if gp.REST_counter >= len(gp.jittered_rest_list):
+            print("SDFKJSDKJFHSKDFJ")
+            return gp.duration_REST_s
+        else:
+            current_jittered_rest_duration = gp.jittered_rest_list[gp.REST_counter] # -1 because the jitter list starts at index 0
+            print("Progress bar. Rest number: " + str(gp.REST_counter) + ", jitter: " + str(current_jittered_rest_duration))
+
+            return current_jittered_rest_duration
+
     def runParadigm():
 
         if gp.currentTime_s >= gp.duration_BASELINE_s:
@@ -757,7 +768,8 @@ if __name__ == '__main__':
                 paradigmManager.initiateBasicTaskEvent()
                 current_time_point = BCI.getCurrentTimePoint_TSI()
                 PRT_writer.addTaskStartEvent(current_time_point)
-                progressBar.resetProgressBar()
+                current_jitter_duration = get_current_jitter_duration()
+                progressBar.resetProgressBar(current_jitter_duration)
                 deleteExistingCoins()
                 coinEvent()
                 paradigmManager.resetRestStartTime()
@@ -772,7 +784,9 @@ if __name__ == '__main__':
                     paradigmManager.resetDurationRest()
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
-                progressBar.resetProgressBar()
+
+                current_jitter_duration = get_current_jitter_duration()
+                progressBar.resetProgressBar(current_jitter_duration)
 
             # if gp.REST_counter == 1:
                 #    paradigmManager.resetJumpStartTime() # Do this the first time the rest event occurs
@@ -1039,6 +1053,8 @@ if __name__ == '__main__':
 
         if gamestate == GameState.STARTNEWGAME:
             gamestate, gp, mainGame_background,paradigmManager, BCI = startANewGame(mounttype,gametype,timeofday)
+            progressBar.set_fill_rate_rest() # Update progress bar duration based on latest in-game settings
+            progressBar.set_fill_rate_task(gp.duration_TASK_s)
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()

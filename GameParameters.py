@@ -6,7 +6,7 @@ GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
 class GameParameters():
-    def __init__(self,player,rider,SCREEN_WIDTH,SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, debugging):
+    def __init__(self,player,rider,SCREEN_WIDTH,SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s,debugging):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -20,6 +20,7 @@ class GameParameters():
         self.duration_REST_s = rest_duration_s
         self.totalNum_TRIALS = number_of_trials  # Set the number of times Task should occur #TODO For simulation mode: shouldn't be dependent on this for the game to finish!
         self.duration_BASELINE_s = baseline_duration_s # Should be 25s for our experiment
+        self.jitter_s = jitter_s
 
         self.protocol_file = {
             'task_start_times': {},
@@ -29,7 +30,7 @@ class GameParameters():
             'datawindow_task_end_times': {},
             'datawindow_rest_start_times': {},
             'datawindow_rest_end_times': {},
-            'jitter_s': 2
+
         }
 
         # Participant information (will be used to correctly name the protocol file for each run)
@@ -319,8 +320,8 @@ class GameParameters():
         baseline_duration = self.duration_BASELINE_s
         total_num_trials = self.totalNum_TRIALS
 
-        min_rest_duration = rest_duration_without_jitter - self.protocol_file['jitter_s'] #Todo also change this!
-        max_rest_duration = rest_duration_without_jitter + self.protocol_file['jitter_s']
+        min_rest_duration = rest_duration_without_jitter - self.jitter_s
+        max_rest_duration = rest_duration_without_jitter + self.jitter_s
 
         task_start_times = {}
         rest_start_times = {}

@@ -18,12 +18,14 @@ class ProgressBar(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect()
 
 
+
         # Set up the loading bar
         self.bar_width = 130
         self.bar_height = 15
         self.bar_fill = 0
         self.fill_rate_task = self.bar_width / ((gameParams.duration_TASK_s - 0) * gameParams.FPS)
         self.fill_rate_rest = self.bar_width / ((gameParams.duration_REST_s - 0 ) * gameParams.FPS) # -1 because the the rest bar otherwise does't fill up completely...
+        self.current_jittered_rest_duration = 1 # Will be updated each rest period to take the jitter into account
 
         # Put the center of surf at the left corner of the display
         #self.surf_center = (30,20)
@@ -33,8 +35,18 @@ class ProgressBar(pygame.sprite.Sprite):
         self.barfilling_x = self.bar_x + 7
         self.barfilling_y = self.bar_y  + 15
 
+    def set_fill_rate_task(self, duration_task_s):
+        self.fill_rate_task = self.bar_width / ((duration_task_s - 0) * self.gameParams.FPS)
+        print("Progress bar task duration: " + str(duration_task_s))
 
-    def resetProgressBar(self):
+    def set_fill_rate_rest(self):
+        self.fill_rate_rest = self.bar_width / ((self.current_jittered_rest_duration - 0) * self.gameParams.FPS)
+        print("Progress bar rest duration: " + str(self.current_jittered_rest_duration))
+
+    def resetProgressBar(self,current_jittered_rest_duration):
+        self.current_jittered_rest_duration = current_jittered_rest_duration
+        self.set_fill_rate_rest() # Set the jittered rest duration for the current rest period
+
         self.bar_fill = 0
 
     def fillProgressBar(self, task):
