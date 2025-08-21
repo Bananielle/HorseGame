@@ -167,8 +167,12 @@ if __name__ == '__main__':
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
         gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, neurofeedback_threshold, debugging)
+        if gameParameters.usePreMadeProtocol:
+            gameParameters.read_premade_protocol()
+            gameParameters.apply_parameters_premadeprotocol_to_settings()
+
+
         gameParameters.generate_protocol()
-        gameParameters.read_premade_protocol()
         gameParameters.gameType = gametype
         gameParameters.generate_dataCollection_protocol()
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
@@ -350,7 +354,7 @@ if __name__ == '__main__':
                 if i == settingMain.selected_index:
                     pygame.draw.rect(
                         screen, (PINK),
-                        pygame.Rect(item.location[0]-6, item.location[1]-10, SCREEN_WIDTH * 0.45, 36), border_radius=8)
+                        pygame.Rect(item.location[0]-6, item.location[1]-10, SCREEN_WIDTH * 0.45, 36))
 
                 # Show item (left)
                 screen.blit(item.surface, (item.location))

@@ -1,5 +1,6 @@
 import pygame
 import random
+import json
 # Colours
 
 GOLD = (255, 184, 28)
@@ -47,7 +48,7 @@ class GameParameters():
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         # To simulate or not simulate
-        self.usePreMadeProtocol = False # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.usePreMadeProtocol = True # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
         self.saveIncomingData= True
 
@@ -75,8 +76,8 @@ class GameParameters():
 
 
 
-        self.durationGame_s = (self.duration_TASK_s + self.duration_REST_s) * (self.totalNum_TRIALS+1) + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
-        # Other
+        self.durationGame_s = self.calculate_duration_game()
+
         self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s+ self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
         self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration
@@ -189,6 +190,10 @@ class GameParameters():
         self.timeForJumpEvent = False
         self.horseHasJumpedThisTrial = False
 
+    def calculate_duration_game(self):
+        duration_game_s = (self.duration_TASK_s + self.duration_REST_s) * (self.totalNum_TRIALS+1) + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
+        # Other
+        return duration_game_s
 
     def set_achieved_NF_level(self, achieved_NF_level):
         self.achievedNFlevel = achieved_NF_level
@@ -242,6 +247,30 @@ class GameParameters():
 
     def reset(self):
         self.all_sprites.empty()
+
+    def change_settings_file(self, parameter, value):
+        with open("GameSettings.json") as f:
+            settings = json.load(f)  # Open settings file (json)
+            # update and save back
+            settings[parameter] = value  # Change the paramater
+
+        with open("GameSettings.json", "w") as f:  # Save changes
+            json.dump(settings, f, indent=2)
+
+        print("Parameter " + parameter + " changed to: " + str(settings[parameter]))
+    def apply_parameters_premadeprotocol_to_settings(self):
+        self.change_settings_file("num_trials",self.totalNum_TRIALS)
+        self.change_settings_file(("task_duration_s"),self.duration_TASK_s)
+        self.change_settings_file("rest_duration_s",self.duration_REST_s)
+        self.change_settings_file("baseline_duration_s",self.duration_BASELINE_s)
+        self.change_settings_file(("jitter_s"),self.jitter_s)
+
+        self.durationGame_s = self.calculate_duration_game() # Recalculate this with the updated parameters
+
+        #todo  Also got to adapt to jitter? or just always set to 0?
+
+
+
 
     def read_premade_protocol(self):
         print("READING PREMADE PROTOCOL FILE. ===========")
