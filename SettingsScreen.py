@@ -97,6 +97,10 @@ class NumericalItem(MenuItem):
             self.change_settings_file("data_input_type", self.value)
         if self.text == "Neurofeedback threshold:":
             self.change_settings_file("neurofeedback_threshold", self.value)
+        if self.text == "Duration datawindow after task ends (seconds):":
+            self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
+        if self.text == "Duration datawindow before task ends (seconds):":
+            self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
 
     def decrease(self):
         if self.value > self.min:
@@ -118,6 +122,10 @@ class NumericalItem(MenuItem):
             self.change_settings_file("jitter_s", self.value)
         if self.text == "Neurofeedback threshold:":
             self.change_settings_file("neurofeedback_threshold", self.value)
+        if self.text == "Duration datawindow after task ends (seconds):":
+            self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
+        if self.text == "Duration datawindow before task ends (seconds):":
+            self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
         # if step is fractional, show one decimal; otherwise integer
@@ -151,6 +159,8 @@ class settingsMain():
             data_input_type = settings["data_input_type"]
             neurofeedback_threshold = settings["neurofeedback_threshold"]
             debugging = settings["debugging"]
+            datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
+            datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
 
 
 
@@ -163,6 +173,8 @@ class settingsMain():
         self.add_item(NumericalItem("Data input type (0 = beta's, 1 = t-values):", data_input_type, 0, 1, 1))
         self.add_item(NumericalItem("Neurofeedback threshold:", neurofeedback_threshold, 0, 10, 0.1))
         self.add_item(ToggleItem("Debugging:", debugging))
+        self.add_item(NumericalItem("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
+        self.add_item(NumericalItem("Duration datawindow before task ends (seconds):", datawindow_duration_before_task_end_s, 0,60, 1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

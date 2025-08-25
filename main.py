@@ -163,10 +163,13 @@ if __name__ == '__main__':
             debugging = settings["debugging"]
             data_input_type = settings["data_input_type"]
             neurofeedback_threshold = settings["neurofeedback_threshold"]
+            datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
+            datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
-        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, neurofeedback_threshold, debugging)
+        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, neurofeedback_threshold,
+                                        datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, debugging)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
@@ -434,6 +437,7 @@ if __name__ == '__main__':
             gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
             gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
+            gp.update_data_window_info(BCI.collectTimewindowData) # True of False
             #screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20,80))
@@ -441,6 +445,7 @@ if __name__ == '__main__':
             screen.blit(gp.signal_value_retrieved_text, (20, 120))
             screen.blit(gp.current_beta_value_text, (20,140))
             screen.blit(gp.current_tvalue_text,(20,160))
+            screen.blit(gp.data_window_info_text, (20, 180))
 
 
     def updateTimeDataWindow_task():

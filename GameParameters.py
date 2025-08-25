@@ -7,7 +7,8 @@ GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
 class GameParameters():
-    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold, debugging):
+    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold,
+                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, debugging):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -48,7 +49,7 @@ class GameParameters():
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         # To simulate or not simulate
-        self.usePreMadeProtocol = True # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.usePreMadeProtocol = False # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
         self.saveIncomingData= True
 
@@ -71,16 +72,19 @@ class GameParameters():
         self.gameType = ' ' # 'maingame' (NF) or 'localizer' (will be selected during start menu)
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
-        self.hemodynamic_delay = 3
-        self.timeUntilJump_s = self.hemodynamic_delay + 1 # todo: note that this should be dependent on when the data window task collection ends
+        self.hemodynamic_delay = datawindow_duration_after_task_end_s # todo: this is basically datawindow_duration_after_task_end_s
+        self.timeUntilJump_s = self.hemodynamic_delay  # todo: note that this should be dependent on when the data window task collection ends (and don't add + 1?)
 
 
 
         self.durationGame_s = self.calculate_duration_game()
 
-        self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s+ self.hemodynamic_delay # for first trial - Add 3 seconds to account for the hemodynamic delay?
+        self. datawindow_duration_before_task_end_s = datawindow_duration_before_task_end_s
+        self. datawindow_duration_after_task_end_s = datawindow_duration_after_task_end_s
+
+        self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s + (self.duration_TASK_s - self.datawindow_duration_before_task_end_s) # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
-        self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration
+        self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration + datawindow_duration_after_task_end_s
 
         self.datawindow_rest_start_time = self.duration_BASELINE_s   # No hemodynamic delay!
         self.datawindow_rest_duration = self.duration_REST_s
@@ -140,6 +144,7 @@ class GameParameters():
         self.NF_target_value_text = self.debuggingFont.render("Neurofeedback threshold = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
+        self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
 
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
@@ -234,6 +239,10 @@ class GameParameters():
     def update_current_t_value_text(self,t_value):
 
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = " + str('{:.2f}'.format(t_value)),
+                                                                   True, [0, 0, 0])
+
+    def update_data_window_info(self,collectTimewindowData):
+        self.data_window_info_text= self.debuggingFont.render(("Collecting data! " if collectTimewindowData else "Not collecting data."),
                                                                    True, [0, 0, 0])
 
 
@@ -416,7 +425,7 @@ class GameParameters():
         total_num_trials = self.totalNum_TRIALS
 
         for trial_number in range(1, total_num_trials+1):
-            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.hemodynamic_delay
+            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + (task_duration - self.datawindow_duration_before_task_end_s)
             datawindow_task_end_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + task_duration + self.hemodynamic_delay
 
             #datawindow_rest_end_times[trial_number] = (self.protocol_file['task_start_times'][trial_number]) - 1

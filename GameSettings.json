@@ -1,12 +1,14 @@
 {
   "fullscreen": false,
-  "num_trials": 10,
-  "task_duration_s": 6,
+  "num_trials": 4,
+  "task_duration_s": 2,
   "rest_duration_s": 15,
   "baseline_duration_s": 2,
   "jitter_s": 0,
   "neurofeedback_threshold": 0.7,
   "data_input_type": 0,
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
-  "debugging": true
+  "debugging": true,
+  "datawindow_duration_after_task_end_s": 10,
+  "datawindow_duration_before_task_end_s": 2
 }
