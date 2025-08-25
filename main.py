@@ -348,10 +348,9 @@ if __name__ == '__main__':
             # draw each item (label)
             base_x = SCREEN_WIDTH / 3.5
             base_y = SCREEN_HEIGHT / 3
-            spacing = max(settingMain.settingsFont.get_linesize(), 40)
 
+            # Draw all settings items, their value, and the highlight bar
             for i, item in enumerate(settingMain.items):
-                y = base_y + i * spacing
 
                 # selected highlight
                 if i == settingMain.selected_index:

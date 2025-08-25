@@ -180,7 +180,7 @@ class settingsMain():
         self.location = self.location
         base_x = self.SCREEN_WIDTH / 3.5
         base_y = self.SCREEN_HEIGHT / 3
-        offset_y = len(self.items) * 50  # 50 pixels between items
+        offset_y = len(self.items) * 34  # 50 pixels between items
         item.location = (base_x, base_y + offset_y)
         self.items.append(item)
         return item
