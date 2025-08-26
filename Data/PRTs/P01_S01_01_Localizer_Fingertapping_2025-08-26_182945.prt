@@ -1,0 +1,22 @@
+FileVersion: 2
+
+ResolutionOfTime: Volumes
+
+Experiment: BCI_4_kids
+
+BackgroundColor: 0 0 0
+TextColor: 255 255 255
+TimeCourseColor: 255 255 30
+TimeCourseThick: 2
+ReferenceFuncColor: 30 200 30
+ReferenceFuncThick: 2
+
+NrOfConditions: 1
+
+Condition1
+10
+   16   22
+   15   21
+   35   41
+   55   61
+Color: 255 0 0

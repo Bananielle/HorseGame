@@ -1,0 +1,5 @@
+Trials,NFsignal_mean_TASK,NFsignal_max_TASK,NFsignal_median_TASK,NFsignal_latestValue_TASK,NFsignal_latestValue_TASK_t_value,NFsignal_latestValue_TASK_beta,NF_MaxThresholdUsed,NF_MaxCalculatedThreshold_Q3_120,AchievedNFLevel,MaxJumpHeightAchieved,CoinsCollected
+1,0.0,0,0.0,0,0,0,0.5,0.0,0.0,288,3
+2,0.0,0,0.0,0,0,0,,,0.0,288,3
+3,0.0,0,0.0,0,0,0,,,0.0,288,3
+Mean,,,,,,,,,,,
