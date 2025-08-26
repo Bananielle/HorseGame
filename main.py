@@ -434,7 +434,6 @@ if __name__ == '__main__':
             gp.display_exp_parameters()
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
-            gp.update_coins_that_should_be_collected(gp.nrCoinsPerTrial[gp.TASK_counter - 1]) # To check whether the animals visually actually collects the nr of coins that it should based on the achieved NF level
             gp.update_retrieved_signal_value_text()
             gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
@@ -443,12 +442,11 @@ if __name__ == '__main__':
             #screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20,80))
-            screen.blit(gp.achieved_jump_height_text, (20, 100))
-            screen.blit(gp.coins_that_should_be_collected_text, (20,120))
-            screen.blit(gp.signal_value_retrieved_text, (20, 140))
-            screen.blit(gp.current_beta_value_text, (20,160))
-            screen.blit(gp.current_tvalue_text,(20,180))
-            screen.blit(gp.data_window_info_text, (20, 200))
+            screen.blit(gp.signal_value_retrieved_text, (20, 100))
+            screen.blit(gp.achieved_jump_height_text, (20, 120))
+            screen.blit(gp.current_beta_value_text, (20,140))
+            screen.blit(gp.current_tvalue_text,(20,160))
+            screen.blit(gp.data_window_info_text, (20, 180))
 
 
     def updateTimeDataWindow_task():

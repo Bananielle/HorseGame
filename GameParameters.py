@@ -49,7 +49,7 @@ class GameParameters():
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         # To simulate or not simulate
-        self.usePreMadeProtocol = True # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.usePreMadeProtocol = False # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
         self.saveIncomingData= True
 
@@ -145,7 +145,6 @@ class GameParameters():
         self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
         self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
-        self.coins_that_should_be_collected_text = self.debuggingFont.render("Coins reached = 0" + str(self.player.rect.top), True, [0,0,0])
 
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
@@ -243,14 +242,9 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_data_window_info(self,collectTimewindowData):
-        self.data_window_info_text= self.debuggingFont.render(("Collecting data! " if collectTimewindowData else "Not collecting data."),
+        self.data_window_info_text= self.debuggingFont.render(("Collecting NF data! " if collectTimewindowData else " "),
                                                                    True, [0, 0, 0])
 
-
-    # To check whether the animals visually actually collects the nr of coins that it should based on the achieved NF level
-    def update_coins_that_should_be_collected(self, coins_that_should_be_collected):
-        self.coins_that_should_be_collected_text= self.debuggingFont.render(("Nr of coins that should be collected: " + str(coins_that_should_be_collected)),
-                                                                   True, [0, 0, 0])
 
 
 
