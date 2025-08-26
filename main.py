@@ -434,7 +434,7 @@ if __name__ == '__main__':
             gp.display_exp_parameters()
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
-            gp.update_coins_that_should_be_collected(gp.coinsCollectedInCurrentTrial) # To check whether the animals visually actually collects the nr of coins that it should based on the achieved NF level
+            gp.update_coins_that_should_be_collected(gp.nrCoinsPerTrial[gp.TASK_counter - 1]) # To check whether the animals visually actually collects the nr of coins that it should based on the achieved NF level
             gp.update_retrieved_signal_value_text()
             gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
@@ -632,6 +632,20 @@ if __name__ == '__main__':
         draw_game_time_text()
         draw_debugging_text()
 
+    def checkForLeftoverCoins():
+        for coin in gp.coin:
+            if coin.rank <= gp.coins_that_should_be_collected: # only kill the coins that should be collected (based on achieved NF level)
+                coin.kill()
+                coinCollectionAdmin()
+
+                print("COLLECTED A LEFTOVER COIN.")
+
+    def coinCollectionAdmin():
+        soundSystem.coinCollected.play()
+
+        gp.nrCoinsCollectedThroughoutRun += 1
+        gp.coinsCollectedInCurrentTrial += 1
+        gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
 
     def checkForCoinCollision():
         #if gp.player.HorseIsJumpingDown:
@@ -640,18 +654,19 @@ if __name__ == '__main__':
             if coin.rect.colliderect(gp.player.rect):  # If the player collides with the coin, it is collected.
                 if coin.rank <= gp.coins_that_should_be_collected: # only kill the coins that should be collected (based on achieved NF level)
                     coin.kill()
-                    soundSystem.coinCollected.play()
 
-                    gp.nrCoinsCollectedThroughoutRun += 1
-                    gp.coinsCollectedInCurrentTrial += 1
-                    gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
+                    coinCollectionAdmin()
 
                     if gp.coins_that_should_be_collected == gp.totalNumCoins:
                         print("T=", gp.currentTime_s, ": Highest coin collected! Killing all coins.")
                         soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
                         killAllCoins()
                         break
-                    # Show the player how many coins have been collected
+
+                else: # If horse collided with all coins that should be collectd based on achieved NF level, check for leftover coins that horse did not collide with
+                    checkForLeftoverCoins() # Check if there are any leftover coins that visuallly still need to be collected (because of how coin collision works it sometimes misses a few that didn't collide with horse)
+
+            # Show the player how many coins have been collected
             text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
             gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
