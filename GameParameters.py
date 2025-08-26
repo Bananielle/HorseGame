@@ -18,7 +18,7 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
 
-        self.neurofeedback_threshold = nf_threshold
+        self.neurofeedback_threshold = float(nf_threshold)
 
         self.duration_TASK_s = task_duration_s
         self.duration_REST_s = rest_duration_s
@@ -145,6 +145,7 @@ class GameParameters():
         self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
         self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
+        self.coins_that_should_be_collected_text = self.debuggingFont.render("Coins reached = 0" + str(self.player.rect.top), True, [0,0,0])
 
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
@@ -244,6 +245,13 @@ class GameParameters():
     def update_data_window_info(self,collectTimewindowData):
         self.data_window_info_text= self.debuggingFont.render(("Collecting data! " if collectTimewindowData else "Not collecting data."),
                                                                    True, [0, 0, 0])
+
+
+    # To check whether the animals visually actually collects the nr of coins that it should based on the achieved NF level
+    def update_coins_that_should_be_collected(self, coins_that_should_be_collected):
+        self.coins_that_should_be_collected_text= self.debuggingFont.render(("Nr of coins that should be collected: " + str(coins_that_should_be_collected)),
+                                                                   True, [0, 0, 0])
+
 
 
     def update_Taskcounter(self):

@@ -102,6 +102,8 @@ if __name__ == '__main__':
     # Saves the output from the console to a logfile.
     allowLogSaving = False
 
+    neurofeedback_threshold = float(1.0)
+
     if allowLogSaving:
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
         log_file_path = f"Data/PyCharm Logs/logfile_{current_date}.txt"  # Specify the file path where you want to save the log
@@ -162,7 +164,7 @@ if __name__ == '__main__':
             jitter_s = settings["jitter_s"]
             debugging = settings["debugging"]
             data_input_type = settings["data_input_type"]
-            neurofeedback_threshold = settings["neurofeedback_threshold"]
+            neurofeedback_threshold = float(settings["neurofeedback_threshold"])
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
 
@@ -336,7 +338,7 @@ if __name__ == '__main__':
                         # If that item is a ToggleItem (ON/OFF type)...
                         if isinstance(item, SettingsScreen.ToggleItem):
                             item.toggle() # ...then switch it to the opposite value
-                        if isinstance(item, SettingsScreen.NumericalItem):
+                        if isinstance(item, SettingsScreen.NumericalItem_int) or isinstance(item, SettingsScreen.NumericalItem_float):
                             item.decrease() if event.key == pygame.K_LEFT else item.increase()
 
 
@@ -432,6 +434,7 @@ if __name__ == '__main__':
             gp.display_exp_parameters()
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
+            gp.update_coins_that_should_be_collected(gp.coinsCollectedInCurrentTrial) # To check whether the animals visually actually collects the nr of coins that it should based on the achieved NF level
             gp.update_retrieved_signal_value_text()
             gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
@@ -441,10 +444,11 @@ if __name__ == '__main__':
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20,80))
             screen.blit(gp.achieved_jump_height_text, (20, 100))
-            screen.blit(gp.signal_value_retrieved_text, (20, 120))
-            screen.blit(gp.current_beta_value_text, (20,140))
-            screen.blit(gp.current_tvalue_text,(20,160))
-            screen.blit(gp.data_window_info_text, (20, 180))
+            screen.blit(gp.coins_that_should_be_collected_text, (20,120))
+            screen.blit(gp.signal_value_retrieved_text, (20, 140))
+            screen.blit(gp.current_beta_value_text, (20,160))
+            screen.blit(gp.current_tvalue_text,(20,180))
+            screen.blit(gp.data_window_info_text, (20, 200))
 
 
     def updateTimeDataWindow_task():

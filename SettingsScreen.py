@@ -46,6 +46,9 @@ class MenuItem:  # For creating different parameters
         with open("GameSettings.json") as f:
             settings = json.load(f)  # Open settings file (json)
             # update and save back
+            if parameter == "neurofeedback_threshold":
+                value = round(value,2) #Make sure it's a float rounded down to 1 decimal after the comma
+
             settings[parameter] = value  # Change the paramater
 
         with open("GameSettings.json", "w") as f:  # Save changes
@@ -70,7 +73,7 @@ class ToggleItem(MenuItem):
         return "ON" if self.value else "OFF"
 
 
-class NumericalItem(MenuItem):
+class NumericalItem_int(MenuItem):
     def __init__(self, text, value=0, minimum=None, maximum=None, step=1):
         super().__init__(text, int(value))
         self.value = int(value)
@@ -119,7 +122,6 @@ class NumericalItem(MenuItem):
             self.change_settings_file("jitter_s", self.value)
         if self.text == "Data input type (0 = beta's, 1 = t-values):":
             self.change_settings_file("data_input_type", self.value)
-            self.change_settings_file("jitter_s", self.value)
         if self.text == "Neurofeedback threshold:":
             self.change_settings_file("neurofeedback_threshold", self.value)
         if self.text == "Duration datawindow after task ends (seconds):":
@@ -130,8 +132,39 @@ class NumericalItem(MenuItem):
     def value_text(self):  # Return the numerical value as a string.
         # if step is fractional, show one decimal; otherwise integer
         if isinstance(self.step, float) and not self.step.is_integer():
-            return f"{self.value:.1f}"
+            print("Neurofeedback threshold 2: " + str(self.value))
+            return f"{self.value:1f}"
         return str(int(self.value)) # Otherwise just return as an integer
+
+class NumericalItem_float(MenuItem):
+    def __init__(self, text, value=0, minimum=None, maximum=None, step=1):
+        super().__init__(text, float(value))
+        self.value = float(value)
+        self.min = minimum
+        self.max = maximum
+        self.step = step
+
+    def increase(self):
+        if self.value < self.max:
+            self.value += self.step
+            print(self.value)
+
+        if self.text == "Neurofeedback threshold:":
+            self.change_settings_file("neurofeedback_threshold", self.value)
+
+
+    def decrease(self):
+        if self.value > self.min:
+            self.value -= self.step
+            print(self.value)
+
+        if self.text == "Neurofeedback threshold:":
+            self.change_settings_file("neurofeedback_threshold", self.value)
+
+    def value_text(self):  # Return the numerical value as a string.
+        # if step is fractional, show one decimal;
+        return str(round(self.value,2)) #
+
 
 
 class settingsMain():
@@ -165,16 +198,17 @@ class settingsMain():
 
 
         # Add new menu items here.
-        self.add_item(NumericalItem("Number of trials: ", number_of_trials, 1, 100, 1))
-        self.add_item(NumericalItem("Task duration (seconds):", task_duration_s, 1, 3600, 1))
-        self.add_item(NumericalItem("Rest duration (seconds):", rest_duration_s, 1, 3600, 1))
-        self.add_item(NumericalItem("Baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))
-        self.add_item(NumericalItem("Jitter duration (seconds):", jitter_s, 0, 360, 1))
-        self.add_item(NumericalItem("Data input type (0 = beta's, 1 = t-values):", data_input_type, 0, 1, 1))
-        self.add_item(NumericalItem("Neurofeedback threshold:", neurofeedback_threshold, 0, 10, 0.1))
+        self.add_item(NumericalItem_int("Number of trials: ", number_of_trials, 1, 100, 1))
+        self.add_item(NumericalItem_int("Task duration (seconds):", task_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem_int("Rest duration (seconds):", rest_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem_int("Baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem_int("Jitter duration (seconds):", jitter_s, 0, 360, 1))
+        self.add_item(NumericalItem_int("Data input type (0 = beta's, 1 = t-values):", data_input_type, 0, 1, 1))
+        self.add_item(NumericalItem_float("Neurofeedback threshold:", neurofeedback_threshold, 0, 10, 0.1))
+        print("Neurofeedback threshold = " + str(neurofeedback_threshold))
+        self.add_item(NumericalItem_int("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
+        self.add_item(NumericalItem_int("Duration datawindow before task ends (seconds):", datawindow_duration_before_task_end_s, 0, 60, 1))
         self.add_item(ToggleItem("Debugging:", debugging))
-        self.add_item(NumericalItem("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
-        self.add_item(NumericalItem("Duration datawindow before task ends (seconds):", datawindow_duration_before_task_end_s, 0,60, 1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location
