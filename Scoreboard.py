@@ -9,6 +9,9 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 GREY = (128, 128, 128)
 
+ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"
+ARIAL_BOLD_FONT_PATH = "Resources/fonts/Arial Bold.ttf"
+HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"
 
 class Scoreboard():
     def __init__(self, gameParameters):
@@ -17,7 +20,7 @@ class Scoreboard():
         self.runList = []
         self.task_coins_dictionary = {}
         self.runNr = 1
-        self.font = pygame.font.SysFont('herculanum', 35, bold=True, )
+        self.font =  pygame.font.Font(HERC_FONT_PATH, 35)
         self.coinsPerTrialPerRuns = []
         self.gp = gameParameters
         self.sortedScores = []
