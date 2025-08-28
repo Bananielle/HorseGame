@@ -12,7 +12,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold,
-                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, debugging):
+                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -53,7 +53,7 @@ class GameParameters():
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
         # To simulate or not simulate
-        self.usePreMadeProtocol = False # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.usePreMadeProtocol = simulation_mode # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
         self.saveIncomingData= True
 

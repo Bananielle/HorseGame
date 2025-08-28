@@ -71,6 +71,8 @@ class ToggleItem(MenuItem):
         self.value = not self.value
         print(self.value)
 
+        if self.text == "Simulation mode:":
+            self.change_settings_file("simulation_mode", self.value)
         if self.text == "Debugging:":
             self.change_settings_file("debugging", self.value)
 
@@ -196,6 +198,7 @@ class settingsMain():
             jitter_s = settings ["jitter_s"]
             data_input_type = settings["data_input_type"]
             neurofeedback_threshold = settings["neurofeedback_threshold"]
+            simulation_mode = settings["simulation_mode"]
             debugging = settings["debugging"]
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
@@ -214,6 +217,7 @@ class settingsMain():
         self.add_item(NumericalItem_int("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
         self.add_item(NumericalItem_int("Duration datawindow before task ends (seconds):", datawindow_duration_before_task_end_s, 0, 60, 1))
         self.add_item(ToggleItem("Debugging:", debugging))
+        self.add_item(ToggleItem("Simulation mode:", simulation_mode))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

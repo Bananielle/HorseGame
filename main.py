@@ -180,6 +180,7 @@ if __name__ == '__main__':
             rest_duration_s = settings["rest_duration_s"]
             baseline_duration_s = settings["baseline_duration_s"]
             jitter_s = settings["jitter_s"]
+            simulation_mode = settings["simulation_mode"]
             debugging = settings["debugging"]
             data_input_type = settings["data_input_type"]
             neurofeedback_threshold = float(settings["neurofeedback_threshold"])
@@ -192,7 +193,7 @@ if __name__ == '__main__':
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type,
                                         neurofeedback_threshold,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
-                                        debugging)
+                                        simulation_mode,debugging)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
