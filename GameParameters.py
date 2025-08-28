@@ -3,6 +3,15 @@ import random
 import json
 # Colours
 
+# make relative paths resolve next to the executable (or source, in dev)
+import os, sys
+from pathlib import Path
+
+if getattr(sys, "frozen", False):
+    os.chdir(Path(sys.executable).resolve().parent)
+else:
+    os.chdir(Path(__file__).resolve().parent)
+
 GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
