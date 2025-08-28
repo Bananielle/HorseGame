@@ -1,12 +1,27 @@
 import pygame
 import csv
 import pandas as pd
+import locale
+
 
 class CSVwriter():
     def __init__(self):
         self.dataOutputFolder = "Data/"
         self.dataInputFolder = "SimulatedData/"
+        self.delimiter = self.detect_excel_friendly_delimiter()
 
+    def detect_excel_friendly_delimiter(self):
+        """
+        Return ';' if the system uses ',' as decimal separator,
+        otherwise return ','.
+        """
+        try:
+            locale.setlocale(locale.LC_NUMERIC, "")
+        except Exception:
+            pass
+
+        decimal = locale.localeconv().get("decimal_point", ".")
+        return ";" if decimal == "," else ","
 
     def save_dict_to_csv(self, file_name, field_names, data_dict):
         # Define the field names (header) for your CSV file
@@ -16,7 +31,7 @@ class CSVwriter():
         # Open the CSV file for writing
         with open(file_path, mode='w', newline='') as file:
             # Create a CSV writer object
-            writer = csv.DictWriter(file, fieldnames=field_names)
+            writer = csv.DictWriter(file, fieldnames=field_names, delimiter=self.delimiter)
 
             # Write the header row
             writer.writeheader()
@@ -33,17 +48,16 @@ class CSVwriter():
 
         print(f'Data written to ' + file_path)
 
-
     def save_list_to_csv(self, data, file_name):
 
         file_path = self.dataOutputFolder + file_name
 
         df = pd.DataFrame(data)
 
-        df.to_csv(file_path,header=False, index=False)
+        df.to_csv(file_path, sep=self.delimiter, header=False, index=False)
         print(f'Data written to ' + file_path)
 
-    def save_coinsList_to_csv(self, data, file_name,column_names=None, index_name=None):
+    def save_coinsList_to_csv(self, data, file_name, column_names=None, index_name=None):
 
         file_path = self.dataOutputFolder + file_name
 
@@ -57,11 +71,10 @@ class CSVwriter():
         if index_name:
             df.index.name = index_name
 
-        df.to_csv(file_path, header=False, index=False)
+        df.to_csv(file_path, sep=self.delimiter, header=False, index=False)
         print(f'Data written to ' + file_path)
 
     def read_csv(self, file_name):
         file_path = self.dataInputFolder + file_name
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path, sep=self.delimiter)
         return df
-

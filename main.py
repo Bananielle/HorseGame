@@ -260,7 +260,7 @@ if __name__ == '__main__':
         fishadventure_text = Title(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Credits(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        string = "(Press L for localizer)"
+        string = "(Press 'L' for localizer, 'S' for settings)"
         font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         testEnvironment_txt = font.render(string, True, (255, 255, 255))
 
@@ -275,7 +275,7 @@ if __name__ == '__main__':
         screen.blit(timeofdayPic.surf, timeofdayPic.location)
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
-        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT - 90))
+        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2.8, SCREEN_HEIGHT - 100))
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:

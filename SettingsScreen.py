@@ -183,7 +183,7 @@ class settingsMain():
         self.settingsFont = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         self.text_item = "Select: UP/DOWN:        Change: LEFT/RIGHT:        Back: ESC"
         self.instructions = self.settingsFont.render(self.text_item, True, PINK)
-        self.location = (SCREEN_WIDTH / 3.2, SCREEN_HEIGHT / 4)
+        self.location = (SCREEN_WIDTH / 3.6, SCREEN_HEIGHT / 4)
         self.gameParams = gameParams
         self.selected_index = 0  # For which item is selected.
         self.items = []
