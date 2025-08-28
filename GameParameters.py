@@ -209,7 +209,9 @@ class GameParameters():
         self.horseHasJumpedThisTrial = False
 
     def calculate_duration_game(self):
-        duration_game_s = (self.duration_TASK_s + self.duration_REST_s) * (self.totalNum_TRIALS+1) + self.duration_BASELINE_s #How long you want to one game run to last (in seconds)
+
+        n = self.totalNum_TRIALS
+        duration_game_s = + self.duration_BASELINE_s + ((n+1) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 5 #How long you want to one game run to last (in seconds)
         # Other
         return duration_game_s
 
