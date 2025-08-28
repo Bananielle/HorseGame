@@ -6,7 +6,8 @@ class PRTwriter():
         self.current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
         self.prt_file = None
         self.dataOutputFolder = "Data/PRTs/"
-        self.file_name = self.gp.participantNr + '_' + self.gp.sessionNr + '_' + self.gp.runNr + '_' + self.gp.runType + '_' + self.gp.taskUsed + '_' + self.current_date + '.prt'
+       # self.file_name = self.gp.participantNr + '_' + self.gp.sessionNr + '_' + self.gp.runNr + '_' + self.gp.runType + '_' + self.gp.taskUsed + '_' + self.current_date + '.prt'
+        self.file_name = 'PRT_' + self.current_date + '.prt'
         self.file_path = ('')
 
 

@@ -51,11 +51,11 @@ class GameParameters():
         }
 
         # Participant information (will be used to correctly name the protocol file for each run)
-        self.taskUsed = 'Fingertapping'
-        self.participantNr = 'P01'
-        self.sessionNr = 'S01'
-        self.runType = 'Localizer'
-        self.runNr = '01'
+        self.taskUsed = ''
+        self.participantNr = ''
+        self.sessionNr = ''
+        self.runType = ''
+        self.runNr = ''
 
         self.dataType = data_input_type # 0 = beta's, 1 = t-values (used for neurofeedback input)
 
