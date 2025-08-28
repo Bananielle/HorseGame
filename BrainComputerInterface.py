@@ -68,7 +68,7 @@ class BrainComputerInterface():
 
 
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
-                         "NFsignal_latestValue_TASK": [], "NFsignal_latestValue_TASK_t_value":[], "NFsignal_latestValue_TASK_beta":[], "NF_MaxCalculatedThreshold_Q3_120": [], "NF_MaxThresholdUsed": [],
+                         "NFsignal_latestValue_TASK": [], "NF t-value":[], "NF beta":[], "NF_Threshold_Q3_120": [], "NF_ThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
 
         self.currentTask_signal = 1
@@ -79,8 +79,8 @@ class BrainComputerInterface():
         #self.field_names = ['Trials','NFsignal_mean_TASK', 'NFsignal_max_TASK', 'NFSignal_median_TASK', 'NFsignal_mean_REST', 'NFsignal_max_REST',
         #               'NFSignal_median_REST', 'NF_MaxThreshold',"CoinsCollected"]
 
-        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK','NFsignal_median_TASK','NFsignal_latestValue_TASK', "NFsignal_latestValue_TASK_t_value", "NFsignal_latestValue_TASK_beta",
-                             'NF_MaxThresholdUsed',"NF_MaxCalculatedThreshold_Q3_120", "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
+        self.field_names = ['Trials', 'NFsignal_mean_TASK', 'NFsignal_max_TASK','NFsignal_median_TASK','NFsignal_latestValue_TASK', "NF t-value", "NF beta",
+                             'NF_ThresholdUsed',"NF_Threshold_Q3_120", "AchievedNFLevel", "MaxJumpHeightAchieved", "CoinsCollected"] #TODO rest values are removed here, because we're currently not using them.
 
         # Look for a connection to turbo-satori
         try:
@@ -245,8 +245,8 @@ class BrainComputerInterface():
             self.NFsignal["NFsignal_max_TASK"].append(self.NFsignal_max)
             self.NFsignal["NFsignal_median_TASK"].append(self.NFSignal_median)
             self.NFsignal["NFsignal_latestValue_TASK"].append(self.NFSignal_latestValue)
-            self.NFsignal["NFsignal_latestValue_TASK_t_value"].append(self.NFSignal_latestValue_t_value)
-            self.NFsignal["NFsignal_latestValue_TASK_beta"].append(self.NFSignal_latestValue_beta)
+            self.NFsignal["NF t-value"].append(self.NFSignal_latestValue_t_value)
+            self.NFsignal["NF beta"].append(self.NFSignal_latestValue_beta)
 
         print("NFsignals stored: " + str(self.NFsignal))
 
@@ -325,8 +325,8 @@ class BrainComputerInterface():
 
 
         # Save NF values to CSV files
-        self.NFsignal["NF_MaxCalculatedThreshold_Q3_120"].append(NFSignal_Q3_120)
-        self.NFsignal["NF_MaxThresholdUsed"].append(self.NF_neurofeedack_threshold)
+        self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
+        self.NFsignal["NF_ThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
         self.save_allChannelData_to_csv()
 
@@ -475,7 +475,13 @@ class BrainComputerInterface():
             filename = f"NF_datalog_localizer_{current_date}.csv"
         else:
             filename = f"NF_datalog_NFrun_{current_date}.csv"
-        csvWriter.save_dict_to_csv(filename, self.field_names, self.NFsignal)
+
+        # exclude unwanted fields
+        exclude = {"NFsignal_mean_TASK", "NFsignal_max_TASK", "NFsignal_median_TASK",
+                         "NFsignal_latestValue_TASK", "MaxJumpHeightAchieved"}  # put your unwanted keys here
+        filtered_fields = [f for f in self.field_names if f not in exclude]
+
+        csvWriter.save_dict_to_csv(filename, filtered_fields, self.NFsignal)
 
     def save_allChannelData_to_csv(self):
         field_names = []
@@ -506,5 +512,4 @@ class BrainComputerInterface():
         print(data)
         self.save_list_to_csv(data, filename)
         print("Data saved to " + filename)
-
 
