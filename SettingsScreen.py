@@ -117,7 +117,7 @@ class NumericalItem_int(MenuItem):
             self.value -= self.step
             print(self.value)
 
-        if self.text == "Number of trials: ":
+        if self.text == "Number of trials:":
             self.change_settings_file("num_trials", self.value)
         if self.text == "Task duration (seconds):":
             self.change_settings_file("task_duration_s", self.value)
@@ -206,7 +206,7 @@ class settingsMain():
 
 
         # Add new menu items here.
-        self.add_item(NumericalItem_int("Number of trials: ", number_of_trials, 1, 100, 1))
+        self.add_item(NumericalItem_int("Number of trials:", number_of_trials, 1, 100, 1))
         self.add_item(NumericalItem_int("Task duration (seconds):", task_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem_int("Rest duration (seconds):", rest_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem_int("Baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))

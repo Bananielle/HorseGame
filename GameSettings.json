@@ -1,8 +1,8 @@
 {
   "fullscreen": false,
-  "num_trials": 2,
-  "task_duration_s": 2,
-  "rest_duration_s": 8,
+  "num_trials": 10,
+  "task_duration_s": 6,
+  "rest_duration_s": 15,
   "baseline_duration_s": 5,
   "jitter_s": 3,
   "neurofeedback_threshold": 10.0,
@@ -11,5 +11,5 @@
   "simulation_mode": false,
   "debugging": true,
   "datawindow_duration_after_task_end_s": 4,
-  "datawindow_duration_before_task_end_s": 2
+  "datawindow_duration_before_task_end_s": 3
 }
