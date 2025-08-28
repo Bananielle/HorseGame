@@ -7,12 +7,15 @@ import json
 from pygame.locals import (
     RLEACCEL,
 )
-#test
+
 # Colours
 GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
+
+ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"
+ARIAL_BOLD_FONT_PATH = "Resources/fonts/Arial Bold.ttf"
 
 
 class Settings_header(pygame.sprite.Sprite):
@@ -34,13 +37,15 @@ class MenuItem:  # For creating different parameters
     def __init__(self, text, value):
         self.text = text
         self.location = 0
-        self.font = pygame.font.SysFont('ariel', 26, bold=True, )
+        self.font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         self.surface = self.font.render(self.text, True, WHITE)
         self.value = value
 
     def value_text(self):
         """You can override this in subclasses; return a string or None if no value."""
         return None
+
+#test
 
     def change_settings_file(self, parameter, value):
         with open("GameSettings.json") as f:
@@ -172,8 +177,8 @@ class settingsMain():
         super(settingsMain, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.font = pygame.font.SysFont('ariel', 35, bold=True, )
-        self.settingsFont = pygame.font.SysFont('ariel', 26, bold=True, )
+        self.font =  pygame.font.Font(ARIAL_BOLD_FONT_PATH, 30)
+        self.settingsFont = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         self.text_item = "Select: UP/DOWN:        Change: LEFT/RIGHT:        Back: ESC"
         self.instructions = self.settingsFont.render(self.text_item, True, PINK)
         self.location = (SCREEN_WIDTH / 3.2, SCREEN_HEIGHT / 4)
@@ -218,3 +223,4 @@ class settingsMain():
         item.location = (base_x, base_y + offset_y)
         self.items.append(item)
         return item
+

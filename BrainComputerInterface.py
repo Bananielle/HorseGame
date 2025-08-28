@@ -507,3 +507,4 @@ class BrainComputerInterface():
         self.save_list_to_csv(data, filename)
         print("Data saved to " + filename)
 
+

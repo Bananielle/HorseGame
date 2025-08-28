@@ -7,6 +7,9 @@ Last updated: May 2025
 
 ------------------------------------------------------------------------------------------------------------------------
 Notes for potential problem solving:
+- You can use runandjump.yml for your (mini)conda interpreter. It should have all the necessary libraries.
+
+Otherwise:
 - Use Python 3.7.5 as your interpreter (needed for expyriment)
 - When successfully pip installing expyriment (in a Python 3.7.5. environment), pygame is also immediately installed.
 - You may need to pip install simpleaudio (used in Soundsystem.py) manually.
@@ -51,10 +54,12 @@ In SoundSystem
 import csv
 
 import pygame, random, os, sys
+
+pygame.font.init()
 from pylsl import StreamInfo, StreamOutlet
 import json
 
-#from pylsl import StreamInfo, StreamOutlet  # import required classes
+# from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
 import datetime
@@ -74,6 +79,18 @@ from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
 from Pictures import PressSpace, Title, Credits, ReadyToJump, AnimalPicture, TimeOfDayPicture
 from MainPlayer import MainPlayer
+
+# make relative paths resolve next to the executable (or source, in dev)
+import os, sys
+from pathlib import Path
+
+if getattr(sys, "frozen", False):
+    os.chdir(Path(sys.executable).resolve().parent)
+else:
+    os.chdir(Path(__file__).resolve().parent)
+
+ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"
+ARIAL_BOLD_FONT_PATH = "Resources/fonts/Arial Bold.ttf"
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -107,10 +124,12 @@ if __name__ == '__main__':
     if allowLogSaving:
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
         log_file_path = f"Data/PyCharm Logs/logfile_{current_date}.txt"  # Specify the file path where you want to save the log
-        log_file = open(log_file_path,'w')  # Open the file in write mode, this will also create the file if it doesn't exist
+        log_file = open(log_file_path,
+                        'w')  # Open the file in write mode, this will also create the file if it doesn't exist
 
-        sys.stdout = log_file                              # Redirect stdout and stderr to the log file
+        sys.stdout = log_file  # Redirect stdout and stderr to the log file
         sys.stderr = log_file
+
 
     # Used to cycle through different game states with a statemachine
     class GameStates:
@@ -142,9 +161,8 @@ if __name__ == '__main__':
             return mount
 
 
-
     # GAME STATE FUNCTIONS
-    def startANewGame(mounttype,gametype,timeofday):
+    def startANewGame(mounttype, gametype, timeofday):
         print('Starting a new game.')
         if gametype == 'maingame':
             gamestate = GameState.setGameState(GameState.MAINGAME)
@@ -170,12 +188,14 @@ if __name__ == '__main__':
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
-        gameParameters = GameParameters(player, rider,SCREEN_WIDTH, SCREEN_HEIGHT,number_of_trials,task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, neurofeedback_threshold,
-                                        datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, debugging)
+        gameParameters = GameParameters(player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s,
+                                        rest_duration_s, baseline_duration_s, jitter_s, data_input_type,
+                                        neurofeedback_threshold,
+                                        datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
+                                        debugging)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
-
 
         gameParameters.generate_protocol()
         gameParameters.gameType = gametype
@@ -183,12 +203,12 @@ if __name__ == '__main__':
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
         player.gameParams = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
-        BCI = BrainComputerInterface(gametype,gameParameters)
+        BCI = BrainComputerInterface(gametype, gameParameters)
 
         print("Time of day input variable = " + timeofday)
-        mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters,mounttype,timeofday)
+        mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters, mounttype, timeofday)
 
-        return gamestate, gameParameters, mainGameBackGround,paradigmManager, BCI  # Reinitialize game parameters and background
+        return gamestate, gameParameters, mainGameBackGround, paradigmManager, BCI  # Reinitialize game parameters and background
 
 
     def changeMount_right(mounttype):
@@ -204,6 +224,7 @@ if __name__ == '__main__':
 
         return mounttype
 
+
     def changeMount_left(mounttype):
 
         if mounttype == Mounts.HORSE:
@@ -217,12 +238,12 @@ if __name__ == '__main__':
 
         return mounttype
 
+
     def setTimeOfDay(time):
         timeOfDay = time
         print("Time of day set to: ", timeOfDay)
 
         return timeOfDay
-
 
 
     def runStartScreen(currentMountType, timeofday):
@@ -239,14 +260,13 @@ if __name__ == '__main__':
         credits = Credits(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         string = "(Press L for localizer)"
-        font = pygame.font.SysFont('ariel', 23, bold=False, )
+        font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         testEnvironment_txt = font.render(string, True, (255, 255, 255))
 
         # Check for turbo-satori connection
         if not BCI.TSIconnectionFound:
-            font = pygame.font.Font('freesansbold.ttf', 18)
             text = font.render('Turbo-Satori connection not found!', True, WHITE)
-            screen.blit(text, (SCREEN_WIDTH*0.37,10))
+            screen.blit(text, (SCREEN_WIDTH * 0.37, 10))
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
@@ -255,8 +275,6 @@ if __name__ == '__main__':
         screen.blit(credits.surf, credits.location)
         screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT - 90))
-
-
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -282,7 +300,6 @@ if __name__ == '__main__':
                     timeofday = setTimeOfDay('Night')
                     soundSystem.menuSelection.play()
 
-
                 if event.key == K_l:
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.STARTNEWGAME)
@@ -294,7 +311,7 @@ if __name__ == '__main__':
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
-        return gamestate, currentMountType, gametype,timeofday
+        return gamestate, currentMountType, gametype, timeofday
 
 
     def runSettings():
@@ -326,21 +343,22 @@ if __name__ == '__main__':
                     # Navigating items
                     if event.key in (pygame.K_UP, pygame.K_w):
                         # Move selection UP by 1
-                        settingMain.selected_index = (settingMain.selected_index - 1) % len(settingMain.items) # Use modulo to get a circular menu
+                        settingMain.selected_index = (settingMain.selected_index - 1) % len(
+                            settingMain.items)  # Use modulo to get a circular menu
                         print("Selected item ", settingMain.items[settingMain.selected_index].text)
                     elif event.key in (pygame.K_DOWN, pygame.K_s):
                         # Move selection DOWN by 1
                         settingMain.selected_index = (settingMain.selected_index + 1) % len(settingMain.items)
                         print("Selected item ", settingMain.items[settingMain.selected_index].text)
-                    elif event.key in (pygame.K_LEFT,pygame.K_RIGHT):
+                    elif event.key in (pygame.K_LEFT, pygame.K_RIGHT):
                         # Get the currently selected item from the list
                         item = settingMain.items[settingMain.selected_index]
                         # If that item is a ToggleItem (ON/OFF type)...
                         if isinstance(item, SettingsScreen.ToggleItem):
-                            item.toggle() # ...then switch it to the opposite value
-                        if isinstance(item, SettingsScreen.NumericalItem_int) or isinstance(item, SettingsScreen.NumericalItem_float):
+                            item.toggle()  # ...then switch it to the opposite value
+                        if isinstance(item, SettingsScreen.NumericalItem_int) or isinstance(item,
+                                                                                            SettingsScreen.NumericalItem_float):
                             item.decrease() if event.key == pygame.K_LEFT else item.increase()
-
 
             # --- draw ---
             screen.fill(BLACK)
@@ -358,7 +376,7 @@ if __name__ == '__main__':
                 if i == settingMain.selected_index:
                     pygame.draw.rect(
                         screen, (PINK),
-                        pygame.Rect(item.location[0]-6, item.location[1]-10, SCREEN_WIDTH * 0.45, 36))
+                        pygame.Rect(item.location[0] - 6, item.location[1] - 10, SCREEN_WIDTH * 0.45, 36))
 
                 # Show item (left)
                 screen.blit(item.surface, (item.location))
@@ -369,7 +387,7 @@ if __name__ == '__main__':
                     value_surface = item.font.render(val, True, WHITE)
                     value_rect = value_surface.get_rect()
                     value_rect.top = item.location[1]  # align vertically with label
-                    value_rect.right = item.location[0] - 10 + SCREEN_WIDTH *0.45  # inside the box, 10px padding
+                    value_rect.right = item.location[0] - 10 + SCREEN_WIDTH * 0.45  # inside the box, 10px padding
                     screen.blit(value_surface, value_rect)
 
             pygame.display.flip()
@@ -391,7 +409,8 @@ if __name__ == '__main__':
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
                 gp.set_achieved_NF_level(0.2)  # For displaying debugging text
-                gp.maxJumpHeightAchieved = gp.player.performJumpSequence(gp.achievedNFlevel)  # For localizer, set it to a fixed level. (no feedback during the localizer)
+                gp.maxJumpHeightAchieved = gp.player.performJumpSequence(
+                    gp.achievedNFlevel)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -401,7 +420,8 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
+                    volume_timepoint = BCI.continuousMeasuring(
+                        trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
                 if not gp.usePreMadeProtocol:
                     collectTaskTrialData()
@@ -410,11 +430,10 @@ if __name__ == '__main__':
                     currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
                     collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
 
-
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
 
-        if mounttype == 'turtle': # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
+        if mounttype == 'turtle':  # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
             y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
             screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
             screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
@@ -422,12 +441,12 @@ if __name__ == '__main__':
         return gamestate
 
 
-
     def draw_game_time_text():
         # Draw game time counter text
         screen.blit(gp.gameTimeCounterText, (SCREEN_WIDTH - 70, 20))
         screen.blit(gp.nrCoinsCollectedText, (SCREEN_WIDTH - 70, 50))
         screen.blit(gp.nrTrialsCompletedText, (20, 20))
+
 
     def draw_debugging_text():
         if gp.debuggingText:
@@ -438,56 +457,66 @@ if __name__ == '__main__':
             gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
             gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
-            gp.update_data_window_info(BCI.collectTimewindowData) # True of False
-            #screen.blit(gp.horse_upper_position_text, (20, 60))
+            gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
+            # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
-            screen.blit(gp.NF_target_value_text, (20,80))
+            screen.blit(gp.NF_target_value_text, (20, 80))
             screen.blit(gp.signal_value_retrieved_text, (20, 100))
             screen.blit(gp.achieved_jump_height_text, (20, 120))
-            screen.blit(gp.current_beta_value_text, (20,140))
-            screen.blit(gp.current_tvalue_text,(20,160))
+            screen.blit(gp.current_beta_value_text, (20, 140))
+            screen.blit(gp.current_tvalue_text, (20, 160))
             screen.blit(gp.data_window_info_text, (20, 180))
 
 
     def updateTimeDataWindow_task():
         if gp.TASK_counter < gp.totalNum_TRIALS:
-            start_time_next_task = gp.protocol_file['datawindow_task_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
+            start_time_next_task = gp.protocol_file['datawindow_task_start_times'][
+                gp.TASK_counter + 1]  # +1 because the first trial is 0
             gp.datawindow_task_start_time = start_time_next_task
             gp.datawindow_task_end_time = gp.datawindow_task_start_time + gp.datawindow_task_duration
 
-            print("T=",gp.currentTime_s,": Next data time window TASK: " + str(gp.datawindow_task_start_time), "Datawindow end time TASK: " + str(gp.datawindow_task_end_time))
+            print("T=", gp.currentTime_s, ": Next data time window TASK: " + str(gp.datawindow_task_start_time),
+                  "Datawindow end time TASK: " + str(gp.datawindow_task_end_time))
+
 
     def updateTimeDataWindow_rest():
         if gp.TASK_counter < gp.totalNum_TRIALS:
-            start_time_next_rest = gp.protocol_file['rest_start_times'][gp.TASK_counter+1] # +1 because the first trial is 0
-            gp.datawindow_rest_start_time = start_time_next_rest + gp.hemodynamic_delay #todo: at what time do I start measuring the baseline?
+            start_time_next_rest = gp.protocol_file['rest_start_times'][
+                gp.TASK_counter + 1]  # +1 because the first trial is 0
+            gp.datawindow_rest_start_time = start_time_next_rest + gp.hemodynamic_delay  # todo: at what time do I start measuring the baseline?
             gp.datawindow_rest_end_time = gp.datawindow_rest_start_time + gp.datawindow_rest_duration
 
-            print("T=",gp.currentTime_s,": Next data time window REST: " + str(gp.datawindow_rest_start_time), "Datawindow REST end time: " + str(gp.datawindow_rest_end_time))
+            print("T=", gp.currentTime_s, ": Next data time window REST: " + str(gp.datawindow_rest_start_time),
+                  "Datawindow REST end time: " + str(gp.datawindow_rest_end_time))
+
 
     def stopCollectingData():
-        print("T=",gp.currentTime_s,": Stop collecting data. Calculating NF signal...")
+        print("T=", gp.currentTime_s, ": Stop collecting data. Calculating NF signal...")
         BCI.collectTimewindowData = False
         BCI.resetTimewindowDataArray()
 
+
     # Protocol generated. Task start times are:{7, 16} and rest start times are: { 2, 11, 20}
 
-    def collectTaskTrialData_fromPreMadeProtocol(currentCondition,current_volume_timepoint):
-        if currentCondition > 0: # Only after baseline
-            #print("Current volume_timepoint: " + str(current_volume_timepoint))
-            start_window = gp.start_volumes[currentCondition-1] # minus one because current condition is one higher
+    def collectTaskTrialData_fromPreMadeProtocol(currentCondition, current_volume_timepoint):
+        if currentCondition > 0:  # Only after baseline
+            # print("Current volume_timepoint: " + str(current_volume_timepoint))
+            start_window = gp.start_volumes[currentCondition - 1]  # minus one because current condition is one higher
             hemodynamic_delay_volumes = gp.hemodynamic_delay * BCI.tsi.get_sampling_rate()[0]
-           # print("Hemodynamic delay in volumes: "+ str(hemodynamic_delay_volumes))
-            end_window= gp.end_volumes[currentCondition-1] + hemodynamic_delay_volumes
-            print("Collect data when between volumes " + str(start_window) + " and " + str(end_window + round(hemodynamic_delay_volumes)))
+            # print("Hemodynamic delay in volumes: "+ str(hemodynamic_delay_volumes))
+            end_window = gp.end_volumes[currentCondition - 1] + hemodynamic_delay_volumes
+            print("Collect data when between volumes " + str(start_window) + " and " + str(
+                end_window + round(hemodynamic_delay_volumes)))
             if current_volume_timepoint >= start_window and current_volume_timepoint < end_window:
                 BCI.collectTimewindowData = True
-                scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=currentCondition)
-                print("T=",gp.currentTime_s,": Collecting timewindow data for task (PREMADE PROTOCOL). Scaled data: " + str(scaled_data))
+                scaled_data = BCI.startMeasuring(task=True, simulatedData=gp.signalValue_simulated,
+                                                 trialNr=currentCondition)
+                print("T=", gp.currentTime_s,
+                      ": Collecting timewindow data for task (PREMADE PROTOCOL). Scaled data: " + str(scaled_data))
 
             # Calculate NF data when measuring window is over
             if current_volume_timepoint > end_window:
-                if BCI.timewindow_task: # if not empty
+                if BCI.timewindow_task:  # if not empty
                     BCI.calculateNFsignal(task=True)
                     stopCollectingData()
 
@@ -500,47 +529,60 @@ if __name__ == '__main__':
 
     def collectTaskTrialData():
         # Send time window to BCI
-        if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
+        if gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task] <= gp.currentTime_s < \
+                gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=True,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
-            print("T=",gp.currentTime_s,": Collecting timewindow data for task. Start time task: " + str(gp.protocol_file['datawindow_task_start_times'][gp.TASK_counter]) + ", Scaled data: " + str(scaled_data))
+            scaled_data = BCI.startMeasuring(task=True, simulatedData=gp.signalValue_simulated,
+                                             trialNr=gp.trial_counter)
+            print("T=", gp.currentTime_s, ": Collecting timewindow data for task. Start time task: " + str(
+                gp.protocol_file['datawindow_task_start_times'][gp.TASK_counter]) + ", Scaled data: " + str(
+                scaled_data))
 
-        if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][gp.trialCounter_task]: # Don't measure rest data while the task trial has already started
-            if gp.trialCounter_task > len(BCI.NFsignal["NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS: # Check if NF signal has already been measured:
+        if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][
+            gp.trialCounter_task]:  # Don't measure rest data while the task trial has already started
+            if gp.trialCounter_task > len(BCI.NFsignal[
+                                              "NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS:  # Check if NF signal has already been measured:
                 BCI.calculateNFsignal(task=True)
                 stopCollectingData()
-                #PSC = BCI.get_percentage_signal_change()
-                #print("T=",gp.currentTime_s,": PSC = " + str(PSC))
+                # PSC = BCI.get_percentage_signal_change()
+                # print("T=",gp.currentTime_s,": PSC = " + str(PSC))
                 updateTimeDataWindow_task()
-                gp.trialCounter_task +=1
+                gp.trialCounter_task += 1
                 if gp.trialCounter_task >= gp.totalNum_TRIALS:
-                    gp.trialCounter_task = gp.totalNum_TRIALS # Then you've reached the end of the task trials (and since this counter is used for indexing it shouldn't exceed its max)
+                    gp.trialCounter_task = gp.totalNum_TRIALS  # Then you've reached the end of the task trials (and since this counter is used for indexing it shouldn't exceed its max)
             else:
                 print("NF signal task already calculated.")
+
 
     def resetCoinsPerTrialCount():
         print("Resetting coinsCollectedInCurrentTrial (was " + str(gp.coinsCollectedInCurrentTrial) + " to 0.")
         gp.coinsCollectedInCurrentTrial = 0  # Rest the counter
 
+
     def collectRestTrialData():
         # Send time window to BCI
 
-        if gp.protocol_file['datawindow_rest_start_times'][gp.trialCounter_rest] <= gp.currentTime_s <  gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]:
+        if gp.protocol_file['datawindow_rest_start_times'][gp.trialCounter_rest] <= gp.currentTime_s < \
+                gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]:
             BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=False,simulatedData=gp.signalValue_simulated,trialNr=gp.trial_counter)
-            print("T=",gp.currentTime_s,": Collecting timewindow data for rest. Rest start time: "+ str(gp.datawindow_rest_start_time) + " ,rest end time: "+ str(gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
+            scaled_data = BCI.startMeasuring(task=False, simulatedData=gp.signalValue_simulated,
+                                             trialNr=gp.trial_counter)
+            print("T=", gp.currentTime_s, ": Collecting timewindow data for rest. Rest start time: " + str(
+                gp.datawindow_rest_start_time) + " ,rest end time: " + str(
+                gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
 
-        if gp.currentTime_s == gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]: # Don't measure rest data while the task trial has already started
-            if gp.trialCounter_rest > len(BCI.NFsignal["NFsignal_mean_REST"]) and gp.trialCounter_rest <= gp.totalNum_TRIALS+1:  # Check if NF signal has already been measured: (+1 because we have one extra rest trial)
+        if gp.currentTime_s == gp.protocol_file['datawindow_rest_end_times'][
+            gp.trialCounter_rest]:  # Don't measure rest data while the task trial has already started
+            if gp.trialCounter_rest > len(BCI.NFsignal[
+                                              "NFsignal_mean_REST"]) and gp.trialCounter_rest <= gp.totalNum_TRIALS + 1:  # Check if NF signal has already been measured: (+1 because we have one extra rest trial)
                 BCI.calculateNFsignal(task=False)
                 stopCollectingData()
                 updateTimeDataWindow_rest()
                 gp.trialCounter_rest += 1
                 if gp.trialCounter_rest >= gp.totalNum_TRIALS:
-                    gp.trialCounter_rest = gp.totalNum_TRIALS # Then you've reached the end of the rest trials (and since this counter is used for indexing it shouldn't exceed its max)
+                    gp.trialCounter_rest = gp.totalNum_TRIALS  # Then you've reached the end of the rest trials (and since this counter is used for indexing it shouldn't exceed its max)
             else:
                 print("NF signal rest already calculated.")
-
 
 
     def runMainGame():
@@ -559,15 +601,15 @@ if __name__ == '__main__':
 
             if event.type == BCI.GET_TURBOSATORI_INPUT:
                 if BCI.saveIncomingData:
-                    volume_timepoint = BCI.continuousMeasuring(trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
+                    volume_timepoint = BCI.continuousMeasuring(
+                        trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
                 if not gp.usePreMadeProtocol:
                     collectTaskTrialData()
                 else:
-                    #print("Volume timepoint (main game) = " + str(volume_timepoint))
+                    # print("Volume timepoint (main game) = " + str(volume_timepoint))
                     currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
-                    collectTaskTrialData_fromPreMadeProtocol(currentCondition,volume_timepoint)
-
+                    collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
 
             runParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
@@ -588,6 +630,7 @@ if __name__ == '__main__':
             screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
         return gamestate
+
 
     def performTaskRestSpecificActions():
 
@@ -616,7 +659,8 @@ if __name__ == '__main__':
 
         # Coins counting management during each trial -> send to logger (that will save it to a csv file for later)
         if gp.coinsBeingCounted:
-            BCI.addCoinsCollectedDuringCurrentTrial(gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
+            BCI.addCoinsCollectedDuringCurrentTrial(
+                gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
             BCI.addAchievedNFlevel(gp.achievedNFlevel)
             BCI.addMaxJumpHeightAchieved(gp.maxJumpHeightAchieved)
             resetCoinsPerTrialCount()  # Reset the counter for the number of coins collected during the current trial
@@ -630,13 +674,15 @@ if __name__ == '__main__':
         draw_game_time_text()
         draw_debugging_text()
 
+
     def checkForLeftoverCoins():
         for coin in gp.coin:
-            if coin.rank <= gp.coins_that_should_be_collected: # only kill the coins that should be collected (based on achieved NF level)
+            if coin.rank <= gp.coins_that_should_be_collected:  # only kill the coins that should be collected (based on achieved NF level)
                 coin.kill()
                 coinCollectionAdmin()
 
                 print("COLLECTED A LEFTOVER COIN.")
+
 
     def coinCollectionAdmin():
         soundSystem.coinCollected.play()
@@ -645,12 +691,13 @@ if __name__ == '__main__':
         gp.coinsCollectedInCurrentTrial += 1
         gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
 
+
     def checkForCoinCollision():
-        #if gp.player.HorseIsJumpingDown:
-              #collect_all_coins()
+        # if gp.player.HorseIsJumpingDown:
+        # collect_all_coins()
         for coin in gp.coin:
             if coin.rect.colliderect(gp.player.rect):  # If the player collides with the coin, it is collected.
-                if coin.rank <= gp.coins_that_should_be_collected: # only kill the coins that should be collected (based on achieved NF level)
+                if coin.rank <= gp.coins_that_should_be_collected:  # only kill the coins that should be collected (based on achieved NF level)
                     coin.kill()
 
                     coinCollectionAdmin()
@@ -661,17 +708,18 @@ if __name__ == '__main__':
                         killAllCoins()
                         break
 
-                else: # If horse collided with all coins that should be collectd based on achieved NF level, check for leftover coins that horse did not collide with
-                    checkForLeftoverCoins() # Check if there are any leftover coins that visuallly still need to be collected (because of how coin collision works it sometimes misses a few that didn't collide with horse)
+                else:  # If horse collided with all coins that should be collectd based on achieved NF level, check for leftover coins that horse did not collide with
+                    checkForLeftoverCoins()  # Check if there are any leftover coins that visuallly still need to be collected (because of how coin collision works it sometimes misses a few that didn't collide with horse)
 
             # Show the player how many coins have been collected
             text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
             gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
+
     def collect_all_coins():
         for coin in gp.coin:
             if gp.coinsCollectedInCurrentTrial < gp.coins_that_should_be_collected:
-                #coin.kill()
+                # coin.kill()
                 gp.nrCoinsCollectedThroughoutRun += 1
                 gp.coinsCollectedInCurrentTrial += 1
                 gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
@@ -683,12 +731,13 @@ if __name__ == '__main__':
                     break
                 else:
 
-                    #soundSystem.coinCollected.play()
-                    #soundSystem.coinCollected.play()  # Play it 2 times to give the illusion of multiple coins
+                    # soundSystem.coinCollected.play()
+                    # soundSystem.coinCollected.play()  # Play it 2 times to give the illusion of multiple coins
                     break
         # Show the player how many coins have been collected
         text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
         gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
+
 
     def killAllCoins():
         for coin in gp.coin:
@@ -707,7 +756,7 @@ if __name__ == '__main__':
         # Sounds
         soundSystem.fadeIntoGameOverMusicTheme()
         soundSystem.playedStartScreenSound = False
-        gp.useProgressBar = False # Turn off progress bar
+        gp.useProgressBar = False  # Turn off progress bar
 
         gameover = GameOver(SCREEN_WIDTH, SCREEN_HEIGHT)
         replay = PressSpaceToReplay(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -717,7 +766,7 @@ if __name__ == '__main__':
         # Save the score for the player
         scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun)
 
-        if not gp.printedNFdata: # If you didn't print the data yet (needs to happen only once)
+        if not gp.printedNFdata:  # If you didn't print the data yet (needs to happen only once)
             print("NFsignals stored: " + str(BCI.NFsignal))
             BCI.calculate_NF_max_threshold()
             gp.printedNFdata = True
@@ -765,27 +814,33 @@ if __name__ == '__main__':
 
         return gamestate
 
+
     def displayScoreboard():
         newPosition = 30
         scoresText_list, taskText_list, bonusText_list = scoreboard.prepareScoreBoardText()
 
         for i in range(len(scoresText_list)):
-
-            screen.blit(bonusText_list[i],((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+            screen.blit(bonusText_list[i],
+                        ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
             newPosition += 35
-            screen.blit(scoresText_list[i], ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-            screen.blit(taskText_list[i], ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+            screen.blit(scoresText_list[i],
+                        ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+            screen.blit(taskText_list[i],
+                        ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
             newPosition += 35
 
 
-    def get_current_jitter_duration(): # todo: This could be coded less rickety...
+    def get_current_jitter_duration():  # todo: This could be coded less rickety...
         if gp.REST_counter >= len(gp.jittered_rest_list):
             return gp.duration_REST_s
         else:
-            current_jittered_rest_duration = gp.jittered_rest_list[gp.REST_counter] # -1 because the jitter list starts at index 0
-            print("Progress bar. Rest number: " + str(gp.REST_counter) + ", jitter: " + str(current_jittered_rest_duration))
+            current_jittered_rest_duration = gp.jittered_rest_list[
+                gp.REST_counter]  # -1 because the jitter list starts at index 0
+            print("Progress bar. Rest number: " + str(gp.REST_counter) + ", jitter: " + str(
+                current_jittered_rest_duration))
 
             return current_jittered_rest_duration
+
 
     def runParadigm():
 
@@ -817,36 +872,41 @@ if __name__ == '__main__':
                 progressBar.resetProgressBar(current_jitter_duration)
 
             # if gp.REST_counter == 1:
-                #    paradigmManager.resetJumpStartTime() # Do this the first time the rest event occurs
+            #    paradigmManager.resetJumpStartTime() # Do this the first time the rest event occurs
 
             # Check if time for horse jump
             if gp.REST_counter > 0 and gp.TASK_counter > 0 and isItTimeForJumpEvent():  # Only let the horse jump after the first task event occured (otherwise it will jump at the start of the game).
                 print("Horse jumping = True")
                 gp.player.HorseIsJumping = True
-                gp.freezeCoins = True # Make the coins stop moving, so that the achieved NF level and horse jump height always amounts to the exact same amount of coins collected.
+                gp.freezeCoins = True  # Make the coins stop moving, so that the achieved NF level and horse jump height always amounts to the exact same amount of coins collected.
                 gp.player.HorseIsJumpingUp = True
 
                 if gp.usePath:
                     mainGame_background.endPathBackground()
- 
+
+
     def isItTimeForJumpEvent():
         timeforjump = False
-        #print("gp.rest = "+ str(gp.rest) + ", horseJumpCounter = " + str(gp.horseJumpCounter) + ", gp.TASK_counter = " + str(gp.TASK_counter) + ', gp.horseHasJumpedThisTrial = ' + str(gp.horseHasJumpedThisTrial))
-        #print("gp.timeUntilJump_s: " + str(gp.timeUntilJump_s) + ", gp.samplingRATE: " + str(BCI.getSamplingRate()))
+        # print("gp.rest = "+ str(gp.rest) + ", horseJumpCounter = " + str(gp.horseJumpCounter) + ", gp.TASK_counter = " + str(gp.TASK_counter) + ', gp.horseHasJumpedThisTrial = ' + str(gp.horseHasJumpedThisTrial))
+        # print("gp.timeUntilJump_s: " + str(gp.timeUntilJump_s) + ", gp.samplingRATE: " + str(BCI.getSamplingRate()))
         if gp.rest:
-            #print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
+            # print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
             if gp.horseJumpCounter == gp.TASK_counter:
                 if gp.usePreMadeProtocol:
                     current_volume_timepoint = BCI.getCurrentTimePoint_TSI()[0]
-                    if current_volume_timepoint >= gp.end_volumes[gp.current_condition - 1] + (gp.timeUntilJump_s * BCI.getSamplingRate()) and not gp.horseHasJumpedThisTrial:
+                    if current_volume_timepoint >= gp.end_volumes[gp.current_condition - 1] + (
+                            gp.timeUntilJump_s * BCI.getSamplingRate()) and not gp.horseHasJumpedThisTrial:
                         timeforjump = signalTimeForJump()
 
-                else: # Use in-game protocol parameters
-                    if gp.currentTime_s >= gp.protocol_file['jump_start_times'][gp.TASK_counter]:  #gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
+                else:  # Use in-game protocol parameters
+                    if gp.currentTime_s >= gp.protocol_file['jump_start_times'][
+                        gp.TASK_counter]:  # gp.currentTime_s >= gp.startTime_JUMP + gp.timeUntilJump_s and not gp.task:
                         timeforjump = signalTimeForJump()
-                        print("!!!!!!!======3454=35========== Jump start time reached: " + str(gp.protocol_file['jump_start_times'][gp.TASK_counter]))
+                        print("!!!!!!!======3454=35========== Jump start time reached: " + str(
+                            gp.protocol_file['jump_start_times'][gp.TASK_counter]))
                         print("Jump start times: " + str(gp.protocol_file['jump_start_times']))
         return timeforjump
+
 
     def signalTimeForJump():
         gp.horseJumpCounter += 1
@@ -855,6 +915,7 @@ if __name__ == '__main__':
         timeforjump = True
 
         return timeforjump
+
 
     def updateProgressBar_task(loadingBar):
         loadingBar.fillProgressBar(task=True)
@@ -880,19 +941,17 @@ if __name__ == '__main__':
 
         # add all the coins
         for coinNr in range(gp.totalNumCoins):
-            addNewCoin(gp.coinStartingPosition_y - stepSize, coinNr+1) # +1 because indexing starts at 0
+            addNewCoin(gp.coinStartingPosition_y - stepSize, coinNr + 1)  # +1 because indexing starts at 0
             print("Coin nr " + str(coinNr) + " added at y position " + str(gp.coinStartingPosition_y - stepSize))
 
             stepSize += 50
 
 
-    def addNewCoin(y_position,rank):
+    def addNewCoin(y_position, rank):
         new_coin = Coin(SCREEN_WIDTH, SCREEN_HEIGHT, gp, y_position, rank)
         gp.coin.add(new_coin)
         gp.all_sprites.add(new_coin)
         gp.NrOfCoins += 1
-
-
 
 
     # BASICALLY MY TIMER CLASS
@@ -920,8 +979,8 @@ if __name__ == '__main__':
 
             # SIMULATED CONDITIONS AND DATA
             if gp.useSimulatedData:
-                condition_simulated = paradigmManager.getCurrentSimulatedCondition() # Get the current simulated condition
-                gp.signalValue_simulated = paradigmManager.getCurrentSimulatedSignalValue() # Get the current simulated signal value
+                condition_simulated = paradigmManager.getCurrentSimulatedCondition()  # Get the current simulated condition
+                gp.signalValue_simulated = paradigmManager.getCurrentSimulatedSignalValue()  # Get the current simulated signal value
 
         return gamestate
 
@@ -931,15 +990,15 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))  # black
 
+        y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
 
-        y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height() # Use background layer 2 for height reference
-
-        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX, y+100]) # To fit the moon better on to the screen (it lowers it a little bit)
-        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y+100])
-        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y-40])
-        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y-40])
-        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y-40])
-        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y-40])
+        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX,
+                                                           y + 100])  # To fit the moon better on to the screen (it lowers it a little bit)
+        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y + 100])
+        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y - 40])
+        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y - 40])
+        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y - 40])
+        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y - 40])
         screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX, y])
         screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX2, y])
         screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX, y])
@@ -948,7 +1007,8 @@ if __name__ == '__main__':
         screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
         if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
-            screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX, y]) # To put the cacti a bit higher
+            screen.blit(mainGame_background.background7.surf,
+                        [mainGame_background.background7.bgX, y])  # To put the cacti a bit higher
             screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
             screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
             screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
@@ -967,10 +1027,9 @@ if __name__ == '__main__':
             screen.blit(mainGame_background.overlay_greysurface,
                         (0, 0))  # Draw the grey overlay surface on top of the background
 
-
         if gp.draw_grid:
             # Draw the grid
-            font = pygame.font.Font('freesansbold.ttf', 18)
+            font = pygame.font.Font(ARIAL_FONT_PATH, 16)
             for x in range(0, SCREEN_WIDTH, grid_size):
                 pygame.draw.line(screen, grid_color, (x, 0), (x, SCREEN_HEIGHT))
                 label = font.render(str(x), True, grid_color)
@@ -981,11 +1040,9 @@ if __name__ == '__main__':
                 pygame.draw.line(screen, grid_color, (0, y), (SCREEN_WIDTH, y))
 
         if gp.usePreMadeProtocol:
-            font = pygame.font.Font('freesansbold.ttf', 18)
+            font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 16)
             text = font.render('Using simulated data.', True, BLACK)
-            screen.blit(text, (SCREEN_WIDTH/2.5,10))
-
-
+            screen.blit(text, (SCREEN_WIDTH / 2.5, 10))
 
 
     def didPlayerPressQuit(gamestate, event):
@@ -1010,12 +1067,11 @@ if __name__ == '__main__':
     infoObject = pygame.display.Info()
     # pygame.display.set_mode((infoObject.current_w, infoObject.current_h))
 
-# Get the monitor screen size information
-    #SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3) #  Adjust the screen size to the monitor size
-    #SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3) #
-    SCREEN_WIDTH = 1280 # Hard code this into the game, so that it stays the same on all monitors
+    # Get the monitor screen size information
+    # SCREEN_WIDTH = infoObject.current_w - int(infoObject.current_w / 3) #  Adjust the screen size to the monitor size
+    # SCREEN_HEIGHT = infoObject.current_h - int(infoObject.current_h /3) #
+    SCREEN_WIDTH = 1280  # Hard code this into the game, so that it stays the same on all monitors
     SCREEN_HEIGHT = 720
-
 
     print('Screen width = ' + str(SCREEN_WIDTH) + ', screen height = ' + str(SCREEN_HEIGHT))
 
@@ -1028,9 +1084,9 @@ if __name__ == '__main__':
                                      display=0)  # WARNING: WITH fullscreen using an external screen may cause problems (tip: it helps if you don't have pycharm in fullscreen already)
 
     # Grid configuration
-    grid_size = int(SCREEN_HEIGHT/10)  # Size of each grid cell
+    grid_size = int(SCREEN_HEIGHT / 10)  # Size of each grid cell
     grid_color = (0, 0, 0)  # Color of the grid lines
-    font = pygame.font.SysFont(None, 18)  # Font for the position labels
+    font = pygame.font.Font(ARIAL_FONT_PATH, 16)
 
     # Setup sounds
     pygame.mixer.init()  # Setup for sounds, defaults are good
@@ -1039,15 +1095,14 @@ if __name__ == '__main__':
 
     # Set up gamestates to cycle through in main loop
     GameState = GameStates()
-    MountType = Mounts() # Set up mount types to cycle through
+    MountType = Mounts()  # Set up mount types to cycle through
     mounttype = MountType.setMount(Mounts.HORSE)
-    timeofday = 'Day' # Default background is daytime
+    timeofday = 'Day'  # Default background is daytime
     print("Starting mount set to ", mounttype)
-
 
     # Set up a new game (will be refreshed after every replay)
     gametype = 'maingame'
-    gamestate, gp, mainGame_background,paradigmManager,BCI = startANewGame(mounttype,gametype,timeofday)
+    gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
     gp.mainGame_background = mainGame_background
     BCI_input = 0
     progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
@@ -1056,15 +1111,12 @@ if __name__ == '__main__':
     scoreboard = Scoreboard(gp)
 
     # Setup BCI interface
-    BCI = BrainComputerInterface(gametype,gp)
+    BCI = BrainComputerInterface(gametype, gp)
     BCI.scaleOxyData()
     gp.setSamplingRate(BCI.getSamplingRate)
 
     PRT_writer = PRTwriter(gp)
     PRT_writer.create_PRT_template()
-
-
-
 
     # ========== GAME STATE MACHINE ==============
     gamestate = GameState.STARTSCREEN
@@ -1072,7 +1124,7 @@ if __name__ == '__main__':
     while run:  # Game loop (= one frame)
 
         if gamestate == GameState.STARTSCREEN:
-            gamestate, mounttype, gametype, timeofday = runStartScreen(mounttype,timeofday)
+            gamestate, mounttype, gametype, timeofday = runStartScreen(mounttype, timeofday)
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()
@@ -1081,8 +1133,8 @@ if __name__ == '__main__':
             gamestate = runLocalizer()
 
         if gamestate == GameState.STARTNEWGAME:
-            gamestate, gp, mainGame_background,paradigmManager, BCI = startANewGame(mounttype,gametype,timeofday)
-            progressBar.set_fill_rate_rest() # Update progress bar duration based on latest in-game settings
+            gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
+            progressBar.set_fill_rate_rest()  # Update progress bar duration based on latest in-game settings
             progressBar.set_fill_rate_task(gp.duration_TASK_s)
 
         elif gamestate == GameState.MAINGAME:
@@ -1107,7 +1159,7 @@ if __name__ == '__main__':
 
         pygame.display.flip()
 
-       # print('frame rate = ',clock.get_fps())
+    # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()

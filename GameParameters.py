@@ -6,6 +6,10 @@ import json
 GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
 
+# Fonts
+HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"  # add the file to your repo
+ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
+
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold,
                  datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, debugging):
@@ -133,9 +137,9 @@ class GameParameters():
 
         # Create counter text
         self.counterText = str('-').rjust(3)
-        self.mainFont = pygame.font.SysFont('herculanum', 30, bold=True, )
-        self.debuggingFont = pygame.font.SysFont('arial', 15, bold=False, )
-        self.coinsCollectedFont = pygame.font.SysFont('herculanum', 40, bold=True, )
+        self.mainFont = pygame.font.Font(HERC_FONT_PATH, 30) # BOLD?
+        self.debuggingFont = pygame.font.Font(ARIAL_FONT_PATH, 15) # 15?
+        self.coinsCollectedFont = pygame.font.Font(HERC_FONT_PATH, 40) # BOLD?
         self.gameTimeCounterText = self.mainFont.render(self.counterText, True, PINK)
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
