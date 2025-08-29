@@ -1113,6 +1113,7 @@ if __name__ == '__main__':
     BCI_input = 0
     progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp)
 
+
     # Make a scoreboard (will remain throughout the game)
     scoreboard = Scoreboard(gp)
 
@@ -1142,6 +1143,9 @@ if __name__ == '__main__':
             gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
             progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp) # Create new progress bar (with corret fill rates)
             scoreboard.gp.scoreSaved = False # Allow scoreboard to save a new score
+            pygame.time.set_timer(0)  # Reset timer to zero
+            pygame.event.clear(gp.SECOND_HAS_PASSED) # Rest this timer event
+            print("Current time when starting new game: " + str(gp.currentTime_s))
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()
@@ -1157,11 +1161,14 @@ if __name__ == '__main__':
 
         # Take care of time
         dt = clock.tick(gp.get_FPS()) / 1000.0 # clock.tick returns the time since last call, in ms. Divide by 1000 to get it in seconds.
+        if dt > 0.05:  # cap at 50 ms (20 FPS floor) # to aboid one-off spikes
+            dt = 0.05
+        gp.deltaTime = dt
         gp.deltaTime = dt # keep it as a float
 
         pygame.display.flip()
 
-    # print('frame rate = ',clock.get_fps())
+       # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
     pygame.mixer.music.stop()
