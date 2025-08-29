@@ -1,7 +1,7 @@
 {
   "fullscreen": false,
   "num_trials": 8,
-  "task_duration_s": 5,
+  "task_duration_s": 4,
   "rest_duration_s": 6,
   "baseline_duration_s": 2,
   "jitter_s": 1,

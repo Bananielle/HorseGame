@@ -1143,8 +1143,8 @@ if __name__ == '__main__':
             gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
             progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp) # Create new progress bar (with corret fill rates)
             scoreboard.gp.scoreSaved = False # Allow scoreboard to save a new score
-            pygame.time.set_timer(0)  # Reset timer to zero
-            pygame.event.clear(gp.SECOND_HAS_PASSED) # Rest this timer event
+            pygame.event.clear(gp.SECOND_HAS_PASSED) # Reset this timer event
+            pygame.time.set_timer(gp.SECOND_HAS_PASSED,1000)  # Reset this timer event
             print("Current time when starting new game: " + str(gp.currentTime_s))
 
         elif gamestate == GameState.MAINGAME:
