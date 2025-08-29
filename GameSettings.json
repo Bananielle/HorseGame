@@ -1,6 +1,6 @@
 {
   "fullscreen": false,
-  "num_trials": 8,
+  "num_trials": 2,
   "task_duration_s": 4,
   "rest_duration_s": 6,
   "baseline_duration_s": 2,

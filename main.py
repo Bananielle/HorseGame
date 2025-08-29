@@ -1145,6 +1145,8 @@ if __name__ == '__main__':
             scoreboard.gp.scoreSaved = False # Allow scoreboard to save a new score
             pygame.event.clear(gp.SECOND_HAS_PASSED) # Reset this timer event
             pygame.time.set_timer(gp.SECOND_HAS_PASSED,1000)  # Reset this timer event
+            PRT_writer = PRTwriter(gp) # Also make a new prt file for the next run
+            PRT_writer.create_PRT_template()
             print("Current time when starting new game: " + str(gp.currentTime_s))
 
         elif gamestate == GameState.MAINGAME:
