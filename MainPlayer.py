@@ -60,7 +60,8 @@ class MainPlayer(pygame.sprite.Sprite):
         #print(' Width player: ', self.rect.width, ' Height player: ', self.rect.height)
 
         self.soundSystem = soundSystem
-        self.playerSpeed = 25
+        self.playerSpeed_base = 1250.0
+        self.playerSpeed = self.playerSpeed_base
         self.RidingAnimation = 0
         self.JumpingAnimation = 0
         self.HorseIsJumping = False
@@ -77,7 +78,7 @@ class MainPlayer(pygame.sprite.Sprite):
         #print("Size of animal image: ", self.surf.get_width(), ",", self.surf.get_height())
 
     def setPlayerSpeed(self):
-        self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.get_deltaTime()
+        self.playerSpeed = self.playerSpeed_base * float(self.gameParams.velocity)
 
     def ridingHorseAnimation(self):
 
@@ -200,7 +201,7 @@ class MainPlayer(pygame.sprite.Sprite):
             if self.rect.centerx > self.startingPosition_x:  # Move horse back to starting point
                 #print("T=",self.gameParams.currentTime_s,": Horse is moving back to starting point.")
                 self.moveLeft()
-                self.moveLeft()
+               # self.moveLeft()
 
         return maxJumpHeightAchieved
 
@@ -261,8 +262,9 @@ class MainPlayer(pygame.sprite.Sprite):
             self.RidingAnimation = 0
 
 
+
     def moveUp(self):
-        self.rect.move_ip(0, self.playerSpeed * -1)
+        self.rect.move_ip(0, (self.playerSpeed * -1) * self.gameParams.get_deltaTime())
        # print('Moving up.')
         #self.soundSystem.playBubbleSound(self.soundSystem.move_up_sound)
 
@@ -273,16 +275,16 @@ class MainPlayer(pygame.sprite.Sprite):
         #    move_by = self.borderOfPathForHorse - self.rect.bottom +10
         #    self.rect.move_ip(0,move_by)
        # else:
-            self.rect.move_ip(0, self.playerSpeed-1)
+            self.rect.move_ip(0, (self.playerSpeed-1) * self.gameParams.get_deltaTime())
 
       #  print('Moving down.')
        # self.soundSystem.playBubbleSound(self.soundSystem.move_down_sound)
 
     def moveLeft(self):
-        self.rect.move_ip(self.playerSpeed * -1, 0)
+        self.rect.move_ip((self.playerSpeed * -1) * self.gameParams.get_deltaTime(), 0)
       #  print('Moving left.')
 
     def moveRight(self):
-        self.rect.move_ip(self.playerSpeed, 0)
+        self.rect.move_ip((self.playerSpeed * self.gameParams.get_deltaTime(), 0))
         #print('Moving right.')
 
