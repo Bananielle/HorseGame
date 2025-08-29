@@ -2160,7 +2160,7 @@ class TPen(object):
         and likewise left/right make the turtle turn instantly.
 
         Example (for a Turtle instance named turtle):
-        >>> turtle.speed(3)
+        >>> turtle.speed_in_pixels_per_sec(3)
         """
         speeds = {'fastest':0, 'fast':10, 'normal':6, 'slow':3, 'slowest':1 }
         if speed is None:
@@ -4104,7 +4104,7 @@ if __name__ == "__main__":
         turtle.speed(6)
         turtle.color("blue","orange")
         turtle.pensize(2)
-        tri.speed(6)
+        tri.speed_in_pixels_per_sec(6)
         setheading(towards(turtle))
         count = 1
         while tri.distance(turtle) > 4:

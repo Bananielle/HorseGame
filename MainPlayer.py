@@ -77,7 +77,7 @@ class MainPlayer(pygame.sprite.Sprite):
         #print("Size of animal image: ", self.surf.get_width(), ",", self.surf.get_height())
 
     def setPlayerSpeed(self):
-        self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.deltaTime
+        self.playerSpeed = self.playerSpeed * self.gameParams.velocity * self.gameParams.get_deltaTime()
 
     def ridingHorseAnimation(self):
 

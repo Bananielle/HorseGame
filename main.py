@@ -186,6 +186,7 @@ if __name__ == '__main__':
             neurofeedback_threshold = float(settings["neurofeedback_threshold"])
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
+            framerate = settings["framerate"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
@@ -193,7 +194,7 @@ if __name__ == '__main__':
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type,
                                         neurofeedback_threshold,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
-                                        simulation_mode,debugging)
+                                        simulation_mode,debugging,framerate)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
@@ -392,7 +393,7 @@ if __name__ == '__main__':
                     screen.blit(value_surface, value_rect)
 
             pygame.display.flip()
-            clock.tick(gp.FPS)
+            clock.tick(gp.get_FPS())
 
         return gamestate
 
@@ -451,7 +452,7 @@ if __name__ == '__main__':
 
     def draw_debugging_text():
         if gp.debuggingText:
-            gp.display_exp_parameters()
+            gp.display_exp_parameters(get_current_jitter_duration())
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
             gp.update_retrieved_signal_value_text()
@@ -840,8 +841,8 @@ if __name__ == '__main__':
         else:
             current_jittered_rest_duration = gp.jittered_rest_list[
                 gp.REST_counter]  # -1 because the jitter list starts at index 0
-            print("Progress bar. Rest number: " + str(gp.REST_counter) + ", jitter: " + str(
-                current_jittered_rest_duration))
+           # print("Progress bar. Rest number: " + str(gp.REST_counter) + ", jitter: " + str(
+               # current_jittered_rest_duration))
 
             return current_jittered_rest_duration
 
@@ -962,7 +963,7 @@ if __name__ == '__main__':
     def showHowMuchTimeHasPassed(gamestate):
 
         # Show the player how much time has passed
-        if gp.currentTime_s == gp.durationGame_s:
+        if gp.currentTime_s >= gp.durationGame_s:
             print("Game time is over. Current time: " +str(gp.currentTime_s) + ", total game duration limit: " + str(gp.durationGame_s) )
             gamestate = GameState.GAMEOVER
             gp.player.kill()
@@ -1139,8 +1140,7 @@ if __name__ == '__main__':
 
         if gamestate == GameState.STARTNEWGAME:
             gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
-            progressBar.set_fill_rate_rest()  # Update progress bar duration based on latest in-game settings
-            progressBar.set_fill_rate_task(gp.duration_TASK_s)
+            progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp) # Create new progress bar (with corret fill rates)
             scoreboard.gp.scoreSaved = False # Allow scoreboard to save a new score
 
         elif gamestate == GameState.MAINGAME:
@@ -1156,12 +1156,8 @@ if __name__ == '__main__':
             run = False  # quit the while loop
 
         # Take care of time
-        clock.tick(
-            gp.FPS)  # Updates the clock using a framerate of x frames per second (so goes through the while loop e.g. 60 times per second).
-        now = pygame.time.get_ticks()  # Get current time since pygame started
-        gp.deltaTime = int(
-            (now - prev_time) / 10)  # Compute delta time... divided by 10 because to make sprite speed more manageble
-        prev_time = now
+        dt = clock.tick(gp.get_FPS()) / 1000.0 # clock.tick returns the time since last call, in ms. Divide by 1000 to get it in seconds.
+        gp.deltaTime = dt # keep it as a float
 
         pygame.display.flip()
 

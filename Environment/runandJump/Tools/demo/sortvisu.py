@@ -241,7 +241,7 @@ class ArrayItem:
     def setindex(self, index):
         nsteps = steps(self.index, index)
         if not nsteps: return
-        if self.array.speed == "fastest":
+        if self.array.speed_in_pixels_per_sec == "fastest":
             nsteps = 0
         oldpts = self.position()
         self.index = index
@@ -255,7 +255,7 @@ class ArrayItem:
     def swapwith(self, other):
         nsteps = steps(self.index, other.index)
         if not nsteps: return
-        if self.array.speed == "fastest":
+        if self.array.speed_in_pixels_per_sec == "fastest":
             nsteps = 0
         myoldpts = self.position()
         otheroldpts = other.position()
@@ -267,7 +267,7 @@ class ArrayItem:
         self.canvas.itemconfig(self.item_id, fill='green')
         self.canvas.itemconfig(other.item_id, fill='yellow')
         self.array.master.update()
-        if self.array.speed == "single-step":
+        if self.array.speed_in_pixels_per_sec == "single-step":
             self.canvas.coords(self.item_id, mynewpts)
             self.canvas.coords(other.item_id, othernewpts)
             self.array.master.update()

@@ -111,6 +111,8 @@ class NumericalItem_int(MenuItem):
             self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
         if self.text == "Duration datawindow before task ends (seconds):":
             self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
+        if self.text == "Frame rate:":
+            self.change_settings_file("framerate", self.value)
 
     def decrease(self):
         if self.value > self.min:
@@ -135,6 +137,8 @@ class NumericalItem_int(MenuItem):
             self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
         if self.text == "Duration datawindow before task ends (seconds):":
             self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
+        if self.text == "Frame rate:":
+            self.change_settings_file("framerate", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
         # if step is fractional, show one decimal; otherwise integer
@@ -202,6 +206,7 @@ class settingsMain():
             debugging = settings["debugging"]
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
+            framerate = settings["framerate"]
 
 
 
@@ -217,6 +222,7 @@ class settingsMain():
         self.add_item(NumericalItem_int("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
         self.add_item(ToggleItem("Debugging:", debugging))
         self.add_item(ToggleItem("Simulation mode:", simulation_mode))
+        self.add_item(NumericalItem_int("Frame rate:", framerate, 10, 80, 1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

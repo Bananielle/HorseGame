@@ -21,7 +21,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold,
-                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging):
+                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging,framerate):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -71,8 +71,9 @@ class GameParameters():
         # Time
         self.velocity = 1 # Determines general speed of all sprites (to ensure frame-rate independence)
         self.deltaTime = 1
-        self.FPS = 20  # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        self.FPS = framerate  # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
         # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
+
 
         # Background markers for task and rest periods
         self.useExclamationMark = False  # Shows a bright exclamation mark when a task starts
@@ -208,12 +209,18 @@ class GameParameters():
         self.timeForJumpEvent = False
         self.horseHasJumpedThisTrial = False
 
+    def get_FPS(self):
+        return self.FPS
+
     def calculate_duration_game(self):
 
         n = self.totalNum_TRIALS
-        duration_game_s = + self.duration_BASELINE_s + ((n+1) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 5 #How long you want to one game run to last (in seconds)
+        duration_game_s = + self.duration_BASELINE_s + ((n+1) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 6 #How long you want to one game run to last (in seconds)
         # Other
         return duration_game_s
+
+    def get_deltaTime(self): # Get the current delta time
+        return self.deltaTime
 
     def set_achieved_NF_level(self, achieved_NF_level):
         self.achievedNFlevel = achieved_NF_level
@@ -229,8 +236,8 @@ class GameParameters():
     def startCountingCoins(self):
         self.coinsBeingCounted = True
 
-    def display_exp_parameters(self):
-        self.exp_parameters_text = self.debuggingFont.render("Task: " + str(self.duration_TASK_s) + "s, rest: "+ str(self.duration_REST_s) + "s, jitter: "+ str(self.jitter_s) + "s",
+    def display_exp_parameters(self, current_jittered_rest_duration):
+        self.exp_parameters_text = self.debuggingFont.render("Task: " + str(self.duration_TASK_s) + "s, current rest: "+ str(current_jittered_rest_duration) + "s, jitter: "+ str(self.jitter_s) + "s",
                                                                    True, [0, 0, 0])
 
     def update_y_position_horse_text(self):

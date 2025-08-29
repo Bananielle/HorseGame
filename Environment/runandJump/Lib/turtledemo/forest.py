@@ -55,7 +55,7 @@ def tree(tlist, size, level, widthfactor, branchlists, angledist=10, sizedist=5)
 def start(t,x,y):
     colormode(255)
     t.reset()
-    t.speed(0)
+    t.speed_in_pixels_per_sec(0)
     t.hideturtle()
     t.left(90)
     t.penup()

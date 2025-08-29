@@ -22,14 +22,13 @@ class Coin(pygame.sprite.Sprite):
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.startingSizeOfCoin = self.surf.get_width()
-        # The starting position is randomly generated, as is the speed
+
         self.startingPosition_y = startingPosition_y
-        self.rect = self.surf.get_rect(
-            center=(SCREEN_WIDTH,startingPosition_y
-            )
-        )
+        self.rect = self.surf.get_rect(center=(SCREEN_WIDTH,startingPosition_y))
+
         print("T=", self.gameParams.currentTime_s, ": New coin added. Width: ", self.rect.width, " Height: ", self.rect.height)
-        self.speed = 2 * gameParams.velocity * gameParams.deltaTime
+
+        self.speed_in_pixels_per_sec = float(200.0 * gameParams.velocity) # Keep it as float (otherwise rounding errors)
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGTH = SCREEN_HEIGHT
@@ -47,21 +46,10 @@ class Coin(pygame.sprite.Sprite):
     # Remove it when it passes the left edge of the screen
     def update(self):
 
-        freezeCoins = self.gameParams.freezeCoins
-
-        # if not freezeCoins:
-        #     if self.movedUpCounter < 20:
-        #         self.rect.move_ip(0, -self.speed/5) # Move down
-        #     else:
-        #         self.rect.move_ip(0, self.speed/5) # Move up
-        #         if self.movedUpCounter > 37:
-        #             self.movedUpCounter = 0
-        #
-        #     self.movedUpCounter += 1
-
+        dt = self.gameParams.deltaTime # Seconds since last frame
 
         # If coin has not yet reached its endspot
         if self.rect.right > self.endSpot: # If coin has not yet reached its endspot
-            self.rect.move_ip(-self.speed, 0) # Keep moving to the left
+            self.rect.move_ip(-self.speed_in_pixels_per_sec * dt, 0) # Keep moving to the left
         else: # Otherwise make coinstop on a random spot somewhere on the right side of the screen
             self.reachedFinalSpot = True
