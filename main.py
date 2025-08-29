@@ -536,7 +536,7 @@ if __name__ == '__main__':
             scaled_data = BCI.startMeasuring(task=True, simulatedData=gp.signalValue_simulated,
                                              trialNr=gp.trial_counter)
             print("T=", gp.currentTime_s, ": Collecting timewindow data for task. Start time task: " + str(
-                gp.protocol_file['datawindow_task_start_times'][gp.TASK_counter]) + ", Scaled data: " + str(
+                gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task]) + ", Scaled data: " + str(
                 scaled_data))
 
         if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][
@@ -765,6 +765,7 @@ if __name__ == '__main__':
         screen.blit(replay.surf, replay.surf_center)
 
         # Save the score for the player
+        #print("Adding scores to scoreboard.")
         scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun)
 
         if not gp.printedNFdata:  # If you didn't print the data yet (needs to happen only once)
@@ -801,6 +802,7 @@ if __name__ == '__main__':
                     ((SCREEN_WIDTH / 2) - (SCREEN_WIDTH * 0.11), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.40)))
 
         sortedScores, sortedTasks = scoreboard.sortScores()
+
         displayScoreboard()
 
         # Check for user input
@@ -817,18 +819,19 @@ if __name__ == '__main__':
 
 
     def displayScoreboard():
-        newPosition = 30
+        #print("Displaying score board...")
+        newPosition = 15
         scoresText_list, taskText_list, bonusText_list = scoreboard.prepareScoreBoardText()
 
         for i in range(len(scoresText_list)):
             screen.blit(bonusText_list[i],
                         ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-            newPosition += 35
+            newPosition += 25
             screen.blit(scoresText_list[i],
                         ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
             screen.blit(taskText_list[i],
                         ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
-            newPosition += 35
+            newPosition += 25
 
 
     def get_current_jitter_duration():  # todo: This could be coded less rickety...
@@ -960,6 +963,7 @@ if __name__ == '__main__':
 
         # Show the player how much time has passed
         if gp.currentTime_s == gp.durationGame_s:
+            print("Game time is over. Current time: " +str(gp.currentTime_s) + ", total game duration limit: " + str(gp.durationGame_s) )
             gamestate = GameState.GAMEOVER
             gp.player.kill()
             progressBar.kill()
@@ -1137,6 +1141,7 @@ if __name__ == '__main__':
             gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
             progressBar.set_fill_rate_rest()  # Update progress bar duration based on latest in-game settings
             progressBar.set_fill_rate_task(gp.duration_TASK_s)
+            scoreboard.gp.scoreSaved = False # Allow scoreboard to save a new score
 
         elif gamestate == GameState.MAINGAME:
             gamestate = runMainGame()

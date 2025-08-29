@@ -328,9 +328,9 @@ class BrainComputerInterface():
         self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
         self.NFsignal["NF_ThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
-        self.save_allChannelData_to_csv()
+       # self.save_allChannelData_to_csv()
 
-        self.save_continousMeasurementDataToCSV()
+      #  self.save_continousMeasurementDataToCSV()
 
 
     def getCurrentTimePoint(self):
@@ -376,7 +376,7 @@ class BrainComputerInterface():
 
     def set_NF_max_threshold(self,NFsignal_max):
         self.NF_neurofeedack_threshold = NFsignal_max
-        print("NF_maxLevel set to: " + str(self.NF_neurofeedack_threshold))
+        print("Recommended neurofeedback threshold: " + str(self.NF_neurofeedack_threshold))
 
     def getCurrentOxyInput(self):
         input = 0

@@ -15,8 +15,10 @@ HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"
 
 class Scoreboard():
     def __init__(self, gameParameters):
+        print("Scoreboard created. (should happen only once")
         self.taskList = []
         self.scoresList = []
+        print("Scorelist is empty.")
         self.runList = []
         self.task_coins_dictionary = {}
         self.runNr = 1
@@ -33,7 +35,7 @@ class Scoreboard():
             self.runList = self.runNr
             self.runNr = + 1
             self.gp.scoreSaved = True  # This will reset when the player goes back to the start screen
-            print('Score ', score, ' saved to score list. Is now: ', str(self.scoresList))
+            print('Score for run ',  self.runNr, ': ', score, ' saved to score list. Is now: ', str(self.scoresList))
             print('Coins per trial: ' + str(self.gp.nrCoinsPerTrial))
             self.coinsPerTrialPerRuns.append(self.gp.nrCoinsPerTrial)
             print('Coins per trial per run: ' + str(self.coinsPerTrialPerRuns))
@@ -52,12 +54,12 @@ class Scoreboard():
         self.sortedScores = sorted(self.scoresList, reverse=True)
         sortedDictionary = dict(sorted(self.task_coins_dictionary.items()))
         self.sortedTasks = list(sortedDictionary)
+        #print("Sorting scores... " + str(self.sortedScores))
 
         return self.sortedScores, self.sortedTasks
 
     def prepareScoreBoardText(self):
         currentScoreAlreadyDisplayed = False
-        newPosition = 30
         count = 1
         scoresText_list = []
         taskText_list = []
@@ -68,10 +70,10 @@ class Scoreboard():
 
             # Adjust the coin vallue based on the difficulty level:
             bonus = 0
-            if self.gp.gameDifficulty == 2:
-                bonus = int((score * 1.2) - score)
-            if self.gp.gameDifficulty == 3:
-                bonus = int((score * 1.2 * 1.2) - score)
+          #  if self.gp.gameDifficulty == 2:
+           #     bonus = int((score * 1.2) - score)
+          #  if self.gp.gameDifficulty == 3:
+           #     bonus = int((score * 1.2 * 1.2) - score) # todo: Keep in our out?
 
             i = 0
 
