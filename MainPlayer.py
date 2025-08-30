@@ -182,8 +182,8 @@ class MainPlayer(pygame.sprite.Sprite):
             if self.HorseIsJumpingDown:
                 if self.rect.bottom < self.borderOfPathForHorse:
                     self.jumpDown()
-                    print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
-                          str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
+                    #print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
+                        #  str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False
@@ -191,8 +191,8 @@ class MainPlayer(pygame.sprite.Sprite):
                     self.gameParams.horseJumpEvent = False
                     self.gameParams.startCountingCoins()
 
-                    print("Horse is not jumping anymore.")
-                    print("===========================================================================================")
+                   # print("Horse is not jumping anymore.")
+                   # print("===========================================================================================")
 
         else:
             self.ridingHorseAnimation()

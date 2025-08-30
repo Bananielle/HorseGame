@@ -64,7 +64,7 @@ class GameParameters():
         # To simulate or not simulate
         self.usePreMadeProtocol = simulation_mode # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
-        self.saveIncomingData= False
+        self.saveIncomingData= True
 
         self.totalNumCoins = 10
 
