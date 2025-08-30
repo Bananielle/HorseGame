@@ -1,16 +1,16 @@
 {
   "fullscreen": false,
-  "num_trials": 2,
-  "task_duration_s": 4,
+  "num_trials": 5,
+  "task_duration_s": 2,
   "rest_duration_s": 6,
-  "baseline_duration_s": 2,
+  "baseline_duration_s": 1,
   "jitter_s": 1,
   "neurofeedback_threshold": 10.0,
   "data_input_type": 1,
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
   "simulation_mode": false,
   "debugging": true,
-  "datawindow_duration_after_task_end_s": 3,
+  "datawindow_duration_after_task_end_s": 2,
   "datawindow_duration_before_task_end_s": 2,
-  "framerate": 80
+  "framerate": 60
 }

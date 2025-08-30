@@ -74,7 +74,7 @@ class MainGame_background(pygame.sprite.Sprite):
         self.folder = "Resources/" + mounttype.capitalize() + "/" + self.timeOfDay + "/"
         print("Using folder: ", self.folder)
 
-        # All backgrounds have at least 6 layers
+        # All backgrounds have at least 6 layers (from furthest background 1 to closest background 9)
         self.background1 = BackgroundTemplate(self.folder + 'Layer 01.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*(y),gameParams) # Don't scale the sky background
         self.background2 = BackgroundTemplate(self.folder + 'Layer 02.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams)
         self.background3 = BackgroundTemplate(self.folder + 'Layer 03.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams)
@@ -82,12 +82,13 @@ class MainGame_background(pygame.sprite.Sprite):
         self.background5 = BackgroundTemplate(self.folder + 'Layer 05.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams)
         self.background6 = BackgroundTemplate(self.folder + 'Layer 06.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams)
 
-        if mounttype is not 'turtle':
+        if mounttype is not 'turtle': # The turle has less background layers
             self.background7 = BackgroundTemplate(self.folder + 'Layer 07.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*(y),gameParams)
             self.background8 = BackgroundTemplate(self.folder + 'Layer 08.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams)# Layer where the animal walks on.
             self.background9 = BackgroundTemplate(self.folder + 'Layer 09.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams) # Layer where the animal walks on.
 
-        if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Bear/Night/":
+        # Some animal scenario's have more background layers
+        if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Horse/Night/" or self.folder == "Resources/Bear/Night/":
             self.background10 = BackgroundTemplate(self.folder + 'Layer 10.png',SCREEN_WIDTH*x,SCREEN_HEIGHT*y,gameParams) # Layer where the animal walks on.
 
         if self.folder == "Resources/Horse/Night/":
@@ -113,21 +114,24 @@ class MainGame_background(pygame.sprite.Sprite):
 
         if self.MountType is 'turtle': # Let this layer move faster, because it is the foreground layer.
             self.background4.moveBackground(speed=100 * self.backgroundSpeed, a=60, overlapBuffer=6)
-            self.background5.moveBackground(speed=150 * self.backgroundSpeed, a=60, overlapBuffer=6)
-            self.background6.moveBackground(speed=200 * self.backgroundSpeed, a=60, overlapBuffer=6)
+            self.background5.moveBackground(speed=130 * self.backgroundSpeed, a=60, overlapBuffer=6)
+            self.background6.moveBackground(speed=180 * self.backgroundSpeed, a=60, overlapBuffer=6)
         else:
             self.background4.moveBackground(speed=35 * self.backgroundSpeed, a=6, overlapBuffer=6)
             self.background5.moveBackground(speed=60 * self.backgroundSpeed, a=6, overlapBuffer=6)
             self.background6.moveBackground(speed=70 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
         if self.MountType is not 'turtle':
-            self.background7.moveBackground(speed=75 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background8.moveBackground(speed=80 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background9.moveBackground(speed=150 * self.backgroundSpeed, a=6, overlapBuffer=6)
-        if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Bear/Night/":
-            self.background10.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background7.moveBackground(speed=80 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            if self.folder == "Resources/Horse/Night/" or self.folder == "Resources/Bear/Night/":
+                self.background8.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            else:
+                self.background8.moveBackground(speed=130 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background9.moveBackground(speed=130 * self.backgroundSpeed, a=6, overlapBuffer=6)
+        if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Horse/Night/" or self.folder == "Resources/Bear/Night/":
+            self.background10.moveBackground(speed=150 * self.backgroundSpeed, a=6, overlapBuffer=6)
         if self.folder == "Resources/Horse/Night/":
-            self.background11.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background11.moveBackground(speed=150 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
     #print('bgX = ', int(self.bgX_foreground), ' bgX2 = ', int(self.bgX2_foreground))
 

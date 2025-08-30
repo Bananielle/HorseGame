@@ -53,7 +53,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-(self.SCREEN_HEIGHT/10)
         self.startingPosition_x = 280
         self.rect = self.surf.get_rect(center=(self.startingPosition_x,self.lowerLimitYpositionPlayer))
-        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer -1
+        self.borderOfPathForHorse = self.lowerLimitYpositionPlayer
         self.rect.bottom = self.borderOfPathForHorse # To make sure the horse is in the correct y position ( on the path)
 
 
@@ -136,7 +136,7 @@ class MainPlayer(pygame.sprite.Sprite):
         if self.rect.bottom >= self.borderOfPathForHorse:
             #print("Horse being kept on path")
             # self.rect.bottom = self.borderOfPathForHorse
-            self.rect.move_ip(0, -5) # Gently move horse up (instead of instantly changing horse to new position, which can create weird distortions)
+            self.rect.move_ip(0, -5* self.gameParams.get_deltaTime()) # Gently move horse up (instead of instantly changing horse to new position, which can create weird distortions)
 
 
     def calculate_jump_position(self, achieved_NF_level):
@@ -149,7 +149,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
         # NF should not be zero or negative
         if achieved_NF_level <= 0:
-            print("NF signal is below zero:  ", str(achieved_NF_level))
+         #   print("NF signal is below zero:  ", str(achieved_NF_level))
             achieved_NF_level = 0.2
         if pd.isna(achieved_NF_level):
             print("NF signal has NaN value:  ", str(achieved_NF_level))
@@ -164,7 +164,6 @@ class MainPlayer(pygame.sprite.Sprite):
 
         #print("Jump position = ", str(jump_position))
 
-
         return jump_position
 
     def performJumpSequence(self, NF_level_reached):
@@ -177,15 +176,14 @@ class MainPlayer(pygame.sprite.Sprite):
                 if self.rect.top >  self.calculate_jump_position(NF_level_reached):
                     self.jumpUp()
                     #print(T=",self.gameParams.currentTime_s,": Horse is jumping up. NF_level reached: " + str(int(NF_level_reached*100)) + "%, Achieved jump position = " + str(self.calculate_jump_position(NF_level_reached)))
-
                 else:
                     self.HorseIsJumpingUp = False
                     self.HorseIsJumpingDown = True
             if self.HorseIsJumpingDown:
                 if self.rect.bottom < self.borderOfPathForHorse:
                     self.jumpDown()
-                    #print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
-                          #str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
+                    print("Horse is jumping down. Screen height = ", str(self.SCREEN_HEIGHT), "  Horse bottom = ",
+                          str(self.rect.bottom), " borderOfScreenForHorse = ", str(self.borderOfPathForHorse))
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False
@@ -198,8 +196,8 @@ class MainPlayer(pygame.sprite.Sprite):
 
         else:
             self.ridingHorseAnimation()
-            if self.rect.centerx > self.startingPosition_x:  # Move horse back to starting point
-                #print("T=",self.gameParams.currentTime_s,": Horse is moving back to starting point.")
+            if self.rect.centerx > self.startingPosition_x:  # Move horse back to starting point # todo turtle not smooth
+                print("T=",self.gameParams.currentTime_s,": Horse is moving back to starting point.")
                 self.moveLeft()
                # self.moveLeft()
 
