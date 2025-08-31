@@ -293,10 +293,10 @@ class GameParameters():
         print("Parameter " + parameter + " changed to: " + str(settings[parameter]))
     def apply_parameters_premadeprotocol_to_settings(self):
         self.change_settings_file("num_trials",self.totalNum_TRIALS)
-        self.change_settings_file(("task_duration_s"),self.duration_TASK_s)
+        self.change_settings_file("task_duration_s",self.duration_TASK_s)
         self.change_settings_file("rest_duration_s",self.duration_REST_s)
         self.change_settings_file("baseline_duration_s",self.duration_BASELINE_s)
-        self.change_settings_file(("jitter_s"),self.jitter_s)
+        self.change_settings_file("jitter_s",0) # todo: set to 0 for now, because it jsut affects the progress bar, not the datawindow
 
         self.durationGame_s = self.calculate_duration_game() # Recalculate this with the updated parameters
 
@@ -347,6 +347,30 @@ class GameParameters():
 
         print("Start volumes: ", str(self.start_volumes))
         print("End volumes: ", str(self.end_volumes))
+
+        self.samplingRate = 10 # todo: need to get this from TSI!
+
+        # convert to seconds
+        start_times_s = [v / self.samplingRate for v in self.start_volumes]
+        end_times_s = [v / self.samplingRate for v in self.end_volumes]
+
+        # task durations
+        task_durations = [end - start for start, end in zip(start_times_s, end_times_s)]
+
+        rest_durations = [
+            start_times_s[i + 1] - end_times_s[i]
+            for i in range(len(end_times_s) - 1)
+        ]
+        print("Task durations: ", str(task_durations))
+        print("Rest durations: ", str(rest_durations))
+
+        # Set task and rest duration based on read PRT file
+        self.duration_TASK_s = round(task_durations[0])
+        self.duration_REST_s = round(rest_durations[0])
+        self.duration_BASELINE_s = (start_times_s[0] - self.duration_REST_s) # todo: incorrect
+
+        print("Task duration: ", str(self.duration_TASK_s))
+        print("Rest duration: ", str(self.duration_REST_s))
 
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions

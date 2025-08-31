@@ -140,25 +140,19 @@ class MainPlayer(pygame.sprite.Sprite):
 
 
     def calculate_jump_position(self, achieved_NF_level):
-        #
-        # achieved_NF_level = 0.1
-        # while achieved_NF_level < 1.1:
-        #     jump_position = (0 + self.SCREEN_HEIGHT * 0.2) + (self.SCREEN_HEIGHT * (1 - achieved_NF_level))
-        #     print("=====achieved NF level: " + str(achieved_NF_level), ", jump position: " + str(jump_position))
-        #     achieved_NF_level += 0.1
 
         # NF should not be zero or negative
-        if achieved_NF_level <= 0:
-         #   print("NF signal is below zero:  ", str(achieved_NF_level))
-            achieved_NF_level = 0.2
-        if pd.isna(achieved_NF_level):
-            print("NF signal has NaN value:  ", str(achieved_NF_level))
-            achieved_NF_level = 0.2 # TODO Should be 0.2!
+        if achieved_NF_level < 0.25 or pd.isna(achieved_NF_level):
+         #   print("NF signal is below min or NaN:  ", str(achieved_NF_level))
+            achieved_NF_level = 0.25
 
-        jump_lower_bound = 6 / 10  # Lower bound of the jump position range
+            minimum_coin_target = self.gameParams.coinOriginalStartingPosition_y   # Make sure it reaches the 3rd coin
+            jump_lower_bound = 5 / 10  # Lower bound of the jump position range
+        else:
+            jump_lower_bound = 5 / 10  # Lower bound of the jump position range
+
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
-
-        # Map the neurofeedback signal to the jump position range
+            # Map the neurofeedback signal to the jump position range
         jump_position = jump_lower_bound + (jump_upper_bound - jump_lower_bound) * achieved_NF_level
         jump_position = int(self.SCREEN_HEIGHT * (1 - jump_position))
 
@@ -283,6 +277,6 @@ class MainPlayer(pygame.sprite.Sprite):
       #  print('Moving left.')
 
     def moveRight(self):
-        self.rect.move_ip((self.playerSpeed * self.gameParams.get_deltaTime(), 0))
+        self.rect.move_ip(self.playerSpeed * self.gameParams.get_deltaTime(), 0)
         #print('Moving right.')
 
