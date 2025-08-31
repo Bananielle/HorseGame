@@ -221,7 +221,7 @@ class settingsMain():
         self.add_item( NumericalItem_int("Duration datawindow before task ends (seconds):", datawindow_duration_before_task_end_s,                              0, 60, 1))
         self.add_item(NumericalItem_int("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
         self.add_item(ToggleItem("Debugging:", debugging))
-        self.add_item(ToggleItem("Simulation mode:", simulation_mode))
+        #self.add_item(ToggleItem("Simulation mode:", simulation_mode))
         self.add_item(NumericalItem_int("Frame rate:", framerate, 10, 80, 1))
 
     def add_item(self, item: MenuItem):

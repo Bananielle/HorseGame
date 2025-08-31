@@ -2,7 +2,7 @@
   "fullscreen": false,
   "num_trials": 6,
   "task_duration_s": 2,
-  "rest_duration_s": 7,
+  "rest_duration_s": 17,
   "baseline_duration_s": 2,
   "jitter_s": 2,
   "neurofeedback_threshold": 10.0,
