@@ -119,19 +119,19 @@ class MainGame_background(pygame.sprite.Sprite):
         else:
             self.background4.moveBackground(speed=35 * self.backgroundSpeed, a=6, overlapBuffer=6)
             self.background5.moveBackground(speed=50 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background6.moveBackground(speed=60 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background6.moveBackground(speed=80 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
         if self.MountType is not 'turtle':
             self.background7.moveBackground(speed=80 * self.backgroundSpeed, a=6, overlapBuffer=6)
             if self.folder == "Resources/Horse/Night/" or self.folder == "Resources/Bear/Night/":
                 self.background8.moveBackground(speed=80 * self.backgroundSpeed, a=6, overlapBuffer=6)
             else:
-                self.background8.moveBackground(speed=80 * self.backgroundSpeed, a=6, overlapBuffer=6)
-            self.background9.moveBackground(speed=130 * self.backgroundSpeed, a=6, overlapBuffer=6)
+                self.background8.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background9.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
         if self.folder == "Resources/Horse/Day/" or self.folder == "Resources/Horse/Night/" or self.folder == "Resources/Bear/Night/":
-            self.background10.moveBackground(speed=130 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background10.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
         if self.folder == "Resources/Horse/Night/":
-            self.background11.moveBackground(speed=130 * self.backgroundSpeed, a=6, overlapBuffer=6)
+            self.background11.moveBackground(speed=100 * self.backgroundSpeed, a=6, overlapBuffer=6)
 
     #print('bgX = ', int(self.bgX_foreground), ' bgX2 = ', int(self.bgX2_foreground))
 
