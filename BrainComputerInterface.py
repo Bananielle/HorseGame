@@ -328,7 +328,7 @@ class BrainComputerInterface():
         self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
         self.NFsignal["NF_ThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
-       # self.save_allChannelData_to_csv()
+        self.save_allChannelData_to_csv()
 
       #  self.save_continousMeasurementDataToCSV()
 
@@ -398,7 +398,7 @@ class BrainComputerInterface():
             selectedChannels = self.selectedChannels
 
            # print('Selected channel = ' + str(selectedChannels[0]))
-            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=1)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
+            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
 
 
            # print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
@@ -416,7 +416,7 @@ class BrainComputerInterface():
             contrast = [0,0,0,0,0,0,0,0,0,0]
             if trialNr > 0:
                 contrast[trialNr-1] = 1 # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
-            t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[0],chromophore=1,contrast=contrast) # 1 is oxy, 0 is deoxy
+            t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[0],chromophore=self.gp.chromophore,contrast=contrast) # 1 is oxy, 0 is deoxy
 
             #print("T-value: " + str(t_values))
 

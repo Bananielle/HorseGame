@@ -183,6 +183,7 @@ if __name__ == '__main__':
             simulation_mode = settings["simulation_mode"]
             debugging = settings["debugging"]
             data_input_type = settings["data_input_type"]
+            chromophore = settings["chromophore"]
             neurofeedback_threshold = float(settings["neurofeedback_threshold"])
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
@@ -191,7 +192,7 @@ if __name__ == '__main__':
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
         gameParameters = GameParameters(player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s,
-                                        rest_duration_s, baseline_duration_s, jitter_s, data_input_type,
+                                        rest_duration_s, baseline_duration_s, jitter_s, data_input_type,chromophore,
                                         neurofeedback_threshold,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode,debugging,framerate)
@@ -378,7 +379,7 @@ if __name__ == '__main__':
                 if i == settingMain.selected_index:
                     pygame.draw.rect(
                         screen, (PINK),
-                        pygame.Rect(item.location[0] - 6, item.location[1] - 10, SCREEN_WIDTH * 0.45, 36))
+                        pygame.Rect(item.location[0] - 6, item.location[1] - 10, SCREEN_WIDTH * 0.55, 36))
 
                 # Show item (left)
                 screen.blit(item.surface, (item.location))
@@ -389,7 +390,7 @@ if __name__ == '__main__':
                     value_surface = item.font.render(val, True, WHITE)
                     value_rect = value_surface.get_rect()
                     value_rect.top = item.location[1]  # align vertically with label
-                    value_rect.right = item.location[0] - 10 + SCREEN_WIDTH * 0.45  # inside the box, 10px padding
+                    value_rect.right = item.location[0] - 10 + SCREEN_WIDTH * 0.55  # inside the box, 10px padding
                     screen.blit(value_surface, value_rect)
 
             pygame.display.flip()

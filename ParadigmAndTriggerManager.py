@@ -15,7 +15,7 @@ class ParadigmAndTriggerManager():
         self.simulatedData_array = [] # Array that contains a signal value (e.g., oxy or betas) for each second
 
         # Set up trigger stream (note that you need to exactly write "TriggerStream', otherwise Aurora and Turbo-Satori won't recognize it!
-        self.info = StreamInfo(name='TriggerStream', type='Markers', channel_count=1, channel_format='int32',
+        self.info = StreamInfo(name='Trigger', type='Markers', channel_count=1, channel_format='int32',
                       source_id='Example')  # sets variables for object info
         self.outlet = StreamOutlet(self.info)  # initialize stream.
 

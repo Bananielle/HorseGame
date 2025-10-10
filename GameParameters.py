@@ -20,11 +20,13 @@ HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"  # add the file to your repo
 ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
-    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, nf_threshold,
+    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold,
                  datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging,framerate):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
+
+        self.chromophore = chromophore # 1 = oxy and 0 is deoxy
 
 
         # ADJUSTABLE PARAMETERS
@@ -249,18 +251,22 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_retrieved_signal_value_text(self):
-        self.signal_value_retrieved_text = self.debuggingFont.render(("Beta " if self.dataType == 0 else "T-") +  "value of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
+        if self.chromophore == 1:
+            self.signal_value_retrieved_text = self.debuggingFont.render(("Beta " if self.dataType == 0 else "T-") +  "value (HbO) of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
                                                                    True, [0, 0, 0])
+        if self.chromophore == 0:
+            self.signal_value_retrieved_text = self.debuggingFont.render(("Beta " if self.dataType == 0 else "T-") + "value (Hb) of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
+                                                                    True, [0, 0, 0])
 
     def update_NF_target_value_text(self,NF_maxLevel_based_on_localizer):
         self.NF_target_value_text = self.debuggingFont.render("NF target value = " + str('{:.2f}'.format(NF_maxLevel_based_on_localizer)),
                                                                    True, [0, 0, 0])
     def update_current_beta_value_text(self, current_beta):
-        self.current_beta_value_text = self.debuggingFont.render("(realtime) Beta = " + str('{:.2f}'.format(current_beta)),
+        self.current_beta_value_text = self.debuggingFont.render("(realtime) Beta " + ("(HbO)" if self.chromophore == 1 else "(Hb)") + " = " + str('{:.2f}'.format(current_beta)),
                                                                    True, [0, 0, 0])
     def update_current_t_value_text(self,t_value):
 
-        self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = " + str('{:.2f}'.format(t_value)),
+        self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value " + ("(HbO)" if self.chromophore == 1 else "(Hb)") + " = " + str('{:.2f}'.format(t_value)),
                                                                    True, [0, 0, 0])
 
     def update_data_window_info(self,collectTimewindowData):
