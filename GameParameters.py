@@ -20,7 +20,7 @@ HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"  # add the file to your repo
 ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
-    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold,
+    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
                  datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging,framerate):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
@@ -33,7 +33,13 @@ class GameParameters():
         # paradigm
         self.folder = 'Horse'
 
-        self.neurofeedback_threshold = float(nf_threshold)
+        self.neurofeedback_threshold_t_value = nf_threshold_t_value
+        self.neurofeedback_threshold_beta = float(nf_threshold_beta)
+
+        if data_input_type == 0:
+            self.neurofeedback_threshold = self.neurofeedback_threshold_beta
+        if data_input_type == 1:
+            self.neurofeedback_threshold = self.neurofeedback_threshold_t_value
 
         self.duration_TASK_s = task_duration_s
         self.duration_REST_s = rest_duration_s
@@ -49,7 +55,6 @@ class GameParameters():
             'datawindow_task_end_times': {},
             'datawindow_rest_start_times': {},
             'datawindow_rest_end_times': {},
-
         }
 
         # Participant information (will be used to correctly name the protocol file for each run)

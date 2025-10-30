@@ -184,7 +184,8 @@ if __name__ == '__main__':
             debugging = settings["debugging"]
             data_input_type = settings["data_input_type"]
             chromophore = settings["chromophore"]
-            neurofeedback_threshold = float(settings["neurofeedback_threshold"])
+            neurofeedback_threshold_t_value = settings["neurofeedback_threshold_t_value"]
+            neurofeedback_threshold_beta = settings["neurofeedback_threshold_beta"]
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
             framerate = settings["framerate"]
@@ -193,7 +194,7 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s,
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type,chromophore,
-                                        neurofeedback_threshold,
+                                        neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode,debugging,framerate)
         if gameParameters.usePreMadeProtocol:

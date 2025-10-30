@@ -17,6 +17,22 @@ WHITE = (255, 255, 255)
 ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"
 ARIAL_BOLD_FONT_PATH = "Resources/fonts/Arial Bold.ttf"
 
+class SettingNames:
+    FULLSCREEN = "Fullscreen:"
+    NUM_TRIALS = "Number of trials:"
+    TASK_DURATION = "Task duration (seconds):"
+    REST_DURATION = "Rest duration (seconds):"
+    BASELINE_DURATION = "Initial baseline duration (seconds):"
+    JITTER = "Jitter duration (seconds):"
+    NF_THRESHOLD_TVALUE = "Neurofeedback threshold (t-value):"
+    NF_THRESHOLD_BETA = "Neurofeedback threshold (beta):"
+    DATA_INPUT_TYPE = "Data input type (0 = beta's, 1 = t-values):"
+    CHROMOPHORE = "Use chromophore (1 = HbO, 0 = Hb):"
+    SIMULATION_MODE = "Simulation mode:"
+    DEBUGGING = "Debugging:"
+    DATAWINDOW_DURATION_AFTER_TASK_END = "Duration datawindow after task ends (seconds):"
+    DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow before task ends (seconds):"
+    FRAMERATE = "Frame rate (Hz):"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
@@ -29,13 +45,13 @@ class Settings_header(pygame.sprite.Sprite):
 
         self.surf_center = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
-            ((self.SCREEN_HEIGHT * 0.15) - self.surf.get_height())
-        )
+            ((self.SCREEN_HEIGHT * 0.15) - self.surf.get_height()))
 
 
 class MenuItem:  # For creating different parameters
     def __init__(self, text, value):
         self.text = text
+        self.var = ''
         self.location = 0
         self.font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         self.surface = self.font.render(self.text, True, WHITE)
@@ -51,8 +67,9 @@ class MenuItem:  # For creating different parameters
         with open("GameSettings.json") as f:
             settings = json.load(f)  # Open settings file (json)
             # update and save back
-            if parameter == "neurofeedback_threshold":
+            if parameter == SettingNames.NF_THRESHOLD_BETA:
                 value = round(value,2) #Make sure it's a float rounded down to 1 decimal after the comma
+
 
             settings[parameter] = value  # Change the paramater
 
@@ -71,9 +88,9 @@ class ToggleItem(MenuItem):
         self.value = not self.value
         print(self.value)
 
-        if self.text == "Simulation mode:":
+        if self.text == SettingNames.SIMULATION_MODE:
             self.change_settings_file("simulation_mode", self.value)
-        if self.text == "Debugging:":
+        if self.text == SettingNames.DEBUGGING:
             self.change_settings_file("debugging", self.value)
 
     def value_text(self):
@@ -88,71 +105,55 @@ class NumericalItem_int(MenuItem):
         self.max = maximum
         self.step = step
 
+    def updateSettings(self):
+        if self.text == SettingNames.NUM_TRIALS:
+            self.change_settings_file("num_trials", self.value)
+        if self.text == SettingNames.TASK_DURATION:
+            self.change_settings_file("task_duration_s", self.value)
+        if self.text == SettingNames.REST_DURATION:
+            self.change_settings_file("rest_duration_s", self.value)
+        if self.text == SettingNames.BASELINE_DURATION:
+            self.change_settings_file("baseline_duration_s", self.value)
+        if self.text == SettingNames.JITTER:
+            self.change_settings_file("jitter_s", self.value)
+        if self.text == SettingNames.DATA_INPUT_TYPE:
+            self.change_settings_file("data_input_type", self.value)
+        if self.text == SettingNames.CHROMOPHORE:
+            self.change_settings_file("chromophore", self.value)
+        if self.text == SettingNames.NF_THRESHOLD_TVALUE:
+            self.change_settings_file("neurofeedback_threshold_t_value", self.value)
+        if self.text == SettingNames.NF_THRESHOLD_BETA:
+            self.change_settings_file("neurofeedback_threshold_beta", self.value)
+        if self.text == SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END:
+            self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
+        if self.text == SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END:
+            self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
+        if self.text == SettingNames.FRAMERATE:
+            self.change_settings_file("framerate", self.value)
+
     def increase(self):
         if self.value < self.max:
             self.value += self.step
             print(self.value)
 
-        if self.text == "Number of trials:":
-            self.change_settings_file("num_trials", self.value)
-        if self.text == "Task duration (seconds):":
-            self.change_settings_file("task_duration_s", self.value)
-        if self.text == "Rest duration (seconds):":
-            self.change_settings_file("rest_duration_s", self.value)
-        if self.text == "Initial baseline duration (seconds):":
-            self.change_settings_file("baseline_duration_s", self.value)
-        if self.text == "Jitter duration (seconds):":
-            self.change_settings_file("jitter_s", self.value)
-        if self.text == "Data input type (0 = beta's, 1 = t-values):":
-            self.change_settings_file("data_input_type", self.value)
-        if self.text == "Use chromophore (1 = HbO, 0 = Hb):":
-            self.change_settings_file("chromophore", self.value)
-        if self.text == "Neurofeedback threshold (value that will get max coins):":
-            self.change_settings_file("neurofeedback_threshold", self.value)
-        if self.text == "Duration datawindow after task ends (seconds):":
-            self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
-        if self.text == "Duration datawindow before task ends (seconds):":
-            self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
-        if self.text == "Frame rate (Hz):":
-            self.change_settings_file("framerate", self.value)
+            self.updateSettings()
 
     def decrease(self):
         if self.value > self.min:
             self.value -= self.step
             print(self.value)
 
-        if self.text == "Number of trials:":
-            self.change_settings_file("num_trials", self.value)
-        if self.text == "Task duration (seconds):":
-            self.change_settings_file("task_duration_s", self.value)
-        if self.text == "Rest duration (seconds):":
-            self.change_settings_file("rest_duration_s", self.value)
-        if self.text == "Initial baseline duration (seconds):":
-            self.change_settings_file("baseline_duration_s", self.value)
-        if self.text == "Jitter duration (seconds):":
-            self.change_settings_file("jitter_s", self.value)
-        if self.text == "Data input type (0 = beta's, 1 = t-values):":
-            self.change_settings_file("data_input_type", self.value)
-        if self.text == "Use chromophore (1 = HbO, 0 = Hb):":
-            self.change_settings_file("chromophore", self.value)
-        if self.text == "Neurofeedback threshold (value that will get max coins):":
-            self.change_settings_file("neurofeedback_threshold", self.value)
-        if self.text == "Duration datawindow after task ends (seconds):":
-            self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
-        if self.text == "Duration datawindow before task ends (seconds):":
-            self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
-        if self.text == "Frame rate (Hz):":
-            self.change_settings_file("framerate", self.value)
+            self.updateSettings()
 
     def value_text(self):  # Return the numerical value as a string.
         # if step is fractional, show one decimal; otherwise integer
         if isinstance(self.step, float) and not self.step.is_integer():
-            print("Neurofeedback threshold 2: " + str(self.value))
+            print("Neurofeedback threshold (beta): " + str(self.value))
             return f"{self.value:1f}"
         return str(int(self.value)) # Otherwise just return as an integer
 
 class NumericalItem_float(MenuItem):
-    def __init__(self, text, value=0, minimum=None, maximum=None, step=1):
+    def __init__(self, text, value=0.0, minimum=None, maximum=None, step=1):
         super().__init__(text, float(value))
         self.value = float(value)
         self.min = minimum
@@ -162,19 +163,21 @@ class NumericalItem_float(MenuItem):
     def increase(self):
         if self.value < self.max:
             self.value += self.step
+            self.value = round(self.value, 2)
             print(self.value)
 
-        if self.text == "Neurofeedback threshold:":
-            self.change_settings_file("neurofeedback_threshold", self.value)
+        if self.text == SettingNames.NF_THRESHOLD_BETA:
+            self.change_settings_file("neurofeedback_threshold_beta", self.value)
 
 
     def decrease(self):
         if self.value > self.min:
             self.value -= self.step
+            self.value = round(self.value,2)
             print(self.value)
 
-        if self.text == "Neurofeedback threshold:":
-            self.change_settings_file("neurofeedback_threshold", self.value)
+        if self.text == SettingNames.NF_THRESHOLD_BETA:
+            self.change_settings_file("neurofeedback_threshold_beta", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
         # if step is fractional, show one decimal;
@@ -205,7 +208,8 @@ class settingsMain():
             baseline_duration_s = settings["baseline_duration_s"]
             jitter_s = settings ["jitter_s"]
             data_input_type = settings["data_input_type"]
-            neurofeedback_threshold = settings["neurofeedback_threshold"]
+            neurofeedback_threshold_t_value = settings["neurofeedback_threshold_t_value"]
+            neurofeedback_threshold_beta = settings["neurofeedback_threshold_beta"]
             simulation_mode = settings["simulation_mode"]
             chromophore = settings["chromophore"]
             debugging = settings["debugging"]
@@ -216,23 +220,20 @@ class settingsMain():
 
 
         # Add new menu items here.
-        self.add_item(NumericalItem_int("Number of trials:", number_of_trials, 1, 100, 1))
-        self.add_item(NumericalItem_int("Task duration (seconds):", task_duration_s, 1, 3600, 1))
-        self.add_item(NumericalItem_int("Rest duration (seconds):", rest_duration_s, 1, 3600, 1))
-        self.add_item(NumericalItem_int("Initial baseline duration (seconds):", baseline_duration_s, 1, 3600, 1))
-        self.add_item(NumericalItem_int("Jitter duration (seconds):", jitter_s, 0, 360, 1))
-        self.add_item(NumericalItem_int("Data input type (0 = beta's, 1 = t-values):", data_input_type, 0, 1, 1))
-        self.add_item(NumericalItem_int("Use chromophore (1 = HbO, 0 = Hb):", chromophore,0,1,1))
-        if data_input_type == 0: # betas have smaller range
-            increase_by = 0.1
-        if data_input_type == 1: # t-values have larger range
-            increase_by = 1
-        self.add_item(NumericalItem_float("Neurofeedback threshold (value that will get max coins):", neurofeedback_threshold, 0, 100, increase_by))
-        self.add_item( NumericalItem_int("Duration datawindow before task ends (seconds):", datawindow_duration_before_task_end_s,                              0, 60, 1))
-        self.add_item(NumericalItem_int("Duration datawindow after task ends (seconds):", datawindow_duration_after_task_end_s, 0, 60, 1))
-        self.add_item(ToggleItem("Debugging:", debugging))
-        #self.add_item(ToggleItem("Simulation mode:", simulation_mode))
-        self.add_item(NumericalItem_int("Frame rate (Hz):", framerate, 10, 80, 1))
+        self.add_item(NumericalItem_int(SettingNames.NUM_TRIALS, number_of_trials, 1, 100, 1))
+        self.add_item(NumericalItem_int(SettingNames.TASK_DURATION, task_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem_int(SettingNames.REST_DURATION, rest_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem_int(SettingNames.BASELINE_DURATION, baseline_duration_s, 1, 3600, 1))
+        self.add_item(NumericalItem_int(SettingNames.JITTER, jitter_s, 0, 360, 1))
+        self.add_item(NumericalItem_int(SettingNames.DATA_INPUT_TYPE, data_input_type, 0, 1, 1))
+        self.add_item(NumericalItem_int(SettingNames.CHROMOPHORE, chromophore,0,1,1))
+        self.add_item(NumericalItem_int(SettingNames.NF_THRESHOLD_TVALUE, neurofeedback_threshold_t_value, 0, 100, 1))
+        self.add_item(NumericalItem_float(SettingNames.NF_THRESHOLD_BETA, neurofeedback_threshold_beta, 0, 100, 0.1))
+        self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END, datawindow_duration_before_task_end_s,                              0, 60, 1))
+        self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END, datawindow_duration_after_task_end_s, 0, 60, 1))
+        self.add_item(ToggleItem(SettingNames.DEBUGGING, debugging))
+        #self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
+        self.add_item(NumericalItem_int(SettingNames.FRAMERATE, framerate, 10, 80, 1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location
