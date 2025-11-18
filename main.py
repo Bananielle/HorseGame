@@ -772,9 +772,9 @@ if __name__ == '__main__':
         soundSystem.playedStartScreenSound = False
         gp.useProgressBar = False  # Turn off progress bar
 
+
         gameover = GameOver(SCREEN_WIDTH, SCREEN_HEIGHT)
         replay = PressSpaceToReplay(SCREEN_WIDTH, SCREEN_HEIGHT)
-        screen.blit(gameover.surf, gameover.surf_center)
         screen.blit(replay.surf, replay.surf_center)
 
         # Save the score for the player

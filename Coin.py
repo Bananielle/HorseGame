@@ -20,7 +20,8 @@ class Coin(pygame.sprite.Sprite):
             self.surf = pygame.image.load("Resources/coin_gold.png").convert_alpha()
 
         if gameParams.boringMode:
-            self.surf.set_alpha(0)
+            self.surf = pygame.image.load("Resources/coin_dot.png").convert_alpha()
+            #self.surf.set_alpha(0)
 
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
