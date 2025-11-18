@@ -1000,42 +1000,44 @@ if __name__ == '__main__':
 
         screen.fill((0, 0, 0))  # black
 
-        y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
+        if not gp.boringMode:
 
-        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX,
-                                                           y + 100])  # To fit the moon better on to the screen (it lowers it a little bit)
-        screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y + 100])
-        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y - 40])
-        screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y - 40])
-        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y - 40])
-        screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y - 40])
-        screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX, y])
-        screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX2, y])
-        screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX, y])
-        screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX2, y])
-        screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
-        screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
+            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
 
-        if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
-            screen.blit(mainGame_background.background7.surf,
-                        [mainGame_background.background7.bgX, y])  # To put the cacti a bit higher
-            screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
-            screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
-            screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
-            screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX, y])
-            screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX2, y])
+            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX,
+                                                               y + 100])  # To fit the moon better on to the screen (it lowers it a little bit)
+            screen.blit(mainGame_background.background1.surf, [mainGame_background.background1.bgX2, y + 100])
+            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX, y - 40])
+            screen.blit(mainGame_background.background2.surf, [mainGame_background.background2.bgX2, y - 40])
+            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX, y - 40])
+            screen.blit(mainGame_background.background3.surf, [mainGame_background.background3.bgX2, y - 40])
+            screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX, y])
+            screen.blit(mainGame_background.background4.surf, [mainGame_background.background4.bgX2, y])
+            screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX, y])
+            screen.blit(mainGame_background.background5.surf, [mainGame_background.background5.bgX2, y])
+            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
+            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
-        if mainGame_background.folder == "Resources/Horse/Day/" or mainGame_background.folder == "Resources/Bear/Night/":
-            screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX, y])
-            screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX2, y])
+            if mounttype == 'horse' or mounttype == 'camel' or mounttype == 'bear':
+                screen.blit(mainGame_background.background7.surf,
+                            [mainGame_background.background7.bgX, y])  # To put the cacti a bit higher
+                screen.blit(mainGame_background.background7.surf, [mainGame_background.background7.bgX2, y])
+                screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX, y])
+                screen.blit(mainGame_background.background8.surf, [mainGame_background.background8.bgX2, y])
+                screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX, y])
+                screen.blit(mainGame_background.background9.surf, [mainGame_background.background9.bgX2, y])
 
-        if mainGame_background.folder == "Resources/Horse/Night/":
-            screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX, y])
-            screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX2, y])
+            if mainGame_background.folder == "Resources/Horse/Day/" or mainGame_background.folder == "Resources/Bear/Night/":
+                screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX, y])
+                screen.blit(mainGame_background.background10.surf, [mainGame_background.background10.bgX2, y])
 
-        if not gp.task and gp.useGreyOverlay:
-            screen.blit(mainGame_background.overlay_greysurface,
-                        (0, 0))  # Draw the grey overlay surface on top of the background
+            if mainGame_background.folder == "Resources/Horse/Night/":
+                screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX, y])
+                screen.blit(mainGame_background.background11.surf, [mainGame_background.background11.bgX2, y])
+
+            if not gp.task and gp.useGreyOverlay:
+                screen.blit(mainGame_background.overlay_greysurface,
+                            (0, 0))  # Draw the grey overlay surface on top of the background
 
         if gp.draw_grid:
             # Draw the grid
