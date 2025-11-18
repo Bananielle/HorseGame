@@ -274,10 +274,11 @@ if __name__ == '__main__':
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
-        screen.blit(mountPic.surf, mountPic.location)
-        screen.blit(timeofdayPic.surf, timeofdayPic.location)
+        if not gp.boringMode:
+            screen.blit(mountPic.surf, mountPic.location)
+            screen.blit(timeofdayPic.surf, timeofdayPic.location)
+            screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(credits.surf, credits.location)
-        screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2.8, SCREEN_HEIGHT - 100))
 
         for event in pygame.event.get():
@@ -695,7 +696,8 @@ if __name__ == '__main__':
 
 
     def coinCollectionAdmin():
-        soundSystem.coinCollected.play()
+        if not gp.boringMode:
+            soundSystem.coinCollected.play()
 
         gp.nrCoinsCollectedThroughoutRun += 1
         gp.coinsCollectedInCurrentTrial += 1
@@ -714,7 +716,8 @@ if __name__ == '__main__':
 
                     if gp.coins_that_should_be_collected == gp.totalNumCoins:
                         print("T=", gp.currentTime_s, ": Highest coin collected! Killing all coins.")
-                        soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
+                        if not gp.boringMode:
+                            soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
                         killAllCoins()
                         break
 

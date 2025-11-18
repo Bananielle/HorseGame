@@ -19,6 +19,9 @@ class Coin(pygame.sprite.Sprite):
         if gameParams.gameDifficulty == 3:
             self.surf = pygame.image.load("Resources/coin_gold.png").convert_alpha()
 
+        if gameParams.boringMode:
+            self.surf.set_alpha(0)
+
         self.surf.set_colorkey((0, 0, 0), RLEACCEL)
 
         self.startingSizeOfCoin = self.surf.get_width()
