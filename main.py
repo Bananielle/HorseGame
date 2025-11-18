@@ -189,6 +189,7 @@ if __name__ == '__main__':
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
             framerate = settings["framerate"]
+            boring_mode = settings["boring_mode"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
@@ -196,7 +197,7 @@ if __name__ == '__main__':
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type,chromophore,
                                         neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
-                                        simulation_mode,debugging,framerate)
+                                        simulation_mode,debugging,framerate, boring_mode)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()

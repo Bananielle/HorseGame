@@ -33,6 +33,7 @@ class SettingNames:
     DATAWINDOW_DURATION_AFTER_TASK_END = "Duration datawindow after task ends (seconds):"
     DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow before task ends (seconds):"
     FRAMERATE = "Frame rate (Hz):"
+    BORING_MODE = "Basic mode:"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
@@ -92,6 +93,8 @@ class ToggleItem(MenuItem):
             self.change_settings_file("simulation_mode", self.value)
         if self.text == SettingNames.DEBUGGING:
             self.change_settings_file("debugging", self.value)
+        if self.text == SettingNames.BORING_MODE:
+            self.change_settings_file("boring_mode", self.value)
 
     def value_text(self):
         return "ON" if self.value else "OFF"
@@ -216,6 +219,7 @@ class settingsMain():
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
             framerate = settings["framerate"]
+            boring_mode = settings["boring_mode"]
 
 
 
@@ -234,6 +238,7 @@ class settingsMain():
         self.add_item(ToggleItem(SettingNames.DEBUGGING, debugging))
         #self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
         self.add_item(NumericalItem_int(SettingNames.FRAMERATE, framerate, 10, 80, 1))
+        self.add_item(ToggleItem(SettingNames.BORING_MODE, boring_mode))
 
     def add_item(self, item: MenuItem):
         self.location = self.location
