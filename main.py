@@ -675,7 +675,9 @@ if __name__ == '__main__':
             screen.blit(entity.surf, entity.rect)
 
         # Draw game time counter text
-        draw_game_time_text()
+        if not gp.boringMode:
+            draw_game_time_text()
+
         draw_debugging_text()
 
 
@@ -1158,7 +1160,10 @@ if __name__ == '__main__':
             gamestate = runGameOver()
 
         elif gamestate == GameState.SCOREBOARD:
-            gamestate = runScoreboard()
+            if not gp.boringMode:
+                gamestate = runScoreboard()
+            else:
+                gamestate = GameState.STARTSCREEN
 
         elif gamestate == GameState.QUITGAME:
             run = False  # quit the while loop

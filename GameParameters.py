@@ -30,6 +30,31 @@ class GameParameters():
 
 
         # ADJUSTABLE PARAMETERS
+        # To simulate or not simulate
+        self.boringMode = True
+        self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
+        self.saveIncomingData = True
+
+        self.totalNumCoins = 10
+
+        # Time
+        self.velocity = 1  # Determines general speed of all sprites (to ensure frame-rate independence)
+        self.deltaTime = 1
+        self.FPS = framerate  # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
+        # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
+
+        # Background markers for task and rest periods
+        self.useExclamationMark = False  # Shows a bright exclamation mark when a task starts
+        self.useGreyOverlay = False  # Overlays the screen with a grey overlay when a task starts
+        self.usePath = False  # If true, then a path will appear during the task trial
+        if self.boringMode:
+            self.useProgressBar = False  # If true, then a loading bar will appear during the task trial
+        else:
+            self.useProgressBar = True
+        self.debuggingText = True
+        self.draw_grid = False  # For debugging purposes
+
         # paradigm
         self.folder = 'Horse'
 
@@ -68,27 +93,6 @@ class GameParameters():
 
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
-        # To simulate or not simulate
-        self.usePreMadeProtocol = simulation_mode # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
-        self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
-        self.saveIncomingData= True
-
-        self.totalNumCoins = 10
-
-        # Time
-        self.velocity = 1 # Determines general speed of all sprites (to ensure frame-rate independence)
-        self.deltaTime = 1
-        self.FPS = framerate  # Frame rate. # Defines how often the the while loop is run through. E.g., an FPS of 60 will go through the while loop 60 times per second).
-        # Note that you can check the computer's FPS by using clock.getFPS(). If it is lower than the FPS you specify here, the game might not work properly. (15 needed over windows FPN connection?)
-
-
-        # Background markers for task and rest periods
-        self.useExclamationMark = False  # Shows a bright exclamation mark when a task starts
-        self.useGreyOverlay = False  # Overlays the screen with a grey overlay when a task starts
-        self.usePath = False  # If true, then a path will appear during the task trial
-        self.useProgressBar = True  # If true, then a loading bar will appear during the task trial
-        self.debuggingText = debugging  # If true, then debugging text will appear during the task trial
-        self.draw_grid = False  # For debugging purposes
 
         self.gameType = ' ' # 'maingame' (NF) or 'localizer' (will be selected during start menu)
         self.duration_datawindow_rest = 6
