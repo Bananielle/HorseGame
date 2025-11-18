@@ -641,6 +641,8 @@ if __name__ == '__main__':
         readyToJump = ReadyToJump(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         if gp.task:
+            if gp.boringMode:
+                gp.player.updateDotColour_green()
             if gp.useProgressBar:
                 screen.blit(progressBar.surf, progressBar.surf_center)
                 updateProgressBar_task(progressBar)
@@ -648,6 +650,8 @@ if __name__ == '__main__':
                 screen.blit(readyToJump.surf, readyToJump.surf_center)
 
         if gp.rest:
+            if gp.boringMode:
+                gp.player.updateDotColour_grey()
             if gp.useProgressBar:
                 screen.blit(progressBar.surf, progressBar.surf_center)
                 updateProgressBar_rest(progressBar)

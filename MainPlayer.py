@@ -27,6 +27,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.MountType = mounttype
 
         # Let the mount type be determined by based on what the player choose in the starting screen.
+
         if self.MountType == 'horse':
             self.mount_folder = "Resources/Horse/"
         elif self.MountType == 'turtle':
@@ -48,6 +49,11 @@ class MainPlayer(pygame.sprite.Sprite):
             #image.set_colorkey((0,0,0))  #pygame.RLEACCEL in the set_colorkey() method instructs pygame to process [compile] the resulting image taking into account the transparency color so that it will be blitted faster in the future.
 
         self.surf = self.animal_images_walking[0] # Starter image
+
+        self.taskPeriod_dot = False
+
+
+
         self.scaleImage()
 
         self.lowerLimitYpositionPlayer = self.SCREEN_HEIGHT-(self.SCREEN_HEIGHT/10)
@@ -68,6 +74,12 @@ class MainPlayer(pygame.sprite.Sprite):
         self.HorseIsJumpingUp = False
         self.HorseIsJumpingDown = False
 
+    def updateDotColour_green(self):
+        self.taskPeriod_dot = True
+
+    def updateDotColour_grey(self):
+        self.taskPeriod_dot = False
+
 
     # Makes sure that each image, be that horse, turtle, camel or bear, is scaled to the exact same size, so that
     #when it jumps, the exact same jump height is achieved across all animals and the same amount of coins is always collected.
@@ -84,7 +96,11 @@ class MainPlayer(pygame.sprite.Sprite):
 
         if self.gameParams.boringMode:
             self.mount_folder = "Resources/Dot/"
-            self.surf = pygame.image.load(self.mount_folder +'dot_grey.png')
+            if self.taskPeriod_dot:
+                self.surf = pygame.image.load(self.mount_folder +'dot_green.png')
+                # Else it will stick to a grey dot
+            else:
+                self.surf = pygame.image.load(self.mount_folder + 'dot_grey.png')
 
             #Scale image
             self.scaleImage()
