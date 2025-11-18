@@ -52,7 +52,7 @@ class GameParameters():
             self.useProgressBar = False  # If true, then a loading bar will appear during the task trial
         else:
             self.useProgressBar = True
-        self.debuggingText = True
+        self.debuggingText = debugging
         self.draw_grid = False  # For debugging purposes
 
         # paradigm

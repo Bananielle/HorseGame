@@ -82,24 +82,32 @@ class MainPlayer(pygame.sprite.Sprite):
 
     def ridingHorseAnimation(self):
 
-        if self.RidingAnimation == 0:
-            self.surf = self.animal_images_walking[0]
-        elif self.RidingAnimation == 1:
-            self.surf = self.animal_images_walking[1]
-        elif self.RidingAnimation == 2:
-            self.surf = self.animal_images_walking[2]
-        elif self.RidingAnimation == 3:
-            self.surf = self.animal_images_walking[3]
-        elif self.RidingAnimation == 4:
-            self.surf = self.animal_images_walking[4]
-        elif self.RidingAnimation == 5:
-            self.surf = self.animal_images_walking[5]
+        if self.gameParams.boringMode:
+            self.mount_folder = "Resources/Dot/"
+            self.surf = pygame.image.load(self.mount_folder +'dot_grey.png')
 
-        self.scaleImage()
+            #Scale image
+            self.scaleImage()
+        else:
 
-        self.RidingAnimation = self.RidingAnimation + 1
-        if self.RidingAnimation > 5: # Reset animation
-            self.RidingAnimation = 0
+            if self.RidingAnimation == 0:
+                self.surf = self.animal_images_walking[0]
+            elif self.RidingAnimation == 1:
+                self.surf = self.animal_images_walking[1]
+            elif self.RidingAnimation == 2:
+                self.surf = self.animal_images_walking[2]
+            elif self.RidingAnimation == 3:
+                self.surf = self.animal_images_walking[3]
+            elif self.RidingAnimation == 4:
+                self.surf = self.animal_images_walking[4]
+            elif self.RidingAnimation == 5:
+                self.surf = self.animal_images_walking[5]
+
+            self.scaleImage()
+
+            self.RidingAnimation = self.RidingAnimation + 1
+            if self.RidingAnimation > 5: # Reset animation
+                self.RidingAnimation = 0
 
     # Move the sprite based on keypresses
     def update(self, pressed_keys,brainKeyPress, useBCIinput):
@@ -198,60 +206,78 @@ class MainPlayer(pygame.sprite.Sprite):
         return maxJumpHeightAchieved
 
     def jumpUp(self):
-        if self.RidingAnimation == 0:
+
+        if self.gameParams.boringMode:
+                #self.mount_folder = "Resources/Dot/"
+                #self.surf = pygame.image.load(self.mount_folder + 'dot_grey.png')
+                self.moveRight()
+                self.moveUp()
+                self.scaleImage()
+        else:
+
+            if self.RidingAnimation == 0:
+                self.moveRight()
+                self.surf = self.animal_images_walking[0]
+            elif self.RidingAnimation == 1:
+                self.surf = self.animal_images_walking[1]
+            elif self.RidingAnimation == 2:
+                self.surf = self.animal_images_walking[1]
+            elif self.RidingAnimation == 3:
+                self.surf = self.animal_images_walking[2]
+            elif self.RidingAnimation == 4:
+                self.surf = self.animal_images_walking[2]
+            elif self.RidingAnimation == 5:
+                self.surf = self.animal_images_walking[3]
+            elif self.RidingAnimation == 6:
+                self.surf = self.animal_images_walking[4]
+            elif self.RidingAnimation == 7:
+                self.surf = self.animal_images_walking[5]
+
+
             self.moveRight()
-            self.surf = self.animal_images_walking[0]
-        elif self.RidingAnimation == 1:
-            self.surf = self.animal_images_walking[1]
-        elif self.RidingAnimation == 2:
-            self.surf = self.animal_images_walking[1]
-        elif self.RidingAnimation == 3:
-            self.surf = self.animal_images_walking[2]
-        elif self.RidingAnimation == 4:
-            self.surf = self.animal_images_walking[2]
-        elif self.RidingAnimation == 5:
-            self.surf = self.animal_images_walking[3]
-        elif self.RidingAnimation == 6:
-            self.surf = self.animal_images_walking[4]
-        elif self.RidingAnimation == 7:
-            self.surf = self.animal_images_walking[5]
+            self.moveUp()
+            self.scaleImage()
 
+            self.RidingAnimation = self.RidingAnimation + 1
+            if self.RidingAnimation > 4:  # Reset animation
+                self.RidingAnimation = 4
 
-        self.moveRight()
-        self.moveUp()
-        self.scaleImage()
-
-        self.RidingAnimation = self.RidingAnimation + 1
-        if self.RidingAnimation > 4:  # Reset animation
-            self.RidingAnimation = 4
 
     def jumpDown(self):
-        if self.RidingAnimation == 0:
-            self.surf = self.animal_images_walking[3]
-        elif self.RidingAnimation == 1:
-            self.surf = self.animal_images_walking[3]
-        elif self.RidingAnimation == 2:
-            self.surf = self.animal_images_walking[4]
-        elif self.RidingAnimation == 3:
-            self.surf = self.animal_images_walking[4]
-        elif self.RidingAnimation == 4:
-            self.surf = self.animal_images_walking[4]
-        elif self.RidingAnimation == 5:
-            self.surf = self.animal_images_walking[5]
-        elif self.RidingAnimation == 6:
-            self.surf = self.animal_images_walking[5]
-        elif self.RidingAnimation == 7:
-            self.surf = self.animal_images_walking[5]
+
+        if self.gameParams.boringMode:
+            self.moveRight()
+            self.moveDown()
+            self.scaleImage()
+        else:
 
 
-        self.moveRight()
-        self.moveDown()
-        self.scaleImage()
+            if self.RidingAnimation == 0:
+                self.surf = self.animal_images_walking[3]
+            elif self.RidingAnimation == 1:
+                self.surf = self.animal_images_walking[3]
+            elif self.RidingAnimation == 2:
+                self.surf = self.animal_images_walking[4]
+            elif self.RidingAnimation == 3:
+                self.surf = self.animal_images_walking[4]
+            elif self.RidingAnimation == 4:
+                self.surf = self.animal_images_walking[4]
+            elif self.RidingAnimation == 5:
+                self.surf = self.animal_images_walking[5]
+            elif self.RidingAnimation == 6:
+                self.surf = self.animal_images_walking[5]
+            elif self.RidingAnimation == 7:
+                self.surf = self.animal_images_walking[5]
 
 
-        self.RidingAnimation = self.RidingAnimation + 1
-        if self.RidingAnimation > 7:  # Reset animation
-            self.RidingAnimation = 0
+            self.moveRight()
+            self.moveDown()
+            self.scaleImage()
+
+
+            self.RidingAnimation = self.RidingAnimation + 1
+            if self.RidingAnimation > 7:  # Reset animation
+                self.RidingAnimation = 0
 
 
 
