@@ -265,8 +265,11 @@ if __name__ == '__main__':
         credits = Credits(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         string = "(Press 'L' for localizer, 'S' for settings)"
+        string2 = "(Change animal: left/right key, change day/night: up/down key)"
         font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         testEnvironment_txt = font.render(string, True, (255, 255, 255))
+        instructions_txt = font.render(string2, True, (255, 255, 255))
+
 
         # Check for turbo-satori connection
         if not BCI.TSIconnectionFound:
@@ -280,7 +283,8 @@ if __name__ == '__main__':
             screen.blit(timeofdayPic.surf, timeofdayPic.location)
             screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(credits.surf, credits.location)
-        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2.8, SCREEN_HEIGHT - 100))
+        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2.8, SCREEN_HEIGHT -100))
+        screen.blit(instructions_txt, (SCREEN_WIDTH / 3.7, SCREEN_HEIGHT - 130))
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -1006,7 +1010,8 @@ if __name__ == '__main__':
     # OTHER FUNCTIONS
     def displayBackgroundsOnScreen():
 
-        screen.fill((0, 0, 0))  # black
+        # screen.fill((0, 0, 0))  # black
+        screen.fill((105,105,105)) # grey
 
         if not gp.boringMode:
 
