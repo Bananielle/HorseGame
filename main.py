@@ -190,6 +190,7 @@ if __name__ == '__main__':
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
             framerate = settings["framerate"]
             boring_mode = settings["boring_mode"]
+            differential_feedback = settings["differential_feedback"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
@@ -197,7 +198,7 @@ if __name__ == '__main__':
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type,chromophore,
                                         neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
-                                        simulation_mode,debugging,framerate, boring_mode)
+                                        simulation_mode,debugging,framerate, boring_mode, differential_feedback)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
@@ -386,7 +387,7 @@ if __name__ == '__main__':
                 if i == settingMain.selected_index:
                     pygame.draw.rect(
                         screen, (PINK),
-                        pygame.Rect(item.location[0] - 6, item.location[1] - 10, SCREEN_WIDTH * 0.55, 36))
+                        pygame.Rect(item.location[0] - 6, item.location[1] - 0, SCREEN_WIDTH * 0.55, 26))
 
                 # Show item (left)
                 screen.blit(item.surface, (item.location))
@@ -468,6 +469,7 @@ if __name__ == '__main__':
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
             gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
             gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
+            gp.show_selected_channels(BCI.selectedChannels)
             # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20, 80))
@@ -476,6 +478,7 @@ if __name__ == '__main__':
             screen.blit(gp.current_beta_value_text, (20, 140))
             screen.blit(gp.current_tvalue_text, (20, 160))
             screen.blit(gp.data_window_info_text, (20, 180))
+            screen.blit(gp.selected_channels_text, (20, 200))
 
 
     def updateTimeDataWindow_task():

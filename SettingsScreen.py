@@ -34,6 +34,7 @@ class SettingNames:
     DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow before task ends (seconds):"
     FRAMERATE = "Frame rate (Hz):"
     BORING_MODE = "Basic mode:"
+    DIFFERENTIAL_FEEDBACK = "Differential feedback:"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
@@ -54,7 +55,7 @@ class MenuItem:  # For creating different parameters
         self.text = text
         self.var = ''
         self.location = 0
-        self.font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
+        self.font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 15)
         self.surface = self.font.render(self.text, True, WHITE)
         self.value = value
 
@@ -95,6 +96,8 @@ class ToggleItem(MenuItem):
             self.change_settings_file("debugging", self.value)
         if self.text == SettingNames.BORING_MODE:
             self.change_settings_file("boring_mode", self.value)
+        if self.text == SettingNames.DIFFERENTIAL_FEEDBACK:
+            self.change_settings_file("differential_feedback", self.value)
 
     def value_text(self):
         return "ON" if self.value else "OFF"
@@ -193,7 +196,7 @@ class settingsMain():
         super(settingsMain, self).__init__()
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        self.font =  pygame.font.Font(ARIAL_BOLD_FONT_PATH, 30)
+
         self.settingsFont = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
         self.text_item = "Select: UP/DOWN:        Change: LEFT/RIGHT:        Back: ESC"
         self.instructions = self.settingsFont.render(self.text_item, True, PINK)
@@ -220,6 +223,7 @@ class settingsMain():
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
             framerate = settings["framerate"]
             boring_mode = settings["boring_mode"]
+            differential_feedback = settings["differential_feedback"]
 
 
 
@@ -239,12 +243,13 @@ class settingsMain():
         #self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
         self.add_item(NumericalItem_int(SettingNames.FRAMERATE, framerate, 10, 80, 1))
         self.add_item(ToggleItem(SettingNames.BORING_MODE, boring_mode))
+        self.add_item(ToggleItem(SettingNames.DIFFERENTIAL_FEEDBACK, differential_feedback))
 
     def add_item(self, item: MenuItem):
         self.location = self.location
-        base_x = self.SCREEN_WIDTH / 3.5
+        base_x = self.SCREEN_WIDTH / 4.5
         base_y = self.SCREEN_HEIGHT / 3
-        offset_y = len(self.items) * 34  # 50 pixels between items
+        offset_y = len(self.items) * 24  # space between items
         item.location = (base_x, base_y + offset_y)
         self.items.append(item)
         return item

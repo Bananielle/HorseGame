@@ -15,5 +15,6 @@
   "debugging": true,
   "datawindow_duration_after_task_end_s": 2,
   "datawindow_duration_before_task_end_s": 2,
-  "framerate": 60
+  "framerate": 60,
+  "differential_feedback": true
 }

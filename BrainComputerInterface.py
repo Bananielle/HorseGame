@@ -22,7 +22,6 @@ class BrainComputerInterface():
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-
         self.NFsignal_mean = 1
         self.NFsignal_max = self.NF_neurofeedack_threshold / 2 # Starter values
         self.NFSignal_median =1
@@ -52,6 +51,10 @@ class BrainComputerInterface():
         self.timewindow_task_betas = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
+
+        # Differential feedback (when substracting one channel value from another and use that as feedback)
+        self.differential_feedbackchannel1 = 0
+        self.differential_feedbackchannel2 = 0
 
         # Set up dictionairies for all-channel data to be collected
         self.timewindow_allChannels_data_raw = {}
@@ -363,6 +366,16 @@ class BrainComputerInterface():
 
             betas = self.getBetas(trialNr)
             t_values = self.getTvalues(trialNr)
+
+            if self.gp.DIFFERENTIAL_FEEDBACK:
+
+                self.differential_feedbackchannel1 = self.selectedChannels[0]
+                self.differential_feedbackchannel2 = self.selectedChannels[1]
+
+                betas = betas[self.differential_feedbackchannel1] - betas[self.differential_feedbackchannel2]
+                t_values = t_values[self.differential_feedbackchannel1] - t_values[self.differential_feedbackchannel2]
+
+                print("Using differential feedback. Channel " + str(self.differential_feedbackchannel1) + " - channel " + str(self.differential_feedbackchannel2))
 
             self.recordedBetas.append(betas)
             self.timepointList.append(timepoint)

@@ -21,7 +21,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
-                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging,framerate, boring_mode):
+                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging,framerate, boring_mode, differential_feedback):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -35,6 +35,8 @@ class GameParameters():
         self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
         self.saveIncomingData = True
+
+        self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
         self.totalNumCoins = 10
 
@@ -170,6 +172,7 @@ class GameParameters():
         self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0" + str(self.player.rect.top), True, [0,0,0])
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
         self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
+        self.selected_channels_text = self.debuggingFont.render(" " , True, [0,0,0])
 
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
@@ -257,6 +260,10 @@ class GameParameters():
 
     def update_jump_position_text(self):
         self.achieved_jump_height_text = self.debuggingFont.render("Achieved NF level = " + str('{:.2f}'.format(self.achievedNFlevel)),
+                                                                   True, [0, 0, 0])
+
+    def show_selected_channels(self,selected_channels):
+        self.selected_channels_text = self.debuggingFont.render("Selected channels = " + str(selected_channels),
                                                                    True, [0, 0, 0])
 
     def update_retrieved_signal_value_text(self):
