@@ -150,8 +150,8 @@ class BrainComputerInterface():
         t_values= 0
         if self.TSIconnectionFound:
 
-            betas = self.getBetas(trialNr)
-            t_values = self.getTvalues(trialNr)
+            betas = self.getBetas(trialNr,0)
+            t_values = self.getTvalues(trialNr,0)
 
             # Use either beta's or t-values based on chosen datatype in GameParameters
             if self.gp.dataType == 0:
@@ -364,18 +364,25 @@ class BrainComputerInterface():
           #  scalefactor = self.tsi.get_oxy_data_scale_factor()  # Turbo-Satori's default is 200 as a scale factor
           #  scaled_data = float(oxy) * float(scalefactor[0])  # Because for some reason you're getting two values for TSI's scacefactor
 
-            betas = self.getBetas(trialNr)
-            t_values = self.getTvalues(trialNr)
+            betas = self.getBetas(trialNr,0)
+            t_values = self.getTvalues(trialNr,0)
 
             if self.gp.DIFFERENTIAL_FEEDBACK:
 
-                self.differential_feedbackchannel1 = self.selectedChannels[0]
-                self.differential_feedbackchannel2 = self.selectedChannels[1]
+                beta1 =  self.getBetas(trialNr,0)
+                beta2 = self.getBetas(trialNr,1)
+                print("TEST" + str(beta1))
 
-                betas = betas[self.differential_feedbackchannel1] - betas[self.differential_feedbackchannel2]
-                t_values = t_values[self.differential_feedbackchannel1] - t_values[self.differential_feedbackchannel2]
+                betas = beta1 - beta2
 
-                print("Using differential feedback. Channel " + str(self.differential_feedbackchannel1) + " - channel " + str(self.differential_feedbackchannel2))
+                tvalue1 = self.getTvalues(trialNr,0)
+                tvalue2 = self.getTvalues(trialNr,1)
+
+                t_values = tvalue1 - tvalue2
+
+
+
+                print("Using differential feedback. Channel ", str(self.selectedChannels[0]), " - channel ", str(self.selectedChannels[1]))
 
             self.recordedBetas.append(betas)
             self.timepointList.append(timepoint)
@@ -406,12 +413,12 @@ class BrainComputerInterface():
         return input
 
     # The trial number gets the predictor for each trial (trial 1 for first predictor, trial 2 for second predictor etc)
-    def getBetas(self,trialNr):
+    def getBetas(self,trialNr,selectedChannel):
         if self.TSIconnectionFound:
             selectedChannels = self.selectedChannels
 
            # print('Selected channel = ' + str(selectedChannels[0]))
-            betas = self.tsi.get_beta_of_channel(selectedChannels[0],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
+            betas = self.tsi.get_beta_of_channel(selectedChannels[selectedChannel],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
 
 
            # print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
@@ -423,13 +430,13 @@ class BrainComputerInterface():
             return betas
         else: return 0
 
-    def getTvalues(self,trialNr):
+    def getTvalues(self,trialNr,selectedChannel):
         if self.TSIconnectionFound:
 
             contrast = [0,0,0,0,0,0,0,0,0,0]
             if trialNr > 0:
                 contrast[trialNr-1] = 1 # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
-            t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[0],chromophore=self.gp.chromophore,contrast=contrast) # 1 is oxy, 0 is deoxy
+            t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[selectedChannel],chromophore=self.gp.chromophore,contrast=contrast) # 1 is oxy, 0 is deoxy
 
             #print("T-value: " + str(t_values))
 

@@ -466,8 +466,8 @@ if __name__ == '__main__':
             gp.update_jump_position_text()
             gp.update_retrieved_signal_value_text()
             gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
-            gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter))
-            gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter))
+            gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter,0))
+            gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter,0))
             gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
             gp.show_selected_channels(BCI.selectedChannels)
             # screen.blit(gp.horse_upper_position_text, (20, 60))
