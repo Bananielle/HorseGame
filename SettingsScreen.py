@@ -34,7 +34,7 @@ class SettingNames:
     DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow before task ends (seconds):"
     FRAMERATE = "Frame rate (Hz):"
     BORING_MODE = "Basic mode:"
-    DIFFERENTIAL_FEEDBACK = "Differential feedback:"
+    DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
@@ -96,8 +96,6 @@ class ToggleItem(MenuItem):
             self.change_settings_file("debugging", self.value)
         if self.text == SettingNames.BORING_MODE:
             self.change_settings_file("boring_mode", self.value)
-        if self.text == SettingNames.DIFFERENTIAL_FEEDBACK:
-            self.change_settings_file("differential_feedback", self.value)
 
     def value_text(self):
         return "ON" if self.value else "OFF"
@@ -136,6 +134,9 @@ class NumericalItem_int(MenuItem):
             self.change_settings_file("datawindow_duration_before_task_end_s", self.value)
         if self.text == SettingNames.FRAMERATE:
             self.change_settings_file("framerate", self.value)
+        if self.text == SettingNames.DIFFERENTIAL_FEEDBACK:
+            self.change_settings_file("differential_feedback", self.value)
+
 
     def increase(self):
         if self.value < self.max:
@@ -243,7 +244,7 @@ class settingsMain():
         self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
         self.add_item(NumericalItem_int(SettingNames.FRAMERATE, framerate, 10, 80, 1))
         self.add_item(ToggleItem(SettingNames.BORING_MODE, boring_mode))
-        self.add_item(ToggleItem(SettingNames.DIFFERENTIAL_FEEDBACK, differential_feedback))
+        self.add_item(NumericalItem_int(SettingNames.DIFFERENTIAL_FEEDBACK, differential_feedback,0,2,1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

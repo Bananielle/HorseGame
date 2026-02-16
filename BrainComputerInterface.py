@@ -367,18 +367,21 @@ class BrainComputerInterface():
             betas = self.getBetas(trialNr,0)
             t_values = self.getTvalues(trialNr,0)
 
-            if self.gp.DIFFERENTIAL_FEEDBACK:
+            if not self.gp.DIFFERENTIAL_FEEDBACK == 0:
 
                 beta1 =  self.getBetas(trialNr,0)
                 beta2 = self.getBetas(trialNr,1)
                 print("TEST" + str(beta1))
 
-                betas = beta1 - beta2
-
                 tvalue1 = self.getTvalues(trialNr,0)
                 tvalue2 = self.getTvalues(trialNr,1)
 
-                t_values = tvalue1 - tvalue2
+                if self.gp.DIFFERENTIAL_FEEDBACK == 1:
+                    betas = beta1 - beta2
+                    t_values = tvalue1 - tvalue2
+                if self.gp.DIFFERENTIAL_FEEDBACK == 2:
+                    betas = beta2 - beta1
+                    t_values = tvalue2 - tvalue1
 
 
 

@@ -263,8 +263,12 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def show_selected_channels(self,selected_channels):
-        self.selected_channels_text = self.debuggingFont.render("Selected channels = " + str(selected_channels),
-                                                                   True, [0, 0, 0])
+        if self.DIFFERENTIAL_FEEDBACK < 2: # so if 0 or 1
+            self.selected_channels_text = self.debuggingFont.render("Selected channels = " + str(selected_channels),
+                                                                    True, [0, 0, 0])
+        else:
+            self.selected_channels_text = self.debuggingFont.render("Selected channels = " + str(selected_channels[::-1]), # Reverse the order
+                                                                    True, [0, 0, 0])
 
     def update_retrieved_signal_value_text(self):
         if self.chromophore == 1:
