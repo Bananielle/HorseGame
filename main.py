@@ -89,6 +89,21 @@ if getattr(sys, "frozen", False):
 else:
     os.chdir(Path(__file__).resolve().parent)
 
+# Saves the output from the console to a logfile.
+allowLogSaving = True
+
+neurofeedback_threshold = float(1.0)
+
+if allowLogSaving: # Note that this means there won't be any visibile output in the console anymore - that's put into a logfile instead.
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+    log_file_path = f"Data/Logs/logfile_{current_date}.txt"  # Specify the file path where you want to save the log
+    log_file = open(log_file_path,
+                    'w')  # Open the file in write mode, this will also create the file if it doesn't exist
+
+    sys.stdout = log_file  # Redirect stdout and stderr to the log file
+    sys.stderr = log_file
+
+
 ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"
 ARIAL_BOLD_FONT_PATH = "Resources/fonts/Arial Bold.ttf"
 
@@ -116,19 +131,7 @@ if __name__ == '__main__':
     # Timing parameters (for the game clock)
     prev_time = 0
 
-    # Saves the output from the console to a logfile.
-    allowLogSaving = False
 
-    neurofeedback_threshold = float(1.0)
-
-    if allowLogSaving:
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
-        log_file_path = f"Data/PyCharm Logs/logfile_{current_date}.txt"  # Specify the file path where you want to save the log
-        log_file = open(log_file_path,
-                        'w')  # Open the file in write mode, this will also create the file if it doesn't exist
-
-        sys.stdout = log_file  # Redirect stdout and stderr to the log file
-        sys.stderr = log_file
 
 
     # Used to cycle through different game states with a statemachine
