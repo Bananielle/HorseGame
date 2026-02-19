@@ -13,8 +13,8 @@
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
   "simulation_mode": false,
   "debugging": true,
-  "datawindow_duration_after_task_end_s": 2,
-  "datawindow_duration_before_task_end_s": 2,
+  "datawindow_duration_after_task_end_s": 3,
+  "datawindow_duration_before_task_end_s": -1,
   "framerate": 60,
   "differential_feedback": 0
 }

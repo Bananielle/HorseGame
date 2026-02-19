@@ -21,7 +21,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
-                 datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s, simulation_mode, debugging,framerate, boring_mode, differential_feedback):
+                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -102,19 +102,20 @@ class GameParameters():
         self.gameType = ' ' # 'maingame' (NF) or 'localizer' (will be selected during start menu)
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
-        self.hemodynamic_delay = datawindow_duration_after_task_end_s # todo: this is basically datawindow_duration_after_task_end_s
-        self.timeUntilJump_s = self.hemodynamic_delay  # todo: note that this should be dependent on when the data window task collection ends (and don't add + 1?)
 
 
 
         self.durationGame_s = self.calculate_duration_game()
 
-        self. datawindow_duration_before_task_end_s = datawindow_duration_before_task_end_s
-        self. datawindow_duration_after_task_end_s = datawindow_duration_after_task_end_s
+        self.datawindow_duration_before_task_end_s = datawindow_prestimulusonset_s + self.duration_TASK_s
+        self.datawindow_duration_after_task_end_s = datawindow_poststimulusonset_s - self.duration_TASK_s
+
+        self.hemodynamic_delay = self.datawindow_duration_after_task_end_s #todo: this is basically datawindow_duration_after_task_end_s
+        self.timeUntilJump_s = self.hemodynamic_delay  # todo: note that this should be dependent on when the data window task collection ends (and don't add + 1?)
 
         self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s + (self.duration_TASK_s - self.datawindow_duration_before_task_end_s) # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
-        self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration + datawindow_duration_after_task_end_s
+        self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration + datawindow_poststimulusonset_s
 
         self.datawindow_rest_start_time = self.duration_BASELINE_s   # No hemodynamic delay!
         self.datawindow_rest_duration = self.duration_REST_s
@@ -262,8 +263,10 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_jump_position_text(self):
-        self.achieved_jump_height_text = self.debuggingFont.render("Achieved NF level = " + str('{:.2f}'.format(self.achievedNFlevel)),
-                                                                   True, [0, 0, 0])
+        self.achieved_jump_height_text = self.debuggingFont.render(
+            "Achieved NF level = " + str('{:.0f}%'.format(self.achievedNFlevel * 100)),
+            True, [0, 0, 0]
+        )
 
     def show_selected_channels(self,selected_channels):
 

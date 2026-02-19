@@ -30,8 +30,8 @@ class SettingNames:
     CHROMOPHORE = "Use chromophore (1 = HbO, 0 = Hb):"
     SIMULATION_MODE = "Simulation mode:"
     DEBUGGING = "Debugging:"
-    DATAWINDOW_DURATION_AFTER_TASK_END = "Duration datawindow after task ends (seconds):"
-    DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow before task ends (seconds):"
+    DATAWINDOW_DURATION_AFTER_TASK_END = "Duration datawindow post-stimulus onset (seconds):" # after task ends
+    DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow pre-stimulus onset (seconds):" # before task ends
     FRAMERATE = "Frame rate (Hz):"
     BORING_MODE = "Basic mode:"
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
@@ -238,8 +238,8 @@ class settingsMain():
         self.add_item(NumericalItem_int(SettingNames.CHROMOPHORE, chromophore,0,1,1))
         self.add_item(NumericalItem_int(SettingNames.NF_THRESHOLD_TVALUE, neurofeedback_threshold_t_value, 0, 100, 1))
         self.add_item(NumericalItem_float(SettingNames.NF_THRESHOLD_BETA, neurofeedback_threshold_beta, 0, 100, 0.1))
-        self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END, datawindow_duration_before_task_end_s,                              0, 60, 1))
-        self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END, datawindow_duration_after_task_end_s, 0, 60, 1))
+        self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END, datawindow_duration_before_task_end_s, -100, 100, 1))
+        self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END, datawindow_duration_after_task_end_s, 0, 100, 1))
         self.add_item(ToggleItem(SettingNames.DEBUGGING, debugging))
         self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
         self.add_item(NumericalItem_int(SettingNames.FRAMERATE, framerate, 10, 80, 1))

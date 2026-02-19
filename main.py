@@ -277,8 +277,8 @@ if __name__ == '__main__':
 
         # Check for turbo-satori connection
         if not BCI.TSIconnectionFound:
-            text = font.render('Turbo-Satori connection not found!', True, WHITE)
-            screen.blit(text, (SCREEN_WIDTH * 0.37, 10))
+            text = font.render('Turbo-Satori connection not found! Is network port set to 55556?', True, RED)
+            screen.blit(text, (SCREEN_WIDTH * 0.25, 10))
 
         # Display on screen
         screen.blit(startscreen.surf, startscreen.surf_center)
@@ -424,7 +424,7 @@ if __name__ == '__main__':
             if event.type == gp.HORSEANIMATION:
                 gp.set_achieved_NF_level(0.2)  # For displaying debugging text
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(
-                    gp.achievedNFlevel,gp.minimal_nr_of_coins)  # For localizer, set it to a fixed level. (no feedback during the localizer)
+                    gp.achievedNFlevel)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -478,7 +478,8 @@ if __name__ == '__main__':
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20, 80))
             screen.blit(gp.signal_value_retrieved_text, (20, 100))
-            screen.blit(gp.achieved_jump_height_text, (20, 120))
+            if gp.gameType == 'maingame': # Dont show achieved NF level during localizer (because no NF is given)
+                screen.blit(gp.achieved_jump_height_text, (20, 120))
             screen.blit(gp.current_beta_value_text, (20, 140))
             screen.blit(gp.current_tvalue_text, (20, 160))
             screen.blit(gp.data_window_info_text, (20, 180))
