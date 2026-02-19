@@ -33,7 +33,7 @@ class Scoreboard():
             self.scoresList.append(score)
             self.taskList.append(self.gp.taskUsed)
             self.runList = self.runNr
-            self.runNr = + 1
+            self.runNr = self.runNr + 1
             self.gp.scoreSaved = True  # This will reset when the player goes back to the start screen
             print('Score for run ',  self.runNr, ': ', score, ' saved to score list. Is now: ', str(self.scoresList))
             print('Coins per trial: ' + str(self.gp.nrCoinsPerTrial))
@@ -51,10 +51,14 @@ class Scoreboard():
         return text
 
     def sortScores(self):
-        self.sortedScores = sorted(self.scoresList, reverse=True)
-        sortedDictionary = dict(sorted(self.task_coins_dictionary.items()))
-        self.sortedTasks = list(sortedDictionary)
+       # self.sortedScores = sorted(self.scoresList, reverse=True)
+        #sortedDictionary = dict(sorted(self.task_coins_dictionary.items()))
+        #self.sortedTasks = list(sortedDictionary)
         #print("Sorting scores... " + str(self.sortedScores))
+
+        self.sortedScores = self.scoresList # todo: i no longer sort the scores so i should remove this
+        sortedDictionary = dict(self.task_coins_dictionary.items())
+        self.sortedTasks = sortedDictionary
 
         return self.sortedScores, self.sortedTasks
 
@@ -77,7 +81,7 @@ class Scoreboard():
 
             i = 0
 
-            count_str = '(Run ' + str(count) + '. ' + self.sortedTasks[i] + ')'  # Get the task name from the dictionary
+            count_str = '(Run ' + str(count) + '. '  + ')'  # Get the task name from the dictionary
             # print('count_str: ', count_str)
 
             final_score_text = str(score) + ' coins. '
