@@ -210,7 +210,7 @@ if __name__ == '__main__':
         gameParameters.gameType = gametype
         gameParameters.generate_dataCollection_protocol()
         paradigmManager = ParadigmAndTriggerManager(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters)
-        player.gameParams = gameParameters  # So that player also has access to game parameters
+        player.gp = gameParameters  # So that player also has access to game parameters
         player.setPlayerSpeed()  # to make this independent of frame rate
         BCI = BrainComputerInterface(gametype, gameParameters)
 
@@ -424,7 +424,7 @@ if __name__ == '__main__':
             if event.type == gp.HORSEANIMATION:
                 gp.set_achieved_NF_level(0.2)  # For displaying debugging text
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(
-                    gp.achievedNFlevel)  # For localizer, set it to a fixed level. (no feedback during the localizer)
+                    gp.achievedNFlevel,gp.minimal_nr_of_coins)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 
             # Show the player how much time has passed
             if event.type == gp.SECOND_HAS_PASSED:
@@ -472,7 +472,8 @@ if __name__ == '__main__':
             gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter,0))
             gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter,0))
             gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
-            gp.show_selected_channels(BCI.selectedChannels)
+            if BCI.TSIconnectionFound:
+                gp.show_selected_channels(BCI.selectedChannels)
             # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20, 80))

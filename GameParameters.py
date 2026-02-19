@@ -39,6 +39,9 @@ class GameParameters():
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
         self.totalNumCoins = 10
+        self.minimal_nr_of_coins = 1
+
+
 
         # Time
         self.velocity = 1  # Determines general speed of all sprites (to ensure frame-rate independence)
@@ -241,8 +244,8 @@ class GameParameters():
 
         # also immediately set the nr of coins that should be collected
         self.coins_that_should_be_collected = round(achieved_NF_level*10)
-        if self.coins_that_should_be_collected <3:
-            self.coins_that_should_be_collected = 3 # keep the minimum of coins collected to 3
+        if self.coins_that_should_be_collected < self.minimal_nr_of_coins:
+            self.coins_that_should_be_collected = self.minimal_nr_of_coins # keep the minimum of coins collected to 3
 
     def setSamplingRate(self, samplingRate):
         self.samplingRate = samplingRate
@@ -263,6 +266,7 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def show_selected_channels(self,selected_channels):
+
         if self.DIFFERENTIAL_FEEDBACK < 2: # so if 0 or 1
             self.selected_channels_text = self.debuggingFont.render("Selected channels = " + str(selected_channels),
                                                                     True, [0, 0, 0])

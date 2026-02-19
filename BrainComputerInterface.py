@@ -120,8 +120,8 @@ class BrainComputerInterface():
     def getCurrentTimePoint_TSI(self):
 
         if self.TSIconnectionFound:
-            current_time_point = self.tsi.get_current_time_point()
-            #print("Current time point TSI: "  + str(current_time_point))
+            current_time_point = self.tsi.get_current_time_point()[0]
+            print("Current time point TSI: "  + str(current_time_point))
         else:
             current_time_point = self.gp.currentTime_s
 

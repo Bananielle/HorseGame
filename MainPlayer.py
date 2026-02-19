@@ -21,7 +21,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.startingPosition_x = None
         self.lowerLimitYpositionPlayer = None
         self.imageScaleFactor = None
-        self.gameParams = gameParams
+        self.gp = gameParams
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.MountType = mounttype
@@ -90,11 +90,11 @@ class MainPlayer(pygame.sprite.Sprite):
         #print("Size of animal image: ", self.surf.get_width(), ",", self.surf.get_height())
 
     def setPlayerSpeed(self):
-        self.playerSpeed = self.playerSpeed_base * float(self.gameParams.velocity)
+        self.playerSpeed = self.playerSpeed_base * float(self.gp.velocity)
 
     def ridingHorseAnimation(self):
 
-        if self.gameParams.boringMode:
+        if self.gp.boringMode:
             self.mount_folder = "Resources/Dot/"
             if self.taskPeriod_dot:
                 self.surf = pygame.image.load(self.mount_folder +'dot_green.png')
@@ -160,34 +160,37 @@ class MainPlayer(pygame.sprite.Sprite):
         if self.rect.bottom >= self.borderOfPathForHorse:
             #print("Horse being kept on path")
             # self.rect.bottom = self.borderOfPathForHorse
-            self.rect.move_ip(0, -5* self.gameParams.get_deltaTime()) # Gently move horse up (instead of instantly changing horse to new position, which can create weird distortions)
-
+            self.rect.move_ip(0, -5 * self.gp.get_deltaTime()) # Gently move horse up (instead of instantly changing horse to new position, which can create weird distortions)
 
     def calculate_jump_position(self, achieved_NF_level):
 
-        # NF should not be zero or negative
+        set_jump_lower_bound = 5
+
+        if self.gp.minimal_nr_of_coins == 1:
+            set_jump_lower_bound = 4 / 10
+        if self.gp.minimal_nr_of_coins == 3:
+            set_jump_lower_bound = 5 / 10
+
+        # NF should not be zero or negative for being able to jump properly
         if achieved_NF_level < 0.25 or pd.isna(achieved_NF_level):
-         #   print("NF signal is below min or NaN:  ", str(achieved_NF_level))
             achieved_NF_level = 0.25
 
-            minimum_coin_target = self.gameParams.coinOriginalStartingPosition_y   # Make sure it reaches the 3rd coin
-            jump_lower_bound = 5 / 10  # Lower bound of the jump position range
-        else:
-            jump_lower_bound = 5 / 10  # Lower bound of the jump position range
 
+        jump_lower_bound = set_jump_lower_bound
         jump_upper_bound = 10 / 10  # Upper bound of the jump position range
-            # Map the neurofeedback signal to the jump position range
+        # Map the neurofeedback signal to the jump position range
         jump_position = jump_lower_bound + (jump_upper_bound - jump_lower_bound) * achieved_NF_level
         jump_position = int(self.SCREEN_HEIGHT * (1 - jump_position))
+        #jump_position = int(self.SCREEN_HEIGHT * (1 - achieved_NF_level)) - (self.SCREEN_HEIGHT*0.43)
 
-        #print("Jump position = ", str(jump_position))
+        # print("Jump position = ", str(jump_position))
 
         return jump_position
 
     def performJumpSequence(self, NF_level_reached):
         maxJumpHeightAchieved = self.calculate_jump_position(NF_level_reached)
         if self.HorseIsJumping:
-            self.gameParams.horseHasJumpedThisTrial = True
+            self.gp.horseHasJumpedThisTrial = True
             if self.HorseIsJumpingUp:
                 #if self.rect.top > 0 + (self.SCREEN_HEIGHT * 0.4):
 
@@ -205,9 +208,9 @@ class MainPlayer(pygame.sprite.Sprite):
                 else:
                     self.HorseIsJumpingDown = False
                     self.HorseIsJumping = False
-                    self.gameParams.freezeCoins = False # Make the coins move up and down again
-                    self.gameParams.horseJumpEvent = False
-                    self.gameParams.startCountingCoins()
+                    self.gp.freezeCoins = False # Make the coins move up and down again
+                    self.gp.horseJumpEvent = False
+                    self.gp.startCountingCoins()
 
                    # print("Horse is not jumping anymore.")
                    # print("===========================================================================================")
@@ -215,7 +218,7 @@ class MainPlayer(pygame.sprite.Sprite):
         else:
             self.ridingHorseAnimation()
             if self.rect.centerx > self.startingPosition_x:  # Move horse back to starting point # todo turtle not smooth
-                print("T=",self.gameParams.currentTime_s,": Horse is moving back to starting point.")
+                print("T=", self.gp.currentTime_s, ": Horse is moving back to starting point.")
                 self.moveLeft()
                # self.moveLeft()
 
@@ -223,7 +226,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
     def jumpUp(self):
 
-        if self.gameParams.boringMode:
+        if self.gp.boringMode:
                 #self.mount_folder = "Resources/Dot/"
                 #self.surf = pygame.image.load(self.mount_folder + 'dot_grey.png')
                 self.moveRight()
@@ -261,7 +264,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
     def jumpDown(self):
 
-        if self.gameParams.boringMode:
+        if self.gp.boringMode:
             self.moveRight()
             self.moveDown()
             self.scaleImage()
@@ -298,7 +301,7 @@ class MainPlayer(pygame.sprite.Sprite):
 
 
     def moveUp(self):
-        self.rect.move_ip(0, (self.playerSpeed * -1) * self.gameParams.get_deltaTime())
+        self.rect.move_ip(0, (self.playerSpeed * -1) * self.gp.get_deltaTime())
        # print('Moving up.')
         #self.soundSystem.playBubbleSound(self.soundSystem.move_up_sound)
 
@@ -309,16 +312,16 @@ class MainPlayer(pygame.sprite.Sprite):
         #    move_by = self.borderOfPathForHorse - self.rect.bottom +10
         #    self.rect.move_ip(0,move_by)
        # else:
-            self.rect.move_ip(0, (self.playerSpeed-1) * self.gameParams.get_deltaTime())
+            self.rect.move_ip(0, (self.playerSpeed-1) * self.gp.get_deltaTime())
 
       #  print('Moving down.')
        # self.soundSystem.playBubbleSound(self.soundSystem.move_down_sound)
 
     def moveLeft(self):
-        self.rect.move_ip((self.playerSpeed * -1) * self.gameParams.get_deltaTime(), 0)
+        self.rect.move_ip((self.playerSpeed * -1) * self.gp.get_deltaTime(), 0)
       #  print('Moving left.')
 
     def moveRight(self):
-        self.rect.move_ip(self.playerSpeed * self.gameParams.get_deltaTime(), 0)
+        self.rect.move_ip(self.playerSpeed * self.gp.get_deltaTime(), 0)
         #print('Moving right.')
 

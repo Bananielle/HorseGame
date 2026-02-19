@@ -2,9 +2,9 @@
   "fullscreen": false,
   "boring_mode": false,
   "num_trials": 4,
-  "task_duration_s": 4,
-  "rest_duration_s": 7,
-  "baseline_duration_s": 2,
+  "task_duration_s": 2,
+  "rest_duration_s": 5,
+  "baseline_duration_s": 1,
   "jitter_s": 0,
   "neurofeedback_threshold_t_value": 53,
   "neurofeedback_threshold_beta": 1.1,
@@ -16,5 +16,5 @@
   "datawindow_duration_after_task_end_s": 2,
   "datawindow_duration_before_task_end_s": 2,
   "framerate": 60,
-  "differential_feedback": 2
+  "differential_feedback": 0
 }
