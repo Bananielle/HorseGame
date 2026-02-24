@@ -96,6 +96,7 @@ neurofeedback_threshold = float(1.0)
 
 if allowLogSaving: # Note that this means there won't be any visibile output in the console anymore - that's put into a logfile instead.
     current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+    os.makedirs("Data/Logs", exist_ok=True) # Make the folder if it doesn[t exist yet.
     log_file_path = f"Data/Logs/logfile_{current_date}.txt"  # Specify the file path where you want to save the log
     log_file = open(log_file_path,
                     'w')  # Open the file in write mode, this will also create the file if it doesn't exist

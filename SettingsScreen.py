@@ -30,8 +30,8 @@ class SettingNames:
     CHROMOPHORE = "Use chromophore (1 = HbO, 0 = Hb):"
     SIMULATION_MODE = "Simulation mode:"
     DEBUGGING = "Debugging:"
-    DATAWINDOW_DURATION_AFTER_TASK_END = "Duration datawindow post-stimulus onset (seconds):" # after task ends
-    DATAWINDOW_DURATION_BEFORE_TASK_END = "Duration datawindow pre-stimulus onset (seconds):" # before task ends
+    DATAWINDOW_DURATION_AFTER_TASK_END = "Datawindow post-stimulus onset (seconds):" # after task ends
+    DATAWINDOW_DURATION_BEFORE_TASK_END = "Datawindow pre-stimulus onset (seconds):" # before task ends
     FRAMERATE = "Frame rate (Hz):"
     BORING_MODE = "Basic mode:"
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
