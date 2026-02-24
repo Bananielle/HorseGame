@@ -241,7 +241,7 @@ class settingsMain():
         self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END, datawindow_duration_before_task_end_s, -100, 100, 1))
         self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END, datawindow_duration_after_task_end_s, 0, 100, 1))
         self.add_item(ToggleItem(SettingNames.DEBUGGING, debugging))
-        self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
+        #self.add_item(ToggleItem(SettingNames.SIMULATION_MODE, simulation_mode))
         self.add_item(NumericalItem_int(SettingNames.FRAMERATE, framerate, 10, 80, 1))
         self.add_item(ToggleItem(SettingNames.BORING_MODE, boring_mode))
         self.add_item(NumericalItem_int(SettingNames.DIFFERENTIAL_FEEDBACK, differential_feedback,0,2,1))
