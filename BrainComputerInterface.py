@@ -22,11 +22,11 @@ class BrainComputerInterface():
         self.useMax = False # Use the max amplitude for NF calculation
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
-        self.NFsignal_mean = 1
+        self.NFsignal_mean = self.NF_neurofeedack_threshold
         self.NFsignal_max = self.NF_neurofeedack_threshold / 2 # Starter values
-        self.NFSignal_median =1
-        self.NFSignal_latestValue = 1
-        self.NFSignal_latestValue_t_value = 1
+        self.NFSignal_median = self.NF_neurofeedack_threshold
+        self.NFSignal_latestValue =  self.NF_neurofeedack_threshold # make this the same so that achieved NF level always starts as 100%
+        self.NFSignal_latestValue_t_value = self.NF_neurofeedack_threshold
 
         self.gp = gameParameters
         self.saveIncomingData = self.gp.saveIncomingData

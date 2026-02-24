@@ -214,6 +214,7 @@ if __name__ == '__main__':
         player.setPlayerSpeed()  # to make this independent of frame rate
         BCI = BrainComputerInterface(gametype, gameParameters)
 
+
         print("Time of day input variable = " + timeofday)
         mainGameBackGround = MainGame_background(SCREEN_WIDTH, SCREEN_HEIGHT, gameParameters, mounttype, timeofday)
 
@@ -1168,6 +1169,7 @@ if __name__ == '__main__':
 
         if gamestate == GameState.STARTNEWGAME:
             gamestate, gp, mainGame_background, paradigmManager, BCI = startANewGame(mounttype, gametype, timeofday)
+
             progressBar = ProgressBar(SCREEN_WIDTH, SCREEN_HEIGHT, gp) # Create new progress bar (with corret fill rates)
             scoreboard.gp.scoreSaved = False # Allow scoreboard to save a new score
             pygame.event.clear(gp.SECOND_HAS_PASSED) # Reset this timer event

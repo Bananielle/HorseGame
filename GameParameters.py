@@ -39,7 +39,7 @@ class GameParameters():
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
         self.totalNumCoins = 10
-        self.minimal_nr_of_coins = 1
+        self.minimal_nr_of_coins = 3
 
 
 
@@ -263,6 +263,7 @@ class GameParameters():
                                                                    True, [0, 0, 0])
 
     def update_jump_position_text(self):
+
         self.achieved_jump_height_text = self.debuggingFont.render(
             "Achieved NF level = " + str('{:.0f}%'.format(self.achievedNFlevel * 100)),
             True, [0, 0, 0]
