@@ -111,7 +111,7 @@ class GameParameters():
         self.datawindow_duration_after_task_end_s = datawindow_poststimulusonset_s - self.duration_TASK_s
 
         self.hemodynamic_delay = self.datawindow_duration_after_task_end_s #todo: this is basically datawindow_duration_after_task_end_s
-        self.timeUntilJump_s = self.hemodynamic_delay  # todo: note that this should be dependent on when the data window task collection ends (and don't add + 1?)
+        self.timeUntilJump_s = self.hemodynamic_delay + 1   # todo: add plus 1 because otherwise the horse jumps too soon without the NF signal being calculated (and will then use previous trial data)
 
         self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s + (self.duration_TASK_s - self.datawindow_duration_before_task_end_s) # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
