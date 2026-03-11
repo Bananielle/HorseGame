@@ -31,7 +31,9 @@ class CSVwriter():
         # Open the CSV file for writing
         with open(file_path, mode='w', newline='') as file:
             # Create a CSV writer object
-            writer = csv.DictWriter(file, fieldnames=field_names, delimiter=self.delimiter)
+            delimiter = self.detect_excel_friendly_delimiter()
+            writer = csv.DictWriter(file, fieldnames=field_names, delimiter='\t', lineterminator='\r\n')
+
 
             # Write the header row
             writer.writeheader()

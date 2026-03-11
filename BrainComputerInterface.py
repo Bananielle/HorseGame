@@ -69,7 +69,6 @@ class BrainComputerInterface():
         for key in self.channelFieldNames:
             self.allChannels_latestValue[key] = []
 
-
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
                          "NFsignal_latestValue_TASK": [], "NF t-value":[], "NF beta":[], "NF_Threshold_Q3_120": [], "NF_ThresholdUsed": [],
                          "AchievedNFLevel": [], "MaxJumpHeightAchieved": [], "CoinsCollected":[]}
@@ -494,10 +493,16 @@ class BrainComputerInterface():
     def save_NFdatalog_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+        if self.gp.dataType == 1:
+            NF_type_used = "t-value"
+        else:
+            NF_type_used = "beta"
+
         if self.typeOfRun == "localizer":
+            NF_type_used = 0
             filename = f"NF_datalog_localizer_{current_date}.csv"
         else:
-            filename = f"NF_datalog_NFrun_{current_date}.csv"
+            filename = f"NF_datalog_NFrun_{NF_type_used}_{current_date}.csv"
 
         # exclude unwanted fields
         exclude = {"NFsignal_mean_TASK", "NFsignal_max_TASK", "NFsignal_median_TASK",
@@ -510,10 +515,16 @@ class BrainComputerInterface():
         field_names = []
         csvWriter = CSVwriter.CSVwriter()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+
+        if self.gp.dataType == 1:
+            NF_type_used = "t-value"
+        else:
+            NF_type_used = "beta"
+
         if self.typeOfRun == "localizer":
             filename = f"NF_allChannelData_localizer_{current_date}.csv"
         else:
-            filename = f"NF_allChannelData_NFrun_{current_date}.csv"
+            filename = f"NF_allChannelData_NFrun_{NF_type_used}_{current_date}.csv"
 
 
         print(f'Keys in data_dict: {list(self.allChannels_latestValue.keys())}')

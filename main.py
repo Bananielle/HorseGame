@@ -90,7 +90,7 @@ else:
     os.chdir(Path(__file__).resolve().parent)
 
 # Saves the output from the console to a logfile.
-allowLogSaving = True
+allowLogSaving = False
 
 neurofeedback_threshold = float(1.0)
 
@@ -802,6 +802,17 @@ if __name__ == '__main__':
 
             # Also write and finish the PRT file only once.
             PRT_writer.finish_PRT_file()  # Finish the PRT file
+
+            # And save a settings file for this run
+            with open("GameSettings.json") as f:
+                settings = json.load(f)  # Open settings file (json)
+            current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+            with open("Data/Logs/config_" + str(current_date) + ".csv", 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['Key', 'Value'])  # Header
+                for key, value in settings.items():
+                    writer.writerow([key, value])
+
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
