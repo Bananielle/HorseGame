@@ -101,10 +101,15 @@ class BrainComputerInterface():
             self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
             print("Number of channels: " + str(self.nrOfChannels))
             self.selectedChannels = self.tsi.get_selected_channels()[0]
+            for channel in self.selectedChannels:
+                channelname = self.tsi.get_channel_name(channel)
+                print(channelname)
+
 
             # Set up dictionairy for all-channel data to be collected
             for channel in range(0, self.nrOfChannels):
                 self.timewindow_allChannels_data_raw[channel] = []
+
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND

@@ -39,7 +39,8 @@ class GameParameters():
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
         self.totalNumCoins = 10
-        self.minimal_nr_of_coins = 3
+        self.minimal_nr_of_coins = 1
+        self.TESTING_MODE = False  # When True, NF levels are overridden with a predefined 0.1..1.0 sequence
 
 
 
@@ -196,6 +197,7 @@ class GameParameters():
 
         self.achievedNFlevel = 1
         self.coins_that_should_be_collected = 3
+        self.coins_to_collect_this_jump = 3  # Frozen at jump start to avoid mid-jump NF updates changing the target
         self.check_for_coin_collision = False
         self.signal_value_retrieved = 0
         self.maxJumpHeightAchieved = 0
