@@ -369,23 +369,25 @@ class BrainComputerInterface():
 
             if not self.gp.DIFFERENTIAL_FEEDBACK == 0:
 
-                beta1 =  self.getBetas(trialNr,0)
-                beta2 = self.getBetas(trialNr,1)
-                print("TEST" + str(beta1))
+                if len(self.selectedChannels) > 1:
 
-                tvalue1 = self.getTvalues(trialNr,0)
-                tvalue2 = self.getTvalues(trialNr,1)
+                    beta1 =  self.getBetas(trialNr,0)
+                    beta2 = self.getBetas(trialNr,1)
+                    print("TEST" + str(beta1))
 
-                if self.gp.DIFFERENTIAL_FEEDBACK == 1:
-                    betas = beta1 - beta2
-                    t_values = tvalue1 - tvalue2
-                if self.gp.DIFFERENTIAL_FEEDBACK == 2:
-                    betas = beta2 - beta1
-                    t_values = tvalue2 - tvalue1
+                    tvalue1 = self.getTvalues(trialNr,0)
+                    tvalue2 = self.getTvalues(trialNr,1)
+
+                    if self.gp.DIFFERENTIAL_FEEDBACK == 1:
+                        betas = beta1 - beta2
+                        t_values = tvalue1 - tvalue2
+                    if self.gp.DIFFERENTIAL_FEEDBACK == 2:
+                        betas = beta2 - beta1
+                        t_values = tvalue2 - tvalue1
 
 
 
-                print("Using differential feedback. Channel ", str(self.selectedChannels[0]), " - channel ", str(self.selectedChannels[1]))
+                    print("Using differential feedback. Channel ", str(self.selectedChannels[0]), " - channel ", str(self.selectedChannels[1]))
 
             self.recordedBetas.append(betas)
             self.timepointList.append(timepoint)
