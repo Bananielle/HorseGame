@@ -264,55 +264,6 @@ class TurbosatoriNetworkInterface(Input, Output):
         else:
             return struct.unpack('!i', data)[0], rt
 
-    def get_channel_name(self, channel):
-        """Get the name of a channel (e.g. 'S1-D1').
-
-        Parameters:
-        ----------
-        channel : int
-            The channel index (0-based).
-
-        Returns:
-        --------
-        name : str
-            The name of the channel (e.g. 'S1-D1').
-        rt : int
-            The time it took to get the data.
-
-        """
-
-        channel_packed = struct.pack('!i', channel)
-        data, rt = self.request_data("tGetChannelName", channel_packed)
-        if data is None:
-            return None, rt
-        elif data[:14] == "Wrong request!":
-            raise Exception("Wrong request!: '{0}'".format(data[19:-1]))
-        else:
-            # Response: 4 bytes echoing channel index + null-terminated name string
-            return byte2unicode(data[4:-1]), rt
-
-    def get_all_channel_names(self):
-        """Get the names of all channels.
-
-        Returns:
-        --------
-        names : list of str
-            The names of all channels (e.g. ['S1-D1', 'S1-D2', ...]).
-        rt : int
-            The total time it took to get all data.
-
-        """
-
-        nr_channels, rt_total = self.get_nr_of_channels()
-        if nr_channels is None:
-            return None, rt_total
-        names = []
-        for i in range(nr_channels):
-            name, rt = self.get_channel_name(i)
-            names.append(name)
-            rt_total += rt
-        return names, rt_total
-
     def get_values_feedback_folder(self):
         """Get the feedback folder for the values.
 

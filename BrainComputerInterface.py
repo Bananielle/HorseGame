@@ -101,10 +101,6 @@ class BrainComputerInterface():
             self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
             print("Number of channels: " + str(self.nrOfChannels))
             self.selectedChannels = self.tsi.get_selected_channels()[0]
-            for channel in self.selectedChannels:
-                channelname = self.tsi.get_channel_name(channel)
-                print(channelname)
-
 
             # Set up dictionairy for all-channel data to be collected
             for channel in range(0, self.nrOfChannels):
