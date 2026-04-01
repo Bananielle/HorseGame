@@ -431,7 +431,9 @@ if __name__ == '__main__':
 
                     # leave settings on SPACE
                     if event.key == K_ESCAPE:
-                        # startscreen.kill()
+                        with open("GameSettings.json") as f:
+                            settings = json.load(f)
+                            gp.boringMode = settings["boring_mode"] # Immmediately update this so that the startscreen is also properly updated when boring mode is on or off
                         gamestate = GameState.setGameState(GameState.STARTSCREEN)
                         running = False
                         break

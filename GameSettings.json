@@ -1,6 +1,6 @@
 {
   "fullscreen": false,
-  "boring_mode": false,
+  "boring_mode": true,
   "num_trials": 10,
   "task_duration_s": 4,
   "rest_duration_s": 8,
@@ -16,5 +16,5 @@
   "datawindow_duration_after_task_end_s": 5,
   "datawindow_duration_before_task_end_s": -1,
   "framerate": 60,
-  "differential_feedback": 0
+  "differential_feedback": 2
 }
