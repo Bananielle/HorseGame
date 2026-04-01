@@ -78,7 +78,7 @@ from Scoreboard import Scoreboard
 
 from SoundSystem import SoundSystem
 from gameover import GameOver, PressSpaceToReplay
-from Pictures import PressSpace, Title, Credits, ReadyToJump, AnimalPicture, TimeOfDayPicture
+from Pictures import PressSpace, Title, Credits, ReadyToJump, AnimalPicture, TimeOfDayPicture, GameType_pic
 from MainPlayer import MainPlayer
 
 # make relative paths resolve next to the executable (or source, in dev)
@@ -136,6 +136,7 @@ if __name__ == '__main__':
     # Used to cycle through different game states with a statemachine
     class GameStates:
         STARTSCREEN = 'StartScreen'
+        STARTUPPROMPT = 'StartupPrompt'
         SETTINGS = 'Settings'
         LOCALIZER = 'Localizer'
         STARTNEWGAME = 'StartNewGame'
@@ -219,6 +220,28 @@ if __name__ == '__main__':
 
         return gamestate, gameParameters, mainGameBackGround, paradigmManager, BCI  # Reinitialize game parameters and background
 
+    def changeGameTypeIcon_right(gametype):
+        if gametype == 0:
+            print("Maingame")
+            gametype = 1
+        elif gametype == 1:
+            print("Localizer")
+            gametype = 2
+        elif gametype == 2:
+            print("Testing")
+            gametype = 0
+
+    def changeGameTypeIcon_left(gametype):
+        if gametype == 0:
+            print("Maingame")
+            gametype = 2
+        elif gametype == 2:
+            print("Testing")
+            gametype = 1
+        elif gametype == 1:
+            print("Localizer")
+            gametype = 0
+
 
     def changeMount_right(mounttype):
 
@@ -295,8 +318,7 @@ if __name__ == '__main__':
                 # If space to start
                 if event.key == K_SPACE:
                     startscreen.kill()
-                    gamestate = GameState.setGameState(GameState.STARTNEWGAME)
-                    gametype = 'maingame'
+                    gamestate = GameState.setGameState(GameState.STARTUPPROMPT)
 
                 if event.key == K_RIGHT:
                     currentMountType = changeMount_right(currentMountType)
@@ -332,6 +354,62 @@ if __name__ == '__main__':
             gamestate = didPlayerPressQuit(gamestate, event)
 
         return gamestate, currentMountType, gametype, timeofday, testing_mode
+
+    def runStartupPrompt():
+        gamestate = GameState.STARTUPPROMPT
+        gametype  = "maingame"
+        gametype_choice = 0
+        gametype_displaytext = "Neurofeedback"
+        testing_mode = False
+        gametype_pic = GameType_pic(SCREEN_WIDTH, SCREEN_HEIGHT, gametype_displaytext)
+
+        # Create elements to be put on screen
+        startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        screen.fill([0, 0, 0])  # Set black background
+
+        # Check for turbo-satori connection
+
+        text = font.render('Note: Differential feedback is on.', True, PINK)
+        screen.blit(text, (SCREEN_WIDTH * 0.25, 10))
+
+        for event in pygame.event.get():
+
+            if event.type == KEYDOWN:
+                # If space to start
+                if event.key == K_SPACE:
+                    gamestate = GameState.setGameState(GameState.STARTNEWGAME)
+
+                if event.key == K_RIGHT:
+                    gametype_choice = changeGameTypeIcon_right(gametype_choice)
+                    soundSystem.menuSelection.play()
+
+                if event.key == K_LEFT:
+                    gametype_choice = changeGameTypeIcon_left(gametype_choice)
+                    soundSystem.menuSelection.play()
+
+                if gametype_choice == 0:
+                    gametype_displaytext = "Neurofeedback"
+                    gametype = "maingame"
+                if gametype_choice == 1:
+                    gametype_displaytext = "Localize"
+                    gametype = "localizer"
+                if gametype_choice == 2:
+                    gametype_displaytext = "Test/Debug"
+                    testing_mode = True
+
+
+
+            gamestate = didPlayerPressQuit(gamestate, event)
+
+
+
+        prompt_txt = font.render(gametype_displaytext, True, (255, 255, 255))
+        screen.blit(prompt_txt, (SCREEN_WIDTH / 3.7, SCREEN_HEIGHT - 80))
+        screen.blit(startscreen.surf, startscreen.surf_center)
+        screen.blit(gametype_pic.surf, gametype_pic.location)
+
+        return gamestate, gametype, testing_mode
 
 
     def runSettings():
@@ -480,6 +558,7 @@ if __name__ == '__main__':
             gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
             if BCI.TSIconnectionFound:
                 gp.show_selected_channels(BCI.selectedChannels)
+            gp.update_gametype_text(gametype)
             # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20, 80))
@@ -490,6 +569,7 @@ if __name__ == '__main__':
             screen.blit(gp.current_tvalue_text, (20, 160))
             screen.blit(gp.data_window_info_text, (20, 180))
             screen.blit(gp.selected_channels_text, (20, 200))
+            screen.blit(gp.gametype_text, (20,220))
 
 
     def updateTimeDataWindow_task():
@@ -1235,6 +1315,9 @@ if __name__ == '__main__':
 
         if gamestate == GameState.STARTSCREEN:
             gamestate, mounttype, gametype, timeofday, testing_mode = runStartScreen(mounttype, timeofday)
+
+        if gamestate == GameState.STARTUPPROMPT:
+            gamestate, gametype, testing_mode = runStartupPrompt()
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()

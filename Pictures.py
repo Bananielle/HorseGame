@@ -39,6 +39,22 @@ class AnimalPicture(pygame.sprite.Sprite):
             (self.SCREEN_HEIGHT * 0.55 - self.surf.get_height())
         )
 
+class GameType_pic(pygame.sprite.Sprite):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT,gametype):
+        super(GameType_pic, self).__init__()
+        self.SCREEN_WIDTH = SCREEN_WIDTH
+        self.SCREEN_HEIGHT = SCREEN_HEIGHT
+        self.mountType = "big" + str(gametype)
+        self.filename = "Resources/GameType/" + str(gametype) + ".png"
+        self.surf = pygame.image.load(self.filename).convert_alpha()
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+        self.rect = self.surf.get_rect()
+
+        self.location = (
+            (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
+            (self.SCREEN_HEIGHT * 0.40 - self.surf.get_height())
+        )
+
 class TimeOfDayPicture(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT,timeofday):
         super(TimeOfDayPicture, self).__init__()

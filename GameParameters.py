@@ -178,6 +178,7 @@ class GameParameters():
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
         self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
         self.selected_channels_text = self.debuggingFont.render(" " , True, [0,0,0])
+        self.gametype_text = self.debuggingFont.render("Neurofeedback", True, [0, 0, 0])
 
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
@@ -270,6 +271,18 @@ class GameParameters():
             "Achieved NF level = " + str('{:.0f}%'.format(self.achievedNFlevel * 100)),
             True, [0, 0, 0]
         )
+
+    def update_gametype_text(self, gametype):
+        if gametype == "maingame":
+            gametype = "neurofeeback"
+
+        self.gametype_text = self.debuggingFont.render(
+            "Game type: " + str(gametype), True, [0, 0, 0])
+
+        if self.DIFFERENTIAL_FEEDBACK > 0:
+            self.gametype_text = self.debuggingFont.render(
+                "Game type: " + str(gametype) + " with differntial feedback", True, [0, 0, 0])
+
 
     def show_selected_channels(self,selected_channels):
 
