@@ -275,13 +275,18 @@ class GameParameters():
     def update_gametype_text(self, gametype):
         if gametype == "maingame":
             gametype = "neurofeeback"
+            if self.DIFFERENTIAL_FEEDBACK > 0:
+                self.gametype_text = self.debuggingFont.render(
+                    "Game type: " + str(gametype) + " with differntial feedback", True, [0, 0, 0])
 
-        self.gametype_text = self.debuggingFont.render(
+        else:
+            self.gametype_text = self.debuggingFont.render(
             "Game type: " + str(gametype), True, [0, 0, 0])
 
-        if self.DIFFERENTIAL_FEEDBACK > 0:
+        if self.TESTING_MODE:
             self.gametype_text = self.debuggingFont.render(
-                "Game type: " + str(gametype) + " with differntial feedback", True, [0, 0, 0])
+                "Game type: TESTING MODE", True, [0, 0, 0])
+
 
 
     def show_selected_channels(self,selected_channels):

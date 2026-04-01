@@ -231,6 +231,8 @@ if __name__ == '__main__':
             print("Testing")
             gametype = 0
 
+        return gametype
+
     def changeGameTypeIcon_left(gametype):
         if gametype == 0:
             print("Maingame")
@@ -241,6 +243,8 @@ if __name__ == '__main__':
         elif gametype == 1:
             print("Localizer")
             gametype = 0
+
+        return gametype
 
 
     def changeMount_right(mounttype):
@@ -292,10 +296,10 @@ if __name__ == '__main__':
         fishadventure_text = Title(SCREEN_WIDTH, SCREEN_HEIGHT)
         credits = Credits(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        string = "(Press 'L' for localizer, 'S' for settings, 'T' for test mode)"
+        string = "(Press 'S' for settings)"
         string2 = "(Change animal: left/right key, change day/night: up/down key)"
         font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
-        testEnvironment_txt = font.render(string, True, (255, 255, 255))
+        s_for_settings = font.render(string, True, PINK)
         instructions_txt = font.render(string2, True, (255, 255, 255))
 
         # Check for turbo-satori connection
@@ -310,7 +314,7 @@ if __name__ == '__main__':
             screen.blit(timeofdayPic.surf, timeofdayPic.location)
             screen.blit(fishadventure_text.surf, fishadventure_text.location)
         screen.blit(credits.surf, credits.location)
-        screen.blit(testEnvironment_txt, (SCREEN_WIDTH / 2.8, SCREEN_HEIGHT - 100))
+        screen.blit(s_for_settings, (SCREEN_WIDTH / 2.4, SCREEN_HEIGHT - 100))
         screen.blit(instructions_txt, (SCREEN_WIDTH / 3.7, SCREEN_HEIGHT - 130))
 
         for event in pygame.event.get():
@@ -355,23 +359,16 @@ if __name__ == '__main__':
 
         return gamestate, currentMountType, gametype, timeofday, testing_mode
 
-    def runStartupPrompt():
+    def runStartupPrompt(gametype_choice):
         gamestate = GameState.STARTUPPROMPT
         gametype  = "maingame"
-        gametype_choice = 0
         gametype_displaytext = "Neurofeedback"
         testing_mode = False
-        gametype_pic = GameType_pic(SCREEN_WIDTH, SCREEN_HEIGHT, gametype_displaytext)
 
         # Create elements to be put on screen
         startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         screen.fill([0, 0, 0])  # Set black background
-
-        # Check for turbo-satori connection
-
-        text = font.render('Note: Differential feedback is on.', True, PINK)
-        screen.blit(text, (SCREEN_WIDTH * 0.25, 10))
 
         for event in pygame.event.get():
 
@@ -388,28 +385,28 @@ if __name__ == '__main__':
                     gametype_choice = changeGameTypeIcon_left(gametype_choice)
                     soundSystem.menuSelection.play()
 
-                if gametype_choice == 0:
-                    gametype_displaytext = "Neurofeedback"
-                    gametype = "maingame"
-                if gametype_choice == 1:
-                    gametype_displaytext = "Localize"
-                    gametype = "localizer"
-                if gametype_choice == 2:
-                    gametype_displaytext = "Test/Debug"
-                    testing_mode = True
-
 
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
+        if gametype_choice == 0:
+            gametype_displaytext = "Neurofeedback"
+            gametype = "maingame"
+        elif gametype_choice == 1:
+            gametype_displaytext = "Localizer"
+            gametype = "localizer"
+        elif gametype_choice == 2:
+            gametype_displaytext = "Debug"
+            testing_mode = True
+        else:
+            gametype_displaytext = "Neurofeedback"
 
 
-        prompt_txt = font.render(gametype_displaytext, True, (255, 255, 255))
-        screen.blit(prompt_txt, (SCREEN_WIDTH / 3.7, SCREEN_HEIGHT - 80))
         screen.blit(startscreen.surf, startscreen.surf_center)
+        gametype_pic = GameType_pic(SCREEN_WIDTH, SCREEN_HEIGHT, gametype_displaytext)
         screen.blit(gametype_pic.surf, gametype_pic.location)
 
-        return gamestate, gametype, testing_mode
+        return gamestate, gametype_choice, gametype, testing_mode
 
 
     def runSettings():
@@ -1310,6 +1307,7 @@ if __name__ == '__main__':
 
     # ========== GAME STATE MACHINE ==============
     gamestate = GameState.STARTSCREEN
+    gametype_choice =  0
     run = True
     while run:  # Game loop (= one frame)
 
@@ -1317,7 +1315,7 @@ if __name__ == '__main__':
             gamestate, mounttype, gametype, timeofday, testing_mode = runStartScreen(mounttype, timeofday)
 
         if gamestate == GameState.STARTUPPROMPT:
-            gamestate, gametype, testing_mode = runStartupPrompt()
+            gamestate, gametype_choice, gametype, testing_mode = runStartupPrompt(gametype_choice)
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()
