@@ -340,52 +340,61 @@ if __name__ == '__main__':
                     timeofday = setTimeOfDay('Night')
                     soundSystem.menuSelection.play()
 
-                if event.key == K_l:
-                    startscreen.kill()
-                    gamestate = GameState.setGameState(GameState.STARTNEWGAME)
-                    gametype = 'localizer'
-
                 if event.key == K_s:  # When you press 's'
                     startscreen.kill()
                     gamestate = GameState.setGameState(GameState.SETTINGS)
 
-                if event.key == K_t:  # When you press 't' - launch test mode
-                    startscreen.kill()
-                    gamestate = GameState.setGameState(GameState.STARTNEWGAME)
-                    gametype = 'maingame'
-                    testing_mode = True
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
         return gamestate, currentMountType, gametype, timeofday, testing_mode
 
-    def runStartupPrompt(gametype_choice):
+    def runStartupPrompt(gametype_choice, prompt_selected_index, diff_feedback_value):
         gamestate = GameState.STARTUPPROMPT
         gametype  = "maingame"
-        gametype_displaytext = "Neurofeedback"
         testing_mode = False
 
-        # Create elements to be put on screen
-        startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
+        # Row 1 (diff feedback) only exists when Neurofeedback is selected
+        num_rows = 2 if gametype_choice == 0 else 1
+        if prompt_selected_index >= num_rows:
+            prompt_selected_index = 0
 
-        screen.fill([0, 0, 0])  # Set black background
+        startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
+        screen.fill([0, 0, 0])
 
         for event in pygame.event.get():
-
             if event.type == KEYDOWN:
-                # If space to start
                 if event.key == K_SPACE:
                     gamestate = GameState.setGameState(GameState.STARTNEWGAME)
 
+                if event.key == K_UP:
+                    prompt_selected_index = (prompt_selected_index - 1) % num_rows
+                if event.key == K_DOWN:
+                    prompt_selected_index = (prompt_selected_index + 1) % num_rows
+
                 if event.key == K_RIGHT:
-                    gametype_choice = changeGameTypeIcon_right(gametype_choice)
-                    soundSystem.menuSelection.play()
+                    if prompt_selected_index == 0:
+                        gametype_choice = changeGameTypeIcon_right(gametype_choice)
+                        soundSystem.menuSelection.play()
+                    elif prompt_selected_index == 1:
+                        diff_feedback_value = (diff_feedback_value + 1) % 3
+                        with open("GameSettings.json") as f:
+                            _s = json.load(f)
+                        _s["differential_feedback"] = diff_feedback_value
+                        with open("GameSettings.json", "w") as f:
+                            json.dump(_s, f, indent=2)
 
                 if event.key == K_LEFT:
-                    gametype_choice = changeGameTypeIcon_left(gametype_choice)
-                    soundSystem.menuSelection.play()
-
-
+                    if prompt_selected_index == 0:
+                        gametype_choice = changeGameTypeIcon_left(gametype_choice)
+                        soundSystem.menuSelection.play()
+                    elif prompt_selected_index == 1:
+                        diff_feedback_value = (diff_feedback_value - 1) % 3
+                        with open("GameSettings.json") as f:
+                            _s = json.load(f)
+                        _s["differential_feedback"] = diff_feedback_value
+                        with open("GameSettings.json", "w") as f:
+                            json.dump(_s, f, indent=2)
 
             gamestate = didPlayerPressQuit(gamestate, event)
 
@@ -401,12 +410,29 @@ if __name__ == '__main__':
         else:
             gametype_displaytext = "Neurofeedback"
 
+        diff_value_labels = {0: "OFF", 1: "A-B", 2: "B-A"}
+        prompt_font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
+        row_x = SCREEN_WIDTH / 3.7
+        row_w = SCREEN_WIDTH * 0.4
+        row_h = 26
 
-        screen.blit(startscreen.surf, startscreen.surf_center)
+        if gametype_choice == 0:
+            row_y = SCREEN_HEIGHT / 2
+            if prompt_selected_index == 1:
+                pygame.draw.rect(screen, PINK, pygame.Rect(int(row_x - 6), int(row_y), int(row_w), row_h))
+            label_surf = prompt_font.render("Differential feedback:", True, WHITE)
+            value_surf = prompt_font.render(diff_value_labels[diff_feedback_value], True, WHITE)
+            value_rect = value_surf.get_rect()
+            value_rect.top = int(row_y)
+            value_rect.right = int(row_x - 6 + row_w - 10)
+            screen.blit(label_surf, (row_x, row_y))
+            screen.blit(value_surf, value_rect)
+
         gametype_pic = GameType_pic(SCREEN_WIDTH, SCREEN_HEIGHT, gametype_displaytext)
+        screen.blit(startscreen.surf, startscreen.surf_center)
         screen.blit(gametype_pic.surf, gametype_pic.location)
 
-        return gamestate, gametype_choice, gametype, testing_mode
+        return gamestate, gametype_choice, prompt_selected_index, diff_feedback_value, gametype, testing_mode
 
 
     def runSettings():
@@ -1309,15 +1335,21 @@ if __name__ == '__main__':
 
     # ========== GAME STATE MACHINE ==============
     gamestate = GameState.STARTSCREEN
-    gametype_choice =  0
+    gametype_choice = 0
+    prompt_selected_index = 0
+    with open("GameSettings.json") as f:
+        diff_feedback_value = json.load(f)["differential_feedback"]
     run = True
     while run:  # Game loop (= one frame)
 
         if gamestate == GameState.STARTSCREEN:
             gamestate, mounttype, gametype, timeofday, testing_mode = runStartScreen(mounttype, timeofday)
+            gametype_choice = 0
+            prompt_selected_index = 0
 
         if gamestate == GameState.STARTUPPROMPT:
-            gamestate, gametype_choice, gametype, testing_mode = runStartupPrompt(gametype_choice)
+            gamestate, gametype_choice, prompt_selected_index, diff_feedback_value, gametype, testing_mode = runStartupPrompt(gametype_choice, prompt_selected_index, diff_feedback_value)
+            gp.DIFFERENTIAL_FEEDBACK = diff_feedback_value
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()
