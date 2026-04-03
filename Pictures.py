@@ -19,7 +19,7 @@ class PressSpace(pygame.sprite.Sprite):
 
         self.surf_center = (
             (self.SCREEN_WIDTH - self.surf.get_width()) / 2,
-            ((self.SCREEN_HEIGHT * 0.8) - self.surf.get_height())
+            ((self.SCREEN_HEIGHT * 0.75) - self.surf.get_height())
         )
 
 

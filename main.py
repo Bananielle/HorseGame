@@ -194,6 +194,7 @@ if __name__ == '__main__':
             framerate = settings["framerate"]
             boring_mode = settings["boring_mode"]
             differential_feedback = settings["differential_feedback"]
+            minimal_nr_of_coins = settings["minimal_nr_of_coins"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
@@ -201,7 +202,8 @@ if __name__ == '__main__':
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore,
                                         neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
-                                        simulation_mode, debugging, framerate, boring_mode, differential_feedback)
+                                        simulation_mode, debugging, framerate, boring_mode, differential_feedback,
+                                        minimal_nr_of_coins)
         if gameParameters.usePreMadeProtocol:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
@@ -746,7 +748,7 @@ if __name__ == '__main__':
             if event.type == gp.HORSEANIMATION:
                 achievedNFlevel, gp.signal_value_retrieved = BCI.get_achieved_NF_level()
                 if gp.TESTING_MODE:
-                    achievedNFlevel = min(gp.TASK_counter * 0.1, 1.0)
+                    achievedNFlevel = min((gp.TASK_counter - 1) * 0.1, 1.0)
                     gp.signal_value_retrieved = achievedNFlevel
                 gp.set_achieved_NF_level(achievedNFlevel)
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=gp.achievedNFlevel)
@@ -835,113 +837,27 @@ if __name__ == '__main__':
         # During the jump: collect all eligible coins simultaneously when the horse reaches
         # the x position of the coin column AND the height of the highest eligible coin
         if gp.player.HorseIsJumping:
-            eligible_coins = [c for c in gp.coin if c.rank <= gp.coins_to_collect_this_jump]
+            eligible_coins = [coin for coin in gp.coin if coin.rank <= gp.coins_to_collect_this_jump]
             if eligible_coins:
                 top_coin = min(eligible_coins, key=lambda c: c.rect.centery)
                 # Collect all eligible coins the moment the horse reaches the coin column x.
-                # No height check: the horse reaches the column on the descent (after the peak),
-                # so a height condition would never trigger.
+
                 if gp.player.rect.right >= top_coin.rect.left:
                     for coin in eligible_coins:
                         coin.kill()
                         coinCollectionAdmin()
-            return
+                    gp.startCountingCoins()
 
-        # After landing: collect any remaining eligible coins that the arc missed
-        if gp.coinsBeingCounted:
-            collectCoinsBasedOnNFPerformance()
-            gp.coinsBeingCounted = False
-            return
-
-        # Fallback collision-based collection when not in a jump sequence
-        for coin in gp.coin:
-            if coin.rect.colliderect(gp.player.rect):  # If the player collides with the coin, it is collected.
-                if coin.rank <= gp.coins_that_should_be_collected:  # only kill the coins that should be collected (based on achieved NF level)
-                    coin.kill()
-
-                    coinCollectionAdmin()
+                    # Show the player how many coins have been collected
+                    text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+                    gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
                     if gp.coins_that_should_be_collected == gp.totalNumCoins:
                         print("T=", gp.currentTime_s, ": Highest coin collected! Killing all coins.")
                         if not gp.boringMode:
                             soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
-                        killAllCoins()
-                        break
+            return
 
-                else:  # If horse collided with all coins that should be collectd based on achieved NF level, check for leftover coins that horse did not collide with
-                    checkForLeftoverCoins()  # Check if there are any leftover coins that visuallly still need to be collected (because of how coin collision works it sometimes misses a few that didn't collide with horse)
-
-            # Show the player how many coins have been collected
-            text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
-            gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
-
-
-    def collectCoinsBasedOnNFPerformance():
-        """
-        Safety-net collection after horse lands: picks up any eligible coins that
-        the jump arc missed.  Accounts for coins already collected during the arc
-        so it never over-collects.
-        """
-        remaining_to_collect = gp.coins_to_collect_this_jump - gp.coinsCollectedInCurrentTrial
-
-        if remaining_to_collect <= 0:
-            return  # All eligible coins were already collected during the jump arc
-
-        coins_collected = 0
-
-        # Sort coins by position (lowest on screen first = highest centery)
-        sorted_coins = sorted(gp.coin, key=lambda coin: coin.rect.centery, reverse=True)
-
-        for i, coin in enumerate(sorted_coins):
-            if i < remaining_to_collect:
-                coin.kill()
-                coinCollectionAdmin()
-                coins_collected += 1
-            else:
-                break
-
-        if coins_collected > 0:
-            print(f"T= {gp.currentTime_s}: Safety-net collected {coins_collected} missed coin(s)")
-
-        # Special case: if all coins should be collected
-        if gp.coins_to_collect_this_jump == gp.totalNumCoins:
-            print("T=", gp.currentTime_s, ": Highest coin collected! All coins collected.")
-            if not gp.boringMode:
-                soundSystem.all_coins_collected_sound.play()
-
-
-    def collect_all_coins():
-        for coin in gp.coin:
-            if gp.coinsCollectedInCurrentTrial < gp.coins_that_should_be_collected:
-                # coin.kill()
-                gp.nrCoinsCollectedThroughoutRun += 1
-                gp.coinsCollectedInCurrentTrial += 1
-                gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
-            else:
-                if gp.coins_that_should_be_collected == gp.totalNumCoins:
-                    print("T=", gp.currentTime_s, ": Highest coin collected! Killing all coins.")
-                    soundSystem.all_coins_collected_sound.play()  # You can potentially play an extra sound here.
-                    killAllCoins()
-                    break
-                else:
-
-                    # soundSystem.coinCollected.play()
-                    # soundSystem.coinCollected.play()  # Play it 2 times to give the illusion of multiple coins
-                    break
-        # Show the player how many coins have been collected
-        text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
-        gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
-
-
-    def killAllCoins():
-        for coin in gp.coin:
-            coin.kill()
-            soundSystem.coinCollected.play()
-            gp.nrCoinsCollectedThroughoutRun += 1
-            gp.coinsCollectedInCurrentTrial += 1
-            # Show the player how many coins have been collected
-            text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
-            gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
 
 
     def runGameOver():

@@ -220,9 +220,12 @@ class MainPlayer(pygame.sprite.Sprite):
             # Ensure we don't try to access more coins than exist
             coins = min(coins, len(coin_positions))
 
+            if coins == 0:
+                return int(self.borderOfPathForHorse)  # No jump: stay at ground level
+
             # The jump height should reach the position of the coin with rank = coins
             # Coin ranks: 1 = lowest coin (easiest), 10 = highest coin (hardest)
-            target_coin_index = coins - 1  # Convert to 0-based index
+            target_coin_index = coins - 1  # Convert to 0-based index (always >= 0 here)
 
             if target_coin_index < len(coin_positions):
                 # Jump to just above the target coin position
@@ -234,6 +237,9 @@ class MainPlayer(pygame.sprite.Sprite):
         # Fallback to the original calculation if no coins are positioned yet
         # Map coins to jump height using a direct proportional relationship
         # More intuitive: fewer coins = lower jump (easier), more coins = higher jump (harder)
+        if coins == 0:
+            return int(self.borderOfPathForHorse)  # No jump: stay at ground level
+
         min_coins = self.gp.minimal_nr_of_coins
         max_coins = self.gp.totalNumCoins
 

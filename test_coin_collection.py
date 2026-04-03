@@ -122,20 +122,6 @@ def _coin_collection_admin(gp):
     gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1
 
 
-def _collect_coins_based_on_nf_performance(gp):
-    """Safety-net collection after horse lands (from collectCoinsBasedOnNFPerformance)."""
-    remaining_to_collect = gp.coins_to_collect_this_jump - gp.coinsCollectedInCurrentTrial
-    if remaining_to_collect <= 0:
-        return
-    sorted_coins = sorted(gp.coin, key=lambda c: c.rect.centery, reverse=True)
-    for i, coin in enumerate(sorted_coins):
-        if i < remaining_to_collect:
-            coin.kill()
-            _coin_collection_admin(gp)
-        else:
-            break
-
-
 def _check_for_coin_collision(gp):
     """Coin collection dispatcher (from checkForCoinCollision)."""
     if gp.player.HorseIsJumping:
@@ -150,12 +136,11 @@ def _check_for_coin_collision(gp):
         return
 
     if gp.coinsBeingCounted:
-        _collect_coins_based_on_nf_performance(gp)
         gp.coinsBeingCounted = False
         return
 
 
-# ─── Helpers ──────────────────────────────────────────────────────────────────
+# ─── Helpers FOR TESTING ──────────────────────────────────────────────────────────────────
 
 COIN_BASE_Y  = 520   # centery of rank-1 coin (lowest on screen)
 COIN_STEP_Y  = 50    # pixels between successive coins

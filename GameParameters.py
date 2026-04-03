@@ -21,7 +21,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
-                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback):
+                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins):
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -39,7 +39,7 @@ class GameParameters():
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
         self.totalNumCoins = 10
-        self.minimal_nr_of_coins = 1
+        self.minimal_nr_of_coins = minimal_nr_of_coins
         self.TESTING_MODE = False  # When True, NF levels are overridden with a predefined 0.1..1.0 sequence
 
 
