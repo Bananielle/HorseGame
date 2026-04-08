@@ -422,6 +422,10 @@ class BrainComputerInterface():
         if self.TSIconnectionFound:
             selectedChannels = self.selectedChannels
 
+            if not selectedChannel: # So if empty
+                print("No channel is selected!")
+                print("Current TSI selected channel list: " + str(self.tsi.get_selected_channels()))
+
            # print('Selected channel = ' + str(selectedChannels[0]))
             try:
                 betas = self.tsi.get_beta_of_channel(selectedChannels[selectedChannel],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
@@ -442,11 +446,18 @@ class BrainComputerInterface():
     def getTvalues(self,trialNr,selectedChannel):
         if self.TSIconnectionFound:
 
+            if not selectedChannel:  # So if empty
+                print("No channel is selected!")
+                print("Current TSI selected channel list: " + str(self.tsi.get_selected_channels()))
+
             contrast = [0,0,0,0,0,0,0,0,0,0]
             if trialNr > 0:
                 contrast[trialNr-1] = 1 # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
-            t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[selectedChannel],chromophore=self.gp.chromophore,contrast=contrast) # 1 is oxy, 0 is deoxy
-
+            try:
+                t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[selectedChannel],chromophore=self.gp.chromophore,contrast=contrast) # 1 is oxy, 0 is deoxy
+            except Exception as e:
+                # Catches any other exception, 'e' holds the error details (most likely request timeout with TSI?)
+                print(f"Unexpected error: {e}")
             #print("T-value: " + str(t_values))
 
             return t_values[0]
