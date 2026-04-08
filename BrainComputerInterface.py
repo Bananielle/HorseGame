@@ -423,7 +423,11 @@ class BrainComputerInterface():
             selectedChannels = self.selectedChannels
 
            # print('Selected channel = ' + str(selectedChannels[0]))
-            betas = self.tsi.get_beta_of_channel(selectedChannels[selectedChannel],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
+            try:
+                betas = self.tsi.get_beta_of_channel(selectedChannels[selectedChannel],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
+            except Exception as e:
+                # Catches any other exception, 'e' holds the error details (most likely request timeout with TSI?)
+                print(f"Unexpected error: {e}")
 
 
            # print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))

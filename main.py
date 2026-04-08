@@ -579,12 +579,12 @@ if __name__ == '__main__':
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
             gp.update_retrieved_signal_value_text()
-            gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
-            gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter, 0))
-            gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
-            gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
             if BCI.TSIconnectionFound:
                 gp.show_selected_channels(BCI.selectedChannels)
+                gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
+                gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter, 0))
+                gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
+                gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
             gp.update_gametype_text(gametype)
             # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
@@ -813,15 +813,6 @@ if __name__ == '__main__':
             draw_game_time_text()
 
         draw_debugging_text()
-
-
-    def checkForLeftoverCoins():
-        for coin in gp.coin:
-            if coin.rank <= gp.coins_that_should_be_collected:  # only kill the coins that should be collected (based on achieved NF level)
-                coin.kill()
-                coinCollectionAdmin()
-
-                print("COLLECTED A LEFTOVER COIN.")
 
 
     def coinCollectionAdmin():

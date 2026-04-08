@@ -34,7 +34,7 @@ class GameParameters():
         self.boringMode = boring_mode
         self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
-        self.saveIncomingData = True
+        self.saveIncomingData = False # Don't save all values unless debugging
 
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
