@@ -14,6 +14,7 @@ else:
 
 GOLD = (255, 184, 28)
 PINK = (170, 22, 166)
+RED = (255, 0, 0)
 
 # Fonts
 HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"  # add the file to your repo
@@ -23,6 +24,7 @@ class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
                  datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins):
 
+        self.nochannel_warning = None
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
 
@@ -87,6 +89,8 @@ class GameParameters():
             'datawindow_rest_start_times': {},
             'datawindow_rest_end_times': {},
         }
+
+        self.noChannelSelectedWarning = False
 
         # Participant information (will be used to correctly name the protocol file for each run)
         self.taskUsed = ''
@@ -179,6 +183,7 @@ class GameParameters():
         self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
         self.selected_channels_text = self.debuggingFont.render(" " , True, [0,0,0])
         self.gametype_text = self.debuggingFont.render("Neurofeedback", True, [0, 0, 0])
+
 
         #self.achieved_jump_position = "Achieved NF signal = " + str(self.player.ju)
 
@@ -286,7 +291,6 @@ class GameParameters():
         if self.TESTING_MODE:
             self.gametype_text = self.debuggingFont.render(
                 "Game type: TESTING MODE", True, [0, 0, 0])
-
 
 
     def show_selected_channels(self,selected_channels):

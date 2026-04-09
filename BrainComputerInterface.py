@@ -170,9 +170,9 @@ class BrainComputerInterface():
                 print("Appending scaled data to timewindow_task..." + str(scaled_data))
 
                 # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
-                for channel in range(0,self.nrOfChannels):
-                    channel_rawdata = self.getDataForAllChannels(channel, trialNr)
-                    self.timewindow_allChannels_data_raw[channel].append(channel_rawdata)
+              #  for channel in range(0,self.nrOfChannels):
+               #     channel_rawdata = self.getDataForAllChannels(channel, trialNr)
+                #    self.timewindow_allChannels_data_raw[channel].append(channel_rawdata)
             else:
                 self.timewindow_rest.append(scaled_data)
 
@@ -228,9 +228,9 @@ class BrainComputerInterface():
         self.NFSignal_latestValue_t_value = round(NFsignal_raw_tvalues[-1],2)
 
         # All Channels
-        for channel in range(0,self.nrOfChannels):
-            key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
-            self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
+        #for channel in range(0,self.nrOfChannels):
+         #   key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
+          #  self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
 
         print("All Channels latest beta value: " + str(self.allChannels_latestValue))
 
@@ -306,15 +306,15 @@ class BrainComputerInterface():
         print("NF threshold based on Q3 * 120%: " + str(NFSignal_Q3_120))
 
         # All channels (add average value across all trials per channel)
-        self.allChannels_latestValue["Trials"].append("Mean")
-        mean_values = [] # for finding the max value later
-        counter = 0
-        for values in self.allChannels_latestValue.values():
-            if counter is not 0: # first column is a header so we want to skip it
-                mean = np.mean(values)
-                values.append(round(mean,2))
-                mean_values.append(mean)
-            counter += 1
+      #  self.allChannels_latestValue["Trials"].append("Mean")
+       # mean_values = [] # for finding the max value later
+        #counter = 0
+        #for values in self.allChannels_latestValue.values():
+         #   if counter is not 0: # first column is a header so we want to skip it
+          #      mean = np.mean(values)
+           #     values.append(round(mean,2))
+            #    mean_values.append(mean)
+           # counter += 1
 
         # Find the channel with the highest mean # todo doesn't work properly...
         # means_array = np.array(list(mean_values)) # Convert mean list to an array (to find the max value)
@@ -331,7 +331,7 @@ class BrainComputerInterface():
         self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
         self.NFsignal["NF_ThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
-        self.save_allChannelData_to_csv()
+       # self.save_allChannelData_to_csv()
 
       #  self.save_continousMeasurementDataToCSV()
 
@@ -419,12 +419,9 @@ class BrainComputerInterface():
 
     # The trial number gets the predictor for each trial (trial 1 for first predictor, trial 2 for second predictor etc)
     def getBetas(self,trialNr,selectedChannel):
+        betas = 0
         if self.TSIconnectionFound:
             selectedChannels = self.selectedChannels
-
-            if not selectedChannel: # So if empty
-                print("No channel is selected!")
-                print("Current TSI selected channel list: " + str(self.tsi.get_selected_channels()))
 
            # print('Selected channel = ' + str(selectedChannels[0]))
             try:
@@ -444,11 +441,8 @@ class BrainComputerInterface():
         else: return 0
 
     def getTvalues(self,trialNr,selectedChannel):
+        t_values = 0
         if self.TSIconnectionFound:
-
-            if not selectedChannel:  # So if empty
-                print("No channel is selected!")
-                print("Current TSI selected channel list: " + str(self.tsi.get_selected_channels()))
 
             contrast = [0,0,0,0,0,0,0,0,0,0]
             if trialNr > 0:
@@ -464,21 +458,30 @@ class BrainComputerInterface():
         else: return 0
 
     def getDataForAllChannels(self, channel, trialNr):
-
+        data = 0
         if self.TSIconnectionFound:
-            data = 0
+
             if self.gp.dataType == 0:
-                beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
-                # print("Beta channel " + str(channel) + " = " + str(beta))
-                data = beta
+                try:
+                    beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
+                    # print("Beta channel " + str(channel) + " = " + str(beta))
+                    data = beta
+                except Exception as e:
+                    print(f"Unexpected error: {e}")
+                    print("Couldn't get beta value from TSI...")
+
             if self.gp.dataType == 1:
                 contrast = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 if trialNr > 0:
                     contrast[trialNr - 1] = 1  # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
-                t_values = self.tsi.get_tvalue_of_channel(channel, chromophore=1,contrast=contrast)  # 1 is oxy, 0 is deoxy
-                data = t_values[0]
+                try:
+                    t_values = self.tsi.get_tvalue_of_channel(channel, chromophore=1,contrast=contrast)  # 1 is oxy, 0 is deoxy
+                    data = t_values[0]
+                except Exception as e:
+                    print(f"Unexpected error: {e}")
+                    print("Couldn't get t-value value from TSI...")
 
-            return data
+        return data
 
 
 

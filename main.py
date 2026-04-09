@@ -91,7 +91,7 @@ else:
     os.chdir(Path(__file__).resolve().parent)
 
 # Saves the output from the console to a logfile.
-allowLogSaving = False
+allowLogSaving = True
 
 neurofeedback_threshold = float(1.0)
 
@@ -574,6 +574,8 @@ if __name__ == '__main__':
 
 
     def draw_debugging_text():
+        no_channel_warning = gp.debuggingFont.render("", True, RED)
+
         if gp.debuggingText:
             gp.display_exp_parameters(get_current_jitter_duration())
             gp.update_y_position_horse_text()
@@ -585,6 +587,9 @@ if __name__ == '__main__':
                 gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter, 0))
                 gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
                 gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
+
+                if not BCI.tsi.get_selected_channels()[0]:
+                    no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
             gp.update_gametype_text(gametype)
             # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
@@ -596,7 +601,8 @@ if __name__ == '__main__':
             screen.blit(gp.current_tvalue_text, (20, 160))
             screen.blit(gp.data_window_info_text, (20, 180))
             screen.blit(gp.selected_channels_text, (20, 200))
-            screen.blit(gp.gametype_text, (20,220))
+            screen.blit(no_channel_warning, (20,220))
+
 
 
     def updateTimeDataWindow_task():
