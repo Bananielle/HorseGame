@@ -364,7 +364,6 @@ class MainPlayer(pygame.sprite.Sprite):
         self.jump_initialized = False
         self.gp.freezeCoins = False
         self.gp.horseJumpEvent = False
-        self.gp.startCountingCoins()
         self.rect.bottom = int(self.borderOfPathForHorse)
         # Don't snap centerx — the idle branch trots the horse back gradually.
         print(f"T= {self.gp.currentTime_s}: Horse landed successfully")
