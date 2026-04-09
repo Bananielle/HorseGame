@@ -429,6 +429,12 @@ class BrainComputerInterface():
             except Exception as e:
                 # Catches any other exception, 'e' holds the error details (most likely request timeout with TSI?)
                 print(f"Unexpected error: {e}")
+                return 0
+
+            if betas is None:
+                return 0 # s
+            else:
+                return betas
 
 
            # print("Betas (condition per trial): " + str(betas), " for trial: " + str(trialNr))
@@ -437,7 +443,6 @@ class BrainComputerInterface():
            # betas_one = self.tsi.get_beta_of_channel(selectedChannels[0], beta=0, chromophore=1)[0]  #  Only get the beta's for all trials as one condition
            # print("Betas (one condition): " + str(betas_one), " for trial: " + str(trialNr))
 
-            return betas
         else: return 0
 
     def getTvalues(self,trialNr,selectedChannel):
@@ -453,9 +458,14 @@ class BrainComputerInterface():
                 # Catches any other exception, 'e' holds the error details (most likely request timeout with TSI?)
                 print(f"Unexpected error: {e}")
             #print("T-value: " + str(t_values))
+                return 0
 
-            return t_values[0]
-        else: return 0
+            if t_values is None:
+                return 0 # skip display update this frame
+            else:
+                return t_values[0]
+        else:
+            return 0
 
     def getDataForAllChannels(self, channel, trialNr):
         data = 0
