@@ -591,6 +591,7 @@ if __name__ == '__main__':
                 if not BCI.tsi.get_selected_channels()[0]:
                     no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
             gp.update_gametype_text(gametype)
+
             # screen.blit(gp.horse_upper_position_text, (20, 60))
             screen.blit(gp.exp_parameters_text, (20, 60))
             screen.blit(gp.NF_target_value_text, (20, 80))
@@ -601,7 +602,8 @@ if __name__ == '__main__':
             screen.blit(gp.current_tvalue_text, (20, 160))
             screen.blit(gp.data_window_info_text, (20, 180))
             screen.blit(gp.selected_channels_text, (20, 200))
-            screen.blit(no_channel_warning, (20,220))
+            screen.blit(gp.gametype_text, (20,220))
+            screen.blit(no_channel_warning, (20,24 0))
 
 
 
