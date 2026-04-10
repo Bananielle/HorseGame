@@ -603,7 +603,7 @@ if __name__ == '__main__':
             screen.blit(gp.data_window_info_text, (20, 180))
             screen.blit(gp.selected_channels_text, (20, 200))
             screen.blit(gp.gametype_text, (20,220))
-            screen.blit(no_channel_warning, (20,24 0))
+            screen.blit(no_channel_warning, (20,240))
 
 
 
