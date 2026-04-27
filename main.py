@@ -91,7 +91,7 @@ else:
     os.chdir(Path(__file__).resolve().parent)
 
 # Saves the output from the console to a logfile.
-allowLogSaving = True
+allowLogSaving = False
 
 neurofeedback_threshold = float(1.0)
 
@@ -104,6 +104,8 @@ if allowLogSaving:  # Note that this means there won't be any visibile output in
 
     sys.stdout = log_file  # Redirect stdout and stderr to the log file
     sys.stderr = log_file
+
+
 
 ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"
 ARIAL_BOLD_FONT_PATH = "Resources/fonts/Arial Bold.ttf"
@@ -364,6 +366,8 @@ if __name__ == '__main__':
         startscreen = PressSpace(SCREEN_WIDTH, SCREEN_HEIGHT)
         screen.fill([0, 0, 0])
 
+
+
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_SPACE:
@@ -587,23 +591,24 @@ if __name__ == '__main__':
                 gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter, 0))
                 gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
                 gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
-
                 if not BCI.tsi.get_selected_channels()[0]:
                     no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
+
             gp.update_gametype_text(gametype)
 
             # screen.blit(gp.horse_upper_position_text, (20, 60))
-            screen.blit(gp.exp_parameters_text, (20, 60))
-            screen.blit(gp.NF_target_value_text, (20, 80))
-            screen.blit(gp.signal_value_retrieved_text, (20, 100))
+            screen.blit(gp.nrTrialsCompletedText_debug, (20,60))
+            screen.blit(gp.exp_parameters_text, (20, 80))
+            screen.blit(gp.NF_target_value_text, (20, 100))
+            screen.blit(gp.signal_value_retrieved_text, (20, 120))
             if gp.gameType == 'maingame':  # Dont show achieved NF level during localizer (because no NF is given)
-                screen.blit(gp.achieved_jump_height_text, (20, 120))
-            screen.blit(gp.current_beta_value_text, (20, 140))
-            screen.blit(gp.current_tvalue_text, (20, 160))
-            screen.blit(gp.data_window_info_text, (20, 180))
-            screen.blit(gp.selected_channels_text, (20, 200))
-            screen.blit(gp.gametype_text, (20,220))
-            screen.blit(no_channel_warning, (20,240))
+                screen.blit(gp.achieved_jump_height_text, (20, 140))
+            screen.blit(gp.current_beta_value_text, (20, 160))
+            screen.blit(gp.current_tvalue_text, (20, 180))
+            screen.blit(gp.data_window_info_text, (20, 200))
+            screen.blit(gp.selected_channels_text, (20, 220))
+            screen.blit(gp.gametype_text, (20,240))
+            screen.blit(no_channel_warning, (20,260))
 
 
 
@@ -1265,6 +1270,10 @@ if __name__ == '__main__':
         if gamestate == GameState.STARTUPPROMPT:
             gamestate, gametype_choice, prompt_selected_index, diff_feedback_value, gametype, testing_mode = runStartupPrompt(gametype_choice, prompt_selected_index, diff_feedback_value)
             gp.DIFFERENTIAL_FEEDBACK = diff_feedback_value
+            if BCI.TSIconnectionFound:
+                if not BCI.tsi.get_selected_channels()[0]:
+                    no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
+                    screen.blit(no_channel_warning, (SCREEN_WIDTH * 0.25, 10))
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()

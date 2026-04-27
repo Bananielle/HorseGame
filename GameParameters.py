@@ -36,7 +36,7 @@ class GameParameters():
         self.boringMode = boring_mode
         self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
-        self.saveIncomingData = False # Don't save all values unless debugging
+        self.saveIncomingData = True # Don't save all values unless debugging
 
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
@@ -175,12 +175,13 @@ class GameParameters():
         self.gameTimeCounterText = self.mainFont.render(self.counterText, True, PINK)
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
+        self.nrTrialsCompletedText_debug = self.debuggingFont.render(self.nrTrials_string, True, [0,0,0])
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top), True, [0,0,0])
-        self.signal_value_retrieved_text = self.debuggingFont.render("Beta value of current trial = 0" + str(self.player.rect.top), True, [0,0,0])
-        self.NF_target_value_text = self.debuggingFont.render("Neurofeedback threshold = 0" + str(self.player.rect.top), True, [0,0,0])
-        self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0" + str(self.player.rect.top), True, [0,0,0])
-        self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0" + str(self.player.rect.top), True, [0,0,0])
-        self.data_window_info_text = self.debuggingFont.render(" " + str(self.player.rect.top), True, [0,0,0])
+        self.signal_value_retrieved_text = self.debuggingFont.render("Beta value of current trial = 0", True, [0,0,0])
+        self.NF_target_value_text = self.debuggingFont.render("Neurofeedback threshold = 0", True, [0,0,0])
+        self.current_beta_value_text =self.debuggingFont.render("(realtime) Beta = 0", True, [0,0,0])
+        self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value = 0", True, [0,0,0])
+        self.data_window_info_text = self.debuggingFont.render(" " , True, [0,0,0])
         self.selected_channels_text = self.debuggingFont.render(" " , True, [0,0,0])
         self.gametype_text = self.debuggingFont.render("Neurofeedback", True, [0, 0, 0])
 
