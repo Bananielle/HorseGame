@@ -537,7 +537,7 @@ if __name__ == '__main__':
 
             # Update horse riding animation
             if event.type == gp.HORSEANIMATION:
-                gp.set_achieved_NF_level(0.2)  # For displaying debugging text
+                gp.set_achieved_NF_level(0.1)  # For displaying debugging text
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(
                     gp.achievedNFlevel)  # For localizer, set it to a fixed level. (no feedback during the localizer)
 

@@ -361,11 +361,11 @@ class GameParameters():
 
         print("Parameter " + parameter + " changed to: " + str(settings[parameter]))
     def apply_parameters_premadeprotocol_to_settings(self):
-        self.change_settings_file("num_trials",self.totalNum_TRIALS)
-        self.change_settings_file("task_duration_s",self.duration_TASK_s)
-        self.change_settings_file("rest_duration_s",self.duration_REST_s)
-        self.change_settings_file("baseline_duration_s",self.duration_BASELINE_s)
-        self.change_settings_file("jitter_s",0) # todo: set to 0 for now, because it jsut affects the progress bar, not the datawindow
+      #  self.change_settings_file("num_trials",self.totalNum_TRIALS)
+       # self.change_settings_file("task_duration_s",self.duration_TASK_s)
+        #self.change_settings_file("rest_duration_s",self.duration_REST_s)
+        #self.change_settings_file("baseline_duration_s",self.duration_BASELINE_s)
+        #self.change_settings_file("jitter_s",0) # todo: set to 0 for now, because it jsut affects the progress bar, not the datawindow
 
         self.durationGame_s = self.calculate_duration_game() # Recalculate this with the updated parameters
         self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS  # Resize to match trial count from protocol file
