@@ -447,19 +447,19 @@ class GameParameters():
            # print("Current volume timepoint: " + str(current_volume_timepoint))
             if current_volume_timepoint < self.start_volumes[0]:
                 self.current_condition = 0 # If the volume timepoint is before the first task, then it is the baseline condition
-                print("Baseline condition.")
+                #print("Baseline condition.") todo: turn these back on for debugging of simulation mode!
             else:
                 if self.current_condition < self.totalNum_TRIALS:
                     # Check for start of new task
                     if current_volume_timepoint >= self.start_volumes[self.current_condition] and current_volume_timepoint < self.end_volumes[self.current_condition]:
                         self.current_condition += 1
-                        print("PREMADE PROTOCOL: New condition! Is now: " + str(self.current_condition))
+                       # print("PREMADE PROTOCOL: New condition! Is now: " + str(self.current_condition))
                         self.timeForTaskEvent = True
                         self.horseHasJumpedThisTrial = False # Rest horse jump counter
                 if self.current_condition <= self.totalNum_TRIALS:
                     # Check for end of task (and start of rest)
                     if current_volume_timepoint >= self.end_volumes[self.current_condition-1]:
-                        print("PREMADE PROTOCOL: End of task condition " + str(self.current_condition) + ". Now rest period.")
+                      #  print("PREMADE PROTOCOL: End of task condition " + str(self.current_condition) + ". Now rest period.") todo: turn these back on for debugging of simulation mode!
                         self.timeForRestEvent = True
                        # if current_volume_timepoint >= self.end_volumes[self.current_condition-1] + (self.timeUntilJump_s * self.samplingRate) and not self.player.HorseIsJumping:
                            #self.timeForJumpEvent = True

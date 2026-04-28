@@ -43,7 +43,7 @@ class BrainComputerInterface():
         self.previousInput = 0
         self.fakeInput = 0
         self.TSIconnectionFound = True
-        self.timeBetweenSamples_ms = 1000 # So 1 second!
+
         self.collectTimewindowData= False
         self.timewindow_task = []
         self.timewindow_task_tvalues = []
@@ -92,8 +92,6 @@ class BrainComputerInterface():
             self.TSIconnectionFound = False
             print("Turbo satori connection not found.")
 
-        #if self.TSIconnectionFound:
-          #  self.timeBetweenSamples_ms = self  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         if self.TSIconnectionFound:
             # Get information from turbo-satori
@@ -105,9 +103,11 @@ class BrainComputerInterface():
             for channel in range(0, self.nrOfChannels):
                 self.timewindow_allChannels_data_raw[channel] = []
 
+        self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
+
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms)
 
 
     def getSamplingRate(self):
@@ -278,14 +278,26 @@ class BrainComputerInterface():
         return round(achieved_NF_signal,2),round(signal_value_used,2)
 
     def calculate_NF_max_threshold(self):
-        # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
-        NFsignal_mean = round(np.mean((self.NFsignal["NFsignal_mean_TASK"])),2)
-        NFsignal_max = round(np.mean((self.NFsignal["NFsignal_max_TASK"])),2)
-        NFSignal_median = round(np.mean((self.NFsignal["NFsignal_median_TASK"])),2)
-        NFSignal_mean_latestValue = round(np.mean((self.NFsignal["NFsignal_latestValue_TASK"])),2) # Mean of the all latest value of each trial
-        NFSignal_Q3_latestValue = round(np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75),2) # Third quartile of the latest value of each trial
-        NFSignal_Q3_120 = round((NFSignal_Q3_latestValue * 1.2),2)
-        # C
+        if not self.NFsignal["NFsignal_latestValue_TASK"]:
+            print("No NF task data collected — filling with zeros for CSV export.")
+            NFsignal_mean = 0
+            NFsignal_max = 0
+            NFSignal_median = 0
+            NFSignal_mean_latestValue = 0
+            NFSignal_Q3_latestValue = 0
+            NFSignal_Q3_120 = 0
+
+        else:
+            # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
+            NFsignal_mean = round(np.mean((self.NFsignal["NFsignal_mean_TASK"])), 2)
+            NFsignal_max = round(np.mean((self.NFsignal["NFsignal_max_TASK"])), 2)
+            NFSignal_median = round(np.mean((self.NFsignal["NFsignal_median_TASK"])), 2)
+            NFSignal_mean_latestValue = round(np.mean((self.NFsignal["NFsignal_latestValue_TASK"])),
+                                              2)  # Mean of the all latest value of each trial
+            NFSignal_Q3_latestValue = round(np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75),
+                                            2)  # Third quartile of the latest value of each trial
+            NFSignal_Q3_120 = round((NFSignal_Q3_latestValue * 1.2), 2)
+            #
 
 
         maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
@@ -309,9 +321,9 @@ class BrainComputerInterface():
         mean_values = [] # for finding the max value later
         counter = 0
         for values in self.allChannels_latestValue.values():
-            if counter is not 0: # first column is a header so we want to skip it
-                mean = np.mean(values)
-                values.append(round(mean,2))
+            if counter is not 0:  # first column is a header so we want to skip it
+                mean = round(np.mean(values), 2) if values else 0  # If empty just put a 0 in there instead
+                values.append(mean)
                 mean_values.append(mean)
             counter += 1
 

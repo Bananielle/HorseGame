@@ -682,7 +682,7 @@ if __name__ == '__main__':
                 gp.protocol_file['datawindow_task_start_times'][gp.trialCounter_task]) + ", Scaled data: " + str(
                 scaled_data))
 
-        if gp.currentTime_s == gp.protocol_file['datawindow_task_end_times'][
+        if gp.currentTime_s >= gp.protocol_file['datawindow_task_end_times'][
             gp.trialCounter_task]:  # Don't measure rest data while the task trial has already started
             if gp.trialCounter_task > len(BCI.NFsignal[
                                               "NFsignal_mean_TASK"]) and gp.trialCounter_task <= gp.totalNum_TRIALS:  # Check if NF signal has already been measured:
