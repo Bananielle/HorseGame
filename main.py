@@ -554,9 +554,9 @@ if __name__ == '__main__':
 
                 if gp.performingSimulation:
                     if BCI.TSIconnectionFound:
-                        print("Volume timepoint (localizer) = " + str(volume_timepoint))
+                        volume_timepoint = BCI.tsi.get_current_time_point()[0]
                         currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
-                        collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)()
+                        collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
                 else:
                     collectTaskTrialData()
 

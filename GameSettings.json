@@ -11,7 +11,7 @@
   "data_input_type": 0,
   "chromophore": 0,
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
-  "simulation_mode": false,
+  "simulation_mode": true,
   "debugging": true,
   "datawindow_duration_after_task_end_s": 9,
   "datawindow_duration_before_task_end_s": 3,
