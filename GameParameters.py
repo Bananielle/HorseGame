@@ -34,9 +34,9 @@ class GameParameters():
         # ADJUSTABLE PARAMETERS
         # To simulate or not simulate
         self.boringMode = boring_mode
-        self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for replay" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
-        self.protocol_file_path = 'Protocol for replay/NFrun6trials.prt'
-        self.saveIncomingData = True # Don't save all values unless debugging
+        self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for simulation" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.protocol_file_path = 'Protocol for simulation/PRT_for_simulation.prt'
+        self.saveIncomingData = False # Don't save all values unless debugging
 
         self.DIFFERENTIAL_FEEDBACK = differential_feedback
 
@@ -112,13 +112,13 @@ class GameParameters():
 
         self.durationGame_s = self.calculate_duration_game()
 
-        self.datawindow_duration_before_task_end_s = datawindow_prestimulusonset_s + self.duration_TASK_s
+        self.datawindow_prestimulusonset_s = datawindow_prestimulusonset_s
         self.datawindow_duration_after_task_end_s = datawindow_poststimulusonset_s - self.duration_TASK_s
 
         self.hemodynamic_delay = self.datawindow_duration_after_task_end_s #todo: this is basically datawindow_duration_after_task_end_s
         self.timeUntilJump_s = self.hemodynamic_delay + 1   # todo: add plus 1 because otherwise the horse jumps too soon without the NF signal being calculated (and will then use previous trial data)
 
-        self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s + (self.duration_TASK_s - self.datawindow_duration_before_task_end_s) # for first trial - Add 3 seconds to account for the hemodynamic delay?
+        self.datawindow_task_start_time = self.duration_BASELINE_s + self.duration_REST_s - datawindow_prestimulusonset_s # for first trial - Add 3 seconds to account for the hemodynamic delay?
         self.datawindow_task_duration = self.duration_TASK_s  #6s to fully capture the peak of the hemodynamic response
         self.datawindow_task_end_time = self.datawindow_task_start_time + self.datawindow_task_duration + datawindow_poststimulusonset_s
 
@@ -540,7 +540,7 @@ class GameParameters():
         total_num_trials = self.totalNum_TRIALS
 
         for trial_number in range(1, total_num_trials+1):
-            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + (task_duration - self.datawindow_duration_before_task_end_s)
+            datawindow_task_start_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + self.datawindow_prestimulusonset_s
             datawindow_task_end_times[trial_number] = self.protocol_file['task_start_times'][trial_number] + task_duration + self.hemodynamic_delay
 
             #datawindow_rest_end_times[trial_number] = (self.protocol_file['task_start_times'][trial_number]) - 1

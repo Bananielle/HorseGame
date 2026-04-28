@@ -39,7 +39,7 @@ In GameParameters, you can adjust:
 - Participant information (will be used for filenaming)
 - Whether you want to use t-values or beta values as input for neurofeedback (dataType)
 - Game difficulty: changes coin colour and NF threshold
-- Whether you want to run the game using simulated data from TSI or not (usePreMadeProtoco = True. Needs TSI to be running in simulation mode and needs a matching protocol file in the "Protocol for replay" folder!)
+- Whether you want to run the game using simulated data from TSI or not (usePreMadeProtoco = True. Needs TSI to be running in simulation mode and needs a matching protocol file in the "Protocol for simulation" folder!)
 - The frame rate. (currently at 20 FPS)
 - The speed of all sprites with 'velocity'.
 
@@ -589,7 +589,7 @@ if __name__ == '__main__':
                 gp.show_selected_channels(BCI.selectedChannels)
                 gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
                 gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter, 0))
-                gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
+                #gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
                 gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
                 if not BCI.tsi.get_selected_channels()[0]:
                     no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
@@ -604,7 +604,7 @@ if __name__ == '__main__':
             if gp.gameType == 'maingame':  # Dont show achieved NF level during localizer (because no NF is given)
                 screen.blit(gp.achieved_jump_height_text, (20, 140))
             screen.blit(gp.current_beta_value_text, (20, 160))
-            screen.blit(gp.current_tvalue_text, (20, 180))
+            #screen.blit(gp.current_tvalue_text, (20, 180))
             screen.blit(gp.data_window_info_text, (20, 200))
             screen.blit(gp.selected_channels_text, (20, 220))
             screen.blit(gp.gametype_text, (20,240))
@@ -752,6 +752,7 @@ if __name__ == '__main__':
                     collectTaskTrialData()
                 else:
                     # print("Volume timepoint (main game) = " + str(volume_timepoint))
+                    volume_timepoint = BCI.tsi.get_current_time_point()[0]
                     currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
                     collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
 
@@ -1021,7 +1022,7 @@ if __name__ == '__main__':
             # print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
             if gp.horseJumpCounter == gp.TASK_counter:
                 if gp.usePreMadeProtocol:
-                    current_volume_timepoint = BCI.getCurrentTimePoint_TSI()[0]
+                    current_volume_timepoint = BCI.getCurrentTimePoint_TSI()
                     if current_volume_timepoint >= gp.end_volumes[gp.current_condition - 1] + (
                             gp.timeUntilJump_s * BCI.getSamplingRate()) and not gp.horseHasJumpedThisTrial:
                         timeforjump = signalTimeForJump()

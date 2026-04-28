@@ -31,7 +31,6 @@ class BrainComputerInterface():
         self.gp = gameParameters
         self.saveIncomingData = self.gp.saveIncomingData
         self.typeOfRun = typeOfRun # localizer or maingame (NF) run
-        self.simulatedData_filepath = "Data/"
         self.previousRetrievedTimePoint = 0
         self.currentRetrievedTimePoint = 0
         self.recordedBetas = []
@@ -121,7 +120,7 @@ class BrainComputerInterface():
 
         if self.TSIconnectionFound:
             current_time_point = self.tsi.get_current_time_point()[0]
-            print("Current time point TSI: "  + str(current_time_point))
+           # print("Current time point TSI: "  + str(current_time_point))
         else:
             current_time_point = self.gp.currentTime_s
 
@@ -333,7 +332,8 @@ class BrainComputerInterface():
         self.save_NFdatalog_to_csv()
         self.save_allChannelData_to_csv()
 
-        self.save_continousMeasurementDataToCSV()
+        if self.gp.saveIncomingData:
+            self.save_continousMeasurementDataToCSV()
 
 
     def getCurrentTimePoint(self):
@@ -452,10 +452,11 @@ class BrainComputerInterface():
 
                 t_values = self.tsi.get_tvalue_of_channel(self.selectedChannels[selectedChannel],chromophore=self.gp.chromophore,contrast=contrast) # 1 is oxy, 0 is deoxy
 
-            if t_values is None:
-                return 0 # skip display update this frame
-            else:
-                return t_values[0]
+                print(str(t_values))
+                if t_values is None:
+                    return 0 # skip display update this frame
+                else:
+                    return t_values[0]
         else:
             return 0
 
