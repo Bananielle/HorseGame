@@ -19,11 +19,6 @@ class ParadigmAndTriggerManager():
                       source_id='Example')  # sets variables for object info
         self.outlet = StreamOutlet(self.info)  # initialize stream.
 
-        if gameParamaters.useSimulatedData: #TODO old! remove!
-            self.retrieveProtocol("LocalizerAline_Protocol.csv")
-            #self.retrieveSimulatedData("LocalizerAline_BetaValues.csv")
-            self.retrieveSimulatedData("NF_run_Dani_2023-11-15.csv")
-
 
 
     # Retrieves protocol data that is specified for each second.
@@ -89,7 +84,7 @@ class ParadigmAndTriggerManager():
         if self.gp.TASK_counter >= self.gp.totalNum_TRIALS:
             return False
 
-        if self.gp.usePreMadeProtocol:
+        if self.gp.performingSimulation:
             if self.gp.timeForTaskEvent:
                 print("Time for task event (BASED ON PROTOCOL)!")
                 return True
@@ -102,7 +97,7 @@ class ParadigmAndTriggerManager():
     def isItTimeForRestEvent(self):
         if self.gp.rest:
             return False
-        if self.gp.usePreMadeProtocol:
+        if self.gp.performingSimulation:
             if self.gp.timeForRestEvent:
                 print("Time for rest event (BASED ON PROTOCOL)!")
                 return True

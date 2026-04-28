@@ -43,7 +43,7 @@ class BrainComputerInterface():
         self.previousInput = 0
         self.fakeInput = 0
         self.TSIconnectionFound = True
-
+        self.timeBetweenSamples_ms = 1000 # So 1 second!
         self.collectTimewindowData= False
         self.timewindow_task = []
         self.timewindow_task_tvalues = []
@@ -92,6 +92,8 @@ class BrainComputerInterface():
             self.TSIconnectionFound = False
             print("Turbo satori connection not found.")
 
+        #if self.TSIconnectionFound:
+          #  self.timeBetweenSamples_ms = self  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
         if self.TSIconnectionFound:
             # Get information from turbo-satori
@@ -103,11 +105,9 @@ class BrainComputerInterface():
             for channel in range(0, self.nrOfChannels):
                 self.timewindow_allChannels_data_raw[channel] = []
 
-        self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
-
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms)
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
 
 
     def getSamplingRate(self):
@@ -278,6 +278,7 @@ class BrainComputerInterface():
         return round(achieved_NF_signal,2),round(signal_value_used,2)
 
     def calculate_NF_max_threshold(self):
+
         if not self.NFsignal["NFsignal_latestValue_TASK"]:
             print("No NF task data collected — filling with zeros for CSV export.")
             NFsignal_mean = 0
@@ -289,21 +290,17 @@ class BrainComputerInterface():
 
         else:
             # Calculate the mean of the NFsignal_mean values in the NFsignal dictionary
-            NFsignal_mean = round(np.mean((self.NFsignal["NFsignal_mean_TASK"])), 2)
-            NFsignal_max = round(np.mean((self.NFsignal["NFsignal_max_TASK"])), 2)
-            NFSignal_median = round(np.mean((self.NFsignal["NFsignal_median_TASK"])), 2)
-            NFSignal_mean_latestValue = round(np.mean((self.NFsignal["NFsignal_latestValue_TASK"])),
-                                              2)  # Mean of the all latest value of each trial
-            NFSignal_Q3_latestValue = round(np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75),
-                                            2)  # Third quartile of the latest value of each trial
-            NFSignal_Q3_120 = round((NFSignal_Q3_latestValue * 1.2), 2)
-            #
+            NFsignal_mean = round(np.mean((self.NFsignal["NFsignal_mean_TASK"])),2)
+            NFsignal_max = round(np.mean((self.NFsignal["NFsignal_max_TASK"])),2)
+            NFSignal_median = round(np.mean((self.NFsignal["NFsignal_median_TASK"])),2)
+            NFSignal_mean_latestValue = round(np.mean((self.NFsignal["NFsignal_latestValue_TASK"])),2) # Mean of the all latest value of each trial
+            NFSignal_Q3_latestValue = round(np.percentile((self.NFsignal["NFsignal_latestValue_TASK"]), 75),2) # Third quartile of the latest value of each trial
+            NFSignal_Q3_120 = round((NFSignal_Q3_latestValue * 1.2),2)
 
-
-        maxtrials = len(self.NFsignal["NFsignal_mean_TASK"]) + 1  # +2 because Python starts at 0 for the array
+        maxtrials = max(len(self.NFsignal["NFsignal_mean_TASK"]), len(self.NFsignal["AchievedNFLevel"])) + 1
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
-        self.allChannels_latestValue["Trials"] = trialIndex
+        self.allChannels_latestValue["Trials"] = list(trialIndex)  # separate copy so appending "Mean" doesn't affect NFsignal
 
 
         # Print the mean of the NFsignal_mean values
@@ -321,10 +318,10 @@ class BrainComputerInterface():
         mean_values = [] # for finding the max value later
         counter = 0
         for values in self.allChannels_latestValue.values():
-            if counter is not 0:  # first column is a header so we want to skip it
-                mean = round(np.mean(values), 2) if values else 0  # If empty just put a 0 in there instead
-                values.append(mean)
-                mean_values.append(mean)
+            if counter is not 0: # first column is a header so we want to skip it
+                mean_channel = round(np.mean(values), 2) if values else 0 # If empty just put a 0 in there instead
+                values.append(mean_channel)
+                mean_values.append(mean_channel)
             counter += 1
 
         # Find the channel with the highest mean # todo doesn't work properly...
@@ -539,7 +536,14 @@ class BrainComputerInterface():
                          "NFsignal_latestValue_TASK", "MaxJumpHeightAchieved"}  # put your unwanted keys here
         filtered_fields = [f for f in self.field_names if f not in exclude]
 
-        csvWriter.save_dict_to_csv(filename, filtered_fields, self.NFsignal)
+        # Build mean row for numeric columns
+        average_cols = ["NF t-value", "NF beta", "AchievedNFLevel", "CoinsCollected"]
+        mean_row = {"Trials": "Mean"}
+        for col in average_cols:
+            values = self.NFsignal[col]
+            mean_row[col] = round(np.mean(values), 2) if values else 0
+
+        csvWriter.save_dict_to_csv(filename, filtered_fields, self.NFsignal, mean_row=mean_row)
 
     def save_allChannelData_to_csv(self):
         field_names = []

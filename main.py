@@ -206,7 +206,7 @@ if __name__ == '__main__':
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode, debugging, framerate, boring_mode, differential_feedback,
                                         minimal_nr_of_coins)
-        if gameParameters.usePreMadeProtocol:
+        if gameParameters.performingSimulation:
             gameParameters.read_premade_protocol()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
 
@@ -552,7 +552,7 @@ if __name__ == '__main__':
                     volume_timepoint = BCI.continuousMeasuring(
                         trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
-                if not gp.usePreMadeProtocol:
+                if not gp.performingSimulation:
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (localizer) = " + str(volume_timepoint))
@@ -581,6 +581,7 @@ if __name__ == '__main__':
         no_channel_warning = gp.debuggingFont.render("", True, RED)
 
         if gp.debuggingText:
+            gp.update_trial_nr_text()
             gp.display_exp_parameters(get_current_jitter_duration())
             gp.update_y_position_horse_text()
             gp.update_jump_position_text()
@@ -644,10 +645,8 @@ if __name__ == '__main__':
 
     def collectTaskTrialData_fromPreMadeProtocol(currentCondition, current_volume_timepoint):
         if currentCondition > 0:  # Only after baseline
-            # print("Current volume_timepoint: " + str(current_volume_timepoint))
             start_window = gp.start_volumes[currentCondition - 1]  # minus one because current condition is one higher
             hemodynamic_delay_volumes = gp.hemodynamic_delay * BCI.tsi.get_sampling_rate()[0]
-            # print("Hemodynamic delay in volumes: "+ str(hemodynamic_delay_volumes))
             end_window = gp.end_volumes[currentCondition - 1] + hemodynamic_delay_volumes
             print("Collect data when between volumes " + str(start_window) + " and " + str(
                 end_window + round(hemodynamic_delay_volumes)))
@@ -703,31 +702,6 @@ if __name__ == '__main__':
         gp.coinsCollectedInCurrentTrial = 0  # Rest the counter
 
 
-    def collectRestTrialData():
-        # Send time window to BCI
-
-        if gp.protocol_file['datawindow_rest_start_times'][gp.trialCounter_rest] <= gp.currentTime_s < \
-                gp.protocol_file['datawindow_rest_end_times'][gp.trialCounter_rest]:
-            BCI.collectTimewindowData = True
-            scaled_data = BCI.startMeasuring(task=False, simulatedData=gp.signalValue_simulated,
-                                             trialNr=gp.trial_counter)
-            print("T=", gp.currentTime_s, ": Collecting timewindow data for rest. Rest start time: " + str(
-                gp.datawindow_rest_start_time) + " ,rest end time: " + str(
-                gp.datawindow_rest_end_time) + ", Scaled data: " + str(scaled_data))
-
-        if gp.currentTime_s == gp.protocol_file['datawindow_rest_end_times'][
-            gp.trialCounter_rest]:  # Don't measure rest data while the task trial has already started
-            if gp.trialCounter_rest > len(BCI.NFsignal[
-                                              "NFsignal_mean_REST"]) and gp.trialCounter_rest <= gp.totalNum_TRIALS + 1:  # Check if NF signal has already been measured: (+1 because we have one extra rest trial)
-                BCI.calculateNFsignal(task=False)
-                stopCollectingData()
-                updateTimeDataWindow_rest()
-                gp.trialCounter_rest += 1
-                if gp.trialCounter_rest >= gp.totalNum_TRIALS:
-                    gp.trialCounter_rest = gp.totalNum_TRIALS  # Then you've reached the end of the rest trials (and since this counter is used for indexing it shouldn't exceed its max)
-            else:
-                print("NF signal rest already calculated.")
-
 
     def runMainGame():
         soundSystem.playMaintheme_slow()
@@ -748,13 +722,13 @@ if __name__ == '__main__':
                     volume_timepoint = BCI.continuousMeasuring(
                         trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
-                if not gp.usePreMadeProtocol:
-                    collectTaskTrialData()
+                if not gp.performingSimulation:
+                    if BCI.TSIconnectionFound:
+                        volume_timepoint = BCI.tsi.get_current_time_point()[0]
+                        currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
+                        collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
                 else:
-                    # print("Volume timepoint (main game) = " + str(volume_timepoint))
-                    volume_timepoint = BCI.tsi.get_current_time_point()[0]
-                    currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
-                    collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
+                    collectTaskTrialData()
 
             runParadigm()  # Duration of task and rest can be changed in GameParameters.py
 
@@ -1021,7 +995,7 @@ if __name__ == '__main__':
         if gp.rest:
             # print("Horsejump counter: " + str(gp.horseJumpCounter) + " Task counter: " + str(gp.TASK_counter))
             if gp.horseJumpCounter == gp.TASK_counter:
-                if gp.usePreMadeProtocol:
+                if gp.performingSimulation:
                     current_volume_timepoint = BCI.getCurrentTimePoint_TSI()
                     if current_volume_timepoint >= gp.end_volumes[gp.current_condition - 1] + (
                             gp.timeUntilJump_s * BCI.getSamplingRate()) and not gp.horseHasJumpedThisTrial:
@@ -1108,11 +1082,6 @@ if __name__ == '__main__':
                     gp.currentTime_s == gp.durationGame_s - 3):  # Play countdown if only 3 seconds left
                 soundSystem.countdownSound.play()
 
-            # SIMULATED CONDITIONS AND DATA
-            if gp.useSimulatedData:
-                condition_simulated = paradigmManager.getCurrentSimulatedCondition()  # Get the current simulated condition
-                gp.signalValue_simulated = paradigmManager.getCurrentSimulatedSignalValue()  # Get the current simulated signal value
-
         return gamestate
 
 
@@ -1173,7 +1142,7 @@ if __name__ == '__main__':
                 screen.blit(label, (0, y))
                 pygame.draw.line(screen, grid_color, (0, y), (SCREEN_WIDTH, y))
 
-        if gp.usePreMadeProtocol:
+        if gp.performingSimulation:
             font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 16)
             text = font.render('Using simulated data.', True, BLACK)
             screen.blit(text, (SCREEN_WIDTH / 2.5, 10))

@@ -34,7 +34,7 @@ class GameParameters():
         # ADJUSTABLE PARAMETERS
         # To simulate or not simulate
         self.boringMode = boring_mode
-        self.usePreMadeProtocol = simulation_mode  # Put your protocol file in the "Protocol for simulation" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
+        self.performingSimulation = simulation_mode  # Put your protocol file in the "Protocol for simulation" folder and the game. Note: this mode only works when you have a simulaion in TBV running@
         self.protocol_file_path = 'Protocol for simulation/PRT_for_simulation.prt'
         self.saveIncomingData = False # Don't save all values unless debugging
 
@@ -133,8 +133,6 @@ class GameParameters():
 
         self.useBCIinput = True  # If true, then player will be controlled by BCI input next to keyboard presses
         self.collectDataDuringRest = False  # (No longer used in our current experimental setup)
-
-        self.useSimulatedData = False  # Todo Should remove this feature, as we can now make use of the premadeprotocol and TSI-simulation mode
 
         # Paradigm parameters - constants
         self.trialCounter_task = 1 # For NF measuring
@@ -271,6 +269,10 @@ class GameParameters():
         self.horse_upper_position_text = self.debuggingFont.render("Y_position horse = " + str(self.player.rect.top),
                                                                    True, [0, 0, 0])
 
+    def update_trial_nr_text(self):
+        self.nrTrialsCompletedText_debug = self.debuggingFont.render("Trial " + str(self.trial_counter) + "/" + str(self.totalNum_TRIALS),
+                                                                   True, [0, 0, 0])
+
     def update_jump_position_text(self):
 
         self.achieved_jump_height_text = self.debuggingFont.render(
@@ -384,7 +386,7 @@ class GameParameters():
 
             if stripped_line.startswith("NrOfConditions"):
                 self.NrOfConditions = int(stripped_line.split(":")[1].strip())
-                if self.usePreMadeProtocol: # only do this when actually in simulation mode
+                if self.performingSimulation: # only do this when actually in simulation mode
                     self.totalNum_TRIALS = self.NrOfConditions # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
                 print("Number of Conditions: ", self.NrOfConditions)
 

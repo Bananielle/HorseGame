@@ -23,7 +23,7 @@ class CSVwriter():
         decimal = locale.localeconv().get("decimal_point", ".")
         return ";" if decimal == "," else ","
 
-    def save_dict_to_csv(self, file_name, field_names, data_dict):
+    def save_dict_to_csv(self, file_name, field_names, data_dict, mean_row=None):
         # Define the field names (header) for your CSV file
 
         file_path = self.dataOutputFolder + file_name
@@ -32,7 +32,7 @@ class CSVwriter():
         with open(file_path, mode='w', newline='') as file:
             # Create a CSV writer object
             delimiter = self.detect_excel_friendly_delimiter()
-            writer = csv.DictWriter(file, fieldnames=field_names, delimiter='\t', lineterminator='\r\n')
+            writer = csv.DictWriter(file, fieldnames=field_names, delimiter=delimiter, lineterminator='\r\n')
 
 
             # Write the header row
@@ -47,6 +47,9 @@ class CSVwriter():
                     else:
                         row[key] = None  # or some other placeholder value
                 writer.writerow(row)
+
+            if mean_row is not None:
+                writer.writerow(mean_row)
 
         print(f'Data written to ' + file_path)
 
