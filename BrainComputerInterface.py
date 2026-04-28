@@ -92,9 +92,6 @@ class BrainComputerInterface():
             self.TSIconnectionFound = False
             print("Turbo satori connection not found.")
 
-        #if self.TSIconnectionFound:
-          #  self.timeBetweenSamples_ms = self  # self.establishTimeInBetweenSamples() todo NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
-
         if self.TSIconnectionFound:
             # Get information from turbo-satori
             self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
