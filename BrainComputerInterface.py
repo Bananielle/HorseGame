@@ -43,7 +43,7 @@ class BrainComputerInterface():
         self.previousInput = 0
         self.fakeInput = 0
         self.TSIconnectionFound = True
-        self.timeBetweenSamples_ms = 1000 # So 1 second!
+        self.timeBetweenSamples_ms = 1000 # fallback before TSI connection
         self.collectTimewindowData= False
         self.timewindow_task = []
         self.timewindow_task_tvalues = []
@@ -100,6 +100,7 @@ class BrainComputerInterface():
             self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
             print("Number of channels: " + str(self.nrOfChannels))
             self.selectedChannels = self.tsi.get_selected_channels()[0]
+            self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
 
             # Set up dictionairy for all-channel data to be collected
             for channel in range(0, self.nrOfChannels):
@@ -107,7 +108,7 @@ class BrainComputerInterface():
 
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
-        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms) #self.timeBetweenSamples_ms) # I have to give it integers... todo: NOTE THAT IT DATA IS NOW COLLECTED ONLY EVERY SECOND
+        pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms)
 
 
     def getSamplingRate(self):
@@ -336,7 +337,7 @@ class BrainComputerInterface():
 
 
         # Save NF values to CSV files
-        self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
+        #self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
         self.NFsignal["NF_ThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
         self.save_allChannelData_to_csv()
@@ -527,27 +528,38 @@ class BrainComputerInterface():
 
         if self.typeOfRun == "localizer":
             NF_type_used = 0
-            filename = f"NF_datalog_localizer_{current_date}.csv"
+            filename = f"NF_datalog_localizer_{current_date}.xlsx"
         else:
-            filename = f"NF_datalog_NFrun_{NF_type_used}_{current_date}.csv"
+            filename = f"NF_datalog_NFrun_{NF_type_used}_{current_date}.xlsx"
 
         # exclude unwanted fields
         exclude = {"NFsignal_mean_TASK", "NFsignal_max_TASK", "NFsignal_median_TASK",
-                         "NFsignal_latestValue_TASK", "MaxJumpHeightAchieved"}  # put your unwanted keys here
+                         "NFsignal_latestValue_TASK","NF_Threshold_Q3_120", "MaxJumpHeightAchieved"}  # put your unwanted keys here
         filtered_fields = [f for f in self.field_names if f not in exclude]
 
-        # Build mean row for numeric columns
+        # Build data rows
+        max_length = max((len(self.NFsignal[k]) for k in filtered_fields), default=0)
+        rows = []
+        for i in range(max_length):
+            row = {k: self.NFsignal[k][i] if i < len(self.NFsignal[k]) else None for k in filtered_fields}
+            rows.append(row)
+
+        # Add mean row for numeric columns
         average_cols = ["NF t-value", "NF beta", "AchievedNFLevel", "CoinsCollected"]
-        mean_row = {"Trials": "Mean"}
+        mean_row = {k: None for k in filtered_fields}
+        mean_row["Trials"] = "Mean"
         for col in average_cols:
             values = self.NFsignal[col]
             mean_row[col] = round(np.mean(values), 2) if values else 0
+        rows.append(mean_row)
 
-        csvWriter.save_dict_to_csv(filename, filtered_fields, self.NFsignal, mean_row=mean_row)
+        import pandas as pd
+        df = pd.DataFrame(rows, columns=filtered_fields)
+        file_path = "Data/" + filename
+        df.to_excel(file_path, index=False)
+        print(f'Data written to ' + file_path)
 
     def save_allChannelData_to_csv(self):
-        field_names = []
-        csvWriter = CSVwriter.CSVwriter()
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
 
         if self.gp.dataType == 1:
@@ -556,14 +568,22 @@ class BrainComputerInterface():
             NF_type_used = "beta"
 
         if self.typeOfRun == "localizer":
-            filename = f"NF_allChannelData_localizer_{current_date}.csv"
+            filename = f"NF_allChannelData_localizer_{current_date}.xlsx"
         else:
-            filename = f"NF_allChannelData_NFrun_{NF_type_used}_{current_date}.csv"
+            filename = f"NF_allChannelData_NFrun_{NF_type_used}_{current_date}.xlsx"
 
+        field_names = list(self.allChannels_latestValue.keys())
+        max_length = max((len(self.allChannels_latestValue[k]) for k in field_names), default=0)
+        rows = []
+        for i in range(max_length):
+            row = {k: self.allChannels_latestValue[k][i] if i < len(self.allChannels_latestValue[k]) else None for k in field_names}
+            rows.append(row)
 
-        print(f'Keys in data_dict: {list(self.allChannels_latestValue.keys())}')
-
-        csvWriter.save_dict_to_csv(filename, self.allChannels_latestValue.keys(), self.allChannels_latestValue)
+        import pandas as pd
+        df = pd.DataFrame(rows, columns=field_names)
+        file_path = "Data/" + filename
+        df.to_excel(file_path, index=False)
+        print(f'Data written to ' + file_path)
 
 
     def save_list_to_csv(self, data,filename):

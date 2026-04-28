@@ -368,6 +368,9 @@ class GameParameters():
         self.change_settings_file("jitter_s",0) # todo: set to 0 for now, because it jsut affects the progress bar, not the datawindow
 
         self.durationGame_s = self.calculate_duration_game() # Recalculate this with the updated parameters
+        self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS  # Resize to match trial count from protocol file
+        self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
+        self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
 
         #todo  Also got to adapt to jitter? or just always set to 0?
 
