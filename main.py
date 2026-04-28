@@ -552,7 +552,7 @@ if __name__ == '__main__':
                     volume_timepoint = BCI.continuousMeasuring(
                         trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
-                if not gp.performingSimulation:
+                if gp.performingSimulation:
                     collectTaskTrialData()
                 else:
                     print("Volume timepoint (localizer) = " + str(volume_timepoint))
@@ -722,7 +722,7 @@ if __name__ == '__main__':
                     volume_timepoint = BCI.continuousMeasuring(
                         trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
-                if not gp.performingSimulation:
+                if gp.performingSimulation:
                     if BCI.TSIconnectionFound:
                         volume_timepoint = BCI.tsi.get_current_time_point()[0]
                         currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
