@@ -553,11 +553,12 @@ if __name__ == '__main__':
                         trialNr=gp.trial_counter)  # Do a continous measurement to get oxy data of the whole run
 
                 if gp.performingSimulation:
-                    collectTaskTrialData()
+                    if BCI.TSIconnectionFound:
+                        print("Volume timepoint (localizer) = " + str(volume_timepoint))
+                        currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
+                        collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)()
                 else:
-                    print("Volume timepoint (localizer) = " + str(volume_timepoint))
-                    currentCondition = gp.checkIfTaskOrRestCondition_PreMadeProtocol(volume_timepoint)
-                    collectTaskTrialData_fromPreMadeProtocol(currentCondition, volume_timepoint)
+                    collectTaskTrialData()
 
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()

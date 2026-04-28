@@ -314,15 +314,23 @@ class BrainComputerInterface():
         print("Third quartile of latest beta data points: "  + str(NFSignal_Q3_latestValue))
         print("NF threshold based on Q3 * 120%: " + str(NFSignal_Q3_120))
 
-        # All channels (add average value across all trials per channel)
-        self.allChannels_latestValue["Trials"].append("Mean")
-        mean_values = [] # for finding the max value later
+        # All channels (add summary rows across all trials per channel)
+        summary_labels = ["Mean", "Median", "Q3", "Q3*1.2"]
+        for label in summary_labels:
+            self.allChannels_latestValue["Trials"].append(label)
+
         counter = 0
         for values in self.allChannels_latestValue.values():
-            if counter is not 0: # first column is a header so we want to skip it
-                mean_channel = round(np.mean(values), 2) if values else 0 # If empty just put a 0 in there instead
-                values.append(mean_channel)
-                mean_values.append(mean_channel)
+            if counter != 0:  # skip Trials column
+                trial_values = values[:-len(summary_labels)]  # exclude the label rows just appended
+                if trial_values:
+                    mean_val   = round(np.mean(trial_values), 2)
+                    median_val = round(np.median(trial_values), 2)
+                    q3_val     = round(np.percentile(trial_values, 75), 2)
+                    q3_120_val = round(q3_val * 1.2, 2)
+                else:
+                    mean_val = median_val = q3_val = q3_120_val = 0
+                values.extend([mean_val, median_val, q3_val, q3_120_val])
             counter += 1
 
         # Find the channel with the highest mean # todo doesn't work properly...
@@ -337,7 +345,7 @@ class BrainComputerInterface():
 
 
         # Save NF values to CSV files
-        #self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
+        self.NFsignal["NF_Threshold_Q3_120"].append(NFSignal_Q3_120)
         self.NFsignal["NF_ThresholdUsed"].append(self.NF_neurofeedack_threshold)
         self.save_NFdatalog_to_csv()
         self.save_allChannelData_to_csv()
@@ -534,7 +542,7 @@ class BrainComputerInterface():
 
         # exclude unwanted fields
         exclude = {"NFsignal_mean_TASK", "NFsignal_max_TASK", "NFsignal_median_TASK",
-                         "NFsignal_latestValue_TASK","NF_Threshold_Q3_120", "MaxJumpHeightAchieved"}  # put your unwanted keys here
+                         "NFsignal_latestValue_TASK", "MaxJumpHeightAchieved", "NF_Threshold_Q3_120"}  # put your unwanted keys here
         filtered_fields = [f for f in self.field_names if f not in exclude]
 
         # Build data rows
