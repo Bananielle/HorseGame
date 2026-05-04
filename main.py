@@ -207,7 +207,9 @@ if __name__ == '__main__':
                                         simulation_mode, debugging, framerate, boring_mode, differential_feedback,
                                         minimal_nr_of_coins)
         if gameParameters.performingSimulation:
-            gameParameters.read_premade_protocol()
+            BCI = BrainComputerInterface(gametype, gameParameters)
+            samplingRate = BCI.tsi.get_sampling_rate()
+            gameParameters.read_premade_protocol(samplingRate)
             gameParameters.apply_parameters_premadeprotocol_to_settings()
 
         gameParameters.generate_protocol()
@@ -960,7 +962,7 @@ if __name__ == '__main__':
                 paradigmManager.resetRestStartTime()
 
             if paradigmManager.isItTimeForRestEvent():
-                if gp.firstRestTrial:
+                if gp.firstRestTrial and not gp.performingSimulation: # Simulation doesn't count the first rest trial so skip
                     gp.firstRestTrial = False
                 else:
                     soundSystem.stopsound.play()

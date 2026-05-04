@@ -1,65 +1,28 @@
+FileVersion: 2
 
-FileVersion:        2
+ResolutionOfTime: Volumes
 
-ResolutionOfTime:   Volumes
+Experiment: BCI_4_kids
 
-Experiment:         20240308_162446
-
-BackgroundColor:    0 0 0
-TextColor:          255 255 255
-TimeCourseColor:    255 255 30
-TimeCourseThick:    2
+BackgroundColor: 0 0 0
+TextColor: 255 255 255
+TimeCourseColor: 255 255 30
+TimeCourseThick: 2
 ReferenceFuncColor: 30 200 30
 ReferenceFuncThick: 2
 
-NrOfConditions:  10
+NrOfConditions: 1
 
-Cond.: 1
-1
- 288  347
-Color: 200 0 0
-
-Cond.: 2
-1
- 513  571
-Color: 100 200 80
-
-Cond.: 3
-1
- 735  795
-Color: 10 40 200
-
-Cond.: 4
-1
- 960 1018
-Color: 200 200 10
-
-Cond.: 5
-1
-1184 1242
-Color: 200 10 200
-
-Cond.: 6
-1
-1407 1466
-Color: 10 200 200
-
-Cond.: 7
-1
-1632 1688
-Color: 200 100 10
-
-Cond.: 8
-1
-1855 1914
-Color: 200 200 200
-
-Cond.: 9
-1
-2079 2137
-Color: 100 200 100
-
-Cond.: 10
-1
-2303 2361
-Color: 100 100 200
+FingerTapping
+10
+   951   1029
+   1248   1326
+   1561   1639
+   1881   1959
+   2201   2279
+   2522   2600
+   2842   2920
+   3155   3233
+   3451   3529
+   3749   3826
+Color: 255 0 0

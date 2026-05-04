@@ -4,6 +4,6 @@ conda activate fishgame_py375
 
 cd C:\Users\P70062819\PycharmProjects\HorseGame
 
-pyinstaller --console --onedir --name "RunAndJump" --icon horse.ico --console --collect-all pygame --add-data "Resources;Resources" --add-data "SimulatedData;SimulatedData" --add-data "Environment;Environment" --add-data "Protocol for replay; Protocol for replay" --add-data "Data;Data" --add-data "GameSettings.json;." --hidden-import pygame.sd12 main.py
+pyinstaller --console --onedir --name "RunAndJump" --icon horse.ico --console --collect-all pygame --add-data "Resources;Resources" --add-data "Environment;Environment" --add-data "Protocol for simulation; Protocol for simulation" --add-data "Data;Data" --add-data "GameSettings.json;." --hidden-import pygame.sd12 main.py
 
 RunAndJump.exe > log.txt 2>&1

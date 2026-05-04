@@ -240,8 +240,20 @@ class GameParameters():
     def calculate_duration_game(self):
 
         n = self.totalNum_TRIALS
+
+        print("Baseline duration: ", str(self.duration_BASELINE_s))
+        print("Task duration: ", str(self.duration_TASK_s))
+        print("Rest duration: ", str(self.duration_REST_s))
+        print("Total nr of trial: " + str(n))
+
         duration_game_s = + self.duration_BASELINE_s + ((n+1) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 6 #How long you want to one game run to last (in seconds)
         # Other
+
+        if self.performingSimulation:
+            duration_game_s = duration_game_s + self.duration_REST_s # Add one extra rest trial duration, because otherwise the run ends too quickly
+
+        print("Duration game (s): ", str(duration_game_s))
+
         return duration_game_s
 
     def get_deltaTime(self): # Get the current delta time
@@ -367,6 +379,12 @@ class GameParameters():
         #self.change_settings_file("baseline_duration_s",self.duration_BASELINE_s)
         #self.change_settings_file("jitter_s",0) # todo: set to 0 for now, because it jsut affects the progress bar, not the datawindow
 
+        print("Simulation mode: Calculating duration game based on read protocol file.")
+        print("Baseline duration: ", str(self.duration_BASELINE_s))
+        print("Task duration: ", str(self.duration_TASK_s))
+        print("Rest duration: ", str(self.duration_REST_s))
+        print("Total nr of trial: " + str(self.totalNum_TRIALS))
+
         self.durationGame_s = self.calculate_duration_game() # Recalculate this with the updated parameters
         self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS  # Resize to match trial count from protocol file
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
@@ -377,7 +395,7 @@ class GameParameters():
 
 
 
-    def read_premade_protocol(self):
+    def read_premade_protocol(self,samplingRate):
         print("READING PREMADE PROTOCOL FILE. ===========")
         with open(self.protocol_file_path, 'r') as file:
             lines = file.readlines()
@@ -389,8 +407,6 @@ class GameParameters():
 
             if stripped_line.startswith("NrOfConditions"):
                 self.NrOfConditions = int(stripped_line.split(":")[1].strip())
-                if self.performingSimulation: # only do this when actually in simulation mode
-                    self.totalNum_TRIALS = self.NrOfConditions # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
                 print("Number of Conditions: ", self.NrOfConditions)
 
             elif stripped_line.startswith("Color:"):
@@ -407,6 +423,7 @@ class GameParameters():
             elif " " in stripped_line and self.reachedTheTrials:
                 # print("Trial: " + stripped_line)
                 start_and_end_volume = stripped_line.split(" ")  # split at the space
+                print(start_and_end_volume)
 
                 if start_and_end_volume[0].isdigit() and int(start_and_end_volume[
                                                                  0]) > 10:  # Check if a digit and larger than 10 (because we are working in volumes, so number will be in the hundreds)
@@ -416,11 +433,17 @@ class GameParameters():
                         self.end_volumes.append(int(start_and_end_volume[1]))
                 elif start_and_end_volume[2].isdigit():
                     self.end_volumes.append(int(start_and_end_volume[2]))
+                elif start_and_end_volume[3].isdigit():
+                    self.end_volumes.append(int(start_and_end_volume[3]))
+                elif start_and_end_volume[4].isdigit():
+                    self.end_volumes.append(int(start_and_end_volume[4]))
 
         print("Start volumes: ", str(self.start_volumes))
         print("End volumes: ", str(self.end_volumes))
 
-        self.samplingRate = 10 # todo: need to get this from TSI!
+        self.samplingRate = samplingRate[0]
+        print("Sampling rate: ", str(samplingRate[0]))
+
 
         # convert to seconds
         start_times_s = [v / self.samplingRate for v in self.start_volumes]
@@ -439,11 +462,19 @@ class GameParameters():
         # Set task and rest duration based on read PRT file
         self.duration_TASK_s = round(task_durations[0])
         self.duration_REST_s = round(rest_durations[0])
-        self.duration_BASELINE_s = (start_times_s[0] - self.duration_REST_s) # todo: incorrect
+        self.duration_BASELINE_s = start_times_s[0] - self.duration_REST_s #
 
+        print("Baseline duration: ", str(self.duration_BASELINE_s))
         print("Task duration: ", str(self.duration_TASK_s))
         print("Rest duration: ", str(self.duration_REST_s))
 
+        trials_found = len(task_durations)
+        if self.NrOfConditions < trials_found: # Means that the trials in the PRT are under 1 condition only
+            print("Adjusting Nr of Conditions, because number of trials found was higher. Is now: ", + trials_found)
+            self.NrOfConditions = trials_found
+
+        if self.performingSimulation:  # only do this when actually in simulation mode
+            self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions
 

@@ -164,7 +164,7 @@ class BrainComputerInterface():
                 self.timewindow_task.append(scaled_data)
                 self.timewindow_task_tvalues.append(t_values)
                 self.timewindow_task_betas.append(betas)
-                print("Appending scaled data to timewindow_task..." + str(scaled_data))
+              #  print("Appending scaled data to timewindow_task..." + str(scaled_data))
 
                 # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
                 for channel in range(0,self.nrOfChannels):
@@ -206,11 +206,11 @@ class BrainComputerInterface():
             NFsignal_raw_tvalues = np.array(self.timewindow_task_tvalues)
             NFsignal_raw_betas = np.array(self.timewindow_task_betas)
             NFsignal_allChannels_raw = self.timewindow_allChannels_data_raw
-            print("All Channels: " + str(self.timewindow_allChannels_data_raw))
+           # print("All Channels: " + str(self.timewindow_allChannels_data_raw))
         else: # If measurement is from the rest period
             NFsignal_raw = np.array(self.timewindow_rest)
 
-        print("Timewindow task = " + str(self.timewindow_task))
+       # print("Timewindow task = " + str(self.timewindow_task))
 
         # Channel of Interest
         self.NFsignal_mean = round(np.mean(NFsignal_raw),2)
@@ -224,14 +224,15 @@ class BrainComputerInterface():
         # Get latest t-value
         self.NFSignal_latestValue_t_value = round(NFsignal_raw_tvalues[-1],2)
 
-        # All Channels
-        for channel in range(0,self.nrOfChannels):
-            key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
-            self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
+        if not self.gp.performingSimulation:
+            # All Channels
+            for channel in range(0,self.nrOfChannels):
+                key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
+                self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
 
-        print("All Channels latest beta value: " + str(self.allChannels_latestValue))
+            #print("All Channels latest beta value: " + str(self.allChannels_latestValue))
 
-        print("NFsignal_raw: " + str(NFsignal_raw))
+       # print("NFsignal_raw: " + str(NFsignal_raw))
         print("NFsignal_mean: " + str(self.NFsignal_mean) + ", NFsignal_max: " + str(self.NFsignal_max) + ", NFSignal_median: "
               + str(self.NFSignal_median) + ", NFSignal_latestValue: " + str(self.NFSignal_latestValue)
               + ", NFSignal_latestValue_t_value: " + str(self.NFSignal_latestValue_t_value) + ", NFSignal_latestValue_beta:" + str(self.NFSignal_latestValue_beta))

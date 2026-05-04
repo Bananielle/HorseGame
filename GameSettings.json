@@ -13,8 +13,8 @@
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
   "simulation_mode": true,
   "debugging": true,
-  "datawindow_duration_after_task_end_s": 9,
-  "datawindow_duration_before_task_end_s": 3,
+  "datawindow_duration_after_task_end_s": 13,
+  "datawindow_duration_before_task_end_s": 8,
   "framerate": 60,
   "differential_feedback": 0,
   "minimal_nr_of_coins": 1

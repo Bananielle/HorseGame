@@ -6,8 +6,21 @@ class PRTwriter():
         self.current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
         self.prt_file = None
         self.dataOutputFolder = "Data/PRTs/"
+        self.run_type = ''
+        self.extra = ''
+        self.extra2 = ''
+        if self.gp.gameType == 'maingame':
+            self.run_type = "NF"
+        if self.gp.gameType == 'localizer':
+            self.run_type = 'localizer'
+        if self.gp.boringMode:
+            self.extra2 = ' basicmode'
+        if self.gp.performingSimulation:
+            self.extra = 'simulated'
+        if self.gp.TESTING_MODE:
+            self.extra = 'debugmode'
        # self.file_name = self.gp.participantNr + '_' + self.gp.sessionNr + '_' + self.gp.runNr + '_' + self.gp.runType + '_' + self.gp.taskUsed + '_' + self.current_date + '.prt'
-        self.file_name = 'PRT_' + self.current_date + '.prt'
+        self.file_name = 'PRT_' + self.run_type + '_' + self.extra + self.extra2 + '_'+  self.current_date + '.prt'
         self.file_path = ('')
 
 
@@ -64,7 +77,7 @@ class PRTwriter():
 
     def finish_PRT_file(self):
         self.prt_file = open(self.file_path, 'a')
-        self.prt_file.write('Color: 255 0 0')
+        self.prt_file.write('\nColor: 255 0 0')
 
         self.prt_file.close()
 
