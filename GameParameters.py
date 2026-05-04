@@ -396,6 +396,7 @@ class GameParameters():
 
 
     def read_premade_protocol(self,samplingRate):
+        time_resolution = 0 # 0 = volumes, 1= seconds
 
         print("READING PREMADE PROTOCOL FILE. ===========")
         try:
@@ -406,6 +407,17 @@ class GameParameters():
             for line in lines:
                 stripped_line = line.strip()
                 # print(line)
+
+                if stripped_line.startswith("ResolutionOfTime:"):
+                    print(stripped_line)
+                    temp = stripped_line.split(":")[1].strip()
+                    print(temp)
+                    if temp == "Volumes":
+                        time_resolution = 0
+                        print(" Time resolution PRT is in volumes.")
+                    if temp == "Seconds":
+                        time_resolution = 1
+                        print(" Time resolution PRT is in seconds.")
 
                 if stripped_line.startswith("NrOfConditions"):
                     self.NrOfConditions = int(stripped_line.split(":")[1].strip())
@@ -423,33 +435,44 @@ class GameParameters():
 
 
                 elif " " in stripped_line and self.reachedTheTrials:
-                    # print("Trial: " + stripped_line)
-                    start_and_end_volume = stripped_line.split(" ")  # split at the space
-                    print(start_and_end_volume)
 
-                    if start_and_end_volume[0].isdigit() and int(start_and_end_volume[
-                                                                     0]) > 10:  # Check if a digit and larger than 10 (because we are working in volumes, so number will be in the hundreds)
-                        self.start_volumes.append(int(start_and_end_volume[0]))
-                    if start_and_end_volume[1].isdigit():
-                        if int(start_and_end_volume[1]) > 10:
-                            self.end_volumes.append(int(start_and_end_volume[1]))
-                    elif start_and_end_volume[2].isdigit():
-                        self.end_volumes.append(int(start_and_end_volume[2]))
-                    elif start_and_end_volume[3].isdigit():
-                        self.end_volumes.append(int(start_and_end_volume[3]))
-                    elif start_and_end_volume[4].isdigit():
-                        self.end_volumes.append(int(start_and_end_volume[4]))
+                    if time_resolution == 0: # If in volumes:
+                        # print("Trial: " + stripped_line)
+                        tokens = stripped_line.split()  # split at the space
+                        print(tokens)
 
-            print("Start volumes: ", str(self.start_volumes))
-            print("End volumes: ", str(self.end_volumes))
+                        if tokens[0].isdigit():
+                            self.start_volumes.append(int(tokens[0]))
+                        if tokens[1].isdigit():
+                            self.end_volumes.append(int(tokens[1]))
 
-            self.samplingRate = samplingRate[0]
-            print("Sampling rate: ", str(samplingRate[0]))
+                        print("Start volumes: ", str(self.start_volumes))
+                        print("End volumes: ", str(self.end_volumes))
+
+                        self.samplingRate = samplingRate
+                       # print("Sampling rate: ", str(samplingRate[0]))
 
 
-            # convert to seconds
-            start_times_s = [v / self.samplingRate for v in self.start_volumes]
-            end_times_s = [v / self.samplingRate for v in self.end_volumes]
+                        # convert to seconds
+                        start_times_s = [v / self.samplingRate for v in self.start_volumes]
+                        end_times_s = [v / self.samplingRate for v in self.end_volumes]
+
+                    if time_resolution == 1: # if in seconds:
+                        tokens = stripped_line.split()  # split at the space
+                        #print(tokens)
+
+                        if tokens[0].isdigit():
+                            self.start_volumes.append(int(tokens[0]))
+                        if tokens[1].isdigit():
+                            self.end_volumes.append(int(tokens[1]))
+
+                        print("Start times(s): ", str(self.start_volumes))
+                        print("End times(s): ", str(self.end_volumes))
+
+                        start_times_s = self.start_volumes
+                        end_times_s = self.end_volumes
+
+
 
             # task durations
             task_durations = [end - start for start, end in zip(start_times_s, end_times_s)]
@@ -477,8 +500,8 @@ class GameParameters():
 
             if self.performingSimulation:  # only do this when actually in simulation mode
                 self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
-        except:
-            print("Something went wrong with reading the PRT for simulation!")
+        except Exception as e:
+            print(f"Something went wrong with reading the PRT for simulation!" + {e})
             self.PRT_error = True
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions
