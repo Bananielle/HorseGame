@@ -1247,6 +1247,9 @@ if __name__ == '__main__':
                 if not BCI.tsi.get_selected_channels()[0]:
                     no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
                     screen.blit(no_channel_warning, (SCREEN_WIDTH * 0.25, 10))
+            if gp.PRT_error:
+                PRT_error_warning = gp.mainFont.render("ERROR: Protocol file could not be read.", True, RED)
+                screen.blit(PRT_error_warning, (SCREEN_WIDTH * 0.25, 80))
 
         if gamestate == GameState.SETTINGS:
             gamestate = runSettings()

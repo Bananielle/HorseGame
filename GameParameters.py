@@ -103,7 +103,7 @@ class GameParameters():
 
         self.gameDifficulty = 3 # 1 = easy (with bronze coins), 2 = medium (silver coins0, 3 = hard (gold coins). The higher the difficulty, the higher the max NF THRESHOLD, but the more points you get for collecting a coin.
 
-
+        self.PRT_error = False
         self.gameType = ' ' # 'maingame' (NF) or 'localizer' (will be selected during start menu)
         self.duration_datawindow_rest = 6
         self.timeUntilRestDataCollection_s = 11 #self.protocol_file['duration_REST_s'] - 6 # Only start measuring the last 6 seconds before the new trial
@@ -396,85 +396,90 @@ class GameParameters():
 
 
     def read_premade_protocol(self,samplingRate):
+
         print("READING PREMADE PROTOCOL FILE. ===========")
-        with open(self.protocol_file_path, 'r') as file:
-            lines = file.readlines()
-            # print(lines)
+        try:
+            with open(self.protocol_file_path, 'r') as file:
+                lines = file.readlines()
+                # print(lines)
 
-        for line in lines:
-            stripped_line = line.strip()
-            # print(line)
+            for line in lines:
+                stripped_line = line.strip()
+                # print(line)
 
-            if stripped_line.startswith("NrOfConditions"):
-                self.NrOfConditions = int(stripped_line.split(":")[1].strip())
-                print("Number of Conditions: ", self.NrOfConditions)
+                if stripped_line.startswith("NrOfConditions"):
+                    self.NrOfConditions = int(stripped_line.split(":")[1].strip())
+                    print("Number of Conditions: ", self.NrOfConditions)
 
-            elif stripped_line.startswith("Color:"):
-                continue
-                # We ignore the Color lines for this task
+                elif stripped_line.startswith("Color:"):
+                    continue
+                    # We ignore the Color lines for this task
 
-            elif stripped_line.isdigit():
-                # print("Nr of trials: " + stripped_line)
-                # If the line is a single number, it's the number of trials for the current condition
-                self.NrOfTrials = int(stripped_line)
-                self.reachedTheTrials = True
-
-
-            elif " " in stripped_line and self.reachedTheTrials:
-                # print("Trial: " + stripped_line)
-                start_and_end_volume = stripped_line.split(" ")  # split at the space
-                print(start_and_end_volume)
-
-                if start_and_end_volume[0].isdigit() and int(start_and_end_volume[
-                                                                 0]) > 10:  # Check if a digit and larger than 10 (because we are working in volumes, so number will be in the hundreds)
-                    self.start_volumes.append(int(start_and_end_volume[0]))
-                if start_and_end_volume[1].isdigit():
-                    if int(start_and_end_volume[1]) > 10:
-                        self.end_volumes.append(int(start_and_end_volume[1]))
-                elif start_and_end_volume[2].isdigit():
-                    self.end_volumes.append(int(start_and_end_volume[2]))
-                elif start_and_end_volume[3].isdigit():
-                    self.end_volumes.append(int(start_and_end_volume[3]))
-                elif start_and_end_volume[4].isdigit():
-                    self.end_volumes.append(int(start_and_end_volume[4]))
-
-        print("Start volumes: ", str(self.start_volumes))
-        print("End volumes: ", str(self.end_volumes))
-
-        self.samplingRate = samplingRate[0]
-        print("Sampling rate: ", str(samplingRate[0]))
+                elif stripped_line.isdigit():
+                    # print("Nr of trials: " + stripped_line)
+                    # If the line is a single number, it's the number of trials for the current condition
+                    self.NrOfTrials = int(stripped_line)
+                    self.reachedTheTrials = True
 
 
-        # convert to seconds
-        start_times_s = [v / self.samplingRate for v in self.start_volumes]
-        end_times_s = [v / self.samplingRate for v in self.end_volumes]
+                elif " " in stripped_line and self.reachedTheTrials:
+                    # print("Trial: " + stripped_line)
+                    start_and_end_volume = stripped_line.split(" ")  # split at the space
+                    print(start_and_end_volume)
 
-        # task durations
-        task_durations = [end - start for start, end in zip(start_times_s, end_times_s)]
+                    if start_and_end_volume[0].isdigit() and int(start_and_end_volume[
+                                                                     0]) > 10:  # Check if a digit and larger than 10 (because we are working in volumes, so number will be in the hundreds)
+                        self.start_volumes.append(int(start_and_end_volume[0]))
+                    if start_and_end_volume[1].isdigit():
+                        if int(start_and_end_volume[1]) > 10:
+                            self.end_volumes.append(int(start_and_end_volume[1]))
+                    elif start_and_end_volume[2].isdigit():
+                        self.end_volumes.append(int(start_and_end_volume[2]))
+                    elif start_and_end_volume[3].isdigit():
+                        self.end_volumes.append(int(start_and_end_volume[3]))
+                    elif start_and_end_volume[4].isdigit():
+                        self.end_volumes.append(int(start_and_end_volume[4]))
 
-        rest_durations = [
-            start_times_s[i + 1] - end_times_s[i]
-            for i in range(len(end_times_s) - 1)
-        ]
-        print("Task durations: ", str(task_durations))
-        print("Rest durations: ", str(rest_durations))
+            print("Start volumes: ", str(self.start_volumes))
+            print("End volumes: ", str(self.end_volumes))
 
-        # Set task and rest duration based on read PRT file
-        self.duration_TASK_s = round(task_durations[0])
-        self.duration_REST_s = round(rest_durations[0])
-        self.duration_BASELINE_s = start_times_s[0] - self.duration_REST_s #
+            self.samplingRate = samplingRate[0]
+            print("Sampling rate: ", str(samplingRate[0]))
 
-        print("Baseline duration: ", str(self.duration_BASELINE_s))
-        print("Task duration: ", str(self.duration_TASK_s))
-        print("Rest duration: ", str(self.duration_REST_s))
 
-        trials_found = len(task_durations)
-        if self.NrOfConditions < trials_found: # Means that the trials in the PRT are under 1 condition only
-            print("Adjusting Nr of Conditions, because number of trials found was higher. Is now: ", + trials_found)
-            self.NrOfConditions = trials_found
+            # convert to seconds
+            start_times_s = [v / self.samplingRate for v in self.start_volumes]
+            end_times_s = [v / self.samplingRate for v in self.end_volumes]
 
-        if self.performingSimulation:  # only do this when actually in simulation mode
-            self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
+            # task durations
+            task_durations = [end - start for start, end in zip(start_times_s, end_times_s)]
+
+            rest_durations = [
+                start_times_s[i + 1] - end_times_s[i]
+                for i in range(len(end_times_s) - 1)
+            ]
+            print("Task durations: ", str(task_durations))
+            print("Rest durations: ", str(rest_durations))
+
+            # Set task and rest duration based on read PRT file
+            self.duration_TASK_s = round(task_durations[0])
+            self.duration_REST_s = round(rest_durations[0])
+            self.duration_BASELINE_s = start_times_s[0] - self.duration_REST_s #
+
+            print("Baseline duration: ", str(self.duration_BASELINE_s))
+            print("Task duration: ", str(self.duration_TASK_s))
+            print("Rest duration: ", str(self.duration_REST_s))
+
+            trials_found = len(task_durations)
+            if self.NrOfConditions < trials_found: # Means that the trials in the PRT are under 1 condition only
+                print("Adjusting Nr of Conditions, because number of trials found was higher. Is now: ", + trials_found)
+                self.NrOfConditions = trials_found
+
+            if self.performingSimulation:  # only do this when actually in simulation mode
+                self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
+        except:
+            print("Something went wrong with reading the PRT for simulation!")
+            self.PRT_error = True
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions
 
