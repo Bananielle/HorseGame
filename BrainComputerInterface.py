@@ -60,9 +60,11 @@ class BrainComputerInterface():
 
         self.nrOfChannels = 0
         self.selectedChannels = 0
-        self.channelFieldNames = ['Trials', 'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
-                                  'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
-                                  'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15'] # done for 28 channels only
+        #self.channelFieldNames = ['Trials', 'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
+                                 # 'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
+                                 # 'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15'] # done for 28 channels only
+        self.channelFieldNames = ['Trials', '1', '2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19',
+                                  '20','21','22','23','24','25','26','27','28']# done for 28 channels
         # Create channel list with the correct channel name
         self.allChannels_latestValue = {key: [] for key in self.channelFieldNames}
         for key in self.channelFieldNames:
