@@ -51,6 +51,7 @@ class BrainComputerInterface():
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
 
+
         # Differential feedback (when substracting one channel value from another and use that as feedback)
         self.differential_feedbackchannel1 = 0
         self.differential_feedbackchannel2 = 0
@@ -527,13 +528,19 @@ class BrainComputerInterface():
     # with current data its 7.8125 samples per second. So a sample every 128ms.
 
     def establishTimeInBetweenSamples(self):
-        samplingRate = self.tsi.get_sampling_rate()
-        if samplingRate[0] is None:
+        timeBetweenSamples_ms = self.timeBetweenSamples_ms
+        samplingRate = self.tsi.get_sampling_rate()[0]
+
+        if samplingRate is None:
             print("Warning: could not retrieve sampling rate from TSI, using fallback 1000ms.")
-            return 1000
-        timeBetweenSamples_ms = int(1000 / samplingRate[0])
+            samplingRate = 1000
+        elif samplingRate == 0:
+            print("Warning: could not retrieve sampling rate from TSI, using fallback 1000ms.")
+            samplingRate = 1000
+        print(samplingRate)
+        timeBetweenSamples_ms = int(1000 / samplingRate)
         print(
-            "Sampling rate = " + str(samplingRate[0]) + ", so " + str(timeBetweenSamples_ms) + "ms inbetween samples.")
+        "Sampling rate = " + str(samplingRate) + ", so " + str(timeBetweenSamples_ms) + "ms inbetween samples.")
         return timeBetweenSamples_ms
 
     # =============================  MAIN LOG for NF and game data

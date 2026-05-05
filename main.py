@@ -209,9 +209,9 @@ if __name__ == '__main__':
                                         minimal_nr_of_coins)
         gameParameters.tsi_port = port
         if gameParameters.performingSimulation:
-            BCI = BrainComputerInterface(gametype, gameParameters, port)
+            BCI = BrainComputerInterface(gametype, gameParameters)
             if BCI.TSIconnectionFound:
-                samplingRate[0] = BCI.tsi.get_sampling_rate()
+                samplingRate = BCI.tsi.get_sampling_rate()[0]
             else:
                 samplingRate = 10
             gameParameters.read_premade_protocol(samplingRate)

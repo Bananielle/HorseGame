@@ -36,7 +36,7 @@ class SettingNames:
     BORING_MODE = "Basic mode:"
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
     MINIMAL_NR_OF_COINS = "Minimal coins per trial (0-3):"
-    PORT = "Tsi port (default is 55556):"
+    PORT = "Tsi port (restart game if changed):"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):

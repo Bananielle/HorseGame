@@ -503,7 +503,7 @@ class GameParameters():
             if self.performingSimulation:  # only do this when actually in simulation mode
                 self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
         except Exception as e:
-            print(f"Something went wrong with reading the PRT for simulation!" + {e})
+            print(f"PRT ERROR: Something went wrong with reading the PRT for simulation! {e}")
             self.PRT_error = True
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions
