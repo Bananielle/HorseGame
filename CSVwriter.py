@@ -1,6 +1,5 @@
 import pygame
 import csv
-import pandas as pd
 import locale
 
 
@@ -57,29 +56,30 @@ class CSVwriter():
 
         file_path = self.dataOutputFolder + file_name
 
-        df = pd.DataFrame(data)
-
-        df.to_csv(file_path, sep=self.delimiter, header=False, index=False)
+        with open(file_path, mode='w', newline='') as f:
+            writer = csv.writer(f, delimiter=self.delimiter)
+            for row in data:
+                if hasattr(row, '__iter__') and not isinstance(row, str):
+                    writer.writerow(list(row))
+                else:
+                    writer.writerow([row])
         print(f'Data written to ' + file_path)
 
     def save_coinsList_to_csv(self, data, file_name, column_names=None, index_name=None):
 
         file_path = self.dataOutputFolder + file_name
 
-        df = pd.DataFrame(data)
-
-        # Set column names if provided
-        if column_names:
-            df.columns = column_names
-
-        # Set index name if provided
-        if index_name:
-            df.index.name = index_name
-
-        df.to_csv(file_path, sep=self.delimiter, header=False, index=False)
+        with open(file_path, mode='w', newline='') as f:
+            writer = csv.writer(f, delimiter=self.delimiter)
+            for row in data:
+                if hasattr(row, '__iter__') and not isinstance(row, str):
+                    writer.writerow(list(row))
+                else:
+                    writer.writerow([row])
         print(f'Data written to ' + file_path)
 
     def read_csv(self, file_name):
         file_path = self.dataInputFolder + file_name
-        df = pd.read_csv(file_path, sep=self.delimiter)
-        return df
+        with open(file_path, newline='') as f:
+            reader = csv.DictReader(f, delimiter=self.delimiter)
+            return list(reader)

@@ -51,16 +51,11 @@ In SoundSystem
 
 ------------------------------------------------------------------------------------------------------------------------
 """
-
+import json
 import csv
-
-import pygame, random, os, sys
+import pygame
 
 pygame.font.init()
-from pylsl import StreamInfo, StreamOutlet
-import json
-
-# from pylsl import StreamInfo, StreamOutlet  # import required classes
 
 import SettingsScreen
 import datetime
@@ -657,8 +652,8 @@ if __name__ == '__main__':
             start_window = gp.start_volumes[currentCondition - 1]  # minus one because current condition is one higher
             hemodynamic_delay_volumes = gp.hemodynamic_delay * BCI.tsi.get_sampling_rate()[0]
             end_window = gp.end_volumes[currentCondition - 1] + hemodynamic_delay_volumes
-            print("Collect data when between volumes " + str(start_window) + " and " + str(
-                end_window + round(hemodynamic_delay_volumes)))
+           # print("Collect data when between volumes " + str(start_window) + " and " + str(
+               # end_window + round(hemodynamic_delay_volumes)))
             if current_volume_timepoint >= start_window and current_volume_timepoint < end_window:
                 BCI.collectTimewindowData = True
                 scaled_data = BCI.startMeasuring(task=True, simulatedData=gp.signalValue_simulated,
@@ -675,8 +670,8 @@ if __name__ == '__main__':
                     gp.trialCounter_task += 1
                     if gp.trialCounter_task >= gp.totalNum_TRIALS:
                         gp.trialCounter_task = gp.totalNum_TRIALS  # Then you've reached the end of the task trials (and since this counter is used for indexing it shouldn't exceed its max)
-                else:
-                    print("NF signal task already calculated.")
+                #else:
+                    # print("NF signal task already calculated.")
 
 
     def collectTaskTrialData():
@@ -1305,15 +1300,6 @@ if __name__ == '__main__':
     # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
-
-    # Change simulation mode back to False so that it is always off when starting a new game
-    with open("GameSettings.json") as f:
-        settings = json.load(f)  # Open settings file (json)
-        # update and save back
-        settings["simulation_mode"] = False  # Change the paramater
-
-    with open("GameSettings.json", "w") as f:  # Save changes
-        json.dump(settings, f, indent=2)
 
 
     pygame.mixer.music.stop()

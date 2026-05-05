@@ -11,18 +11,49 @@ TimeCourseThick: 2
 ReferenceFuncColor: 30 200 30
 ReferenceFuncThick: 2
 
-NrOfConditions: 1
+NrOfConditions: 9
 
-FingerTapping
-10
-   951    1029
-   1248   1326
-   1561   1639
-   1881   1959
-   2201   2279
-   2522   2600
-   2842   2920
-   3155   3233
-   3451   3529
-   3749   3826
+Cond1
+1
+   691   769
+Color: 255 0 0
+
+Cond2
+1
+   1003   1081
+Color: 255 0 0
+
+Cond3
+1
+   1332   1410
+Color: 255 0 0
+
+Cond4
+1
+   1628   1707
+Color: 255 0 0
+
+Cond5
+1
+   1933   2011
+Color: 255 0 0
+
+Cond6
+1
+   2230   2308
+Color: 255 0 0
+
+Cond7
+1
+   2839   2918
+Color: 255 0 0
+
+Cond8
+1
+   3144   3222
+Color: 255 0 0
+
+Cond9
+1
+   3456   3535
 Color: 255 0 0

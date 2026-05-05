@@ -230,6 +230,8 @@ class GameParameters():
         self.NrOfConditions = 0
         self.start_volumes = []
         self.end_volumes = []
+        self.start_seconds = []
+        self.end_seconds = []
         self.current_condition = 0
         self.timeForTaskEvent = False
         self.timeForRestEvent = False
@@ -443,10 +445,10 @@ class GameParameters():
                         tokens = stripped_line.split()  # split at the space
                         print(tokens)
 
-                        if tokens[0].isdigit():
-                            self.start_volumes.append(int(tokens[0]))
-                        if tokens[1].isdigit():
-                            self.end_volumes.append(int(tokens[1]))
+                        if self.is_number(tokens[0]):
+                            self.start_volumes.append(int(float(tokens[0])))
+                        if self.is_number(tokens[1]):
+                            self.end_volumes.append(int(float(tokens[1])))
 
                         print("Start volumes: ", str(self.start_volumes))
                         print("End volumes: ", str(self.end_volumes))
@@ -460,19 +462,26 @@ class GameParameters():
                         end_times_s = [v / self.samplingRate for v in self.end_volumes]
 
                     if time_resolution == 1: # if in seconds:
+                        self.PRT_error = True # todo: can't yet read second properly!
+
                         tokens = stripped_line.split()  # split at the space
                         #print(tokens)
 
-                        if tokens[0].isdigit():
-                            self.start_volumes.append(int(tokens[0]))
-                        if tokens[1].isdigit():
-                            self.end_volumes.append(int(tokens[1]))
+                        if self.is_number(tokens[0]):
+                            self.start_volumes.append(int(float(tokens[0])) * int(float(samplingRate)))
+                            self.start_seconds.append(int(float(tokens[0])))
+                        if self.is_number(tokens[1]):
+                            self.end_volumes.append(int(float(tokens[1])) * int(float(samplingRate)))
+                            self.end_seconds.append(int(float(tokens[1])))
 
-                        print("Start times(s): ", str(self.start_volumes))
-                        print("End times(s): ", str(self.end_volumes))
+                        print("Start times(s): ", str(self.start_seconds))
+                        print("End times(s): ", str(self.end_seconds))
 
-                        start_times_s = self.start_volumes
-                        end_times_s = self.end_volumes
+                        print("Start times(vol): ", str(self.start_volumes))
+                        print("End times(vol): ", str(self.end_volumes))
+
+                        start_times_s = self.start_seconds
+                        end_times_s = self.end_seconds
 
 
 
@@ -503,10 +512,18 @@ class GameParameters():
             if self.performingSimulation:  # only do this when actually in simulation mode
                 self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
         except Exception as e:
-            print(f"PRT ERROR: Something went wrong with reading the PRT for simulation! {e}")
+            print(f"PRT ERROR: Something went wrong with reading the PRT for simulation "+  {e})
             self.PRT_error = True
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions
+
+    def is_number(self,s): # Checks if float or integer
+        try:
+            float(s)
+            return True
+        except ValueError:
+            return False
+
 
     def checkIfTaskOrRestCondition_PreMadeProtocol(self, current_volume_timepoint):
         if current_volume_timepoint is not None:

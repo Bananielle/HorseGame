@@ -394,10 +394,14 @@ class TurbosatoriNetworkInterface:
                                      chromophore)
         if data is None:
             return None, rt
-        elif data[:14] == b"Wrong request!":
-            raise Exception("Wrong request!: '{0}'".format(data[19:-1]))
+        elif b"Wrong request!" in data:
+            print("Warning: get_beta_of_channel - TSI error: {0}".format(data))
+            return None, rt
+        elif len(data) < 16:
+            print("Warning: get_beta_of_channel received short response ({0} bytes): {1}".format(len(data), data))
+            return None, rt
         else:
-            return struct.unpack('!f', data[12:])[0], rt
+            return struct.unpack('!f', data[12:16])[0], rt #slices exactly 4 bytes instead of everything from byte 12 onwards, so struct.unpack always gets the right amount
 
     def get_tvalue_of_channel(self, channel, chromophore, contrast):
         sizecontrast = struct.pack('!i', len(contrast))

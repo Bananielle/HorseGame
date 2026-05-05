@@ -1,3 +1,4 @@
+import openpyxl
 import pygame
 import _turbosatorinetworkinterface as tsi  # handles getting data from TSI
 import numpy as np
@@ -463,7 +464,6 @@ class BrainComputerInterface():
 
             betas = self.tsi.get_beta_of_channel(selectedChannels[selectedChannel],beta=trialNr-1, chromophore=self.gp.chromophore)[0] # -1 Because trial starts at 1 but indexing starts at 0 # doesn't need a timepoint because it just checks the latest betas
 
-
             if betas is None:
                 return 0 # s
             else:
@@ -503,7 +503,7 @@ class BrainComputerInterface():
             if self.gp.dataType == 0:
                 beta = self.tsi.get_beta_of_channel(channel,beta=trialNr-1, chromophore=1)[0]
                 # print("Beta channel " + str(channel) + " = " + str(beta))
-                data = beta
+                data = beta if beta is not None else 0
 
 
             if self.gp.dataType == 1:
@@ -512,7 +512,7 @@ class BrainComputerInterface():
                     contrast[trialNr - 1] = 1  # Change the contrast depnding on which trial it is (because we use a separate condition for each trial)
 
                     t_values = self.tsi.get_tvalue_of_channel(channel, chromophore=1,contrast=contrast)  # 1 is oxy, 0 is deoxy
-                    data = t_values[0]
+                    data = t_values[0] if t_values[0] is not None else 0
 
         return data
 
@@ -588,10 +588,15 @@ class BrainComputerInterface():
             mean_row[col] = round(np.mean(values), 2) if values else 0
         rows.append(mean_row)
 
-        import pandas as pd
-        df = pd.DataFrame(rows, columns=filtered_fields)
         file_path = "Data/" + filename
-        df.to_excel(file_path, index=False)
+
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.append(filtered_fields)
+        for row in rows:
+            ws.append([row.get(k) for k in filtered_fields])
+        wb.save(file_path)
+        file_path = "Data/" + filename
         print(f'Data written to ' + file_path)
 
     def save_allChannelData_to_csv(self):
@@ -614,10 +619,14 @@ class BrainComputerInterface():
             row = {k: self.allChannels_latestValue[k][i] if i < len(self.allChannels_latestValue[k]) else None for k in field_names}
             rows.append(row)
 
-        import pandas as pd
-        df = pd.DataFrame(rows, columns=field_names)
         file_path = "Data/" + filename
-        df.to_excel(file_path, index=False)
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.append(field_names)
+        for row in rows:
+            ws.append([row.get(k) for k in field_names])
+        wb.save(file_path)
+
         print(f'Data written to ' + file_path)
 
 

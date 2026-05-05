@@ -1,6 +1,6 @@
+import csv
 import pygame
 from pylsl import StreamInfo, StreamOutlet
-import pandas as pd
 import numpy as np
 
 class ParadigmAndTriggerManager():
@@ -21,11 +21,13 @@ class ParadigmAndTriggerManager():
 
 
 
+
     # Retrieves protocol data that is specified for each second.
     def retrieveProtocol(self, file_name):
         file_path = self.dataInputFolder + file_name
-        df = pd.read_csv(file_path, header=None)
-        conditions = df.iloc[:,0].values # Get the values of the first column
+        with open(file_path, newline='') as f:
+            reader = csv.reader(f)
+            conditions = np.array([float(row[0]) for row in reader if row])
         print("Simulated protocol retrieved (specified for each second). 0=rest, 1=task.")
         print(conditions)
 
@@ -53,8 +55,9 @@ class ParadigmAndTriggerManager():
 
     def retrieveSimulatedData(self, file_name):
         file_path = self.dataInputFolder + file_name
-        df = pd.read_csv(file_path, header=None,dtype=float)
-        data = df.iloc[:,0].values
+        with open(file_path, newline='') as f:
+            reader = csv.reader(f)
+            data = np.array([float(row[0]) for row in reader if row])
         print("Simulated data retrieved (specified for each second).")
         print(data)
         self.simulatedData_array = data

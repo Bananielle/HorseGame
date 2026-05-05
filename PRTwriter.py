@@ -45,11 +45,17 @@ class PRTwriter():
         self.prt_file.write('ReferenceFuncColor: 30 200 30\n')
         self.prt_file.write('ReferenceFuncThick: 2\n')
         self.prt_file.write('\n')
-        self.prt_file.write('NrOfConditions: 1\n') # One condition for all trials
-        self.prt_file.write('\n')
 
-        self.prt_file.write('Condition1\n')
-        self.prt_file.write(str(self.gp.totalNum_TRIALS) + '\n') # Number of trials
+        if self.gp.gameType == 'maingame':
+            self.prt_file.write('NrOfConditions: ' + str(self.gp.totalNum_TRIALS) + '\n')  # One condition for all trials
+
+        if self.gp.gameType == 'localizer':
+            self.prt_file.write('NrOfConditions: 1\n') # One condition for all trials
+
+            self.prt_file.write('\n')
+            self.prt_file.write('Condition1\n')
+            self.prt_file.write(str(self.gp.totalNum_TRIALS) + '\n') # Number of trials
+
 
         # Timings will be added during the experiment
 
@@ -65,13 +71,25 @@ class PRTwriter():
     def addTaskStartEvent(self, current_time_point):
 
         self.prt_file = open(self.file_path, 'a')
-        self.prt_file.write('   ' + str(current_time_point))
+
+        if self.gp.gameType == 'maingame':
+            self.prt_file.write('\nNFtrial' + str(self.gp.trial_counter) + '\n')
+            self.prt_file.write('1\n')
+            self.prt_file.write('   ' + str(current_time_point))
+        if self.gp.gameType == 'localizer':
+            self.prt_file.write('   ' + str(current_time_point))
+
 
         self.prt_file.close()
 
     def addTaskEndEvent(self, current_time_point):
         self.prt_file = open(self.file_path, 'a')
-        self.prt_file.write('   ' + str(current_time_point) + '\n')
+
+        if self.gp.gameType == 'maingame':
+            self.prt_file.write('   ' + str(current_time_point) + '\n')
+            self.prt_file.write('Color: 255 0 0\n')
+        if self.gp.gameType == 'localizer':
+            self.prt_file.write('   ' + str(current_time_point) + '\n')
 
         self.prt_file.close()
 

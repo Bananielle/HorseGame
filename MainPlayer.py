@@ -1,5 +1,4 @@
-import pygame, random, math
-import pandas as pd
+import pygame, math
 
 # Import pygame.locals for easier access to key coordinates. Updated to conform to flake8 and black standards
 from pygame.locals import (
