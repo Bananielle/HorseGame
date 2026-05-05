@@ -649,11 +649,14 @@ if __name__ == '__main__':
 
     def collectTaskTrialData_fromPreMadeProtocol(currentCondition, current_volume_timepoint):
         if currentCondition > 0:  # Only after baseline
-            start_window = gp.start_volumes[currentCondition - 1]  # minus one because current condition is one higher
-            hemodynamic_delay_volumes = gp.hemodynamic_delay * BCI.tsi.get_sampling_rate()[0]
+            sampling_rate = BCI.tsi.get_sampling_rate()[0]
+            hemodynamic_delay_volumes = gp.hemodynamic_delay * sampling_rate
+            prestimulusonset_volumes = gp.datawindow_prestimulusonset_s * sampling_rate
+            start_window = gp.start_volumes[
+                               currentCondition - 1] + prestimulusonset_volumes  # minus one because current condition is one higher; offset matches real-time mode
             end_window = gp.end_volumes[currentCondition - 1] + hemodynamic_delay_volumes
-           # print("Collect data when between volumes " + str(start_window) + " and " + str(
-               # end_window + round(hemodynamic_delay_volumes)))
+            print("Collect data when between volumes " + str(start_window) + " and " + str(end_window))
+
             if current_volume_timepoint >= start_window and current_volume_timepoint < end_window:
                 BCI.collectTimewindowData = True
                 scaled_data = BCI.startMeasuring(task=True, simulatedData=gp.signalValue_simulated,
