@@ -1,30 +1,16 @@
 """TCP client.
 
 This module contains a class implementing a TCP network client.
+Rewritten to remove the expyriment dependency.
 
 """
-from __future__ import absolute_import, print_function, division
-from builtins import *
-
-__author__ = 'Florian Krause <florian@expyriment.org>, \
-Oliver Lindemann <oliver@expyriment.org>'
-__version__ = ''
-__revision__ = ''
-__date__ = ''
-
 
 import socket
 import errno
-from types import FunctionType
-
-from expyriment import _internals
-from expyriment.misc._timer import get_time
-from expyriment._internals import CallbackQuitEvent
-from expyriment.io._keyboard import Keyboard
-from expyriment.io._input_output import Input, Output
+from time import perf_counter
 
 
-class TcpClient(Input, Output):
+class TcpClient:
     """A class implementing a TCP network client."""
 
     def __init__(self, host, port, default_package_size=1024, connect=True):
@@ -43,9 +29,6 @@ class TcpClient(Input, Output):
 
         """
 
-        Input.__init__(self)
-        Output.__init__(self)
-
         self._host = host
         self._port = port
         self._default_package_size = default_package_size
@@ -54,61 +37,38 @@ class TcpClient(Input, Output):
         if connect:
             self.connect()
 
-    _getter_exception_message = "Cannot set {0} if connected!"
-
     @property
     def host(self):
-        """Getter for host."""
-
         return self._host
 
     @host.setter
     def host(self, value):
-        """Setter for host."""
-
         if self._is_connected:
-            raise AttributeError(
-                TcpClient._getter_exception_message.format("host"))
-        else:
-            self._host = value
+            raise AttributeError("Cannot set host if connected!")
+        self._host = value
 
     @property
     def port(self):
-        """Getter for port."""
-
         return self._port
 
     @port.setter
     def port(self, value):
-        """Setter for port."""
-
         if self._is_connected:
-            raise AttributeError(
-                TcpClient._getter_exception_message.format("port"))
-        else:
-            self._port = value
+            raise AttributeError("Cannot set port if connected!")
+        self._port = value
 
     @property
     def default_package_size(self):
-        """Getter for default_package_size."""
-
         return self._default_package_size
 
     @default_package_size.setter
     def default_package_size(self, value):
-        """Setter for default_package_size."""
-
         if self._is_connected:
-            raise AttributeError(
-                TcpClient._getter_exception_message.format(
-                    "default_package_size"))
-        else:
-            self._default_package_size = value
+            raise AttributeError("Cannot set default_package_size if connected!")
+        self._default_package_size = value
 
     @property
     def is_connected(self):
-        """Getter for is_connected."""
-
         return self._is_connected
 
     def connect(self):
@@ -122,72 +82,44 @@ class TcpClient(Input, Output):
                 self._socket.settimeout(0)
             except socket.error:
                 raise RuntimeError(
-                    "TCP connection to {0}:{1} failed!".format(self._host,
-                                                               self._port))
-            if self._logging:
-                _internals.active_exp._event_file_log(
-                    "TcpClient,connected,{0}:{1}".format(self._host,
-                                                         self._port))
+                    "TCP connection to {0}:{1} failed!".format(self._host, self._port))
 
     def send(self, data):
         """Send data.
 
         Parameters:
         -----------
-        data : str
+        data : bytes
             The data to be sent.
 
         """
 
         self._socket.sendall(data)
-        if self._logging:
-            _internals.active_exp._event_file_log(
-                "TcpClient,sent,{0}".format(data))
 
     def wait(self, length=None, package_size=None, duration=None,
              callback_function=None, process_control_events=True):
-        """Wait for data.
+        """Wait for incoming data.
 
         Parameters
         ----------
         length : int, optional
             The length of the data to be waited for in bytes.
-            If not set, a single package will be waited for.
         package_size : int, optional
-            The size of the package to be waited for.
-            If not set, the default package size will be used.
-            If length < package_size, package_size = length.
-        duration: int, optional
-            The duration to wait in milliseconds.
-        callback_function : function, optional
-            function to repeatedly execute during waiting loop
-        process_control_events : bool, optional
-            process ``io.Keyboard.process_control_keys()`` and
-            ``io.Mouse.process_quit_event()`` (default = True)
+            The size of each chunk to receive.
+        duration : int, optional
+            The maximum time to wait in milliseconds.
+        callback_function : ignored
+        process_control_events : ignored
 
         Returns:
         --------
-        data : str
-            The received data.
-        rt : int
-            The time it took to receive the data in milliseconds.
-
-        Notes
-        -----
-        This will also by default process control events (quit and pause).
-        Thus, keyboard events will be cleared from the cue and cannot be
-        received by a Keyboard().check() anymore!
-
-        See Also
-        --------
-        design.experiment.register_wait_callback_function
+        data : bytes or None
+        rt : int or None
+            Time taken in milliseconds.
 
         """
 
-        if _internals.skip_wait_methods:
-            return None, None
-
-        start = get_time()
+        start = perf_counter()
         data = None
         rt = None
 
@@ -197,66 +129,37 @@ class TcpClient(Input, Output):
             length = package_size
         elif length < package_size:
             package_size = length
+
         while True:
             try:
                 if data is None:
                     data = self._socket.recv(package_size)
                 while len(data) < length:
-                    if length - len(data) >= package_size:
-                        data = data + self._socket.recv(package_size)
-                    else:
-                        data = data + self._socket.recv(length - len(data))
-                    if duration:
-                        if int((get_time() - start) * 1000) >= duration:
-                            data = None
-                            rt = None
-                            break
-                rt = int((get_time() - start) * 1000)
+                    chunk_size = min(package_size, length - len(data))
+                    data = data + self._socket.recv(chunk_size)
+                    if duration and int((perf_counter() - start) * 1000) >= duration:
+                        return None, None
+                rt = int((perf_counter() - start) * 1000)
                 break
             except socket.error as e:
                 err = e.args[0]
-                if err == errno.EAGAIN or err == errno.EWOULDBLOCK:
-                    if isinstance(callback_function, FunctionType):
-                        callback_function()
-                    if _internals.active_exp is not None and \
-                    _internals.active_exp.is_initialized:
-                        rtn_callback = _internals.active_exp._execute_wait_callback()
-                        if isinstance(rtn_callback, CallbackQuitEvent):
-                            data = rtn_callback
-                            rt = int((get_time() - start) * 1000)
-                            break
-                        if process_control_events:
-                            if _internals.active_exp.mouse.process_quit_event() or \
-                            _internals.active_exp.keyboard.process_control_keys():
-                                break
-                        else:
-                            _internals.pump_pygame_events()
+                if err in (errno.EAGAIN, errno.EWOULDBLOCK):
+                    if duration and int((perf_counter() - start) * 1000) >= duration:
+                        return None, None
+                else:
+                    raise
 
-            if duration:
-                if int((get_time() - start) * 1000) >= duration:
-                    data = None
-                    rt = None
-                    break
-
-        if self._logging:
-            _internals.active_exp._event_file_log(
-                            "TcpClient,received,{0},wait".format(data))
         return data, rt
 
-
     def clear(self):
-        """Read the stream empty."""
+        """Read the socket buffer empty."""
 
-        cleared = ""
         while True:
             try:
-                cleared = cleared + self._socket.recv(1024)
+                if not self._socket.recv(1024):
+                    break
             except:
                 break
-
-        if self._logging:
-            _internals.active_exp._event_file_log(
-                            "TcpClient,cleared,{0}".format(len(cleared)), 2)
 
     def close(self):
         """Close the connection to the server."""
@@ -265,6 +168,3 @@ class TcpClient(Input, Output):
             self._socket.close()
             self._socket = None
             self._is_connected = False
-            if self._logging:
-                _internals.active_exp._event_file_log(
-                    "TcpClient,closed")

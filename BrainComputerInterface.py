@@ -3,12 +3,10 @@ import _turbosatorinetworkinterface as tsi  # handles getting data from TSI
 import numpy as np
 import CSVwriter
 import datetime
-import matplotlib.pyplot as plt
 
 from pygame.locals import (
     K_UP,
     K_DOWN,
-
 )
 
 class BrainComputerInterface():
@@ -61,15 +59,14 @@ class BrainComputerInterface():
 
         self.nrOfChannels = 0
         self.selectedChannels = 0
-        #self.channelFieldNames = ['Trials', 'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
-                                 # 'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
-                                 # 'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15'] # done for 28 channels only
-        self.channelFieldNames = ['Trials', '1', '2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19',
-                                  '20','21','22','23','24','25','26','27','28']# done for 28 channels
-        # Create channel list with the correct channel name
-        self.allChannels_latestValue = {key: [] for key in self.channelFieldNames}
-        for key in self.channelFieldNames:
-            self.allChannels_latestValue[key] = []
+        self._named_channels = [
+            'S1-D1', 'S1-D2', 'S1-D8', 'S2-D1', 'S2-D2', 'S2-D3', 'S2-D5', 'S2-D9', 'S3-D2',
+            'S3-D3', 'S3-D10', 'S4-D1', 'S4-D4', 'S4-D5', 'S4-D11', 'S5-D4', 'S5-D5', 'S5-D6',
+            'S5-D12', 'S6-D3', 'S6-D5', 'S6-D6', 'S6-D13', 'S7-D4', 'S7-D7', 'S7-D14', 'S8-D7', 'S8-D15'
+        ]
+        # Will be rebuilt after TSI reports the real channel count.
+        self.channelFieldNames = ['Trials']
+        self.allChannels_latestValue = {'Trials': []}
 
         self.NFsignal = {"Trials": [], "NFsignal_mean_TASK": [], "NFsignal_max_TASK": [], "NFsignal_median_TASK": [],
                          "NFsignal_latestValue_TASK": [], "NF t-value":[], "NF beta":[], "NF_Threshold_Q3_120": [], "NF_ThresholdUsed": [],
@@ -236,11 +233,22 @@ class BrainComputerInterface():
         # Get latest t-value
         self.NFSignal_latestValue_t_value = round(NFsignal_raw_tvalues[-1],2)
 
-        if not self.gp.performingSimulation:
+        # Safety guard: rebuild channelFieldNames if it doesn't cover all channels.
+        # This can happen if the BCI was constructed twice in quick succession and
+        # the second connection attempt left nrOfChannels set but channelFieldNames unbuilt.
+        if len(self.channelFieldNames) < self.nrOfChannels + 1:
+            channel_names = [
+                self._named_channels[i] if i < len(self._named_channels)
+                else 'Ch' + str(i + 1)
+                for i in range(self.nrOfChannels)
+            ]
+            self.channelFieldNames = ['Trials'] + channel_names
+            self.allChannels_latestValue = {key: [] for key in self.channelFieldNames}
+
             # All Channels
-            for channel in range(0,self.nrOfChannels):
-                key = self.channelFieldNames[channel+1] # +1 because first key is trial nr
-                self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
+        for channel in range(0, self.nrOfChannels):
+            key = self.channelFieldNames[channel + 1]  # +1 because index 0 is 'Trials'
+            self.allChannels_latestValue[key].append(round(NFsignal_allChannels_raw[channel][-1], 2))
 
             #print("All Channels latest beta value: " + str(self.allChannels_latestValue))
 

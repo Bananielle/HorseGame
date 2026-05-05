@@ -1226,8 +1226,8 @@ if __name__ == '__main__':
     scoreboard = Scoreboard(gp)
 
     # Setup BCI interface
-    BCI = BrainComputerInterface(gametype, gp)
-    BCI.scaleOxyData()
+   # BCI = BrainComputerInterface(gametype, gp)
+    #BCI.scaleOxyData()
     gp.setSamplingRate(BCI.getSamplingRate)
 
     PRT_writer = PRTwriter(gp)
