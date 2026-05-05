@@ -95,7 +95,9 @@ class PRTwriter():
 
     def finish_PRT_file(self):
         self.prt_file = open(self.file_path, 'a')
-        self.prt_file.write('\nColor: 255 0 0')
+
+        if self.gp.gameType == 'localizer':
+            self.prt_file.write('\nColor: 255 0 0')
 
         self.prt_file.close()
 

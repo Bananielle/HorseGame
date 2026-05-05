@@ -11,49 +11,55 @@ TimeCourseThick: 2
 ReferenceFuncColor: 30 200 30
 ReferenceFuncThick: 2
 
-NrOfConditions: 9
+NrOfConditions: 10
 
 Cond1
 1
-   691   769
+   814   892
 Color: 255 0 0
 
 Cond2
 1
-   1003   1081
+   1111   1189
 Color: 255 0 0
 
 Cond3
 1
-   1332   1410
+   1440   1517
 Color: 255 0 0
 
 Cond4
 1
-   1628   1707
+   1751   1830
 Color: 255 0 0
 
 Cond5
 1
-   1933   2011
+   2072   2150
 Color: 255 0 0
 
 Cond6
 1
-   2230   2308
+   2369   2447
 Color: 255 0 0
 
 Cond7
 1
-   2839   2918
+   2674   2752
 Color: 255 0 0
 
 Cond8
 1
-   3144   3222
+   2978   3056
 Color: 255 0 0
 
 Cond9
 1
-   3456   3535
+   3306   3384
 Color: 255 0 0
+
+Cond10
+1
+   3619   3697
+Color: 255 0 0
+
