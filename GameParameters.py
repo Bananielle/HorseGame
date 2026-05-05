@@ -112,6 +112,8 @@ class GameParameters():
 
         self.durationGame_s = self.calculate_duration_game()
 
+        self.tsi_port = '55556' # default
+
         self.datawindow_prestimulusonset_s = datawindow_prestimulusonset_s
         self.datawindow_duration_after_task_end_s = datawindow_poststimulusonset_s - self.duration_TASK_s
 

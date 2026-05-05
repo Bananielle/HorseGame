@@ -18,5 +18,5 @@
   "framerate": 60,
   "differential_feedback": 0,
   "minimal_nr_of_coins": 1,
-  "simulatio_nmode": false
+  "port": 55556
 }

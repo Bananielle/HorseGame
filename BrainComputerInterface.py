@@ -87,20 +87,13 @@ class BrainComputerInterface():
 
         # Look for a connection to turbo-satori
         try:
-            self.tsi = tsi.TurbosatoriNetworkInterface("127.0.0.1", 55556)
+            self.tsi = tsi.TurbosatoriNetworkInterface("127.0.0.1", gameParameters.tsi_port)
             print("Turbo satori connection successful.")
         except:
             # None found? Let the user know
             self.TSIconnectionFound = False
-            print("Turbo satori connection not found. Trying port 555557.")
+            print("Turbo satori connection not found using port " + str(gameParameters.tsi_port))
 
-        if not self.TSIconnectionFound:
-            try:
-                self.tsi = tsi.TurbosatoriNetworkInterface("127.0.0.1", 55557)
-                print("Turbo satori connection successful.")
-            except:
-                self.TSIconnectionFound = False
-                print("Turbo satori connection using port 55555 also not found.")
 
         if self.TSIconnectionFound:
             try:

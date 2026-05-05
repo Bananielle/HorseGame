@@ -197,6 +197,7 @@ if __name__ == '__main__':
             boring_mode = settings["boring_mode"]
             differential_feedback = settings["differential_feedback"]
             minimal_nr_of_coins = settings["minimal_nr_of_coins"]
+            port = settings["port"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
 
@@ -206,8 +207,9 @@ if __name__ == '__main__':
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode, debugging, framerate, boring_mode, differential_feedback,
                                         minimal_nr_of_coins)
+        gameParameters.tsi_port = port
         if gameParameters.performingSimulation:
-            BCI = BrainComputerInterface(gametype, gameParameters)
+            BCI = BrainComputerInterface(gametype, gameParameters, port)
             if BCI.TSIconnectionFound:
                 samplingRate[0] = BCI.tsi.get_sampling_rate()
             else:
@@ -313,7 +315,7 @@ if __name__ == '__main__':
 
         # Check for turbo-satori connection
         if not BCI.TSIconnectionFound:
-            text = font.render('Turbo-Satori connection not found! Is network port set to 55556?', True, RED)
+            text = font.render('Turbo-Satori connection not found using port ' + str(gp.tsi_port) + '! (default is 55556)', True, RED)
             screen.blit(text, (SCREEN_WIDTH * 0.25, 10))
 
         # Display on screen

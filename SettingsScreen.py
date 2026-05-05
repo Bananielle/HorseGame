@@ -36,6 +36,7 @@ class SettingNames:
     BORING_MODE = "Basic mode:"
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
     MINIMAL_NR_OF_COINS = "Minimal coins per trial (0-3):"
+    PORT = "Tsi port (default is 55556):"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
@@ -139,6 +140,8 @@ class NumericalItem_int(MenuItem):
             self.change_settings_file("differential_feedback", self.value)
         if self.text == SettingNames.MINIMAL_NR_OF_COINS:
             self.change_settings_file("minimal_nr_of_coins", self.value)
+        if self.text == SettingNames.PORT:
+            self.change_settings_file("port", self.value)
 
 
     def increase(self):
@@ -229,6 +232,7 @@ class settingsMain():
             boring_mode = settings["boring_mode"]
             differential_feedback = settings["differential_feedback"]
             minimal_nr_of_coins = settings["minimal_nr_of_coins"]
+            port = settings["port"]
 
 
 
@@ -250,6 +254,7 @@ class settingsMain():
         self.add_item(ToggleItem(SettingNames.BORING_MODE, boring_mode))
         self.add_item(NumericalItem_int(SettingNames.DIFFERENTIAL_FEEDBACK, differential_feedback,0,2,1))
         self.add_item(NumericalItem_int(SettingNames.MINIMAL_NR_OF_COINS, minimal_nr_of_coins, 0, 3, 1))
+        self.add_item(NumericalItem_int(SettingNames.PORT, port, 55550, 55560, 1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location
