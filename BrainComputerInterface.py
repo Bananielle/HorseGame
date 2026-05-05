@@ -92,19 +92,35 @@ class BrainComputerInterface():
         except:
             # None found? Let the user know
             self.TSIconnectionFound = False
-            print("Turbo satori connection not found.")
+            print("Turbo satori connection not found. Trying port 555557.")
+
+        if not self.TSIconnectionFound:
+            try:
+                self.tsi = tsi.TurbosatoriNetworkInterface("127.0.0.1", 55557)
+                print("Turbo satori connection successful.")
+            except:
+                self.TSIconnectionFound = False
+                print("Turbo satori connection using port 55555 also not found.")
 
         if self.TSIconnectionFound:
-            # Get information from turbo-satori
-            self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
-            print("Number of channels: " + str(self.nrOfChannels))
-            self.selectedChannels = self.tsi.get_selected_channels()[0]
-            self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
+            try:
+                # Get information from turbo-satori
+                self.nrOfChannels = self.tsi.get_nr_of_channels()[0]
+                print("Number of channels: " + str(self.nrOfChannels))
+                self.selectedChannels = self.tsi.get_selected_channels()[0]
+                self.timeBetweenSamples_ms = self.establishTimeInBetweenSamples()
 
-            # Set up dictionairy for all-channel data to be collected
-            for channel in range(0, self.nrOfChannels):
-                self.timewindow_allChannels_data_raw[channel] = []
+            except Exception as e:
+                self.TSIconnectionFound = False
+                print("Turbo satori post-connection setup failed: " + str(e))
 
+            try:
+                # Set up dictionairy for all-channel data to be collected
+                for channel in range(0, self.nrOfChannels):
+                    self.timewindow_allChannels_data_raw[channel] = []
+            except Exception as e:
+                self.TSIconnectionFound = False
+                print("Turbo satori all-channel setup failed.: " + str(e))
 
         self.GET_TURBOSATORI_INPUT = pygame.USEREVENT + 7
         pygame.time.set_timer(self.GET_TURBOSATORI_INPUT, self.timeBetweenSamples_ms)
@@ -515,16 +531,19 @@ class BrainComputerInterface():
         return scaled_data
 
 
-
     # with current data its 7.8125 samples per second. So a sample every 128ms.
+
     def establishTimeInBetweenSamples(self):
         samplingRate = self.tsi.get_sampling_rate()
+        if samplingRate[0] is None:
+            print("Warning: could not retrieve sampling rate from TSI, using fallback 1000ms.")
+            return 1000
         timeBetweenSamples_ms = int(1000 / samplingRate[0])
-        print("Sampling rate = "+  str(self.tsi.get_sampling_rate()) + ", so " + str(timeBetweenSamples_ms) + "ms inbetween samples.")
-
+        print(
+            "Sampling rate = " + str(samplingRate[0]) + ", so " + str(timeBetweenSamples_ms) + "ms inbetween samples.")
         return timeBetweenSamples_ms
 
-# =============================  MAIN LOG for NF and game data
+    # =============================  MAIN LOG for NF and game data
     # CSV writer
     def save_NFdatalog_to_csv(self):
         csvWriter = CSVwriter.CSVwriter()

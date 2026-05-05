@@ -568,10 +568,11 @@ if __name__ == '__main__':
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
 
-        if mounttype == 'turtle':  # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
-            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
-            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
-            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
+        if not gp.boringMode:
+            if mounttype == 'turtle':  # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
+                y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
+                screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
+                screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
         return gamestate
 
@@ -752,10 +753,11 @@ if __name__ == '__main__':
         updatePlayerCoinsAndText()
         performTaskRestSpecificActions()
 
-        if mounttype == 'turtle':  # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
-            y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
-            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
-            screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
+        if not gp.boringMode:
+            if mounttype == 'turtle':  # Do this at the very last so that part of the backgroundw ill move in FRONT of the turle
+                y = SCREEN_HEIGHT - mainGame_background.background2.surf.get_height()  # Use background layer 2 for height reference
+                screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX, y])
+                screen.blit(mainGame_background.background6.surf, [mainGame_background.background6.bgX2, y])
 
         return gamestate
 
@@ -1150,8 +1152,8 @@ if __name__ == '__main__':
 
         if gp.performingSimulation:
             font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 16)
-            text = font.render('Using simulated data.', True, BLACK)
-            screen.blit(text, (SCREEN_WIDTH / 2.5, 10))
+            text = font.render('Using simulated data (tip: don\'t forget to adjust your data-collection window!)', True, BLACK)
+            screen.blit(text, (SCREEN_WIDTH / 4, 10))
 
 
     def didPlayerPressQuit(gamestate, event):
@@ -1301,6 +1303,17 @@ if __name__ == '__main__':
     # print('frame rate = ',clock.get_fps())
 
     # ====== QUIT GAME =======
+
+    # Change simulation mode back to False so that it is always off when starting a new game
+    with open("GameSettings.json") as f:
+        settings = json.load(f)  # Open settings file (json)
+        # update and save back
+        settings["simulation_mode"] = False  # Change the paramater
+
+    with open("GameSettings.json", "w") as f:  # Save changes
+        json.dump(settings, f, indent=2)
+
+
     pygame.mixer.music.stop()
     pygame.mixer.quit()
     print('Quitting game now.')
