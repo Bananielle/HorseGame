@@ -616,7 +616,7 @@ class BrainComputerInterface():
         channel_row["Trials"] = "Selected channel indice(s)"
         for col in channel_cols:
             values = self.NFsignal[col]
-            channel_row[col] = str(self.selectedChannels)
+            channel_row[col] = str(self.selectedChannels +1)
         rows.append(channel_row)
 
         file_path = "Data/" + filename
