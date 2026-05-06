@@ -588,6 +588,37 @@ class BrainComputerInterface():
             mean_row[col] = round(np.mean(values), 2) if values else 0
         rows.append(mean_row)
 
+        # Add sum row for numeric columns
+        sum_cols = ["NF t-value", "NF beta", "AchievedNFLevel", "CoinsCollected"]
+        sum_row = {k: None for k in filtered_fields}
+        sum_row["Trials"] = "Sum"
+        for col in sum_cols:
+            values = self.NFsignal[col]
+            sum_row[col] = round(np.sum(values), 2) if values else 0
+        rows.append(sum_row)
+
+        # Add an empty row
+        empty_row = {k: None for k in filtered_fields}
+        rows.append(empty_row)
+
+        # Add chromophore used
+        chromophore_cols = ["NF t-value"]
+        chromophore_row = {k: None for k in filtered_fields}
+        chromophore_row["Trials"] = "Input used"
+        for col in chromophore_cols:
+            values = self.NFsignal[col]
+            chromophore_row[col] = ("T-value, " if self.gp.dataType == 1 else "Beta, ") + ("Hbo" if self.gp.chromophore == 1 else "Hb")
+        rows.append(chromophore_row)
+
+        # Add channel used
+        channel_cols = ["NF t-value"]
+        channel_row = {k: None for k in filtered_fields}
+        channel_row["Trials"] = "Selected channel indice(s)"
+        for col in channel_cols:
+            values = self.NFsignal[col]
+            channel_row[col] = str(self.selectedChannels)
+        rows.append(channel_row)
+
         file_path = "Data/" + filename
 
         wb = openpyxl.Workbook()

@@ -1229,7 +1229,7 @@ if __name__ == '__main__':
     gp.setSamplingRate(BCI.getSamplingRate)
 
     PRT_writer = PRTwriter(gp)
-    PRT_writer.create_PRT_template()
+   # PRT_writer.create_PRT_template()
 
     # ========== GAME STATE MACHINE ==============
     gamestate = GameState.STARTSCREEN
