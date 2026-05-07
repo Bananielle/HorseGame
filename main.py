@@ -86,7 +86,7 @@ else:
     os.chdir(Path(__file__).resolve().parent)
 
 # Saves the output from the console to a logfile.
-allowLogSaving = True
+allowLogSaving = true
 
 neurofeedback_threshold = float(1.0)
 

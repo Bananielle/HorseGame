@@ -446,9 +446,11 @@ class GameParameters():
                         print(tokens)
 
                         if self.is_number(tokens[0]):
-                            self.start_volumes.append(int(float(tokens[0])))
+                            if int(tokens[0]) > 50: # larger than 50 to avoid numbers that are not volumes
+                                self.start_volumes.append(int(float(tokens[0])))
                         if self.is_number(tokens[1]):
-                            self.end_volumes.append(int(float(tokens[1])))
+                            if int(tokens[1]) > 50:  # should be larger than 50 to avoid numbers that are not volumes
+                                self.end_volumes.append(int(float(tokens[1])))
 
                         print("Start volumes: ", str(self.start_volumes))
                         print("End volumes: ", str(self.end_volumes))
@@ -512,7 +514,7 @@ class GameParameters():
             if self.performingSimulation:  # only do this when actually in simulation mode
                 self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
         except Exception as e:
-            print(f"PRT ERROR: Something went wrong with reading the PRT for simulation "+  {e})
+            print(f"PRT ERROR: Something went wrong with reading the PRT for simulation", {e})
             self.PRT_error = True
 
         return self.start_volumes, self.end_volumes, self.NrOfConditions
