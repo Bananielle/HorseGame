@@ -19,7 +19,7 @@ class ParadigmAndTriggerManager():
                       source_id='Example')  # sets variables for object info
         self.outlet = StreamOutlet(self.info, max_buffered=1)  # initialize stream. Use a max buffer of 1 second so tthat any trigger longer ago than that is thrown awa. A late-connecting TS inlet gets an empty buffer, so no more phantom conditions.y
 
-
+#
 
 
     # Retrieves protocol data that is specified for each second.
