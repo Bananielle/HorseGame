@@ -17,7 +17,7 @@ class ParadigmAndTriggerManager():
         # Set up trigger stream (note that you need to exactly write "TriggerStream', otherwise Aurora and Turbo-Satori won't recognize it!
         self.info = StreamInfo(name='Trigger', type='Markers', channel_count=1, channel_format='int32',
                       source_id='Example')  # sets variables for object info
-        self.outlet = StreamOutlet(self.info)  # initialize stream.
+        self.outlet = StreamOutlet(self.info, max_buffered=1)  # initialize stream. Use a max buffer of 1 second so tthat any trigger longer ago than that is thrown awa. A late-connecting TS inlet gets an empty buffer, so no more phantom conditions.y
 
 
 
@@ -137,7 +137,6 @@ class ParadigmAndTriggerManager():
     def startTaskTrigger(self,triggerNr):
        # if self.gp.gameType == 'localizer': # If NF run then give each trial its own trigger
          #   self.outlet.push_sample(x=[2])
-        #    print('Started task trigger (One condition) nr: 2.')
        # else:
         self.outlet.push_sample(x=[triggerNr+1])  #+1 because  1 = rest
         print('Started task trigger (Single conditions) nr:' + str([triggerNr+1]))
