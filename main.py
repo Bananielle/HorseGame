@@ -192,6 +192,7 @@ if __name__ == '__main__':
             boring_mode = settings["boring_mode"]
             differential_feedback = settings["differential_feedback"]
             minimal_nr_of_coins = settings["minimal_nr_of_coins"]
+            show_coin_count = settings["show_coin_count"]
             port = settings["port"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
@@ -201,7 +202,7 @@ if __name__ == '__main__':
                                         neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode, debugging, framerate, boring_mode, differential_feedback,
-                                        minimal_nr_of_coins)
+                                        minimal_nr_of_coins,show_coin_count)
         gameParameters.tsi_port = port
         if gameParameters.performingSimulation:
             BCI = BrainComputerInterface(gametype, gameParameters)
@@ -861,7 +862,8 @@ if __name__ == '__main__':
 
         # Save the score for the player
         # print("Adding scores to scoreboard.")
-        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun)
+        mean_achievedNFlevel = BCI.get_mean_achieved_NFsignal()
+        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun, mean_achievedNFlevel)
 
         if not gp.printedNFdata:  # If you didn't print the data yet (needs to happen only once)
             print("NFsignals stored: " + str(BCI.NFsignal))
@@ -935,7 +937,7 @@ if __name__ == '__main__':
             screen.blit(scoresText_list[i],
                         ((SCREEN_WIDTH / 3.8), (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
             screen.blit(taskText_list[i],
-                        ((SCREEN_WIDTH / 2.2) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
+                        ((SCREEN_WIDTH / 1.4) - 80, (SCREEN_HEIGHT / 2) - (SCREEN_HEIGHT * 0.35) + newPosition))
             newPosition += 25
 
 

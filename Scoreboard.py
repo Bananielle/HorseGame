@@ -26,17 +26,20 @@ class Scoreboard():
         self.coinsPerTrialPerRuns = []
         self.gp = gameParameters
         self.sortedScores = []
+        self.list_mean_achieved_NFsignal = []
         self.sortedTasks = []
 
-    def addScoretoScoreBoard(self, score):
+    def addScoretoScoreBoard(self, score, mean_achievedNF):
         if not self.gp.scoreSaved:
             self.scoresList.append(score)
+            self.list_mean_achieved_NFsignal.append(mean_achievedNF)
             self.taskList.append(self.gp.taskUsed)
             self.runList = self.runNr
             self.runNr = self.runNr + 1
             self.gp.scoreSaved = True  # This will reset when the player goes back to the start screen
             print('Score for run ',  self.runNr, ': ', score, ' saved to score list. Is now: ', str(self.scoresList))
             print('Coins per trial: ' + str(self.gp.nrCoinsPerTrial))
+            print("Mean achieved NF level for this run: " + str(mean_achievedNF))
             self.coinsPerTrialPerRuns.append(self.gp.nrCoinsPerTrial)
             print('Coins per trial per run: ' + str(self.coinsPerTrialPerRuns))
 
@@ -81,10 +84,15 @@ class Scoreboard():
 
             i = 0
 
-            count_str = '(Run ' + str(count) + '. '  + ')'  # Get the task name from the dictionary
+            count_str = '(Run ' + str(count) + '. ' + ')'  # Get the task name from the dictionary
             # print('count_str: ', count_str)
 
-            final_score_text = str(score) + ' coins. '
+            if self.gp.showCoinCount: # Sum of coins collected per run
+                final_score_text = str(score) + ' coins. '
+            else: # Otherwise show the mean % achieved NF level
+                mean_percentage_score = self.list_mean_achieved_NFsignal[i]*100
+                final_score_text = str(mean_percentage_score) + '     % of coins collected. '
+
 
             if score == self.gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD
                 scores_text = self.font.render(final_score_text, True, BLACK)
