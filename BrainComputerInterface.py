@@ -49,6 +49,7 @@ class BrainComputerInterface():
         self.timewindow_task_betas = []
         self.timewindow_rest = []
         self.startTimeMeasurement = 0
+        self.mean_achieved_NFsignal = 0
 
 
         # Differential feedback (when substracting one channel value from another and use that as feedback)
@@ -75,6 +76,8 @@ class BrainComputerInterface():
 
         self.currentTask_signal = 1
         self.currentRest_signal = 1
+
+
 
         # CSV file preparation
         # Define the field names (header) for your CSV file
@@ -535,6 +538,13 @@ class BrainComputerInterface():
 
     # with current data its 7.8125 samples per second. So a sample every 128ms.
 
+
+    def set_mean_achieved_NFsignal(self, value):
+        self.mean_achieved_NFsignal = value
+
+    def get_mean_achieved_NFsignal(self):
+        return self.mean_achieved_NFsignal
+
     def establishTimeInBetweenSamples(self):
         timeBetweenSamples_ms = self.timeBetweenSamples_ms
         samplingRate = self.tsi.get_sampling_rate()[0]
@@ -586,6 +596,9 @@ class BrainComputerInterface():
         for col in average_cols:
             values = self.NFsignal[col]
             mean_row[col] = round(np.mean(values), 2) if values else 0
+            if col == "AchievedNFLevel":
+                self.set_mean_achieved_NFsignal( mean_row[col]) # save this for scoreboard presentation later
+                print("Mean achieved NF signal for this run: " + str(self.mean_achieved_NFsignal))
         rows.append(mean_row)
 
         # Add sum row for numeric columns
