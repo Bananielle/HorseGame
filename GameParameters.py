@@ -251,7 +251,7 @@ class GameParameters():
         print("Rest duration: ", str(self.duration_REST_s))
         print("Total nr of trial: " + str(n))
 
-        duration_game_s = + self.duration_BASELINE_s + ((n+1) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 6 #How long you want to one game run to last (in seconds)
+        duration_game_s = + self.duration_BASELINE_s + ((n) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 6 #How long you want to one game run to last (in seconds)
         # Other
 
         if self.performingSimulation:

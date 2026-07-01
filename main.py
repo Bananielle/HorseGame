@@ -871,7 +871,7 @@ if __name__ == '__main__':
             gp.printedNFdata = True
 
             # Also write and finish the PRT file only once.
-            PRT_writer.finish_PRT_file()  # Finish the PRT file
+            PRT_writer.finish_PRT_file_oneCond()  # Finish the PRT file
 
             # And save a settings file for this run
             with open("GameSettings.json") as f:
@@ -961,7 +961,8 @@ if __name__ == '__main__':
                 soundSystem.startsound.play()
                 paradigmManager.initiateBasicTaskEvent()
                 current_time_point = BCI.getCurrentTimePoint_TSI()
-                PRT_writer.addTaskStartEvent(current_time_point)
+                PRT_writer.addTaskStartEvent_oneCond(current_time_point)
+                PRT_writer.addTaskStartEvent_multipleCond(current_time_point)
                 current_jitter_duration = get_current_jitter_duration()
                 progressBar.resetProgressBar(current_jitter_duration)
                 deleteExistingCoins()
@@ -974,7 +975,8 @@ if __name__ == '__main__':
                 else:
                     soundSystem.stopsound.play()
                     current_time_point = BCI.getCurrentTimePoint_TSI()
-                    PRT_writer.addTaskEndEvent(current_time_point)
+                    PRT_writer.addTaskEndEvent_oneCond(current_time_point)
+                    PRT_writer.addTaskEndEvent_multipleCond(current_time_point)
                     paradigmManager.resetDurationRest()
                 paradigmManager.resetTaskStartTime()
                 paradigmManager.initiateBasicRestEvent()
@@ -1274,7 +1276,8 @@ if __name__ == '__main__':
             pygame.event.clear(gp.SECOND_HAS_PASSED)  # Reset this timer event
             pygame.time.set_timer(gp.SECOND_HAS_PASSED, 1000)  # Reset this timer event
             PRT_writer = PRTwriter(gp)  # Also make a new prt file for the next run
-            PRT_writer.create_PRT_template()
+            PRT_writer.create_PRT_template_oneCond()
+            PRT_writer.create_PRT_template_multipleCond()
             print("Current time when starting new game: " + str(gp.currentTime_s))
 
         elif gamestate == GameState.MAINGAME:
