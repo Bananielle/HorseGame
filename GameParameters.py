@@ -22,7 +22,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
-                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins,show_coin_count):
+                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins,show_coin_count,practice_first_trial):
 
         self.nochannel_warning = None
         self.SCREEN_WIDTH = SCREEN_WIDTH
@@ -110,7 +110,7 @@ class GameParameters():
 
 
 
-        self.durationGame_s = self.calculate_duration_game()
+        self.durationGame_s = 0
 
         self.tsi_port = '55556' # default
 
@@ -133,6 +133,7 @@ class GameParameters():
         self.currentTime_s = 0  #
         self.firstRestTrial = True
         self.showCoinCount = show_coin_count # Either show sum of coins collected at end of run or show mean achieved NF signal of that run
+        self.practiceFirstTrial = practice_first_trial # If True, trial 1 is an unscored localizer-style practice trial (no NF, excluded from scoreboard + NF Excel aggregates)
 
         self.useBCIinput = True  # If true, then player will be controlled by BCI input next to keyboard presses
         self.collectDataDuringRest = False  # (No longer used in our current experimental setup)
@@ -242,24 +243,13 @@ class GameParameters():
     def get_FPS(self):
         return self.FPS
 
-    def calculate_duration_game(self):
+    def calculate_duration_game(self, rest_end_time):
 
-        n = self.totalNum_TRIALS
+        self.durationGame_s = rest_end_time + 6 # Game should stop 6  seconds after last resting period ends.
 
-        print("Baseline duration: ", str(self.duration_BASELINE_s))
-        print("Task duration: ", str(self.duration_TASK_s))
-        print("Rest duration: ", str(self.duration_REST_s))
-        print("Total nr of trial: " + str(n))
+        print("Duration game (s): ", str(self.durationGame_s))
 
-        duration_game_s = + self.duration_BASELINE_s + ((n+1) * self.duration_TASK_s) + ((n+1) * self.duration_REST_s) + 6 #How long you want to one game run to last (in seconds)
-        # Other
-
-        if self.performingSimulation:
-            duration_game_s = duration_game_s + self.duration_REST_s # Add one extra rest trial duration, because otherwise the run ends too quickly
-
-        print("Duration game (s): ", str(duration_game_s))
-
-        return duration_game_s
+        return self.durationGame_s
 
     def get_deltaTime(self): # Get the current delta time
         return self.deltaTime
@@ -390,7 +380,7 @@ class GameParameters():
         print("Rest duration: ", str(self.duration_REST_s))
         print("Total nr of trial: " + str(self.totalNum_TRIALS))
 
-        self.durationGame_s = self.calculate_duration_game() # Recalculate this with the updated parameters
+
         self.nrCoinsPerTrial = [0] * self.totalNum_TRIALS  # Resize to match trial count from protocol file
         self.nrTrials_string = "Trial = " + str(self.TASK_counter) + "/" + str(self.totalNum_TRIALS)
         self.nrTrialsCompletedText = self.mainFont.render(self.nrTrials_string, True, PINK)
@@ -604,10 +594,20 @@ class GameParameters():
         rest_start_time = previous_rest_start_time + task_duration + jittered_rest_duration
         rest_start_times[total_num_trials +1] = rest_start_time
 
+        self.jittered_rest_list.append(jittered_rest_duration)  # For the rest before the last task
+
         # Add the last jump period
         jump_start_times[total_num_trials] = rest_start_times[total_num_trials+1] + self.timeUntilJump_s
 
+
         print("Jittered rest list = " + str(self.jittered_rest_list))
+
+        # The final rest period is not jittered (no task follows it), so it lasts the plain
+        # duration_REST_s. Append it so the progress bar can look it up like any other rest.
+        self.jittered_rest_list.append(rest_duration_without_jitter)
+
+        # Based on these times, calculate the whole duration of the game.
+        self.calculate_duration_game(rest_start_time + rest_duration_without_jitter )
 
         self.protocol_file['task_start_times'] = task_start_times
         self.protocol_file['rest_start_times'] = rest_start_times

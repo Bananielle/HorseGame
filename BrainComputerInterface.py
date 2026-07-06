@@ -324,6 +324,8 @@ class BrainComputerInterface():
         trialIndex = list(range(1, maxtrials))
         self.NFsignal["Trials"] = trialIndex
         self.allChannels_latestValue["Trials"] = list(trialIndex)  # separate copy so appending "Mean" doesn't affect NFsignal
+        if self.gp.practiceFirstTrial and self.NFsignal["Trials"]:  # Mark the unscored practice trial in the NF datalog
+            self.NFsignal["Trials"][0] = "1 (practice)"
 
 
         # Print the mean of the NFsignal_mean values
@@ -589,12 +591,21 @@ class BrainComputerInterface():
             row = {k: self.NFsignal[k][i] if i < len(self.NFsignal[k]) else None for k in filtered_fields}
             rows.append(row)
 
+            # When the first trial is a practice trial, blank (t-value/beta) cells,
+            if self.gp.practiceFirstTrial and rows:
+                for col in ("NF t-value", "NF beta"):
+                    if col in rows[0]:
+                        rows[0][col] = None
+
+        # Exclude the practice trial (index 0) and any blanked (None) cells from the aggregates.
+        practice_idx = 0 if self.gp.practiceFirstTrial else None
+
         # Add mean row for numeric columns
         average_cols = ["NF t-value", "NF beta", "AchievedNFLevel", "CoinsCollected"]
         mean_row = {k: None for k in filtered_fields}
         mean_row["Trials"] = "Mean"
         for col in average_cols:
-            values = self.NFsignal[col]
+            values = [v for j, v in enumerate(self.NFsignal[col]) if v is not None and j != practice_idx]
             mean_row[col] = round(np.mean(values), 2) if values else 0
             if col == "AchievedNFLevel":
                 self.set_mean_achieved_NFsignal( mean_row[col]) # save this for scoreboard presentation later
@@ -606,7 +617,7 @@ class BrainComputerInterface():
         sum_row = {k: None for k in filtered_fields}
         sum_row["Trials"] = "Sum"
         for col in sum_cols:
-            values = self.NFsignal[col]
+            values = [v for j, v in enumerate(self.NFsignal[col]) if v is not None and j != practice_idx]
             sum_row[col] = round(np.sum(values), 2) if values else 0
         rows.append(sum_row)
 

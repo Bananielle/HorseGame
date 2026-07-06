@@ -1,9 +1,9 @@
 {
   "fullscreen": false,
   "boring_mode": false,
-  "num_trials": 2,
-  "task_duration_s": 4,
-  "rest_duration_s": 9,
+  "num_trials": 4,
+  "task_duration_s": 6,
+  "rest_duration_s": 8,
   "baseline_duration_s": 2,
   "jitter_s": 0,
   "neurofeedback_threshold_t_value": 50,
@@ -13,11 +13,12 @@
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
   "simulation_mode": false,
   "debugging": true,
-  "datawindow_duration_after_task_end_s": 6,
-  "datawindow_duration_before_task_end_s": 2,
+  "datawindow_duration_after_task_end_s": 8,
+  "datawindow_duration_before_task_end_s": 3,
   "framerate": 60,
   "differential_feedback": 0,
   "minimal_nr_of_coins": 1,
   "port": 55556,
-  "show_coin_count": 0
+  "show_coin_count": 1,
+  "practice_first_trial": 1
 }
