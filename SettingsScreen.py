@@ -37,7 +37,8 @@ class SettingNames:
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
     MINIMAL_NR_OF_COINS = "Minimal coins per trial (0-3):"
     PORT = "Tsi port (restart game if changed):"
-    SHOW_COIN_COUNT = "Show mean % achieved neurofeedback level (1) or sum of coins (0) in scoreboard:"
+    SHOW_COIN_COUNT = "Show mean % of coins (1) or sum of coins (0) in scoreboard:"
+    PRACTICE_FIRST_TRIAL = "First trial = practice (no NF, unscored) (0=off, 1=on):"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
@@ -145,6 +146,8 @@ class NumericalItem_int(MenuItem):
             self.change_settings_file("port", self.value)
         if self.text == SettingNames.SHOW_COIN_COUNT:
             self.change_settings_file("show_coin_count", self.value)
+        if self.text == SettingNames.PRACTICE_FIRST_TRIAL:
+            self.change_settings_file("practice_first_trial", self.value)
 
 
     def increase(self):
@@ -237,6 +240,7 @@ class settingsMain():
             minimal_nr_of_coins = settings["minimal_nr_of_coins"]
             port = settings["port"]
             show_coin_count = settings["show_coin_count"]
+            practice_first_trial = settings["practice_first_trial"]
 
 
 
@@ -260,6 +264,7 @@ class settingsMain():
         self.add_item(NumericalItem_int(SettingNames.MINIMAL_NR_OF_COINS, minimal_nr_of_coins, 0, 3, 1))
         self.add_item(NumericalItem_int(SettingNames.PORT, port, 55550, 55560, 1))
         self.add_item(NumericalItem_int(SettingNames.SHOW_COIN_COUNT,show_coin_count,0,1,1))
+        self.add_item(NumericalItem_int(SettingNames.PRACTICE_FIRST_TRIAL,int(practice_first_trial),0,1,1))
 
     def add_item(self, item: MenuItem):
         self.location = self.location

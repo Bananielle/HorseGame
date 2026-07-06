@@ -22,7 +22,7 @@ ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
     def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
-                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins,show_coin_count):
+                 datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins,show_coin_count,practice_first_trial):
 
         self.nochannel_warning = None
         self.SCREEN_WIDTH = SCREEN_WIDTH
@@ -133,6 +133,7 @@ class GameParameters():
         self.currentTime_s = 0  #
         self.firstRestTrial = True
         self.showCoinCount = show_coin_count # Either show sum of coins collected at end of run or show mean achieved NF signal of that run
+        self.practiceFirstTrial = practice_first_trial # If True, trial 1 is an unscored localizer-style practice trial (no NF, excluded from scoreboard + NF Excel aggregates)
 
         self.useBCIinput = True  # If true, then player will be controlled by BCI input next to keyboard presses
         self.collectDataDuringRest = False  # (No longer used in our current experimental setup)

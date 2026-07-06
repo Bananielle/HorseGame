@@ -72,6 +72,8 @@ class Scoreboard():
         taskText_list = []
         bonusText_list = []
 
+        i = 0
+
         for score in self.sortedScores:
             bonus_text = pygame.Surface((0, 0))
 
@@ -82,16 +84,15 @@ class Scoreboard():
           #  if self.gp.gameDifficulty == 3:
            #     bonus = int((score * 1.2 * 1.2) - score) # todo: Keep in our out?
 
-            i = 0
 
             count_str = '(Run ' + str(count) + '. ' + ')'  # Get the task name from the dictionary
             # print('count_str: ', count_str)
 
-            if self.gp.showCoinCount: # Sum of coins collected per run
+            if not self.gp.showCoinCount: # Sum of coins collected per run
                 final_score_text = str(score) + ' coins. '
             else: # Otherwise show the mean % achieved NF level
                 mean_percentage_score = self.list_mean_achieved_NFsignal[i]*100
-                final_score_text = str(mean_percentage_score) + '     % achieved neurofeedback level.'
+                final_score_text = str(round(mean_percentage_score,2)) + '     % achieved NF level.'
 
 
             if score == self.gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD

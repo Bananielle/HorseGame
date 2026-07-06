@@ -193,6 +193,7 @@ if __name__ == '__main__':
             differential_feedback = settings["differential_feedback"]
             minimal_nr_of_coins = settings["minimal_nr_of_coins"]
             show_coin_count = settings["show_coin_count"]
+            practice_first_trial = settings["practice_first_trial"]
             port = settings["port"]
 
         print("New game started: Number of trials from settings file: " + str(settings["num_trials"]))
@@ -202,7 +203,7 @@ if __name__ == '__main__':
                                         neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode, debugging, framerate, boring_mode, differential_feedback,
-                                        minimal_nr_of_coins,show_coin_count)
+                                        minimal_nr_of_coins,show_coin_count,practice_first_trial)
         gameParameters.tsi_port = port
         if gameParameters.performingSimulation:
             BCI = BrainComputerInterface(gametype, gameParameters)
@@ -746,6 +747,9 @@ if __name__ == '__main__':
                 if gp.TESTING_MODE:
                     achievedNFlevel = min((gp.TASK_counter - 1) * 0.1, 1.0)
                     gp.signal_value_retrieved = achievedNFlevel
+                if gp.practiceFirstTrial and gp.TASK_counter == 1:  # Practice trial: no NF, fixed localizer-style jump
+                    achievedNFlevel = 0.1
+                    gp.signal_value_retrieved = achievedNFlevel
                 gp.set_achieved_NF_level(achievedNFlevel)
                 gp.maxJumpHeightAchieved = gp.player.performJumpSequence(NF_level_reached=gp.achievedNFlevel)
 
@@ -795,9 +799,13 @@ if __name__ == '__main__':
         # Coins counting management during each trial -> send to logger (that will save it to a csv file for later)
         if gp.coinsBeingCounted:
             collectMissedCoins()
-            BCI.addCoinsCollectedDuringCurrentTrial(
-                gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
-            BCI.addAchievedNFlevel(gp.achievedNFlevel)
+            if gp.practiceFirstTrial and gp.TASK_counter == 1:  # Practice trial: keep the row but blank the scored columns
+                BCI.addCoinsCollectedDuringCurrentTrial(None)
+                BCI.addAchievedNFlevel(None)
+            else:
+                BCI.addCoinsCollectedDuringCurrentTrial(
+                    gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
+                BCI.addAchievedNFlevel(gp.achievedNFlevel)
             BCI.addMaxJumpHeightAchieved(gp.maxJumpHeightAchieved)
             resetCoinsPerTrialCount()  # Reset the counter for the number of coins collected during the current trial
             gp.coinsBeingCounted = False
@@ -817,7 +825,8 @@ if __name__ == '__main__':
         if not gp.boringMode:
             soundSystem.coinCollected.play()
 
-        gp.nrCoinsCollectedThroughoutRun += 1
+        if not (gp.practiceFirstTrial and gp.TASK_counter == 1):  # Practice-trial coins don't count toward the score
+            gp.nrCoinsCollectedThroughoutRun += 1
         gp.coinsCollectedInCurrentTrial += 1
         gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
 
@@ -876,14 +885,15 @@ if __name__ == '__main__':
         replay = PressSpaceToReplay(SCREEN_WIDTH, SCREEN_HEIGHT)
         screen.blit(replay.surf, replay.surf_center)
 
-        # Save the score for the player
-        # print("Adding scores to scoreboard.")
-        mean_achievedNFlevel = BCI.get_mean_achieved_NFsignal()
-        scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun, mean_achievedNFlevel)
-
         if not gp.printedNFdata:  # If you didn't print the data yet (needs to happen only once)
             print("NFsignals stored: " + str(BCI.NFsignal))
-            BCI.calculate_NF_max_threshold()
+            BCI.calculate_NF_max_threshold()  # Computes the mean AchievedNFLevel and stashes it via set_mean_achieved_NFsignal()
+
+            # Save the score for the player. Must run AFTER calculate_NF_max_threshold() so the
+            # scoreboard reads the freshly-computed mean, not the stale initial 0.
+            mean_achievedNFlevel = BCI.get_mean_achieved_NFsignal()
+            scoreboard.addScoretoScoreBoard(gp.nrCoinsCollectedThroughoutRun, mean_achievedNFlevel)
+
             gp.printedNFdata = True
 
             # Also write and finish the PRT file only once.
