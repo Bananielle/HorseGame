@@ -794,6 +794,7 @@ if __name__ == '__main__':
 
         # Coins counting management during each trial -> send to logger (that will save it to a csv file for later)
         if gp.coinsBeingCounted:
+            collectMissedCoins()
             BCI.addCoinsCollectedDuringCurrentTrial(
                 gp.coinsCollectedInCurrentTrial)  # Add the number of coins collected during the current trial to the BCI object
             BCI.addAchievedNFlevel(gp.achievedNFlevel)
@@ -821,6 +822,22 @@ if __name__ == '__main__':
         gp.nrCoinsPerTrial[gp.TASK_counter - 1] += 1  # -1 because indexing is at 0
 
 
+    def collectMissedCoins():
+        # Safety net: a frame hitch can push the jump past the coin column and land the
+        # horse in a single animation tick, so the in-air collision check never fires.
+        # Award the frozen jump target so the trial never ends below the intended coins.
+        if gp.coinsCollectedInCurrentTrial < gp.coins_to_collect_this_jump:
+            missed_coins = [coin for coin in gp.coin if coin.rank <= gp.coins_to_collect_this_jump]
+            for coin in missed_coins:
+                coin.kill()
+                coinCollectionAdmin()
+            if missed_coins:
+                print("T=", gp.currentTime_s, ": Collision check missed", len(missed_coins),
+                      "coin(s) this jump — awarded at landing.")
+                text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)
+                gp.nrCoinsCollectedText = gp.coinsCollectedFont.render(text, True, RED)
+
+
     def checkForCoinCollision():
         # During the jump: collect all eligible coins simultaneously when the horse reaches
         # the x position of the coin column AND the height of the highest eligible coin
@@ -834,7 +851,6 @@ if __name__ == '__main__':
                     for coin in eligible_coins:
                         coin.kill()
                         coinCollectionAdmin()
-                    gp.startCountingCoins()
 
                     # Show the player how many coins have been collected
                     text = str(gp.nrCoinsCollectedThroughoutRun).rjust(3)

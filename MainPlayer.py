@@ -363,6 +363,7 @@ class MainPlayer(pygame.sprite.Sprite):
         self.jump_initialized = False
         self.gp.freezeCoins = False
         self.gp.horseJumpEvent = False
+        self.gp.startCountingCoins()  # Log the trial at landing, even if 0 coins were collected — otherwise the trial is silently dropped from the run mean/sum
         self.rect.bottom = int(self.borderOfPathForHorse)
         # Don't snap centerx — the idle branch trots the horse back gradually.
         print(f"T= {self.gp.currentTime_s}: Horse landed successfully")

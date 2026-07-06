@@ -91,7 +91,7 @@ class Scoreboard():
                 final_score_text = str(score) + ' coins. '
             else: # Otherwise show the mean % achieved NF level
                 mean_percentage_score = self.list_mean_achieved_NFsignal[i]*100
-                final_score_text = str(mean_percentage_score) + '     % of coins collected. '
+                final_score_text = str(mean_percentage_score) + '     % achieved neurofeedback level.'
 
 
             if score == self.gp.nrCoinsCollectedThroughoutRun and not currentScoreAlreadyDisplayed:  # Colour the currently achieved score GOLD

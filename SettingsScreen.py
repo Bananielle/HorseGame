@@ -37,7 +37,7 @@ class SettingNames:
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
     MINIMAL_NR_OF_COINS = "Minimal coins per trial (0-3):"
     PORT = "Tsi port (restart game if changed):"
-    SHOW_COIN_COUNT = "Show mean % of coins (1) or sum of coins (0) in scoreboard:"
+    SHOW_COIN_COUNT = "Show mean % achieved neurofeedback level (1) or sum of coins (0) in scoreboard:"
 
 class Settings_header(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
