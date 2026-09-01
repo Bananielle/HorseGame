@@ -26,7 +26,8 @@ class SettingNames:
     JITTER = "Jitter duration (seconds):"
     NF_THRESHOLD_TVALUE = "Neurofeedback threshold (t-value):"
     NF_THRESHOLD_BETA = "Neurofeedback threshold (beta):"
-    DATA_INPUT_TYPE = "Data input type (0 = beta's, 1 = t-values):"
+    NF_THRESHOLD_OXYDEOXY =  "Neurofeedback threshold (mean oxy/deoxy):"
+    DATA_INPUT_TYPE = "Data input type (0 = beta's, 1 = t-values, 2 = mean oxy/deoxy):"
     CHROMOPHORE = "Use chromophore (1 = HbO, 0 = Hb):"
     SIMULATION_MODE = "Simulation mode:"
     DEBUGGING = "Debugging:"
@@ -37,7 +38,7 @@ class SettingNames:
     DIFFERENTIAL_FEEDBACK = "Differential feedback (0=off, 1=a-b, 2=b-a):"
     MINIMAL_NR_OF_COINS = "Minimal coins per trial (0-3):"
     PORT = "Tsi port (restart game if changed):"
-    SHOW_COIN_COUNT = "Show mean % of coins (1) or sum of coins (0) in scoreboard:"
+    SHOW_COIN_COUNT = "Show mean % of coins (0) or sum of coins (1) in scoreboard:"
     PRACTICE_FIRST_TRIAL = "First trial = practice (no NF, unscored) (0=off, 1=on):"
 
 class Settings_header(pygame.sprite.Sprite):
@@ -132,6 +133,8 @@ class NumericalItem_int(MenuItem):
             self.change_settings_file("neurofeedback_threshold_t_value", self.value)
         if self.text == SettingNames.NF_THRESHOLD_BETA:
             self.change_settings_file("neurofeedback_threshold_beta", self.value)
+        if self.text == SettingNames.NF_THRESHOLD_OXYDEOXY:
+            self.change_settings_file("neurofeedback_threshold_oxydeoxy", self.value)
         if self.text == SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END:
             self.change_settings_file("datawindow_duration_after_task_end_s", self.value)
         if self.text == SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END:
@@ -169,6 +172,9 @@ class NumericalItem_int(MenuItem):
         if isinstance(self.step, float) and not self.step.is_integer():
             print("Neurofeedback threshold (beta): " + str(self.value))
             return f"{self.value:1f}"
+
+
+
         return str(int(self.value)) # Otherwise just return as an integer
 
 class NumericalItem_float(MenuItem):
@@ -185,7 +191,11 @@ class NumericalItem_float(MenuItem):
             self.value = round(self.value, 2)
             print(self.value)
 
+        # Floats
         if self.text == SettingNames.NF_THRESHOLD_BETA:
+            self.change_settings_file("neurofeedback_threshold_beta", self.value)
+
+        if self.text == SettingNames.NF_THRESHOLD_OXYDEOXY:
             self.change_settings_file("neurofeedback_threshold_beta", self.value)
 
 
@@ -195,7 +205,11 @@ class NumericalItem_float(MenuItem):
             self.value = round(self.value,2)
             print(self.value)
 
+        # Floats
         if self.text == SettingNames.NF_THRESHOLD_BETA:
+            self.change_settings_file("neurofeedback_threshold_beta", self.value)
+
+        if self.text == SettingNames.NF_THRESHOLD_OXYDEOXY:
             self.change_settings_file("neurofeedback_threshold_beta", self.value)
 
     def value_text(self):  # Return the numerical value as a string.
@@ -229,6 +243,7 @@ class settingsMain():
             data_input_type = settings["data_input_type"]
             neurofeedback_threshold_t_value = settings["neurofeedback_threshold_t_value"]
             neurofeedback_threshold_beta = settings["neurofeedback_threshold_beta"]
+            neurofeedback_threshold_oxydeoxy = settings["neurofeedback_threshold_oxydeoxy"]
             simulation_mode = settings["simulation_mode"]
             chromophore = settings["chromophore"]
             debugging = settings["debugging"]
@@ -250,10 +265,11 @@ class settingsMain():
         self.add_item(NumericalItem_int(SettingNames.REST_DURATION, rest_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem_int(SettingNames.BASELINE_DURATION, baseline_duration_s, 1, 3600, 1))
         self.add_item(NumericalItem_int(SettingNames.JITTER, jitter_s, 0, 360, 1))
-        self.add_item(NumericalItem_int(SettingNames.DATA_INPUT_TYPE, data_input_type, 0, 1, 1))
+        self.add_item(NumericalItem_int(SettingNames.DATA_INPUT_TYPE, data_input_type, 0, 2, 1))
         self.add_item(NumericalItem_int(SettingNames.CHROMOPHORE, chromophore,0,1,1))
         self.add_item(NumericalItem_int(SettingNames.NF_THRESHOLD_TVALUE, neurofeedback_threshold_t_value, 0, 100, 1))
         self.add_item(NumericalItem_float(SettingNames.NF_THRESHOLD_BETA, neurofeedback_threshold_beta, 0, 100, 0.1))
+        self.add_item(NumericalItem_float(SettingNames.NF_THRESHOLD_OXYDEOXY, neurofeedback_threshold_oxydeoxy, 0, 100, 0.1))
         self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_BEFORE_TASK_END, datawindow_duration_before_task_end_s, 0, 100, 1))
         self.add_item(NumericalItem_int(SettingNames.DATAWINDOW_DURATION_AFTER_TASK_END, datawindow_duration_after_task_end_s, 1, 100, 1))
         self.add_item(ToggleItem(SettingNames.DEBUGGING, debugging))

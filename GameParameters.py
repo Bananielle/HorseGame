@@ -21,7 +21,7 @@ HERC_FONT_PATH = "Resources/fonts/Herculanum.ttf"  # add the file to your repo
 ARIAL_FONT_PATH = "Resources/fonts/Arial.ttf"  # add the file to your repo
 
 class GameParameters():
-    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta,
+    def __init__(self, player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s, rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore, nf_threshold_t_value, nf_threshold_beta, nf_threshold_oxydeoxy,
                  datawindow_poststimulusonset_s, datawindow_prestimulusonset_s, simulation_mode, debugging, framerate, boring_mode, differential_feedback, minimal_nr_of_coins,show_coin_count,practice_first_trial):
 
         self.nochannel_warning = None
@@ -68,11 +68,14 @@ class GameParameters():
 
         self.neurofeedback_threshold_t_value = nf_threshold_t_value
         self.neurofeedback_threshold_beta = float(nf_threshold_beta)
+        self.neurofeedback_threshold_oxydeoxy = nf_threshold_oxydeoxy
 
         if data_input_type == 0:
             self.neurofeedback_threshold = self.neurofeedback_threshold_beta
         if data_input_type == 1:
             self.neurofeedback_threshold = self.neurofeedback_threshold_t_value
+        if data_input_type == 2:
+            self.neurofeedback_threshold = self.neurofeedback_threshold_oxydeoxy
 
         self.duration_TASK_s = task_duration_s
         self.duration_REST_s = rest_duration_s
@@ -115,6 +118,7 @@ class GameParameters():
         self.tsi_port = '55556' # default
 
         self.datawindow_prestimulusonset_s = datawindow_prestimulusonset_s
+        self.datawindow_poststimulusonset_s = datawindow_poststimulusonset_s
         self.datawindow_duration_after_task_end_s = datawindow_poststimulusonset_s - self.duration_TASK_s
 
         self.hemodynamic_delay = self.datawindow_duration_after_task_end_s #todo: this is basically datawindow_duration_after_task_end_s
@@ -240,12 +244,15 @@ class GameParameters():
         self.timeForJumpEvent = False
         self.horseHasJumpedThisTrial = False
 
+    def get_show_coin_count(self):
+        return self.showCoinCount
+
     def get_FPS(self):
         return self.FPS
 
     def calculate_duration_game(self, rest_end_time):
 
-        self.durationGame_s = rest_end_time + 6 # Game should stop 6  seconds after last resting period ends.
+        self.durationGame_s = rest_end_time + 10 # Game should stop 6  seconds after last resting period ends.
 
         print("Duration game (s): ", str(self.durationGame_s))
 
@@ -321,11 +328,18 @@ class GameParameters():
                 True, [0, 0, 0])
 
     def update_retrieved_signal_value_text(self):
+        if self.dataType == 0:
+            string_input = "Beta "
+        if self.dataType == 1:
+            string_input = "T- "
+        if self.dataType == 2:
+            string_input = "Mean " # For oxy/deoxy
+
         if self.chromophore == 1:
-            self.signal_value_retrieved_text = self.debuggingFont.render(("Beta " if self.dataType == 0 else "T-") +  "value (HbO) of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
+            self.signal_value_retrieved_text = self.debuggingFont.render(string_input +  "value (HbO) of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
                                                                    True, [0, 0, 0])
         if self.chromophore == 0:
-            self.signal_value_retrieved_text = self.debuggingFont.render(("Beta " if self.dataType == 0 else "T-") + "value (Hb) of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
+            self.signal_value_retrieved_text = self.debuggingFont.render(string_input + "value (Hb) of current trial = " + str('{:.2f}'.format(self.signal_value_retrieved)),
                                                                     True, [0, 0, 0])
 
     def update_NF_target_value_text(self,NF_maxLevel_based_on_localizer):
@@ -338,6 +352,12 @@ class GameParameters():
 
         self.current_tvalue_text = self.debuggingFont.render("(realtime) T-value " + ("(HbO)" if self.chromophore == 1 else "(Hb)") + " = " + str('{:.2f}'.format(t_value)),
                                                                    True, [0, 0, 0])
+
+    def update_current_mean_oxydeoxy_text(self,oxy):
+
+        self.current_mean_oxydeoxy_text = self.debuggingFont.render("(realtime) " + ("HbO" if self.chromophore == 1 else "Hb") + " = " + str('{:.2f}'.format(oxy)),
+                                                                   True, [0, 0, 0])
+
 
     def update_data_window_info(self,collectTimewindowData):
         self.data_window_info_text= self.debuggingFont.render(("Collecting NF data! " if collectTimewindowData else " "),
@@ -504,6 +524,9 @@ class GameParameters():
 
             if self.performingSimulation:  # only do this when actually in simulation mode
                 self.totalNum_TRIALS = self.NrOfConditions  # todo: Update the total nr of trial based on the conditions found in the protocol file (each trial should be its own condition)
+                last_rest_period =  end_times_s[-1] + self.duration_REST_s
+                self.calculate_duration_game(last_rest_period)
+
         except Exception as e:
             print(f"PRT ERROR: Something went wrong with reading the PRT for simulation", {e})
             self.PRT_error = True
@@ -607,7 +630,9 @@ class GameParameters():
         self.jittered_rest_list.append(rest_duration_without_jitter)
 
         # Based on these times, calculate the whole duration of the game.
-        self.calculate_duration_game(rest_start_time + rest_duration_without_jitter )
+        if not self.performingSimulation:
+            self.calculate_duration_game(rest_start_time + rest_duration_without_jitter) #OTherwise get duration during reeading of premade protocol instead
+
 
         self.protocol_file['task_start_times'] = task_start_times
         self.protocol_file['rest_start_times'] = rest_start_times

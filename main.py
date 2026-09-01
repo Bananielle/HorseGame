@@ -186,6 +186,7 @@ if __name__ == '__main__':
             chromophore = settings["chromophore"]
             neurofeedback_threshold_t_value = settings["neurofeedback_threshold_t_value"]
             neurofeedback_threshold_beta = settings["neurofeedback_threshold_beta"]
+            neurofeedback_threshold_oxydeoxy= settings["neurofeedback_threshold_oxydeoxy"]
             datawindow_duration_after_task_end_s = settings["datawindow_duration_after_task_end_s"]
             datawindow_duration_before_task_end_s = settings["datawindow_duration_before_task_end_s"]
             framerate = settings["framerate"]
@@ -200,7 +201,7 @@ if __name__ == '__main__':
 
         gameParameters = GameParameters(player, rider, SCREEN_WIDTH, SCREEN_HEIGHT, number_of_trials, task_duration_s,
                                         rest_duration_s, baseline_duration_s, jitter_s, data_input_type, chromophore,
-                                        neurofeedback_threshold_t_value, neurofeedback_threshold_beta,
+                                        neurofeedback_threshold_t_value, neurofeedback_threshold_beta,neurofeedback_threshold_oxydeoxy,
                                         datawindow_duration_after_task_end_s, datawindow_duration_before_task_end_s,
                                         simulation_mode, debugging, framerate, boring_mode, differential_feedback,
                                         minimal_nr_of_coins,show_coin_count,practice_first_trial)
@@ -212,6 +213,7 @@ if __name__ == '__main__':
             else:
                 samplingRate = 10
             gameParameters.read_premade_protocol(samplingRate)
+            gameParameters.apply_parameters_premadeprotocol_to_settings()
             gameParameters.apply_parameters_premadeprotocol_to_settings()
 
         gameParameters.generate_protocol()
@@ -596,7 +598,8 @@ if __name__ == '__main__':
                 gp.show_selected_channels(BCI.selectedChannels)
                 gp.update_NF_target_value_text(BCI.NF_neurofeedack_threshold)
                 gp.update_current_beta_value_text(BCI.getBetas(gp.trial_counter, 0))
-                #gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
+                gp.update_current_mean_oxydeoxy_text(BCI.scaleOxyData())
+               # gp.update_current_t_value_text(BCI.getTvalues(gp.trial_counter, 0))
                 gp.update_data_window_info(BCI.collectTimewindowData)  # True of False
                 if not BCI.tsi.get_selected_channels()[0]:
                     no_channel_warning = gp.debuggingFont.render("WARNING: NO CHANNEL SELECTED!!!", True, RED)
@@ -612,10 +615,11 @@ if __name__ == '__main__':
                 screen.blit(gp.achieved_jump_height_text, (20, 140))
             screen.blit(gp.current_beta_value_text, (20, 160))
             #screen.blit(gp.current_tvalue_text, (20, 180))
-            screen.blit(gp.data_window_info_text, (20, 200))
-            screen.blit(gp.selected_channels_text, (20, 220))
-            screen.blit(gp.gametype_text, (20,240))
-            screen.blit(no_channel_warning, (20,260))
+            screen.blit(gp.current_mean_oxydeoxy_text, (20, 200))
+            screen.blit(gp.data_window_info_text, (20, 220))
+            screen.blit(gp.selected_channels_text, (20, 240))
+            screen.blit(gp.gametype_text, (20,260))
+            screen.blit(no_channel_warning, (20,280))
 
 
 
@@ -657,7 +661,7 @@ if __name__ == '__main__':
             start_window = gp.start_volumes[
                                currentCondition - 1] + prestimulusonset_volumes  # minus one because current condition is one higher; offset matches real-time mode
             end_window = gp.end_volumes[currentCondition - 1] + hemodynamic_delay_volumes
-            print("Collect data when between volumes " + str(start_window) + " and " + str(end_window))
+           # print("Collect data when between volumes " + str(start_window) + " and " + str(end_window))
 
             if current_volume_timepoint >= start_window and current_volume_timepoint < end_window:
                 BCI.collectTimewindowData = True
@@ -1181,8 +1185,8 @@ if __name__ == '__main__':
                 pygame.draw.line(screen, grid_color, (0, y), (SCREEN_WIDTH, y))
 
         if gp.performingSimulation:
-            font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 16)
-            text = font.render('Using simulated data (tip: don\'t forget to adjust your data-collection window!)', True, BLACK)
+            font = pygame.font.Font(ARIAL_BOLD_FONT_PATH, 18)
+            text = font.render('Using simulated data (tip: don\'t forget to adjust your data-collection window!)', True, RED)
             screen.blit(text, (SCREEN_WIDTH / 4, 10))
 
 

@@ -8,17 +8,18 @@
   "jitter_s": 0,
   "neurofeedback_threshold_t_value": 50,
   "neurofeedback_threshold_beta": 1.0,
-  "data_input_type": 0,
+  "neurofeedback_threshold_oxydeoxy": 1,
+  "data_input_type": 2,
   "chromophore": 0,
   "Comment": "For_data_input_type: 0 = beta's, 1 = t-values.",
-  "simulation_mode": false,
+  "simulation_mode": true,
   "debugging": true,
-  "datawindow_duration_after_task_end_s": 8,
+  "datawindow_duration_after_task_end_s": 13,
   "datawindow_duration_before_task_end_s": 3,
   "framerate": 60,
   "differential_feedback": 0,
   "minimal_nr_of_coins": 1,
   "port": 55556,
   "show_coin_count": 1,
-  "practice_first_trial": 1
+  "practice_first_trial": 0
 }

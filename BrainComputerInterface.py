@@ -22,10 +22,11 @@ class BrainComputerInterface():
         self.useLatestDataPoint = True # Use the latest data point for NF calculation
 
         self.NFsignal_mean = self.NF_neurofeedack_threshold
-        self.NFsignal_max = self.NF_neurofeedack_threshold / 2 # Starter values
+        self.NFsignal_max = self.NF_neurofeedack_threshold  # Starter values
         self.NFSignal_median = self.NF_neurofeedack_threshold
         self.NFSignal_latestValue =  self.NF_neurofeedack_threshold # make this the same so that achieved NF level always starts as 100%
         self.NFSignal_latestValue_t_value = self.NF_neurofeedack_threshold
+        self.NFSignal_latestValue_beta = self.NF_neurofeedack_threshold
 
         self.gp = gameParameters
         self.saveIncomingData = self.gp.saveIncomingData
@@ -45,6 +46,7 @@ class BrainComputerInterface():
         self.timeBetweenSamples_ms = 1000 # fallback before TSI connection
         self.collectTimewindowData= False
         self.timewindow_task = []
+        self.timewindow_task_oxy = []
         self.timewindow_task_tvalues = []
         self.timewindow_task_betas = []
         self.timewindow_rest = []
@@ -162,12 +164,17 @@ class BrainComputerInterface():
 
             betas = self.getBetas(trialNr,0)
             t_values = self.getTvalues(trialNr,0)
+            oxy = self.scaleOxyData()
 
             # Use either beta's or t-values based on chosen datatype in GameParameters
             if self.gp.dataType == 0:
                 scaled_data = betas
             if self.gp.dataType == 1:
                 scaled_data = t_values
+            if self.gp.dataType == 2:
+                self.useMean = True # set useMean to true when measuring oxy/deoxy
+                scaled_data = oxy
+
 
         elif simulatedData is not 0: # But use simulated data instead if it's available
             scaled_data = simulatedData
@@ -177,6 +184,7 @@ class BrainComputerInterface():
                 self.timewindow_task.append(scaled_data)
                 self.timewindow_task_tvalues.append(t_values)
                 self.timewindow_task_betas.append(betas)
+                self.timewindow_task_oxy.append(oxy)
               #  print("Appending scaled data to timewindow_task..." + str(scaled_data))
 
                 # Also collect data from other channels (needed for NF threshold calculation during the Motor Imagery Localizer)
@@ -215,7 +223,7 @@ class BrainComputerInterface():
     def calculateNFsignal(self, task):
 
         if task:
-            NFsignal_raw = np.array(self.timewindow_task) # Array of all incoming oxy values.
+            NFsignal_raw = np.array(self.timewindow_task_oxy) # Array of all incoming oxy values.
             NFsignal_raw_tvalues = np.array(self.timewindow_task_tvalues)
             NFsignal_raw_betas = np.array(self.timewindow_task_betas)
             NFsignal_allChannels_raw = self.timewindow_allChannels_data_raw
@@ -225,7 +233,7 @@ class BrainComputerInterface():
 
        # print("Timewindow task = " + str(self.timewindow_task))
 
-        # Channel of Interest
+        # Channel of Interest HbO/HbR
         self.NFsignal_mean = round(np.mean(NFsignal_raw),2)
         self.NFsignal_max = round(np.max(NFsignal_raw),2)
         self.NFSignal_median = round(np.median(NFsignal_raw),2)
@@ -280,17 +288,18 @@ class BrainComputerInterface():
 
         signal_value_used = 0
 
-        if self.useMean:
-            achieved_NF_signal = self.NFsignal_mean / self.NF_neurofeedack_threshold
-            signal_value_retrieved =  self.NFsignal_mean
-        if self.useMax:
-            achieved_NF_signal = self.NFsignal_max / self.NF_neurofeedack_threshold
-            signal_value_retrieved =  self.NFsignal_max
+        if self.gp.dataType == 0:
+            signal_value_used = self.NFSignal_latestValue_beta
+        if self.gp.dataType == 1:
+            signal_value_used = self.NFSignal_latestValue_t_value
+        if self.gp.dataType == 2:
+            signal_value_used = self.NFsignal_mean # oxy/deoxy mean
 
-        if self.useLatestDataPoint: # takes the latest data point for each trial
-            achieved_NF_signal = self.NFSignal_latestValue / self.NF_neurofeedack_threshold
-            signal_value_used = self.NFSignal_latestValue
-        #print("achieved_NF_signal: " + str(achieved_NF_signal))
+            if self.gp.chromophore == 1: # if doexy
+                signal_value_used = signal_value_used * -1 # make the value positive for NF calculation
+
+        achieved_NF_signal = signal_value_used / self.NF_neurofeedack_threshold
+       # print("achieved_NF_signal: " + str(achieved_NF_signal))
 
         # Add a ceiling and floor to the achieved NF signal
         if achieved_NF_signal > 1:
@@ -408,6 +417,7 @@ class BrainComputerInterface():
 
             betas = self.getBetas(trialNr,0)
             t_values = self.getTvalues(trialNr,0)
+            oxy = self.getCurrentOxyInput()
 
             if not self.gp.DIFFERENTIAL_FEEDBACK == 0:
 
@@ -431,6 +441,7 @@ class BrainComputerInterface():
 
                     print("Using differential feedback. Channel ", str(self.selectedChannels[0]), " - channel ", str(self.selectedChannels[1]))
 
+
             self.recordedBetas.append(betas)
             self.timepointList.append(timepoint)
             self.reactionTimeList.append(rt)
@@ -446,18 +457,23 @@ class BrainComputerInterface():
         print("Recommended neurofeedback threshold: " + str(self.NF_neurofeedack_threshold))
 
     def getCurrentOxyInput(self):
-        input = 0
+        oxy = 0
         if self.TSIconnectionFound:
             currentTimePoint = self.tsi.get_current_time_point()[0]
             selectedChannels = self.tsi.get_selected_channels()[0]
-#            oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
-           # input = oxy
-            #print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(Selected) + " , oxy: " + str(oxy))
+
+            if self.gp.chromophore == 1: # HbO
+                oxy = self.tsi.get_data_oxy(selectedChannels[0], currentTimePoint - 1)[0] # -1 Because timepoint var starts at 1
+
+            if self.gp.chromophore == 0: #HbR
+                oxy = self.tsi.get_data_deoxy(selectedChannels[0], currentTimePoint - 1)[0]  # -1 Because timepoint var starts at 1
+
+        # print("Current time point: " + str(currentTimePoint), ", selected channels: " + str(selectedChannels) + " , oxy: " + str(oxy))
 
         else:
-            input = 0
+            oxy = 0
 
-        return input
+        return oxy
 
     # The trial number gets the predictor for each trial (trial 1 for first predictor, trial 2 for second predictor etc)
     def getBetas(self,trialNr,selectedChannel):
@@ -519,6 +535,10 @@ class BrainComputerInterface():
                     t_values = self.tsi.get_tvalue_of_channel(channel, chromophore=1,contrast=contrast)  # 1 is oxy, 0 is deoxy
                     data = t_values[0] if t_values[0] is not None else 0
 
+            if self.gp.dataType == 2:
+                oxy = self.scaleOxyData()
+                data = oxy if oxy is not None else 0
+
         return data
 
 
@@ -528,7 +548,8 @@ class BrainComputerInterface():
             oxy = self.getCurrentOxyInput()
             scalefactor = self.tsi.get_oxy_data_scale_factor() # Turbo-Satori's default is 200 as a scale factor
 
-            scaled_data = float(oxy) * float(scalefactor[0]) # Because for some reason you're getting two values for TSI's scacefactor
+
+            scaled_data = float(oxy) * float(scalefactor[0]) if oxy is not None else 0# Because for some reason you're getting two values for TSI's scacefactor
 
         #print("Scaled oxy: " + str(scaled_data) + ", scalefactor: " + str(scalefactor[0]))
 
@@ -563,6 +584,18 @@ class BrainComputerInterface():
         "Sampling rate = " + str(samplingRate) + ", so " + str(timeBetweenSamples_ms) + "ms inbetween samples.")
         return timeBetweenSamples_ms
 
+    def calculate_mean_achieved_NFlevel(self):
+
+        values = self.NFsignal["AchievedNFLevel"]
+       # mean_v = round(np.mean(values), 2) if values else 0
+        mean_v = np.mean(values) if values else 0
+        self.set_mean_achieved_NFsignal(mean_v)  # save this for scoreboard presentation later
+        #print("Mean achieved NF signal for this run: " + str(self.mean_achieved_NFsignal))
+
+        return self.mean_achieved_NFsignal
+
+
+
     # =============================  MAIN LOG for NF and game data
     # CSV writer
     def save_NFdatalog_to_csv(self):
@@ -570,8 +603,10 @@ class BrainComputerInterface():
         current_date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
         if self.gp.dataType == 1:
             NF_type_used = "t-value"
-        else:
+        if self.gp.dataType == 0:
             NF_type_used = "beta"
+        if self.gp.dataType == 2:
+            NF_type_used =  "oxy_deoxy"
 
         if self.typeOfRun == "localizer":
             NF_type_used = 0
@@ -580,7 +615,7 @@ class BrainComputerInterface():
             filename = f"NF_datalog_NFrun_{NF_type_used}_{current_date}.xlsx"
 
         # exclude unwanted fields
-        exclude = {"NFsignal_mean_TASK", "NFsignal_max_TASK", "NFsignal_median_TASK",
+        exclude = {"NFsignal_median_TASK", "NFsignal_max_TASK",
                          "NFsignal_latestValue_TASK", "MaxJumpHeightAchieved", "NF_Threshold_Q3_120"}  # put your unwanted keys here
         filtered_fields = [f for f in self.field_names if f not in exclude]
 
@@ -601,19 +636,21 @@ class BrainComputerInterface():
         practice_idx = 0 if self.gp.practiceFirstTrial else None
 
         # Add mean row for numeric columns
-        average_cols = ["NF t-value", "NF beta", "AchievedNFLevel", "CoinsCollected"]
+        average_cols = ["NF t-value", "NF beta", "NFsignal_mean_TASK", "AchievedNFLevel", "CoinsCollected"]
         mean_row = {k: None for k in filtered_fields}
         mean_row["Trials"] = "Mean"
         for col in average_cols:
             values = [v for j, v in enumerate(self.NFsignal[col]) if v is not None and j != practice_idx]
-            mean_row[col] = round(np.mean(values), 2) if values else 0
+            #mean_row[col] = round(np.mean(values), 2) if values else 0
+            mean_row[col] = np.mean(values) if values else 0
             if col == "AchievedNFLevel":
-                self.set_mean_achieved_NFsignal( mean_row[col]) # save this for scoreboard presentation later
+                print(values)
+                self.set_mean_achieved_NFsignal(mean_row[col]) # save this for scoreboard presentation later
                 print("Mean achieved NF signal for this run: " + str(self.mean_achieved_NFsignal))
         rows.append(mean_row)
 
         # Add sum row for numeric columns
-        sum_cols = ["NF t-value", "NF beta", "AchievedNFLevel", "CoinsCollected"]
+        sum_cols = ["NF t-value", "NF beta","NFsignal_mean_TASK", "AchievedNFLevel", "CoinsCollected"]
         sum_row = {k: None for k in filtered_fields}
         sum_row["Trials"] = "Sum"
         for col in sum_cols:
@@ -631,8 +668,24 @@ class BrainComputerInterface():
         chromophore_row["Trials"] = "Input used"
         for col in chromophore_cols:
             values = self.NFsignal[col]
-            chromophore_row[col] = ("T-value, " if self.gp.dataType == 1 else "Beta, ") + ("Hbo" if self.gp.chromophore == 1 else "Hb")
+            if self.gp.dataType == 1:
+                chromophore_type = "T-value, "
+            if self.gp.dataType == 0:
+                chromophore_type = "Beta, "
+            if self.gp.dataType == 2:
+                chromophore_type = "Oxy/deoxy, "
+            chromophore_row[col] = chromophore_type + ("Hbo" if self.gp.chromophore == 1 else "Hb")
         rows.append(chromophore_row)
+
+        # Add data window used
+        datawindow_cols = ["NF t-value"]
+        datawindow_row = {k: None for k in filtered_fields}
+        datawindow_row["Trials"] = "Datawindow used:"
+        for col in datawindow_cols:
+            start_time = self.gp.datawindow_prestimulusonset_s
+            end_time = self.gp.datawindow_poststimulusonset_s
+            datawindow_row[col] = "After task start: " + str(start_time) + " - " + str(end_time)
+        rows.append(datawindow_row)
 
         file_path = "Data/" + filename
 
@@ -642,7 +695,6 @@ class BrainComputerInterface():
         for row in rows:
             ws.append([row.get(k) for k in filtered_fields])
         wb.save(file_path)
-        file_path = "Data/" + filename
         print(f'Data written to ' + file_path)
 
     def save_allChannelData_to_csv(self):
@@ -650,8 +702,10 @@ class BrainComputerInterface():
 
         if self.gp.dataType == 1:
             NF_type_used = "t-value"
-        else:
+        if self.gp.dataType == 0:
             NF_type_used = "beta"
+        if self.gp.dataType == 2:
+            NF_type_used = "oxy_deoxy"
 
         if self.typeOfRun == "localizer":
             filename = f"NF_allChannelData_localizer_{current_date}.xlsx"

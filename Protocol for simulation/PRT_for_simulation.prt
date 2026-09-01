@@ -1,45 +1,44 @@
+FileVersion: 2
 
-FileVersion:        2
+ResolutionOfTime: Volumes
 
-ResolutionOfTime:   Volumes
+Experiment: BCI_4_kids
 
-Experiment:         2026-04-30_001
-
-BackgroundColor:    0 0 0
-TextColor:          255 255 255
-TimeCourseColor:    255 255 30
-TimeCourseThick:    2
+BackgroundColor: 0 0 0
+TextColor: 255 255 255
+TimeCourseColor: 255 255 30
+TimeCourseThick: 2
 ReferenceFuncColor: 30 200 30
 ReferenceFuncThick: 2
 
-NrOfConditions:  6
+NrOfConditions: 6
 
-Cond. 1
+NFtrial1
 1
- 721  823
-Color: 200 0 0
+   706   808
+Color: 255 0 0
 
-Cond. 2
+NFtrial2
 1
-1128 1230
-Color: 100 200 80
+   1103   1205
+Color: 255 0 0
 
-Cond. 3
+NFtrial3
 1
-1535 1637
-Color: 10 40 200
+   1530   1632
+Color: 255 0 0
 
-Cond. 4
+NFtrial4
 1
-1952 2054
-Color: 200 200 10
+   1947   2049
+Color: 255 0 0
 
-Cond. 5
+NFtrial5
 1
-2349 2451
-Color: 200 10 200
+   2374   2476
+Color: 255 0 0
 
-Cond. 6
+NFtrial6
 1
-2766 2868
-Color: 10 200 200
+   2792   2893
+Color: 255 0 0
